@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Kotlin最佳实践 | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Kotlin,">
+  
+
+  <meta name="description" content="&amp;#x524D;&amp;#x4E00;&amp;#x6BB5;&amp;#x65F6;&amp;#x95F4;&amp;#x5F00;&amp;#x53D1;&amp;#x6BD4;&amp;#x8F83;&amp;#x8F7B;&amp;#x677E;&amp;#xFF0C;&amp;#x6240;&amp;#x4EE5;&amp;#x5C31;&amp;#x7814;&amp;#x7A76;&amp;#x4E86;&amp;#x4E00;&amp;#x4E0B;google&amp;#x4E3B;&amp;#x63A8;&amp;#x7684;kotlin&amp;#x8">
+<meta name="keywords" content="Kotlin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kotlin最佳实践">
+<meta property="og:url" content="https://www.rousetime.com/2017/08/21/Kotlin最佳实践/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="&amp;#x524D;&amp;#x4E00;&amp;#x6BB5;&amp;#x65F6;&amp;#x95F4;&amp;#x5F00;&amp;#x53D1;&amp;#x6BD4;&amp;#x8F83;&amp;#x8F7B;&amp;#x677E;&amp;#xFF0C;&amp;#x6240;&amp;#x4EE5;&amp;#x5C31;&amp;#x7814;&amp;#x7A76;&amp;#x4E86;&amp;#x4E00;&amp;#x4E0B;google&amp;#x4E3B;&amp;#x63A8;&amp;#x7684;kotlin&amp;#x8">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.rousetime.com/2017/08/21/Kotlin最佳实践/1.png">
+<meta property="og:image" content="https://www.rousetime.com/2017/08/21/Kotlin最佳实践/2.png">
+<meta property="og:image" content="https://www.rousetime.com/2017/08/21/Kotlin最佳实践/3.png">
+<meta property="og:updated_time" content="2017-08-21T16:43:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kotlin最佳实践">
+<meta name="twitter:description" content="&amp;#x524D;&amp;#x4E00;&amp;#x6BB5;&amp;#x65F6;&amp;#x95F4;&amp;#x5F00;&amp;#x53D1;&amp;#x6BD4;&amp;#x8F83;&amp;#x8F7B;&amp;#x677E;&amp;#xFF0C;&amp;#x6240;&amp;#x4EE5;&amp;#x5C31;&amp;#x7814;&amp;#x7A76;&amp;#x4E86;&amp;#x4E00;&amp;#x4E0B;google&amp;#x4E3B;&amp;#x63A8;&amp;#x7684;kotlin&amp;#x8">
+<meta name="twitter:image" content="https://www.rousetime.com/2017/08/21/Kotlin最佳实践/1.png">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#界面"><span class="toc-text">界面</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#主界面"><span class="toc-text">主界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#详情界面"><span class="toc-text">详情界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#订阅界面"><span class="toc-text">订阅界面</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#网络请求"><span class="toc-text">网络请求</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#接口请求封装"><span class="toc-text">接口请求封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图片加载封装"><span class="toc-text">图片加载封装</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Interface"><span class="toc-text">Interface</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Delegated-Properties"><span class="toc-text">Delegated Properties</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Anko"><span class="toc-text">Anko</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#End"><span class="toc-text">End</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Kotlin最佳实践" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Kotlin最佳实践</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.08.21</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>&#x524D;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x5F00;&#x53D1;&#x6BD4;&#x8F83;&#x8F7B;&#x677E;&#xFF0C;&#x6240;&#x4EE5;&#x5C31;&#x7814;&#x7A76;&#x4E86;&#x4E00;&#x4E0B;<code>google</code>&#x4E3B;&#x63A8;&#x7684;<code>kotlin</code>&#x8BED;&#x8A00;&#x3002;&#x6211;&#x4E00;&#x76F4;&#x575A;&#x4FE1;&#xFF0C;&#x5FEB;&#x901F;&#x5B66;&#x4E60;&#x4E0E;&#x638C;&#x63E1;&#x4E00;&#x95E8;&#x8BED;&#x8A00;&#x7684;&#x6700;&#x597D;&#x65B9;&#x5F0F;&#x5C31;&#x662F;&#x5B9E;&#x8DF5;&#xFF0C;&#x8FB9;&#x5F00;&#x53D1;&#x9879;&#x76EE;&#x8FB9;&#x5B66;&#x4E60;&#x3002;&#x8FD9;&#x6837;&#x624D;&#x80FD;&#x5FEB;&#x901F;&#x7684;&#x5C06;&#x5B66;&#x4E60;&#x7684;&#x77E5;&#x8BC6;&#x8FD0;&#x7528;&#x5230;&#x5B9E;&#x8DF5;&#x4E2D;&#xFF0C;&#x4ECE;&#x800C;&#x53D1;&#x73B0;&#x95EE;&#x9898;&#xFF0C;&#x603B;&#x7ED3;&#x7ECF;&#x9A8C;&#x3002;&#x5982;&#x679C;&#x4F60;&#x4E5F;&#x60F3;&#x5B66;&#x4E60;<code>kotlin</code>&#x6216;&#x8005;&#x4E5F;&#x6B63;&#x5728;&#x5B66;&#x4E60;<code>kotlin</code>&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x4E0D;&#x59A8;&#x53EF;&#x4EE5;&#x643A;&#x624B;&#x5171;&#x6D4E;&#xFF0C;&#x5728;&#x5B9E;&#x8DF5;&#x4E2D;&#x63D0;&#x5347;&#x81EA;&#x5DF1;&#xFF0C;&#x5FEB;&#x901F;&#x638C;&#x63E1;<code>kotlin</code>&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x6211;&#x8981;&#x4ECB;&#x7ECD;&#x7684;&#x9879;&#x76EE;&#x662F;&#x5B8C;&#x5168;&#x4F7F;&#x7528;<code>kotlin</code>&#x7F16;&#x5199;&#x7684;&#x4E00;&#x4E2A;&#x5173;&#x4E8E;&#x65B0;&#x95FB;&#x7684;<code>App</code>&#xFF0C;&#x7531;&#x4E8E;&#x662F;&#x5B9E;&#x8DF5;&#x4ECB;&#x7ECD;&#xFF0C;&#x6211;&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x662F;&#x4ECB;&#x7ECD;&#x4E00;&#x4E0B;&#x9879;&#x76EE;&#x4E2D;&#x8FD0;&#x7528;&#x5230;&#x7684;&#x77E5;&#x8BC6;&#x70B9;&#xFF0C;&#x65B9;&#x4FBF;&#x540E;&#x7EED;&#x60F3;&#x8981;&#x4E00;&#x8D77;&#x5B66;&#x4E60;&#x7684;&#x540C;&#x5B66;&#x4EEC;&#x5FEB;&#x901F;&#x5165;&#x95E8;&#x4E0E;&#x8FD0;&#x7528;&#x3002;</p>
+<h1 id="&#x754C;&#x9762;"><a href="#&#x754C;&#x9762;" class="headerlink" title="&#x754C;&#x9762;"></a>&#x754C;&#x9762;</h1><p>&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x5173;&#x4E8E;&#x65B0;&#x95FB;&#x7684;<code>App</code>&#xFF0C;&#x6211;&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x5305;&#x62EC;&#x4E09;&#x4E2A;&#x754C;&#x9762;&#xFF0C;&#x5206;&#x522B;&#x4E3A;&#x65B0;&#x95FB;&#x4E3B;&#x754C;&#x9762;&#x3001;&#x65B0;&#x95FB;&#x8BE6;&#x60C5;&#x754C;&#x9762;&#x4E0E;&#x65B0;&#x95FB;&#x8BA2;&#x9605;&#x754C;&#x9762;&#x3002;&#x4E0B;&#x9762;&#x7B80;&#x8981;&#x4ECB;&#x7ECD;&#x4E0B;&#x6BCF;&#x4E2A;&#x754C;&#x9762;&#x8FD0;&#x7528;&#x5230;&#x7684;&#x77E5;&#x8BC6;&#x70B9;&#x3002;</p>
+<h2 id="&#x4E3B;&#x754C;&#x9762;"><a href="#&#x4E3B;&#x754C;&#x9762;" class="headerlink" title="&#x4E3B;&#x754C;&#x9762;"></a>&#x4E3B;&#x754C;&#x9762;</h2><p>&#x4E3B;&#x754C;&#x9762;&#x4E3A;&#x4E86;&#x5C55;&#x793A;&#x4E0D;&#x540C;&#x7684;&#x5206;&#x7C7B;&#x65B0;&#x95FB;&#xFF0C;&#x8FD9;&#x91CC;&#x4F7F;&#x7528;&#x4E86;<code>TabLayout</code>+<code>ViewPager</code>+<code>Fragment</code>&#x6765;&#x5B9E;&#x73B0;&#xFF0C;&#x56E0;&#x6B64;&#x4E3B;&#x8981;&#x662F;&#x903B;&#x8F91;&#x5C31;&#x662F;<code>NewsCategoryFrament</code>&#x4E2D;&#x7684;&#x63A5;&#x53E3;&#x8BF7;&#x6C42;&#x4E0E;&#x6570;&#x636E;&#x5904;&#x7406;&#x3002;&#x63A5;&#x53E3;&#x8BF7;&#x6C42;&#x4E3B;&#x8981;&#x8FD0;&#x7528;&#x7684;&#x662F;<code>Retrofit</code>+<code>RxJava</code>+<code>RxAndroid</code>&#x3002;&#x6765;&#x770B;&#x4E0B;&#x754C;&#x9762;&#x56FE;&#xFF1A;</p>
+<p><img src="/2017/08/21/Kotlin&#x6700;&#x4F73;&#x5B9E;&#x8DF5;/1.png" alt="&#x4E3B;&#x754C;&#x9762;"></p>
+<blockquote>
+<p>&#x6211;&#x8FD9;&#x91CC;&#x53EA;&#x662F;&#x7B80;&#x5355;&#x7684;&#x4ECB;&#x7ECD;&#x9879;&#x76EE;&#xFF0C;&#x5982;&#x679C;&#x60F3;&#x8981;&#x8FDB;&#x4E00;&#x6B65;&#x4E86;&#x89E3;<code>kotlin</code>&#x7684;&#x5B9E;&#x73B0;&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x540E;&#x9762;&#x7684;&#x6E90;&#x7801;&#x5730;&#x5740;</p>
+</blockquote>
+<h2 id="&#x8BE6;&#x60C5;&#x754C;&#x9762;"><a href="#&#x8BE6;&#x60C5;&#x754C;&#x9762;" class="headerlink" title="&#x8BE6;&#x60C5;&#x754C;&#x9762;"></a>&#x8BE6;&#x60C5;&#x754C;&#x9762;</h2><p>&#x7531;&#x4E8E;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x56FD;&#x5916;&#x7684;<code>News Api</code>&#x6240;&#x4EE5;&#xFF0C;&#x5BF9;&#x4E8E;&#x8BE6;&#x60C5;&#x7684;&#x5C55;&#x793A;&#x8FD9;&#x91CC;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x4E00;&#x4E2A;<code>WebView</code>&#xFF0C;&#x5168;&#x90E8;&#x901A;&#x8FC7;&#x539F;&#x751F;&#x7684;<code>WebView</code>&#x6765;&#x5C55;&#x793A;&#x3002;&#x540E;&#x7EED;&#x67E5;&#x770B;&#x6E90;&#x7801;&#x4F1A;&#x53D1;&#x73B0;&#x8BE5;&#x5904;&#x7684;&#x4EE3;&#x7801;&#x6BD4;&#x8F83;&#x7B80;&#x5355;&#x3002;</p>
+<p><img src="/2017/08/21/Kotlin&#x6700;&#x4F73;&#x5B9E;&#x8DF5;/2.png" alt="&#x8BE6;&#x60C5;&#x754C;&#x9762;"></p>
+<h2 id="&#x8BA2;&#x9605;&#x754C;&#x9762;"><a href="#&#x8BA2;&#x9605;&#x754C;&#x9762;" class="headerlink" title="&#x8BA2;&#x9605;&#x754C;&#x9762;"></a>&#x8BA2;&#x9605;&#x754C;&#x9762;</h2><p>&#x8BA2;&#x9605;&#x754C;&#x9762;&#x4E3B;&#x8981;&#x662F;&#x5BF9;&#x4E3B;&#x754C;&#x9762;&#x7684;&#x5206;&#x7C7B;<code>News</code>&#x8FDB;&#x884C;&#x6DFB;&#x52A0;&#x8BA2;&#x9605;&#x4E0E;&#x53D6;&#x6D88;&#x8BA2;&#x9605;&#x64CD;&#x4F5C;&#x3002;&#x754C;&#x9762;&#x7ED3;&#x6784;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x4E24;&#x4E2A;&#x6ED1;&#x52A8;&#x7684;<code>RecyclerView</code>&#x3002;&#x5B9E;&#x73B0;&#x5B83;&#x4EEC;&#x95F4;<code>item</code>&#x7684;&#x8054;&#x52A8;&#x3002;</p>
+<p><img src="/2017/08/21/Kotlin&#x6700;&#x4F73;&#x5B9E;&#x8DF5;/3.png" alt="&#x8BA2;&#x9605;&#x754C;&#x9762;"></p>
+<h1 id="&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;"><a href="#&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;" class="headerlink" title="&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;"></a>&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;</h1><p>&#x4E0A;&#x9762;&#x4E3B;&#x8981;&#x4ECB;&#x7ECD;&#x4E86;&#x754C;&#x9762;&#x76F8;&#x5173;&#x7684;&#x77E5;&#x8BC6;&#xFF0C;&#x4E0B;&#x9762;&#x6765;&#x8BF4;&#x4E0B;&#x9879;&#x76EE;&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#x6709;&#x5173;&#x7F51;&#x7EDC;&#x65B9;&#x9762;&#x7684;&#x77E5;&#x8BC6;&#x3002;&#x4E3B;&#x8981;&#x5305;&#x62EC;<code>&#x63A5;&#x53E3;&#x8BF7;&#x6C42;</code>&#x4E0E;<code>&#x56FE;&#x7247;&#x52A0;&#x8F7D;</code></p>
+<h2 id="&#x63A5;&#x53E3;&#x8BF7;&#x6C42;&#x5C01;&#x88C5;"><a href="#&#x63A5;&#x53E3;&#x8BF7;&#x6C42;&#x5C01;&#x88C5;" class="headerlink" title="&#x63A5;&#x53E3;&#x8BF7;&#x6C42;&#x5C01;&#x88C5;"></a>&#x63A5;&#x53E3;&#x8BF7;&#x6C42;&#x5C01;&#x88C5;</h2><p>&#x524D;&#x9762;&#x5DF2;&#x7ECF;&#x4ECB;&#x7ECD;&#x8FC7;&#x4E86;&#xFF0C;&#x9879;&#x76EE;&#x4F7F;&#x7528;&#x7684;&#x662F;<code>Retrofit</code>+<code>RxJava</code>+<code>RxAndroid</code>&#x6765;&#x8FDB;&#x884C;&#x63A5;&#x53E3;&#x7684;&#x8BF7;&#x6C42;&#xFF0C;&#x4E3A;&#x4E86;&#x5728;&#x9879;&#x76EE;&#x4E2D;&#x8FDB;&#x884C;&#x66F4;&#x597D;&#x7684;&#x8C03;&#x7528;&#xFF0C;&#x8FD9;&#x91CC;&#x5BF9;&#x63A5;&#x53E3;&#x8BF7;&#x6C42;&#x8FDB;&#x884C;&#x4E86;&#x5C01;&#x88C5;&#x3002;&#x4E3B;&#x8981;<code>code</code>&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">fun &lt;T&gt; doGet(params: MutableMap&lt;String, Any?&gt;, tClass: Class&lt;T&gt;): Observable&lt;T?&gt; {</span><br><span class="line">        return initParams(params, tClass)!!.observeOn(Schedulers.io()).flatMap { tempString -&gt;</span><br><span class="line">            if (tClass == NewsArticleListModel::class.java) {</span><br><span class="line">                getNewsApi().getArticles(tempString).subscribeOn(Schedulers.io())</span><br><span class="line">            } else {</span><br><span class="line">                getNewsApi().getSources(tempString).subscribeOn(Schedulers.io())</span><br><span class="line">            }</span><br><span class="line">        }.flatMap { newsResponse -&gt;</span><br><span class="line">            if (newsResponse is NewsArticleListModel &amp;&amp; newsResponse.status.equals(&quot;ok&quot;)</span><br><span class="line">                    || (newsResponse is NewsSourcesListModel &amp;&amp; newsResponse.status.equals(&quot;ok&quot;))) {</span><br><span class="line">                val json = getGson()?.toJson(newsResponse!!)</span><br><span class="line">                if (json.isNullOrEmpty()) return@flatMap null!!</span><br><span class="line">                val data = getGson()?.fromJson(json, tClass)</span><br><span class="line">                Observable.just(data)</span><br><span class="line">            } else {</span><br><span class="line">                Observable.error&lt;T&gt; { Exception() }</span><br><span class="line">            }</span><br><span class="line">        }.observeOn(AndroidSchedulers.mainThread())</span><br><span class="line">                .doOnError { t -&gt; Log.d(&quot;TAG&quot;, &quot;throwable: &quot; + t) }</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<p>&#x7531;&#x4E8E;&#x6570;&#x636E;&#x53EF;&#x4EE5;&#x6765;&#x81EA;&#x4E0E;&#x7F51;&#x7EDC;&#x4E0E;&#x672C;&#x5730;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x5C06;&#x6765;&#x6E90;&#x5C4F;&#x853D;&#xFF0C;&#x8BF7;&#x6C42;&#x62BD;&#x8C61;&#x6210;&#x63A5;&#x53E3;&#x3002;&#x65B9;&#x4FBF;&#x4EE5;&#x540E;&#x672C;&#x5730;&#x6570;&#x636E;&#x8BF7;&#x6C42;&#x7684;&#x52A0;&#x5165;<strong><em>&#xFF08;&#x76EE;&#x524D;&#x8FD8;&#x6CA1;&#x6709;&#x5F15;&#x5165;&#x672C;&#x5730;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x540E;&#x7EED;&#x6709;&#x65F6;&#x95F4;&#x5C06;&#x5F15;&#x5165;&#xFF09;</em></strong>&#x3002;&#x5206;&#x522B;&#x4E3A;<code>RequestCommand</code>&#x4E0E;<code>Provider</code>&#x63A5;&#x53E3;&#xFF0C;&#x5BF9;&#x5E94;&#x7684;&#x5B9E;&#x73B0;&#x5C31;&#x662F;<code>NewsReqeustCommand</code>&#x4E0E;<code>NewsProvider</code>&#x3002;&#x56E0;&#x6B64;&#x6700;&#x7EC8;&#x7684;&#x8C03;&#x7528;&#x5982;&#x4E0B;:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">fun setupRequest(refresh: Boolean) {</span><br><span class="line">        val params = mutableMapOf&lt;String, Any?&gt;(</span><br><span class="line">                NewsConfig.REQUEST_SOURCE to id,</span><br><span class="line">                NewsConfig.REQUEST_SORT_BY to NewsConfig.SortBy.TOP.sort</span><br><span class="line">        )</span><br><span class="line">        requestCommand = NewsRequestCommand(params, NewsArticleListModel::class.java,</span><br><span class="line">                object : DefaultDisposableObserver&lt;NewsArticleListModel&gt;() {</span><br><span class="line">                    override fun onNext(t: NewsArticleListModel) {</span><br><span class="line">                        if (refresh) swipeRefreshLayout.isRefreshing = false</span><br><span class="line">                        dataList.clear()</span><br><span class="line">                        dataList.addAll(t.articles)</span><br><span class="line">                        recyclerView.adapter.notifyDataSetChanged()</span><br><span class="line">                    }</span><br><span class="line"></span><br><span class="line">                    override fun onError(e: Throwable) {</span><br><span class="line">                        super.onError(e)</span><br><span class="line">                        if (refresh) swipeRefreshLayout.isRefreshing = false</span><br><span class="line">                    }</span><br><span class="line">                })</span><br><span class="line">        requestCommand?.execute()</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>&#x81EA;&#x5DF1;&#x6700;&#x8FD1;&#x6CA1;&#x6709;&#x65F6;&#x95F4;&#xFF0C;&#x624B;&#x4E0A;&#x7684;&#x9879;&#x76EE;&#x5C06;&#x8981;&#x5927;&#x6539;&#x7248;&#x3002;&#x5982;&#x679C;&#x5BA2;&#x5B98;&#x4EEC;&#x6709;&#x5174;&#x8DA3;&#x7684;&#x8BDD;&#x53EF;&#x4EE5;&#x5728;<code>Github</code>&#x4E0A;<code>Start/Fork</code>&#x63D0;&#x4EA4;<code>PR</code></p>
+</blockquote>
+<h2 id="&#x56FE;&#x7247;&#x52A0;&#x8F7D;&#x5C01;&#x88C5;"><a href="#&#x56FE;&#x7247;&#x52A0;&#x8F7D;&#x5C01;&#x88C5;" class="headerlink" title="&#x56FE;&#x7247;&#x52A0;&#x8F7D;&#x5C01;&#x88C5;"></a>&#x56FE;&#x7247;&#x52A0;&#x8F7D;&#x5C01;&#x88C5;</h2><p>&#x56FE;&#x7247;&#x52A0;&#x8F7D;&#x4F7F;&#x7528;&#x7684;&#x662F;<code>facebook</code>&#x7684;<code>fresco</code>&#xFF0C;&#x4E3A;&#x4E86;&#x5168;&#x5C40;&#x4F7F;&#x7528;&#x7EDF;&#x4E00;&#x7684;&#x56FE;&#x7247;&#x52A0;&#x8F7D;&#xFF0C;&#x8FD9;&#x91CC;&#x4F7F;&#x7528;<code>kotlin</code>&#x7684;<code>Extension Functions</code>&#x7279;&#x6027;&#xFF0C;&#x5BF9;&#x56FE;&#x7247;&#x52A0;&#x8F7D;&#x8FDB;&#x884C;&#x5C01;&#x88C5;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">fun SimpleDraweeView.displayImage(url: String?, width: Int = 200, listener: BaseControllerListener&lt;Any&gt;? = null) {</span><br><span class="line">    if (url == null) return</span><br><span class="line">    this.hierarchy.setPlaceholderImage(R.drawable.news_default_bg)</span><br><span class="line">    val imageRequest = ImageRequestBuilder.newBuilderWithSource(Uri.parse(url))</span><br><span class="line">            .setResizeOptions(ResizeOptions(width, width))</span><br><span class="line">            .build()</span><br><span class="line">    val controller = Fresco.newDraweeControllerBuilder()</span><br><span class="line">            .setImageRequest(imageRequest)</span><br><span class="line">            .setAutoPlayAnimations(true)</span><br><span class="line">            .setControllerListener(listener)</span><br><span class="line">            .setOldController(this.controller)</span><br><span class="line">            .build()</span><br><span class="line">    this.controller = controller</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6240;&#x4EE5;&#x6700;&#x7EC8;&#x7684;&#x8C03;&#x7528;&#x662F;&#x8FD9;&#x6837;&#x7684;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">itemView.image.displayImage(url = urlToImage)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>&#x5C31;&#x662F;&#x8FD9;&#x4E48;&#x7B80;&#x5355;&#xFF0C;&#x5F53;&#x7136;&#x53C2;&#x6570;&#x53EF;&#x4EE5;&#x52A8;&#x6001;&#x9009;&#x62E9;</p>
+</blockquote>
+<h1 id="Interface"><a href="#Interface" class="headerlink" title="Interface"></a>Interface</h1><p>&#x5728;<code>kotlin</code>&#x4E2D;&#x7684;<code>interface</code>&#x4E0E;<code>java</code>&#x4E2D;&#x7684;<code>interface</code>&#x6709;&#x4E00;&#x4E2A;&#x5DE8;&#x5927;&#x7684;&#x533A;&#x522B;&#x3002;&#x6211;&#x4EEC;&#x90FD;&#x77E5;&#x9053;&#x5728;<code>java</code>&#x4E2D;<code>interface</code>&#x4E2D;&#x662F;&#x4E0D;&#x80FD;&#x591F;&#x5BF9;&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x5B9E;&#x73B0;&#xFF0C;&#x4F46;&#x5728;<code>kotlin</code>&#x4E2D;&#x7684;<code>interface</code>&#x53EF;&#x4EE5;&#x5BF9;&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#x3002;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x501F;&#x52A9;&#x8FD9;&#x4E00;&#x7279;&#x6027;&#x6765;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;&#x7EDF;&#x4E00;&#x7684;<code>ToolBarManager</code>&#xFF0C;&#x65B9;&#x4FBF;&#x754C;&#x9762;&#x7684;&#x5BFC;&#x822A;&#x8BBE;&#x7F6E;&#x3002;&#x5177;&#x4F53;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">interface ToolBarManager {</span><br><span class="line">    val toolBar: Toolbar</span><br><span class="line">    var toolBarTitle: String</span><br><span class="line">        set(value) {</span><br><span class="line">            toolBar.title = value</span><br><span class="line">        }</span><br><span class="line">        get() = toolBar.title.toString()</span><br><span class="line"> </span><br><span class="line">    fun initToolBar() {</span><br><span class="line">        toolBar.inflateMenu(R.menu.menu)</span><br><span class="line">        toolBar.setOnMenuItemClickListener {</span><br><span class="line">            when (it.itemId) {</span><br><span class="line">                R.id.subscribe -&gt; toolBar.context.startActivity&lt;SubscribeActivity&gt;()</span><br><span class="line">            }</span><br><span class="line">            true</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    fun enableHomeAsUp(back: () -&gt; Unit) {</span><br><span class="line">        toolBar.navigationIcon = DrawerArrowDrawable(toolBar.context)</span><br><span class="line">        toolBar.setNavigationOnClickListener { back() }</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<p>&#x6240;&#x4EE5;&#x540E;&#x7EED;&#x754C;&#x9762;&#x5BFC;&#x822A;&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5B9E;&#x73B0;<code>ToolBarManager</code>&#x63A5;&#x53E3;&#x5373;&#x53EF;&#x3002;</p>
+<h1 id="Delegated-Properties"><a href="#Delegated-Properties" class="headerlink" title="Delegated Properties"></a>Delegated Properties</h1><p>&#x6211;&#x4EEC;&#x90FD;&#x77E5;&#x9053;&#x5728;&#x5F00;&#x53D1;&#x8FC7;&#x7A0B;&#x4E2D;&#x4F1A;&#x9047;&#x5230;&#x5355;&#x4F8B;&#x6A21;&#x5F0F;&#x7684;&#x7F16;&#x5199;&#xFF0C;&#x57FA;&#x672C;&#x7684;<code>kotlin</code>&#x7F16;&#x5199;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class App : Application() {</span><br><span class="line">	companion object {</span><br><span class="line">		private var instance: Application? = null</span><br><span class="line">		fun instance() = instance!!</span><br><span class="line">	}</span><br><span class="line"> </span><br><span class="line">	override fun onCreate() {</span><br><span class="line">		super.onCreate()</span><br><span class="line">		instance = this</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5BF9;&#x4E8E;<code>kotlin</code>&#x4E5F;&#x63D0;&#x4F9B;&#x4E86;<code>standard Delegates</code>&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x5176;&#x4E2D;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<code>lazy</code>&#x6765;&#x8FDB;&#x884C;&#x5355;&#x4F8B;&#x6A21;&#x5F0F;&#x7684;&#x61D2;&#x52A0;&#x8F7D;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">companion object {</span><br><span class="line">    val instance by lazy { NewsApp() }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6216;&#x8005;&#x662F;<code>lateinit</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class App : Application() {</span><br><span class="line">	companion object {</span><br><span class="line">		lateinit var instance: App</span><br><span class="line">			private set</span><br><span class="line">	}</span><br><span class="line"> </span><br><span class="line">	override fun onCreate() {</span><br><span class="line">		super.onCreate()</span><br><span class="line">		instance = this</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6700;&#x540E;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x81EA;&#x5B9A;&#x4E49;<a href="https://kotlinlang.org/docs/reference/delegated-properties.html" target="_blank" rel="noopener">Delegated</a>&#x6765;&#x5B9E;&#x73B0;&#xFF0C;&#x901A;&#x8FC7;&#x4F7F;&#x7528;<code>ReadWriteProperty&lt;in R, T&gt;</code>&#x63A5;&#x53E3;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">object DelegatesExt {</span><br><span class="line">    fun &lt;T&gt; notNullSingleValue(): ReadWriteProperty&lt;Any?, T&gt; = NotNullSingleValueVar()</span><br><span class="line">}</span><br><span class="line">class NotNullSingleValueVar&lt;T&gt; : ReadWriteProperty&lt;Any?, T&gt; {</span><br><span class="line"></span><br><span class="line">    private var value: T? = null</span><br><span class="line"> </span><br><span class="line">    override fun getValue(thisRef: Any?, property: KProperty&lt;*&gt;): T {</span><br><span class="line">        return value ?: throw IllegalStateException(&quot;${property.name} not initialized&quot;)</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    override fun setValue(thisRef: Any?, property: KProperty&lt;*&gt;, value: T) {</span><br><span class="line">        this.value = if (this.value == null) value else throw IllegalStateException(&quot;${property.name} not initialized&quot;)</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5F53;&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x8BBE;&#x7F6E;&#x503C;&#x4E0E;&#x83B7;&#x53D6;&#x503C;&#x65F6;&#xFF0C;&#x4F1A;&#x8C03;&#x7528;&#x76F8;&#x5E94;&#x7684;<code>getValue</code>&#x4E0E;<code>setValue</code>&#x65B9;&#x6CD5;&#xFF0C;&#x6700;&#x7EC8;&#x8C03;&#x7528;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">companion object {</span><br><span class="line">    var instance: NewsApp by DelegatesExt.notNullSingleValue&lt;NewsApp&gt;()</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>&#x5F53;&#x7136;&#xFF0C;&#x9879;&#x76EE;&#x4E2D;&#x8FD8;&#x5BF9;<code>Preference</code>&#x8FDB;&#x884C;&#x4E86;&#x76F8;&#x4F3C;&#x7684;&#x64CD;&#x4F5C;&#x3002;</p>
+</blockquote>
+<h1 id="Anko"><a href="#Anko" class="headerlink" title="Anko"></a>Anko</h1><p>&#x5176;&#x5B9E;&#x4F7F;&#x7528;<code>kotlin</code>&#x8FDB;&#x884C;<code>Android</code>&#x5F00;&#x53D1;&#x4E5F;&#x6709;&#x76F8;&#x5E94;&#x7684;&#x5DE5;&#x5177;&#x5E93;&#x3002;&#x53EF;&#x4EE5;&#x5FEB;&#x901F;&#x63D0;&#x5347;&#x6211;&#x4EEC;&#x7684;&#x5F00;&#x53D1;&#x6548;&#x7387;&#xFF0C;&#x5176;&#x4E2D;<a href="https://github.com/Kotlin/anko" target="_blank" rel="noopener">Anko</a>&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x4E0D;&#x9519;&#x7684;&#x9009;&#x62E9;&#x3002;&#x5B83;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<code>Anko DSL</code>&#x4EE3;&#x7801;&#x4E66;&#x5199;&#x4EE3;&#x66FF;<code>XML</code>&#x6765;&#x8FDB;&#x884C;<code>UI</code>&#x5E03;&#x5C40;&#x3002;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x975E;&#x5E38;&#x6709;&#x6548;&#x7684;&#x7279;&#x6027;&#xFF0C;&#x5F53;&#x7136;&#x5B83;&#x4E5F;&#x6709;&#x8BB8;&#x591A;&#x6709;&#x7528;&#x7684;<code>functions</code>&#xFF0C;&#x53EF;&#x4EE5;&#x5927;&#x5927;&#x63D0;&#x5347;&#x6211;&#x4EEC;&#x7684;&#x5F00;&#x53D1;&#x6548;&#x7387;&#x3002;&#x4F8B;&#x5982;&#xFF1A;</p>
+<p>1.<code>find()</code>&#x4EE3;&#x66FF;<code>findViewById()</code><br>2.<code>longToast()</code>&#x4EE3;&#x66FF;&#x539F;&#x751F;<code>Toast()</code><br>3.<code>startActivity(vararg params: Pair&lt;String, Any&gt;</code>&#x4EE3;&#x66FF;&#x539F;&#x751F;<code>startActivity()</code><br>4.<code>Anko SQLite</code>&#x7B80;&#x5316;&#x539F;&#x751F;&#x7684;<code>SQLite</code>&#x7684;&#x4F7F;&#x7528;<br>5.<code>Dialogs</code>&#x7684;&#x7B80;&#x5316;&#x4F7F;&#x7528;</p>
+<h1 id="End"><a href="#End" class="headerlink" title="End"></a>End</h1><p>&#x597D;&#x4E86;&#xFF0C;&#x5927;&#x6982;&#x5C31;&#x662F;&#x8FD9;&#x4E48;&#x591A;&#x4E86;&#x3002;&#x5E0C;&#x671B;&#x80FD;&#x591F;&#x5E2E;&#x52A9;&#x60F3;&#x5B66;&#x4E0E;&#x6B63;&#x5728;&#x5B66;&#x4E60;<code>kotlin</code>&#x7684;&#x5BA2;&#x5B98;&#x4EEC;&#xFF0C;&#x5C11;&#x8D70;&#x5F2F;&#x8DEF;&#xFF0C;&#x5FEB;&#x901F;&#x6210;&#x957F;&#x3002;&#x5982;&#x6709;&#x4E0D;&#x8DB3;&#x4E4B;&#x5904;&#x6B22;&#x8FCE;&#x4EA4;&#x6D41;&#xFF01;</p>
+<p><a href="https://github.com/idisfkj/NewsKotlin" target="_blank" rel="noopener">&#x9879;&#x76EE;&#x5730;&#x5740;</a></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/07/16/Android共享动画兼容实现/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/11/06/tensorflow-梯度下降-有这一篇就足够了/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Mon Aug 21 2017 20:55:12 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

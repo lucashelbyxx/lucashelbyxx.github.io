@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Fresco源码分析之Hierarchy | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="源码分析,">
+  
+
+  <meta name="description" content="&amp;#x4E0A;&amp;#x7BC7;&amp;#x6587;&amp;#x7AE0;&amp;#x6211;&amp;#x4EEC;&amp;#x5206;&amp;#x6790;&amp;#x4E86;Fresco&amp;#x4E2D;&amp;#x7684;DraweeView&amp;#xFF0C;&amp;#x5BF9;&amp;#x5176;&amp;#x4E2D;&amp;#x7684;&amp;#x4E00;&amp;#x4E9B;&amp;#x539F;&amp;#x7406;&amp;#x4EE5;&amp;#x53CA;&amp;#x65B9;">
+<meta name="keywords" content="源码分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fresco源码分析之Hierarchy">
+<meta property="og:url" content="https://www.rousetime.com/2017/12/07/Fresco源码分析之Hierarchy/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="&amp;#x4E0A;&amp;#x7BC7;&amp;#x6587;&amp;#x7AE0;&amp;#x6211;&amp;#x4EEC;&amp;#x5206;&amp;#x6790;&amp;#x4E86;Fresco&amp;#x4E2D;&amp;#x7684;DraweeView&amp;#xFF0C;&amp;#x5BF9;&amp;#x5176;&amp;#x4E2D;&amp;#x7684;&amp;#x4E00;&amp;#x4E9B;&amp;#x539F;&amp;#x7406;&amp;#x4EE5;&amp;#x53CA;&amp;#x65B9;">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-12-28T14:36:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fresco源码分析之Hierarchy">
+<meta name="twitter:description" content="&amp;#x4E0A;&amp;#x7BC7;&amp;#x6587;&amp;#x7AE0;&amp;#x6211;&amp;#x4EEC;&amp;#x5206;&amp;#x6790;&amp;#x4E86;Fresco&amp;#x4E2D;&amp;#x7684;DraweeView&amp;#xFF0C;&amp;#x5BF9;&amp;#x5176;&amp;#x4E2D;&amp;#x7684;&amp;#x4E00;&amp;#x4E9B;&amp;#x539F;&amp;#x7406;&amp;#x4EE5;&amp;#x53CA;&amp;#x65B9;">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GenericDraweeHierarchyBuilder"><span class="toc-text">GenericDraweeHierarchyBuilder</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GenericDraweeHierarchy"><span class="toc-text">GenericDraweeHierarchy</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SettableDraweeHierarchy"><span class="toc-text">SettableDraweeHierarchy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DraweeHierarchy"><span class="toc-text">DraweeHierarchy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#setImage"><span class="toc-text">setImage</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Drawable"><span class="toc-text">Drawable</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#End"><span class="toc-text">End</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Fresco源码分析之Hierarchy" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Fresco源码分析之Hierarchy</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.12.07</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>&#x4E0A;&#x7BC7;&#x6587;&#x7AE0;&#x6211;&#x4EEC;&#x5206;&#x6790;&#x4E86;<strong>Fresco</strong>&#x4E2D;&#x7684;<strong>DraweeView</strong>&#xFF0C;&#x5BF9;&#x5176;&#x4E2D;&#x7684;&#x4E00;&#x4E9B;&#x539F;&#x7406;&#x4EE5;&#x53CA;&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x4E86;&#x89E3;&#x6790;&#x3002;&#x5728;&#x8FD9;&#x8FC7;&#x7A0B;&#x4E2D;&#x6211;&#x4EEC;&#x4E86;&#x89E3;&#x5230;&#xFF0C;<strong>DraweeView</strong>&#x4E2D;&#x662F;&#x901A;&#x8FC7;<strong>DraweeHolder</strong>&#x6765;&#x7EDF;&#x4E00;&#x7BA1;&#x7406;&#x7684;&#x3002;&#x800C;<strong>DraweeHolder</strong>&#x53C8;&#x662F;&#x7528;&#x6765;&#x7EDF;&#x4E00;&#x7BA1;&#x7406;&#x76F8;&#x5173;&#x7684;<strong>Hierarchy</strong>&#x4E0E;<strong>Controller</strong>&#xFF0C;&#x5982;&#x679C;&#x60F3;&#x4E86;&#x89E3;<strong>DraweeView</strong>&#x76F8;&#x5173;&#x7684;&#x77E5;&#x8BC6;&#xFF0C;&#x53EF;&#x4EE5;&#x5148;&#x770B;&#x4E0B;&#x6211;&#x7684;&#x524D;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;<a href="https://idisfkj.github.io/2017/11/28/Fresco%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BDraweeView/" target="_blank" rel="noopener">Fresco&#x6E90;&#x7801;&#x5206;&#x6790;&#x4E4B;DraweeView</a>&#x3002;&#x4ECA;&#x5929;&#x8FD9;&#x91CC;&#x8FDB;&#x4E00;&#x6B65;&#x6765;&#x5206;&#x6790;<strong>Fresco</strong>&#x4E2D;&#x7684;<strong>Hierarchy</strong>&#x3002;</p>
+<h1 id="GenericDraweeHierarchyBuilder"><a href="#GenericDraweeHierarchyBuilder" class="headerlink" title="GenericDraweeHierarchyBuilder"></a>GenericDraweeHierarchyBuilder</h1><p>&#x5728;<strong>GenericDraweeView</strong>&#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x4E2D;&#x4F1A;&#x8C03;&#x7528;<em>inflateHierarchy(context, atts)</em>&#x65B9;&#x6CD5;&#x6765;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;<strong>GenericDraweeHierarchyBuilder</strong>&#x5BF9;&#x8C61;&#xFF0C;&#x901A;&#x8FC7;&#x8C03;&#x7528;&#x8BE5;&#x5BF9;&#x8C61;&#x7684;<strong>build</strong>&#x65B9;&#x6CD5;&#x6765;&#x751F;&#x6210;&#x4E00;&#x4E2A;<strong>Hierarchy</strong>&#x3002;</p>
+<blockquote>
+<p>&#x5982;&#x679C;&#x4F60;&#x770B;&#x4E86;&#x6211;&#x4E0A;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;&#xFF0C;&#x76F8;&#x4FE1;&#x5BF9;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x4F60;&#x4F1A;&#x611F;&#x5230;&#x5F88;&#x4EB2;&#x5207;&#x3002;</p>
+</blockquote>
+<p>&#x6240;&#x4EE5;&#x8FD9;&#x4E2A;&#x7C7B;&#x7684;&#x4E3B;&#x8981;&#x4F5C;&#x7528;&#x662F;&#x7528;&#x6765;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;<strong>Hierarchy</strong>&#xFF0C;&#x901A;&#x8FC7;<strong>builder</strong>&#x6A21;&#x5F0F;&#x6765;&#x5B9E;&#x4F8B;&#x5316;&#x5305;&#x542B;&#x76F8;&#x5173;&#x4FE1;&#x606F;&#x7684;<strong>Hierarchy</strong>&#x3002;&#x5982;&#x679C;&#x4F60;&#x4E00;&#x6B65;&#x6B65;&#x6DF1;&#x5165;&#x4E86;&#x89E3;<strong>Fresco</strong>&#x7684;&#x8BDD;&#xFF0C;&#x76F8;&#x4FE1;&#x4F60;&#x5BF9;<strong>builder</strong>&#x6A21;&#x5F0F;&#x4E5F;&#x5C06;&#x4E60;&#x4EE5;&#x4E3A;&#x5E38;&#xFF0C;&#x56E0;&#x4E3A;&#x540E;&#x9762;&#x4F60;&#x5C06;&#x7ECF;&#x5E38;&#x4E0E;&#x5B83;&#x78B0;&#x9762;&#x3002;&#x8FD9;&#x4E5F;&#x662F;<strong>Fresco</strong>&#x5F00;&#x6E90;&#x9879;&#x76EE;&#x7684;&#x4E3B;&#x8981;&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;&#x3002;&#x5728;&#x8BE5;<strong>builder</strong>&#x7C7B;&#x4E2D;&#x4E3B;&#x8981;&#x6784;&#x5EFA;&#x7684;&#x4FE1;&#x606F;&#x6709;:</p>
+<ul>
+<li><strong>Drawable</strong>&#x76F8;&#x5173;&#xFF1A;<strong>placeholderImage</strong>&#x3001;<strong>retryImage</strong>&#x3001;<strong>failureImage</strong>&#x3001;<strong>progressBarImage</strong>&#x3001;<strong>background</strong>&#x3001;<strong>overlays</strong>&#x4E0E;<strong>pressedStateOverlay</strong></li>
+<li><strong>ScaleType</strong>&#x76F8;&#x5173;&#xFF1A;&#x4E0E;<strong>Drawable</strong>&#x76F8;&#x5BF9;&#x5E94;&#x7684;<strong>placeholderImageScaleType</strong>&#x3001;<strong>retryImageScaleType</strong>&#x7B49;&#x7B49;&#x3002;</li>
+<li>&#x5176;&#x5B83;&#xFF1A;<strong>fadeDuration</strong>&#x6E10;&#x53D8;&#x8FC7;&#x6E21;&#x65F6;&#x95F4;&#x4E0E;<strong>RoundingParams</strong>&#x5706;&#x89D2;&#x76F8;&#x5173;&#x4FE1;&#x606F;&#x7B49;&#x7B49;</li>
+</ul>
+<h1 id="GenericDraweeHierarchy"><a href="#GenericDraweeHierarchy" class="headerlink" title="GenericDraweeHierarchy"></a>GenericDraweeHierarchy</h1><p>&#x901A;&#x8FC7;&#x4E0A;&#x9762;&#x7684;<strong>GenericDraweeHierarchyBuilder</strong>&#x7684;<strong>build</strong>&#x65B9;&#x6CD5;&#x4F1A;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;<strong>GenericDraweeHierarchy</strong>&#x5BF9;&#x8C61;&#x3002;&#x8FD9;&#x5C31;&#x662F;&#x6211;&#x4EEC;&#x4ECA;&#x5929;&#x9700;&#x8981;&#x4E3B;&#x8981;&#x5206;&#x6790;&#x7684;&#x7C7B;&#xFF0C;&#x4E5F;&#x662F;<strong>Fresco</strong>&#x7684;&#x4E00;&#x4E2A;&#x6838;&#x5FC3;&#x7C7B;&#x3002;</p>
+<h2 id="SettableDraweeHierarchy"><a href="#SettableDraweeHierarchy" class="headerlink" title="SettableDraweeHierarchy"></a>SettableDraweeHierarchy</h2><p>&#x9996;&#x5148;&#x6211;&#x4EEC;&#x6765;&#x5206;&#x6790;&#x4E00;&#x4E0B;&#x5B83;&#x7684;&#x7C7B;&#x7ED3;&#x6784;&#xFF0C;&#x5B83;&#x4F1A;&#x5B9E;&#x73B0;<strong>SettableDraweeHierarchy</strong>&#x63A5;&#x53E3;&#xFF0C;&#x6211;&#x4EEC;&#x8FDB;&#x5165;&#x8BE5;&#x63A5;&#x53E3;&#x53D1;&#x73B0;&#x4E00;&#x5171;&#x6709;6&#x4E2A;&#x63A5;&#x53E3;&#x65B9;&#x6CD5;&#xFF0C;&#x5B83;&#x4EEC;&#x5206;&#x522B;&#x4E3A;&#xFF1A;</p>
+<ol>
+<li><em>void reset();</em> &#x91CD;&#x65B0;&#x521D;&#x59CB;&#x5316;<strong>Hierarchy</strong></li>
+<li><em>void setImage(Drawable drawable, float progress, boolean immediate);</em> &#x8BBE;&#x7F6E;&#x5B9E;&#x9645;&#x9700;&#x8981;&#x5C55;&#x793A;&#x7684;&#x56FE;&#x7247;&#xFF0C;&#x5176;&#x4E2D;<strong>progress</strong>&#x8868;&#x793A;&#x56FE;&#x7247;&#x7684;&#x52A0;&#x8F7D;&#x8D28;&#x91CF;&#x8FDB;&#x5EA6;(&#x5728;&#x6E10;&#x8FDB;&#x5F0F;&#x4E2D;&#x4F1A;&#x4F7F;&#x7528;&#x5230;)</li>
+<li><em>void setProgress(float progress, boolean immediate);</em> &#x66F4;&#x65B0;&#x56FE;&#x7247;&#x52A0;&#x8F7D;&#x8FDB;&#x5EA6;</li>
+<li><em>void setFailure(Throwable throwable);</em> &#x56FE;&#x7247;&#x52A0;&#x8F7D;&#x5931;&#x8D25;&#x65F6;&#x8C03;&#x7528;&#xFF0C;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;<strong>failureImage</strong></li>
+<li><em>void setRetry(Throwable throwable);</em> &#x5F53;&#x56FE;&#x7247;&#x52A0;&#x8F7D;&#x5931;&#x8D25;&#x65F6;&#x91CD;&#x65B0;&#x8FDB;&#x884C;&#x52A0;&#x8F7D;&#xFF0C;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;<strong>retryImage</strong></li>
+<li><em>void setControllerOverlay(Drawable drawable);</em> &#x7528;&#x6765;&#x8BBE;&#x7F6E;&#x56FE;&#x5C42;&#x8986;&#x76D6;</li>
+</ol>
+<p>&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x5728;<strong>GenericDraweeHierarchy</strong>&#x4E2D;&#x90FD;&#x4F1A;&#x505A;&#x51FA;&#x76F8;&#x5E94;&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x540C;&#x65F6;&#x6700;&#x7EC8;&#x90FD;&#x4F1A;&#x5728;&#x5BF9;&#x5E94;&#x7684;<strong>DraweeView</strong>&#x4E2D;&#x7684;<strong>Controller</strong>&#x6765;&#x8C03;&#x7528;&#x3002;</p>
+<blockquote>
+<p>&#x81F3;&#x4E8E;&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x4E2D;&#x7684;&#x5B9E;&#x73B0;&#x7EC6;&#x8282;&#xFF0C;&#x7531;&#x4E8E;&#x4EE3;&#x7801;&#x6BD4;&#x8F83;&#x591A;&#xFF0C;&#x8FD9;&#x91CC;&#x5C31;&#x4E0D;&#x4E00;&#x4E00;&#x5217;&#x4E3E;&#x51FA;&#x6765;&#xFF0C;&#x5927;&#x5BB6;&#x53EF;&#x4EE5;&#x81EA;&#x884C;&#x67E5;&#x770B;<strong>GenericDraweeHierarchy</strong>&#x7684;&#x6E90;&#x7801;&#x3002;</p>
+</blockquote>
+<h2 id="DraweeHierarchy"><a href="#DraweeHierarchy" class="headerlink" title="DraweeHierarchy"></a>DraweeHierarchy</h2><p>&#x4E0A;&#x9762;&#x7684;<strong>SettableDraweeHierarchy</strong>&#x8FD8;&#x6709;&#x4E00;&#x4E2A;&#x7236;&#x7C7B;&#x63A5;&#x53E3;&#x4E3A;<strong>DraweeHierarchy</strong>&#xFF0C;&#x5728;&#x8FD9;&#x4E2A;&#x63A5;&#x53E3;&#x4E2D;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x63A5;&#x53E3;&#x65B9;&#x6CD5;&#x4E3A;<em>Drawable getTopLevelDrawable();</em>&#x3002;&#x662F;&#x4E0D;&#x662F;&#x5BF9;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x4E5F;&#x6709;&#x70B9;&#x719F;&#x6089;&#x5462;&#xFF1F;&#xFF08;&#x8DEF;&#x4EBA;&#x7532;&#xFF1A;&#x55EF;&#xFF0C;&#x597D;&#x50CF;&#x4E0A;&#x7BC7;&#x6587;&#x7AE0;&#x63D0;&#x53CA;&#x8FC7;&#xFF01;&#xFF09;&#x5B83;&#x662F;&#x7528;&#x6765;&#x83B7;&#x53D6;&#x89C6;&#x56FE;&#x6811;&#x7684;&#x6700;&#x9876;&#x5C42;&#x89C6;&#x56FE;&#xFF0C;&#x5176;&#x5B9E;&#x8BF4;&#x767D;&#x4E86;&#x5C31;&#x662F;&#x663E;&#x793A;&#x51FA;&#x6765;&#x7684;<strong>Drawable</strong>&#x3002;&#x5B83;&#x4E3B;&#x8981;&#x5728;<strong>DraweeHolder</strong>&#x4E2D;&#x8C03;&#x7528;&#xFF0C;&#x6700;&#x7EC8;&#x4E5F;&#x4F1A;&#x7531;<em>void setHierarchy(DH hierarchy)</em> &#x4E0E; <em>void setController(@Nullable DraweeController draweeController)</em> &#x6765;&#x8C03;&#x7528;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">super.setImageDrawable(mDraweeHolder.getTopLevelDrawable());</span><br></pre></td></tr></table></figure>
+<p>&#x4ECE;&#x800C;&#x663E;&#x793A;&#x9700;&#x8981;&#x5C55;&#x793A;&#x7684;&#x56FE;&#x7247;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x56DE;&#x5230;&#x4E4B;&#x524D;&#x7684;<strong>GenericDraweeHierarchy</strong>&#x7C7B;&#x3002;&#x5728;&#x5F00;&#x59CB;&#x5206;&#x6790;&#x5B83;&#x4E4B;&#x524D;&#xFF0C;&#x6211;&#x4EEC;&#x5148;&#x6765;&#x4E86;&#x89E3;&#x4E00;&#x4E0B;&#x5B83;&#x7684;&#x53E6;&#x4E00;&#x4E2A;&#x611F;&#x5FF5;-<code>&#x5C42;&#x7EA7;&#x6811;&#x6216;&#x8005;&#x8BF4;&#x56FE;&#x5C42;&#x6811;</code>&#xFF0C;&#x6211;&#x8FD9;&#x91CC;&#x5C31;&#x628A;&#x5B83;&#x8BF4;&#x6210;&#x56FE;&#x5C42;&#x6811;&#x5427;&#x3002;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4E0B;<strong>Fresco</strong>&#x7684;&#x56FE;&#x5C42;&#x6811;&#x662F;&#x4EC0;&#x4E48;&#x6837;&#x7684;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">*  o RootDrawable (top level drawable)</span><br><span class="line">*  |</span><br><span class="line">*  +--o FadeDrawable</span><br><span class="line">*     |</span><br><span class="line">*     +--o ScaleTypeDrawable (placeholder branch, optional)</span><br><span class="line">*     |  |</span><br><span class="line">*     |  +--o Drawable (placeholder image)</span><br><span class="line">*     |</span><br><span class="line">*     +--o ScaleTypeDrawable (actual image branch)</span><br><span class="line">*     |  |</span><br><span class="line">*     |  +--o ForwardingDrawable (actual image wrapper)</span><br><span class="line">*     |     |</span><br><span class="line">*     |     +--o Drawable (actual image)</span><br><span class="line">*     |</span><br><span class="line">*     +--o null (progress bar branch, optional)</span><br><span class="line">*     |</span><br><span class="line">*     +--o Drawable (retry image branch, optional)</span><br><span class="line">*     |</span><br><span class="line">*     +--o ScaleTypeDrawable (failure image branch, optional)</span><br><span class="line">*        |</span><br><span class="line">*        +--o Drawable (failure image</span><br></pre></td></tr></table></figure>
+<p>&#x6839;&#x636E;&#x4E0A;&#x9762;&#x6240;&#x5C55;&#x793A;&#x7684;&#x5C42;&#x6B21;&#x7ED3;&#x6784;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x53D1;&#x73B0;&#x6700;&#x5E95;&#x5C42;&#x662F;&#x7531;<strong>RootDrawable</strong>&#x6765;&#x6784;&#x6210;&#xFF0C;&#x5B83;&#x6709;&#x4E00;&#x4E2A;&#x76F4;&#x63A5;&#x5B50;&#x5206;&#x652F;&#x4E3A;<strong>FadeDrawable</strong>&#x3002;&#x800C;&#x5728;<strong>FadeDrawable</strong>&#x4E2D;&#x53C8;&#x6709;5&#x4E2A;&#x76F4;&#x63A5;&#x5B50;&#x5206;&#x652F;&#xFF0C;&#x5206;&#x522B;&#x4E3A;<strong>placeholder branch</strong>&#x3001;<strong>actual image branch</strong>&#x3001;<strong>progressBar image branch</strong>&#x3001;<strong>retry image branch</strong>&#x4E0E;<strong>failure image branch</strong>&#x3002;&#x81F3;&#x4E8E;&#x8FD9;&#x4E9B;<strong>image</strong>&#x7684;&#x4F5C;&#x7528;&#x76F8;&#x4FE1;&#x4E0D;&#x7528;&#x6211;&#x518D;&#x591A;&#x505A;&#x8BF4;&#x660E;&#x4E86;&#xFF0C;&#x8FD9;&#x4E9B;<strong>image</strong>&#x9664;&#x4E86;<strong>actual image</strong>&#x662F;&#x5FC5;&#x987B;&#x8981;&#x660E;&#x786E;&#x6307;&#x5B9A;&#x7684;&#xFF0C;&#x5176;&#x5B83;&#x7684;&#x90FD;&#x662F;&#x53EF;&#x9009;&#x62E9;&#x7684;&#x914D;&#x7F6E;&#x3002;&#x56E0;&#x6B64;<strong>RootDrawable</strong>&#x4E0E;<strong>FadeDrawable</strong>&#x662F;&#x4E00;&#x5B9A;&#x5B58;&#x5728;&#x7684;&#x3002;&#x867D;&#x7136;&#x5176;&#x5B83;&#x7684;&#x90FD;&#x662F;&#x53EF;&#x9009;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x4F46;&#x65E0;&#x8BBA;&#x4F60;&#x662F;&#x5426;&#x9009;&#x62E9;&#x4E86;&#xFF0C;&#x5B83;&#x4EEC;&#x7684;&#x5C42;&#x7EA7;&#x7ED3;&#x6784;&#x90FD;&#x4F1A;&#x4FDD;&#x7559;&#x5728;&#x56FE;&#x5C42;&#x6811;&#x4E2D;&#x3002;&#x8FD8;&#x6709;&#x6BCF;&#x4E00;&#x4E2A;&#x5C42;&#x7EA7;&#x90FD;&#x6709;&#x81EA;&#x5DF1;&#x72EC;&#x7ACB;&#x7684;<strong>scale type</strong>&#xFF0C;&#x5F53;&#x7136;<strong>rounding</strong>(&#x5706;&#x89D2;)&#x4E5F;&#x662F;&#x652F;&#x6301;&#x7684;&#x3002;</p>
+<blockquote>
+<p>&#x5176;&#x5B9E;&#x9664;&#x4E86;&#x8FD9;5&#x4E2A;&#x5206;&#x652F;&#xFF0C;&#x4E0E;&#x5B83;&#x4EEC;&#x540C;&#x4E00;&#x5C42;&#x6B21;&#x7684;&#x8FD8;&#x6709;<strong>background image</strong>&#x4E0E;<strong>overlay image</strong>&#xFF0C;&#x5B83;&#x4EEC;&#x5206;&#x522B;&#x4F4D;&#x4E8E;<strong>placeholder image</strong>&#x4E4B;&#x524D;&#x4E0E;<strong>failure image</strong>&#x4E4B;&#x540E;&#x3002;<strong>background</strong>&#x76F8;&#x4FE1;&#x90FD;&#x77E5;&#x9053;&#xFF0C;&#x56E0;&#x4E3A;&#x56FE;&#x7247;&#x90FD;&#x652F;&#x6301;<strong>background</strong>&#x4E0E;<strong>src</strong>&#xFF0C;<strong>overlay</strong>&#x4E3A;&#x56FE;&#x5C42;&#x8986;&#x76D6;&#x3002;&#x81F3;&#x4E8E;&#x4E3A;&#x4EC0;&#x4E48;&#x6CA1;&#x6709;&#x5728;&#x4E0A;&#x9762;&#x7684;&#x7ED3;&#x6784;&#x4E2D;&#x663E;&#x793A;&#xFF0C;&#x6211;&#x8FD9;&#x91CC;&#x4E5F;&#x4E0D;&#x5F97;&#x800C;&#x77E5;&#xFF0C;&#x731C;&#x6D4B;&#x53EF;&#x80FD;&#x662F;&#x8FD9;&#x4E24;&#x4E2A;&#x5E76;&#x4E0D;&#x662F;<strong>Fresco</strong>&#x4E3B;&#x8981;&#x5E38;&#x7528;&#x7684;&#x7279;&#x6027;&#x3002;</p>
+</blockquote>
+<p>&#x90A3;&#x4E48;&#x8FD9;&#x4E9B;&#x56FE;&#x5C42;&#x7ED3;&#x6784;&#x662F;&#x901A;&#x8FC7;<strong>layers</strong>&#x6570;&#x7EC4;&#x6765;&#x4F53;&#x73B0;&#x7684;&#xFF0C;&#x53EF;&#x4EE5;&#x6765;&#x770B;&#x4E0B;<strong>GenericDraweeHierarchy</strong>&#x7684;&#x6E90;&#x7801;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">GenericDraweeHierarchy(GenericDraweeHierarchyBuilder builder) {</span><br><span class="line">  mResources = builder.getResources();</span><br><span class="line">  mRoundingParams = builder.getRoundingParams();</span><br><span class="line"> </span><br><span class="line">  mActualImageWrapper = new ForwardingDrawable(mEmptyActualImageDrawable);</span><br><span class="line"> </span><br><span class="line">  int numOverlays = (builder.getOverlays() != null) ? builder.getOverlays().size() : 1;</span><br><span class="line">  numOverlays += (builder.getPressedStateOverlay() != null) ? 1 : 0;</span><br><span class="line"> </span><br><span class="line">  // layer indices and count</span><br><span class="line">  int numLayers = OVERLAY_IMAGES_INDEX + numOverlays;</span><br><span class="line"> </span><br><span class="line">  // array of layers</span><br><span class="line">  Drawable[] layers = new Drawable[numLayers];</span><br><span class="line">  layers[BACKGROUND_IMAGE_INDEX] = buildBranch(builder.getBackground(), null);</span><br><span class="line">  layers[PLACEHOLDER_IMAGE_INDEX] = buildBranch(</span><br><span class="line">      builder.getPlaceholderImage(),</span><br><span class="line">      builder.getPlaceholderImageScaleType());</span><br><span class="line">  layers[ACTUAL_IMAGE_INDEX] = buildActualImageBranch(</span><br><span class="line">      mActualImageWrapper,</span><br><span class="line">      builder.getActualImageScaleType(),</span><br><span class="line">      builder.getActualImageFocusPoint(),</span><br><span class="line">      builder.getActualImageColorFilter());</span><br><span class="line">  layers[PROGRESS_BAR_IMAGE_INDEX] = buildBranch(</span><br><span class="line">      builder.getProgressBarImage(),</span><br><span class="line">      builder.getProgressBarImageScaleType());</span><br><span class="line">  layers[RETRY_IMAGE_INDEX] = buildBranch(</span><br><span class="line">      builder.getRetryImage(),</span><br><span class="line">      builder.getRetryImageScaleType());</span><br><span class="line">  layers[FAILURE_IMAGE_INDEX] = buildBranch(</span><br><span class="line">      builder.getFailureImage(),</span><br><span class="line">      builder.getFailureImageScaleType());</span><br><span class="line">  if (numOverlays &gt; 0) {</span><br><span class="line">    int index = 0;</span><br><span class="line">    if (builder.getOverlays() != null) {</span><br><span class="line">      for (Drawable overlay : builder.getOverlays()) {</span><br><span class="line">        layers[OVERLAY_IMAGES_INDEX + index++] = buildBranch(overlay, null);</span><br><span class="line">      }</span><br><span class="line">    } else {</span><br><span class="line">      index = 1; // reserve space for one overlay</span><br><span class="line">    }</span><br><span class="line">    if (builder.getPressedStateOverlay() != null) {</span><br><span class="line">      layers[OVERLAY_IMAGES_INDEX + index] = buildBranch(builder.getPressedStateOverlay(), null);</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"> </span><br><span class="line">  // fade drawable composed of layers</span><br><span class="line">  mFadeDrawable = new FadeDrawable(layers);</span><br><span class="line">   mFadeDrawable.setTransitionDuration(builder.getFadeDuration());</span><br><span class="line"> </span><br><span class="line">  // rounded corners drawable (optional)</span><br><span class="line">  Drawable maybeRoundedDrawable =</span><br><span class="line">      WrappingUtils.maybeWrapWithRoundedOverlayColor(mFadeDrawable, mRoundingParams);</span><br><span class="line"> </span><br><span class="line">  // top-level drawable</span><br><span class="line">  mTopLevelDrawable = new RootDrawable(maybeRoundedDrawable);</span><br><span class="line">  mTopLevelDrawable.mutate();</span><br><span class="line"> </span><br><span class="line">  resetFade();</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6839;&#x636E;&#x6E90;&#x7801;&#x53EF;&#x4EE5;&#x660E;&#x663E;&#x7684;&#x770B;&#x51FA;&#x4E0D;&#x7BA1;<strong>overlay</strong>&#x662F;&#x5426;&#x5B58;&#x5728;&#xFF0C;&#x5B83;&#x90FD;&#x4F1A;&#x4FDD;&#x7559;&#x56FE;&#x5C42;&#x5C42;&#x6B21;&#xFF0C;&#x5F53;&#x7136;&#x5982;&#x679C;&#x5B58;&#x5728;&#x7684;&#x8BDD;&#xFF0C;&#x5C31;&#x6839;&#x636E;&#x5B9E;&#x9645;&#x60C5;&#x51B5;&#x5728;<strong>OVERLAY_IMAGES_INDEX</strong>&#x4E4B;&#x540E;&#x589E;&#x52A0;&#x56FE;&#x5C42;&#x5C42;&#x6B21;&#x3002;<strong>layers</strong>&#x662F;&#x4E00;&#x4E2A;<strong>Drawable</strong>&#x6570;&#x7EC4;&#xFF0C;&#x8FD9;&#x91CC;&#x901A;&#x8FC7;<em>Drawable buildBranch(@Nullable Drawable drawable, @Nullable ScaleType scaleType)</em> &#x65B9;&#x6CD5;&#x6765;&#x521B;&#x5EFA;&#x5BF9;&#x5E94;&#x7684;<strong>Drawable</strong>&#x3002;&#x5728;&#x6700;&#x540E;&#xFF0C;&#x521B;&#x5EFA;&#x4E86;<strong>FadeDrawable</strong>&#x5E76;&#x5C06;<strong>layers</strong>&#x4F20;&#x9012;&#x7ED9;&#x5B83;&#xFF0C;&#x5728;&#x8FD9;&#x91CC;<strong>FadeDrawable</strong>&#x7684;&#x7279;&#x6027;&#x5E94;&#x8BE5;&#x6709;&#x70B9;&#x7709;&#x76EE;&#x4E86;&#x5427;&#xFF0C;&#x5176;&#x5B9E;&#x5B83;&#x5185;&#x90E8;&#x505A;&#x7684;&#x5C31;&#x662F;&#x5BF9;<strong>Drawable</strong>&#x6570;&#x7EC4;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#x3002;&#x4E4B;&#x540E;<strong>RootDrawable</strong>&#x4E5F;&#x51FA;&#x73B0;&#x4E86;(&#x5173;&#x4E8E;<strong>Drawable</strong>&#x6587;&#x7AE0;&#x540E;&#x9762;&#x4F1A;&#x7EDF;&#x4E00;&#x5206;&#x6790;)&#xFF0C;&#x8FD9;&#x6837;&#x4E4B;&#x524D;&#x6240;&#x63D0;&#x5230;&#x7684;&#x5C42;&#x7EA7;&#x7ED3;&#x6784;&#x5C31;&#x5F62;&#x6210;&#x4E86;&#x3002;</p>
+<p>&#x65E2;&#x7136;<strong>actual image</strong>&#x662F;&#x4E00;&#x5B9A;&#x5B58;&#x5728;&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x5728;&#x5B83;&#x771F;&#x6B63;&#x5C55;&#x793A;&#x4E4B;&#x524D;<strong>image</strong>&#x4E2D;&#x7684;&#x663E;&#x793A;&#x7528;&#x4EC0;&#x4E48;&#x6765;&#x63A7;&#x5236;&#x7684;&#x5462;&#xFF1F;&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x6211;&#x4EEC;&#x4E4B;&#x524D;&#x6240;&#x63D0;&#x5230;&#x7684;<strong>SettableDraweeHierarchy</strong>&#x6765;&#x63A7;&#x5236;&#x3002;&#x5728;&#x771F;&#x5B9E;&#x7684;&#x56FE;&#x7247;&#x5C55;&#x793A;&#x51FA;&#x6765;&#x4E4B;&#x524D;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x5C55;&#x793A;<strong>placeholder image</strong>&#x7B49;&#x76F8;&#x5173;&#x56FE;&#x5C42;&#x3002;&#x5177;&#x4F53;&#x7684;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x6765;&#x770B;&#x4E00;&#x4E0B;&#x5B83;&#x91CC;&#x9762;&#x5B9E;&#x73B0;&#x7684;&#x4E00;&#x4E9B;&#x65B9;&#x6CD5;&#x3002;</p>
+<h2 id="setImage"><a href="#setImage" class="headerlink" title="setImage"></a>setImage</h2><p>&#x8FD9;&#x91CC;&#x5C31;&#x62FF;<em>void setImage(Drawable drawable, float progress, boolean immediate)</em> &#x6765;&#x8FDB;&#x884C;&#x6DF1;&#x5165;&#x5206;&#x6790;&#xFF0C;&#x90A3;&#x4E48;&#x4E0B;&#x9762;&#x6765;&#x770B;&#x4E0B;&#x5B83;&#x7684;&#x6E90;&#x7801;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void setImage(Drawable drawable, float progress, boolean immediate) {</span><br><span class="line">  drawable = WrappingUtils.maybeApplyLeafRounding(drawable, mRoundingParams, mResources);</span><br><span class="line">  drawable.mutate();</span><br><span class="line">  mActualImageWrapper.setDrawable(drawable);</span><br><span class="line">  mFadeDrawable.beginBatchMode();</span><br><span class="line">  fadeOutBranches();</span><br><span class="line">  fadeInLayer(ACTUAL_IMAGE_INDEX);</span><br><span class="line">  setProgress(progress);</span><br><span class="line">  if (immediate) {</span><br><span class="line">    mFadeDrawable.finishTransitionImmediately();</span><br><span class="line">  }</span><br><span class="line">  mFadeDrawable.endBatchMode();</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x9996;&#x5148;&#x8BE5;&#x65B9;&#x6CD5;&#x4F1A;&#x4F7F;&#x7528;<strong>WrappingUtils</strong>&#x5DE5;&#x5177;&#x7C7B;&#x5E76;&#x4E14;&#x7ED3;&#x5408;<strong>RoundingParams</strong>&#x53C2;&#x6570;&#x6765;&#x91CD;&#x65B0;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x53EF;&#x4EE5;&#x9644;&#x5E26;&#x5706;&#x89D2;&#x7684;<strong>Drawable</strong>&#x3002;&#x7136;&#x540E;&#x5C06;&#x65B0;&#x7684;<strong>Drawable</strong>&#x4EA4;&#x7531;<strong>mActualImageWrapper</strong>&#xFF0C;&#x7ED3;&#x5408;&#x4E0A;&#x9762;&#x7684;&#x5C42;&#x6B21;&#x7ED3;&#x679C;&#x5206;&#x6790;&#xFF0C;&#x4F1A;&#x5F88;&#x5BB9;&#x6613;&#x77E5;&#x9053;&#x8FD9;&#x5C31;&#x662F;&#x9700;&#x8981;&#x771F;&#x5B9E;&#x663E;&#x793A;&#x7684;&#x56FE;&#x5C42;&#x3002;&#x5B83;&#x662F;&#x4E00;&#x4E2A;<strong>ForwardingDrawable</strong>&#x7C7B;&#x578B;&#xFF0C;&#x8BE5;&#x7C7B;&#x4E3B;&#x8981;&#x662F;&#x5BF9;&#x4F20;&#x5165;&#x7684;&#x76EE;&#x6807;<strong>Drawable</strong>&#x8FDB;&#x884C;&#x76F8;&#x5E94;&#x7684;&#x539F;&#x751F;&#x65B9;&#x6CD5;&#x64CD;&#x4F5C;&#x3002;&#x4E0B;&#x4E00;&#x6B65;&#x8C03;&#x7528;<strong>FadeDrawable</strong>&#x7684;<em>beginBatchMode()</em>&#x65B9;&#x6CD5;&#xFF0C;&#x8BE5;&#x65B9;&#x6CD5;&#x7684;&#x4F5C;&#x7528;&#x4E3B;&#x8981;&#x4E3A;&#x4E86;&#x56FE;&#x5C42;&#x6279;&#x5904;&#x7406;&#x505A;&#x6807;&#x8BB0;&#xFF0C;&#x9632;&#x6B62;&#x5728;&#x6279;&#x5904;&#x7406;&#x65F6;&#x8FDB;&#x884C;<strong>invalidate</strong>&#x64CD;&#x4F5C;&#x3002;&#x76F4;&#x5230;&#x6700;&#x540E;&#x7684;<em>endBatchMode()</em>&#x65B9;&#x6CD5;&#x8C03;&#x7528;&#x4E4B;&#x540E;&#x624D;&#x6807;&#x8BC6;&#x7740;&#x56FE;&#x5C42;&#x6279;&#x5904;&#x7406;&#x64CD;&#x4F5C;&#x7ED3;&#x675F;&#x3002;&#x8BE5;&#x6279;&#x5904;&#x7406;&#x64CD;&#x4F5C;&#x7684;&#x76EE;&#x7684;&#x662F;&#x5C06;<strong>actual image</strong>&#x56FE;&#x5C42;&#x663E;&#x793A;&#x51FA;&#x6765;&#xFF0C;&#x6240;&#x4EE5;&#x9996;&#x5148;&#x8C03;&#x7528;<em>fadeOutBranches()</em>&#x65B9;&#x6CD5;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">private void fadeOutBranches() {</span><br><span class="line">  fadeOutLayer(PLACEHOLDER_IMAGE_INDEX);</span><br><span class="line">  fadeOutLayer(ACTUAL_IMAGE_INDEX);</span><br><span class="line">  fadeOutLayer(PROGRESS_BAR_IMAGE_INDEX);</span><br><span class="line">  fadeOutLayer(RETRY_IMAGE_INDEX);</span><br><span class="line">  fadeOutLayer(FAILURE_IMAGE_INDEX);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x5BF9;&#x4E0A;&#x8FF0;&#x63D0;&#x5230;&#x7684;&#x6240;&#x6709;&#x56FE;&#x5C42;&#x8FDB;&#x884C;<em>fadeOutLayer()</em>&#x64CD;&#x4F5C;&#xFF0C;&#x7EE7;&#x7EED;&#x8FDB;&#x5165;<em>fadeOutLayer()</em>&#x65B9;&#x6CD5;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">private void fadeOutLayer(int index) {</span><br><span class="line">  if (index &gt;= 0) {</span><br><span class="line">    mFadeDrawable.fadeOutLayer(index);</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x53D1;&#x73B0;&#x4E5F;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x65E0;&#x975E;&#x5C31;&#x662F;&#x8C03;&#x7528;&#x4E86;<strong>FadeDrawable</strong>&#x7684;<em>fadeOutLayer()</em>&#x65B9;&#x6CD5;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public void fadeOutLayer(int index) {</span><br><span class="line">  mTransitionState = TRANSITION_STARTING;</span><br><span class="line">  mIsLayerOn[index] = false;</span><br><span class="line">  invalidateSelf();</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x4E4B;&#x524D;&#x5DF2;&#x7ECF;&#x63D0;&#x5230;&#x8FC7;<strong>FadeDrawable</strong>&#x672C;&#x8D28;&#x4E0A;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x65F6;&#x4E00;&#x4E2A;<strong>Drawable</strong>&#x6570;&#x7EC4;&#xFF0C;&#x5185;&#x90E8;&#x90FD;&#x662F;&#x56F4;&#x7ED5;&#x7740;&#x6570;&#x7EC4;&#x6574;&#x4F53;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#x3002;&#x5BF9;&#x5E94;&#x7684;&#x8FD8;&#x6709;<em>fadeInLayer()</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">private void fadeInLayer(int index) {</span><br><span class="line">  if (index &gt;= 0) {</span><br><span class="line">    mFadeDrawable.fadeInLayer(index);</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;<strong>FadeDrawable</strong>&#x4E2D;&#x9664;&#x4E86;&#x7528;&#x6765;&#x4FDD;&#x5B58;&#x76F8;&#x5E94;&#x7684;<strong>Drawable</strong>&#x6570;&#x7EC4;<strong>mLayers</strong>&#xFF0C;&#x8FD8;&#x6709;&#x4E0E;&#x5176;&#x76F8;&#x5BF9;&#x5E94;&#x7684;<strong>mIsLayerOn</strong>&#x5E03;&#x5C14;&#x6570;&#x7EC4;&#xFF0C;&#x8BE5;&#x6570;&#x7EC4;&#x7528;&#x6765;&#x6807;&#x8BC6;&#x5404;&#x4E2A;<strong>Hierarchy</strong>&#x4E2D;&#x7684;&#x56FE;&#x5C42;&#x662F;&#x5426;&#x9700;&#x8981;&#x5C55;&#x793A;&#x3002;&#x6240;&#x4EE5;<em>fadeOutLayer()</em>&#x662F;&#x5BF9;<strong>index</strong>&#x5904;&#x7684;&#x56FE;&#x5C42;&#x8FDB;&#x884C;&#x9690;&#x85CF;&#x6807;&#x8BC6;&#x3002;&#x6700;&#x7EC8;&#x7684;&#x663E;&#x9690;&#x64CD;&#x4F5C;&#x90FD;&#x4F1A;&#x8F6C;&#x5316;&#x4E3A;&#x5728;<em>void draw(Canvas canvas)</em>&#x65B9;&#x6CD5;&#x4E2D;&#x8FDB;&#x884C;<strong>alpha</strong>&#x64CD;&#x4F5C;&#x3002;</p>
+<p>&#x90A3;&#x4E48;&#x518D;&#x56DE;&#x5230;&#x4E4B;&#x524D;&#x7684;<em>setImage()</em>&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;<em>fadeOutBranches()</em>&#x662F;&#x5BF9;&#x76F8;&#x5173;&#x7684;&#x56FE;&#x5C42;&#x8FDB;&#x884C;&#x9690;&#x85CF;&#x6807;&#x8BC6;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x901A;&#x8FC7;<em>fadeInLayer(ACTUAL_IMAGE_INDEX)</em>&#x65B9;&#x6CD5;&#x6539;&#x53D8;<strong>actual image</strong>&#x56FE;&#x5C42;&#x7684;&#x6807;&#x8BC6;&#xFF0C;&#x5C06;&#x5B83;&#x6539;&#x53D8;&#x6210;&#x663E;&#x793A;&#x72B6;&#x6001;&#x3002;&#x6700;&#x540E;&#x5982;&#x679C;&#x6709;<strong>progressBar image</strong>&#x56FE;&#x5C42;&#x7684;&#x8BDD;&#xFF0C;&#x4E5F;&#x5C06;&#x4F1A;&#x7531;<em>setProgress(progress)</em>&#x65B9;&#x6CD5;&#x6765;&#x4F53;&#x73B0;&#x3002;<strong>immediate</strong>&#x662F;&#x7528;&#x6765;&#x5224;&#x65AD;&#x662F;&#x5426;&#x4E4B;&#x540E;&#x7684;&#x663E;&#x9690;&#x64CD;&#x4F5C;&#x7ACB;&#x9A6C;&#x5B9E;&#x73B0;&#x6216;&#x8005;&#x6E10;&#x53D8;&#x8FC7;&#x6E21;&#x5B9E;&#x73B0;(&#x5185;&#x90E8;&#x5C31;&#x662F;&#x5BF9;alpha&#x8FDB;&#x884C;&#x767E;&#x5206;&#x6BD4;&#x64CD;&#x4F5C;&#xFF0C;&#x5185;&#x90E8;&#x6709;&#x4E2A;mDurationMs&#xFF0C;&#x8BE5;&#x65F6;&#x95F4;&#x503C;&#x4E5F;&#x662F;&#x6587;&#x7AE0;&#x5F00;&#x5934;&#x63D0;&#x5230;&#x7684;builder&#x4E2D;&#x7684;fadeDuration)&#x3002;&#x8FD9;&#x6837;&#x6574;&#x4E2A;&#x7684;&#x5B9E;&#x9645;&#x56FE;&#x7247;&#x5C55;&#x793A;&#x6D41;&#x7A0B;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x5206;&#x6790;&#x5B8C;&#x6BD5;&#xFF0C;&#x6240;&#x4EE5;<strong>Hierarchy</strong>&#x4E2D;&#x6700;&#x91CD;&#x8981;&#x7684;&#x8FD8;&#x662F;&#x5BF9;&#x56FE;&#x5C42;&#x6982;&#x5FF5;&#x7684;&#x7406;&#x89E3;&#x3002;&#x4E0B;&#x9762;&#x518D;&#x5BF9;<strong>GenericDraweeHierarchy</strong>&#x4E2D;&#x7684;&#x4E00;&#x4E9B;&#x5176;&#x5B83;&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x7B80;&#x8981;&#x7684;&#x8BF4;&#x660E;&#xFF1A;</p>
+<ul>
+<li><em>Drawable buildActualImageBranch(Drawable drawable, @Nullable ScaleType scaleType, @Nullable PointF focusPoint, @Nullable ColorFilter colorFilter)</em> &#x6784;&#x5EFA;&#x5B9E;&#x9645;&#x5C55;&#x793A;&#x56FE;&#x7247;&#x7684;&#x56FE;&#x5C42;&#x5206;&#x652F;&#xFF0C;&#x5185;&#x90E8;&#x5BF9;&#x4E8E;<strong>Drawable</strong>&#x7684;&#x521B;&#x5EFA;&#x8FD8;&#x662F;&#x501F;&#x52A9;<strong>WrappingUtils</strong>&#x5DE5;&#x5177;&#x7C7B;</li>
+<li><em>Drawable buildBranch(@Nullable Drawable drawable, @Nullable ScaleType scaleType)</em> &#x6784;&#x5EFA;&#x9664;&#x5B9E;&#x9645;&#x5C55;&#x793A;&#x56FE;&#x7247;&#x4E4B;&#x5916;&#x7684;&#x5176;&#x5B83;&#x56FE;&#x5C42;&#x5206;&#x652F;&#xFF0C;<strong>Drawable</strong>&#x7684;&#x521B;&#x5EFA;&#x4E5F;&#x662F;&#x501F;&#x52A9;<strong>WrappingUtils</strong>&#x5DE5;&#x5177;&#x7C7B;</li>
+<li><em>void resetFade()</em> &#x521D;&#x59CB;&#x5316;&#x56FE;&#x5C42;&#x7ED3;&#x6784;</li>
+</ul>
+<blockquote>
+<p>&#x4E3B;&#x8981;&#x7684;&#x5C31;&#x8FD9;&#x51E0;&#x4E2A;&#x5427;&#xFF0C;&#x5176;&#x5B83;&#x7684;&#x90FD;&#x5DF2;&#x7ECF;&#x5728;&#x4E0A;&#x9762;&#x5206;&#x6790;&#x6D41;&#x7A0B;&#x4E2D;&#x8BE6;&#x7EC6;&#x8BF4;&#x660E;&#x4E86;&#x3002;</p>
+</blockquote>
+<h1 id="Drawable"><a href="#Drawable" class="headerlink" title="Drawable"></a>Drawable</h1><p>&#x6700;&#x540E;&#x518D;&#x6574;&#x7406;&#x4E00;&#x4E0B;<strong>Fresco</strong>&#x4E2D;&#x7684;&#x4E00;&#x4E9B;&#x76F8;&#x5173;&#x7684;&#x81EA;&#x5B9A;&#x4E49;&#x7684;<strong>Drawable</strong>&#x5B50;&#x7C7B;</p>
+<ol>
+<li><strong>ArrayDrawable</strong>&#xFF1A;<strong>Drawable</strong>&#x6570;&#x7EC4;&#x7684;&#x96C6;&#x5408;&#x4F53;&#xFF0C;&#x901A;&#x8FC7;<strong>layers</strong>&#x6570;&#x7EC4;&#x6765;&#x7BA1;&#x7406;<strong>Drawable</strong>&#xFF0C;&#x5185;&#x90E8;&#x7684;&#x90FD;&#x662F;&#x5BF9;&#x6570;&#x7EC4;&#x96C6;&#x5408;&#x4E2D;&#x7684;&#x6BCF;&#x4E00;&#x4E2A;<strong>Drawable</strong>&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#xFF0C;&#x7C7B;&#x4F3C;&#x4E0E;<strong>Android</strong>&#x539F;&#x751F;&#x7684;<strong>LayerDrawable</strong>&#xFF0C;&#x53EA;&#x662F;&#x5B83;&#x5E76;&#x4E0D;&#x652F;&#x6301;<strong>add</strong>&#x4E0E;<strong>remove</strong>&#x64CD;&#x4F5C;</li>
+<li><strong>ForwardingDrawable</strong>&#xFF1A;&#x5BF9;&#x4F20;&#x5165;&#x7684;&#x76EE;&#x6807;<strong>Drawable</strong>&#x5373;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x8FDB;&#x884C;&#x5C01;&#x88C5;&#x5904;&#x7406;&#xFF0C;&#x8BE5;&#x65B0;&#x7C7B;&#x7684;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x8C03;&#x7528;&#x76EE;&#x6807;&#x5BF9;&#x8C61;&#x5BF9;&#x5E94;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x540C;&#x65F6;&#x4FDD;&#x7559;&#x76EE;&#x6807;<strong>Drawable</strong>&#x7684;&#x5404;&#x4E2A;&#x72B6;&#x6001;&#xFF0C;&#x4E0D;&#x4F9D;&#x8D56;&#x4E0E;&#x76EE;&#x6807;&#x7C7B;&#x7684;&#x7EC6;&#x8282;&#x5B9E;&#x73B0;&#xFF0C;&#x63D0;&#x9AD8;&#x65B0;&#x7C7B;&#x7684;&#x7A33;&#x5B9A;&#x6027;&#xFF0C;&#x8BE5;&#x65B9;&#x5F0F;&#x53EF;&#x4EE5;&#x79F0;&#x4E4B;&#x4E3A;&#x590D;&#x5408;&#x3002;<strong>Fresco</strong>&#x4E2D;&#x7EDD;&#x5927;&#x591A;&#x6570;&#x81EA;&#x5B9A;&#x4E49;<strong>Drawable</strong>&#x90FD;&#x662F;&#x5B83;&#x7684;&#x5B50;&#x7C7B;&#x3002;</li>
+<li><strong>AutoRotateDrawable</strong>&#xFF1A;&#x5B83;&#x7EE7;&#x627F;&#x4E8E;<strong>ForwardingDrawable</strong>&#xFF0C;&#x5B9E;&#x73B0;&#x7684;&#x662F;&#x5BF9;<strong>Drawable</strong>&#x7684;&#x65CB;&#x8F6C;&#x64CD;&#x4F5C;</li>
+<li><strong>FadeDrawable</strong>&#xFF1A;&#x5B83;&#x7EE7;&#x627F;&#x4E8E;<strong>ArrayDrawable</strong>&#xFF0C;&#x4E4B;&#x524D;&#x4E5F;&#x8BE6;&#x7EC6;&#x63D0;&#x5230;&#x8FC7;&#xFF0C;<strong>Hierarchy</strong>&#x4E2D;&#x7684;&#x4E3B;&#x8981;&#x56FE;&#x5C42;&#x96C6;&#x5408;&#x4F53;&#x3002;&#x4E3B;&#x8981;&#x662F;&#x901A;&#x8FC7;<strong>mLayers</strong>&#x4E0E;<strong>mIsLayerOn</strong>&#x6570;&#x7EC4;&#x6765;&#x63A7;&#x5236;&#x6570;&#x7EC4;&#x4E2D;&#x5404;&#x4E2A;<strong>Drawable</strong>&#x7684;<strong>alpha</strong>&#x503C;&#xFF0C;&#x5373;&#x663E;&#x9690;</li>
+<li><strong>MatrixDrawable</strong>&#xFF1A;&#x5B83;&#x7EE7;&#x627F;&#x4E8E;<strong>ForwardingDrawable</strong>&#xFF0C;&#x987E;&#x540D;&#x601D;&#x4E49;&#x901A;&#x8FC7;&#x77E9;&#x9635;&#x6765;&#x6539;&#x53D8;<strong>Drawable</strong>&#x72B6;&#x6001;&#x3002;</li>
+<li><strong>OrientedDrawable</strong>&#xFF1A;&#x5B83;&#x4E5F;&#x7EE7;&#x627F;&#x4E8E;<strong>ForwardingDrawable</strong>&#xFF0C;&#x5B83;&#x4E0D;&#x540C;&#x4E8E;<strong>AutoRotateDrawable</strong>&#x7684;&#x662F;&#xFF0C;&#x5B83;&#x53EA;&#x652F;&#x6301;90&#x5EA6;&#x7684;&#x500D;&#x6570;&#x89D2;&#x5EA6;&#x65CB;&#x8F6C;&#x3002;</li>
+<li><strong>ProgressBarDrawable</strong>&#xFF1A;&#x8FDB;&#x5EA6;&#x6761;<strong>Drawable</strong>&#xFF0C;&#x652F;&#x6301;&#x6A2A;&#x7AD6;&#x65B9;&#x5411;&#x3002;</li>
+<li><strong>RoundedBitmapDrawable</strong>&#xFF1A;&#x7EE7;&#x627F;&#x4E8E;<strong>BitmapDrawable</strong>&#xFF0C;&#x6839;&#x636E;<strong>Bitmap</strong>&#x6765;&#x521B;&#x5EFA;&#x6709;&#x5173;&#x5706;&#x89D2;&#x7684;<strong>Drawable</strong>&#xFF0C;&#x4E3B;&#x8981;&#x5728;<strong>WrappingUtils</strong>&#x7C7B;&#x4E2D;&#x4F7F;&#x7528;&#xFF0C;&#x7528;&#x4F8B;&#x6784;&#x5EFA;&#x5168;&#x65B0;&#x7684;&#x5706;&#x89D2;<strong>Drawable</strong></li>
+<li><strong>RoundedColorDrawable</strong>&#xFF1A;&#x7EE7;&#x627F;&#x4E8E;<strong>Drawable</strong>&#xFF0C;&#x6839;&#x636E;<strong>Color</strong>&#x6765;&#x521B;&#x5EFA;&#x5706;&#x89D2;<strong>Drawable</strong>&#xFF0C;&#x4E3B;&#x8981;&#x5728;<strong>WrappingUtils</strong>&#x7C7B;&#x4E2D;&#x4F7F;&#x7528;&#xFF0C;&#x7528;&#x4F8B;&#x6784;&#x5EFA;&#x5168;&#x65B0;&#x7684;&#x5706;&#x89D2;<strong>Drawable</strong></li>
+<li><strong>RoundedCornersDrawable</strong>&#xFF1A;&#x7EE7;&#x627F;&#x4E8E;<strong>ForwardingDrawable</strong>&#xFF0C;&#x7528;&#x4E8E;&#x8BBE;&#x8BA1;<strong>overLay</strong>&#x8986;&#x76D6;&#x56FE;&#x7247;&#x5706;&#x89D2;&#xFF0C;&#x4E3B;&#x8981;&#x5728;<strong>WrappingUtils</strong>&#x7C7B;&#x4E2D;&#x4F7F;&#x7528;</li>
+<li><strong>ScaleTypeDrawable</strong>&#xFF1A;&#x7EE7;&#x627F;&#x4E8E;<strong>ForwardingDrawable</strong>&#xFF0C;&#x7528;&#x4E8E;&#x7F29;&#x653E;&#x7C7B;&#x578B;&#x7684;<strong>Drawable</strong></li>
+</ol>
+<h1 id="End"><a href="#End" class="headerlink" title="End"></a>End</h1><p>&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x4E3B;&#x8981;&#x662F;&#x5206;&#x6790;<strong>Fresco</strong>&#x4E2D;&#x6709;&#x5173;<strong>Hierarchy</strong>&#x76F8;&#x5173;&#x7684;&#x5B9E;&#x73B0;&#x4E0E;&#x539F;&#x7406;&#xFF0C;&#x901A;&#x8FC7;&#x5206;&#x6790;&#x53D1;&#x73B0;<strong>Hierarchy</strong>&#x4E2D;&#x90FD;&#x662F;&#x5BF9;<strong>Drawable</strong>&#x56FE;&#x5C42;&#x8FDB;&#x884C;&#x5904;&#x7406;&#xFF0C;&#x5E76;&#x6CA1;&#x6709;&#x5176;&#x5B83;&#x7684;&#x7F13;&#x5B58;&#x3001;&#x8BF7;&#x6C42;&#x4E4B;&#x7C7B;&#x7684;&#x903B;&#x8F91;&#x3002;&#x6240;&#x4EE5;&#x5982;&#x679C;&#x4F60;&#x4F7F;&#x7528;<strong>Fresco</strong>&#x7684;&#x65F6;&#x5019;&#x53EA;&#x4F7F;&#x7528;<strong>Hierarchy</strong>&#x7684;&#x8BDD;&#xFF0C;&#x5C31;&#x4E0E;&#x522B;&#x7684;<strong>ImageView</strong>&#x6CA1;&#x6709;&#x591A;&#x5927;&#x7684;&#x533A;&#x522B;&#xFF0C;&#x771F;&#x6B63;&#x7684;&#x56FE;&#x5C42;&#x64CD;&#x4F5C;&#x4E0E;&#x7F13;&#x5B58;&#x63A7;&#x5236;&#x90FD;&#x5728;<strong>Controller</strong>&#x4E2D;&#xFF0C;&#x6240;&#x4EE5;&#x4E0B;&#x7BC7;&#x6587;&#x7AE0;&#x5C06;&#x8FDB;&#x5165;<strong>Controller</strong>&#x89E3;&#x6790;&#xFF0C;&#x6765;&#x8BE6;&#x7EC6;&#x4E86;&#x89E3;&#x5B83;&#x7684;&#x5B9E;&#x73B0;&#x7EC6;&#x8282;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/Fresco-Source-Analysis" target="_blank" rel="noopener">Fresco&#x6E90;&#x7801;&#x5206;&#x6790;&#x7CFB;&#x5217;Github&#x5730;&#x5740;</a></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/11/28/Fresco源码分析之DraweeView/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/12/14/Fresco源码分析之Controller/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Thu Dec 07 2017 22:28:31 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Fresco源码分析之Controller | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="源码分析,">
+  
+
+  <meta name="description" content="&amp;#x5982;&amp;#x679C;&amp;#x4F60;&amp;#x662F;&amp;#x7B2C;&amp;#x4E00;&amp;#x6B21;&amp;#x770B;&amp;#x6211;&amp;#x7684;Fresco&amp;#x7684;&amp;#x6E90;&amp;#x7801;&amp;#x5206;&amp;#x6790;&amp;#x7CFB;&amp;#x5217;&amp;#x6587;&amp;#x7AE0;&amp;#xFF0C;&amp;#x8FD9;&amp;#x91CC;&amp;#x5F3A;&amp;#x70C8;&amp;#">
+<meta name="keywords" content="源码分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fresco源码分析之Controller">
+<meta property="og:url" content="https://www.rousetime.com/2017/12/14/Fresco源码分析之Controller/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="&amp;#x5982;&amp;#x679C;&amp;#x4F60;&amp;#x662F;&amp;#x7B2C;&amp;#x4E00;&amp;#x6B21;&amp;#x770B;&amp;#x6211;&amp;#x7684;Fresco&amp;#x7684;&amp;#x6E90;&amp;#x7801;&amp;#x5206;&amp;#x6790;&amp;#x7CFB;&amp;#x5217;&amp;#x6587;&amp;#x7AE0;&amp;#xFF0C;&amp;#x8FD9;&amp;#x91CC;&amp;#x5F3A;&amp;#x70C8;&amp;#">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-12-28T14:58:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fresco源码分析之Controller">
+<meta name="twitter:description" content="&amp;#x5982;&amp;#x679C;&amp;#x4F60;&amp;#x662F;&amp;#x7B2C;&amp;#x4E00;&amp;#x6B21;&amp;#x770B;&amp;#x6211;&amp;#x7684;Fresco&amp;#x7684;&amp;#x6E90;&amp;#x7801;&amp;#x5206;&amp;#x6790;&amp;#x7CFB;&amp;#x5217;&amp;#x6587;&amp;#x7AE0;&amp;#xFF0C;&amp;#x8FD9;&amp;#x91CC;&amp;#x5F3A;&amp;#x70C8;&amp;#">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Suppiler"><span class="toc-text">Suppiler</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PipelineDraweeControllerFactory"><span class="toc-text">PipelineDraweeControllerFactory</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ImagePipeline"><span class="toc-text">ImagePipeline</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ControllerListener"><span class="toc-text">ControllerListener</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ControllerBuilder"><span class="toc-text">ControllerBuilder</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Controller"><span class="toc-text">Controller</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#onAttach"><span class="toc-text">onAttach</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#onDetach"><span class="toc-text">onDetach</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#End"><span class="toc-text">End</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Fresco源码分析之Controller" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Fresco源码分析之Controller</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.12.14</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>&#x5982;&#x679C;&#x4F60;&#x662F;&#x7B2C;&#x4E00;&#x6B21;&#x770B;&#x6211;&#x7684;<strong>Fresco</strong>&#x7684;&#x6E90;&#x7801;&#x5206;&#x6790;&#x7CFB;&#x5217;&#x6587;&#x7AE0;&#xFF0C;&#x8FD9;&#x91CC;&#x5F3A;&#x70C8;&#x63A8;&#x8350;&#x4F60;&#x5148;&#x9605;&#x8BFB;&#x6211;&#x7684;&#x524D;&#x9762;&#x4E24;&#x7BC7;&#x6587;&#x7AE0;<a href="https://idisfkj.github.io/2017/11/28/Fresco%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BDraweeView/" target="_blank" rel="noopener">Fresco&#x6E90;&#x7801;&#x5206;&#x6790;&#x4E4B;DraweeView</a>&#x4E0E;<a href="https://idisfkj.github.io/2017/12/07/Fresco%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BHierarchy/" target="_blank" rel="noopener">Fresco&#x6E90;&#x7801;&#x5206;&#x6790;&#x4E4B;Hierarchy</a>&#x3002;&#x597D;&#x4E86;&#xFF0C;&#x4E0B;&#x9762;&#x8FDB;&#x5165;&#x6B63;&#x9898;&#x3002;&#x5728;&#x4E0A;&#x7BC7;&#x6587;&#x7AE0;&#x4E2D;&#x6211;&#x4EEC;&#x63D0;&#x5230;&#xFF0C;&#x5728;<strong>Fresco</strong>&#x4E2D;&#x5173;&#x4E8E;&#x56FE;&#x7247;&#x7684;&#x7F13;&#x5B58;&#x3001;&#x8BF7;&#x6C42;&#x4E0E;&#x663E;&#x793A;&#x903B;&#x8F91;&#x5904;&#x7406;&#x90FD;&#x5728;<strong>Controller</strong>&#x4E2D;&#x3002;&#x90A3;&#x4E48;<strong>Controller</strong>&#x5230;&#x5E95;&#x662F;&#x5982;&#x4F55;&#x8D2F;&#x7A7F;&#x8FD9;&#x4E9B;&#x529F;&#x80FD;&#x7684;&#x5462;&#xFF1F;&#x6211;&#x4EEC;&#x5148;&#x4ECE;&#x5B83;&#x7684;&#x51FA;&#x751F;&#x5F00;&#x59CB;&#x3002;</p>
+<h1 id="Suppiler"><a href="#Suppiler" class="headerlink" title="Suppiler"></a>Suppiler</h1><p><strong>PipelineDraweeControllerBuilderSupplier</strong>&#x662F;&#x4E00;&#x4E2A;&#x4F9B;&#x5E94;&#x5546;&#xFF0C;&#x4E3B;&#x8981;&#x5B9E;&#x73B0;&#x4E86;<code>Supplier&lt;T&gt;</code>&#x63A5;&#x53E3;&#xFF0C;&#x5B83;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;<em>T get()</em>&#xFF0C;&#x7528;&#x6765;&#x83B7;&#x53D6;&#x76F8;&#x5173;&#x7684;&#x63D0;&#x4F9B;&#x5B9E;&#x73B0;&#x3002;&#x56E0;&#x6B64;&#x8BE5;&#x4F9B;&#x5E94;&#x7C7B;&#x63D0;&#x4F9B;&#x7684;&#x5C31;&#x662F;<strong>PipelineDraweeControllerBuilder</strong>&#x5B9E;&#x4F8B;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public PipelineDraweeControllerBuilder get() {</span><br><span class="line">  return new PipelineDraweeControllerBuilder(</span><br><span class="line">      mContext,</span><br><span class="line">      mPipelineDraweeControllerFactory,</span><br><span class="line">      mImagePipeline,</span><br><span class="line">      mBoundControllerListeners);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x751F;&#x6210;&#x7684;<strong>builder</strong>&#x4E2D;&#x6709;4&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x7B2C;&#x4E00;&#x4E2A;&#x662F;<strong>Context</strong>&#x518D;&#x719F;&#x6089;&#x4E0D;&#x8FC7;&#x4E86;&#xFF1B;&#x7B2C;&#x4E8C;&#x4E2A;&#x662F;<strong>Controller</strong>&#x7684;&#x5DE5;&#x5382;&#xFF1B;&#x7B2C;&#x4E09;&#x4E2A;&#x662F;&#x6570;&#x636E;&#x7BA1;&#x9053;<strong>ImagePipeline</strong>&#xFF1B;&#x7B2C;&#x56DB;&#x4E2A;&#x662F;<strong>listener</strong>&#x7684;<strong>set</strong>&#x96C6;&#x5408;&#xFF0C;&#x4E3B;&#x8981;&#x7528;&#x5728;&#x56FE;&#x7247;&#x8BF7;&#x6C42;&#x4E4B;&#x540E;&#x7684;&#x76D1;&#x542C;&#x56DE;&#x8C03;&#x3002;&#x4E0B;&#x9762;&#x8BE6;&#x7EC6;&#x8BF4;&#x660E;&#x540E;&#x9762;&#x4E09;&#x4E2A;&#x53C2;&#x6570;&#x5185;&#x5BB9;&#x4E0E;&#x4F5C;&#x7528;&#x3002;</p>
+<h2 id="PipelineDraweeControllerFactory"><a href="#PipelineDraweeControllerFactory" class="headerlink" title="PipelineDraweeControllerFactory"></a>PipelineDraweeControllerFactory</h2><p>&#x5728;&#x8FD9;&#x4E2A;&#x7C7B;&#x4E2D;&#x4E3B;&#x8981;&#x5C31;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;&#x5206;&#x522B;&#x4E3A;<strong>internalCreateController</strong>&#x4E0E;<strong>newController</strong>&#xFF0C;&#x5BF9;&#x5916;&#x7684;&#x65B9;&#x6CD5;&#x5C31;&#x4E00;&#x4E2A;<strong>newController</strong>&#x3002;&#x8FD9;&#x4E2A;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#x90FD;&#x662F;&#x7528;&#x6765;&#x521B;&#x5EFA;<strong>PipelineDraweeController</strong>&#x5BF9;&#x8C61;&#x3002;&#x5176;&#x4E2D;<strong>newController</strong>&#x5185;&#x90E8;&#x5C31;&#x662F;&#x8C03;&#x7528;&#x4E86;<strong>internalCreateController</strong>&#x6765;&#x8FDB;&#x884C;&#x521B;&#x5EFA;<strong>PipelineDraweeController</strong>&#x5B9E;&#x4F8B;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">protected PipelineDraweeController internalCreateController(</span><br><span class="line">    Resources resources,</span><br><span class="line">    DeferredReleaser deferredReleaser,</span><br><span class="line">    DrawableFactory animatedDrawableFactory,</span><br><span class="line">    Executor uiThreadExecutor,</span><br><span class="line">    MemoryCache&lt;CacheKey, CloseableImage&gt; memoryCache,</span><br><span class="line">    @Nullable ImmutableList&lt;DrawableFactory&gt; globalDrawableFactories,</span><br><span class="line">    @Nullable ImmutableList&lt;DrawableFactory&gt; customDrawableFactories,</span><br><span class="line">     Supplier&lt;DataSource&lt;CloseableReference&lt;CloseableImage&gt;&gt;&gt; dataSourceSupplier,</span><br><span class="line">    String id,</span><br><span class="line">    CacheKey cacheKey,</span><br><span class="line">    Object callerContext) {</span><br><span class="line">  PipelineDraweeController controller = new PipelineDraweeController(</span><br><span class="line">      resources,</span><br><span class="line">      deferredReleaser,</span><br><span class="line">      animatedDrawableFactory,</span><br><span class="line">      uiThreadExecutor,</span><br><span class="line">      memoryCache,</span><br><span class="line">      dataSourceSupplier,</span><br><span class="line">      id,</span><br><span class="line">      cacheKey,</span><br><span class="line">      callerContext,</span><br><span class="line">      globalDrawableFactories);</span><br><span class="line">   controller.setCustomDrawableFactories(customDrawableFactories);</span><br><span class="line">  return controller;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5176;&#x4E2D;<strong>DeferredReleaser</strong>&#x662F;&#x7528;&#x6765;&#x7BA1;&#x7406;&#x63A8;&#x8FDF;&#x8D44;&#x6E90;&#x91CA;&#x653E;&#x7684;&#x3002;&#x6211;&#x4EEC;&#x5728;&#x4E4B;&#x524D;&#x7684;&#x6587;&#x7AE0;&#x5DF2;&#x7ECF;&#x63D0;&#x5230;&#xFF0C;&#x5728;<strong>onAttach</strong>&#x4E2D;&#x4F1A;&#x8FDB;&#x884C;&#x52A0;&#x8F7D;&#x8D44;&#x6E90;&#xFF0C;&#x800C;<strong>onDetach</strong>&#x4E2D;&#x53C8;&#x4F1A;&#x91CA;&#x653E;&#x8D44;&#x6E90;&#x3002;&#x56E0;&#x4E3A;&#x5728;<strong>Fresco</strong>&#x4E2D;&#x5F80;&#x5F80;&#x4F1A;&#x5728;<strong>onDetach</strong>&#x4E0E;<strong>onAttach</strong>&#x4E4B;&#x95F4;&#x9891;&#x7E41;&#x5207;&#x6362;(view&#x7684;&#x663E;&#x9690;&#x3001;&#x7ED8;&#x5236;&#x4E0E;Controller&#x7684;&#x8BBE;&#x7F6E;&#x90FD;&#x4F1A;&#x8C03;&#x7528;)&#xFF0C;&#x5E76;&#x4E14;&#x5B83;&#x4EEC;&#x90FD;&#x5904;&#x4E8E;&#x5728;&#x540C;&#x4E00;&#x4E2A;<strong>looper</strong>(&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x4E3B;&#x8FDB;&#x7A0B;&#x7684;looper)&#x4E2D;&#x3002;&#x5982;&#x679C;&#x5728;<strong>onDetach</strong>&#x65F6;&#x9A6C;&#x4E0A;&#x91CA;&#x653E;&#x8D44;&#x6E90;&#x7684;&#x8BDD;&#xFF0C;&#x8FD9;&#x6837;&#x4F1A;&#x9020;&#x6210;&#x8D44;&#x6E90;&#x7684;&#x6EE5;&#x7528;&#xFF0C;&#x5BFC;&#x81F4;&#x4E0D;&#x5FC5;&#x8981;&#x7684;&#x8D44;&#x6E90;&#x52A0;&#x8F7D;&#x4E0E;&#x91CA;&#x653E;&#x56DE;&#x6536;&#x3002;&#x6240;&#x4EE5;&#x5C31;&#x7528;&#x4E86;&#x8FD9;&#x4E2A;&#x8D44;&#x6E90;&#x63A8;&#x8FDF;&#x91CA;&#x653E;&#x7684;&#x673A;&#x5236;(&#x5185;&#x90E8;&#x539F;&#x7406;&#x662F;&#x4F7F;&#x7528;&#x4E86;set&#x96C6;&#x5408;&#x7684;&#x552F;&#x4E00;&#x6027;&#x7684;&#x7279;&#x6027;)&#x3002;</p>
+<p><strong>dataSourceSupplier</strong>&#x662F;<strong>DataSource</strong>&#x7684;&#x4F9B;&#x5E94;&#x5546;&#xFF0C;&#x7528;&#x6765;&#x63D0;&#x4F9B;<strong>DataSource</strong>&#x5B9E;&#x4F8B;&#x3002;&#x800C;<strong>DataSource</strong>&#x662F;&#x7528;&#x6765;&#x83B7;&#x53D6;&#x4E0E;&#x5B58;&#x50A8;&#x8BF7;&#x6C42;&#x7ED3;&#x679C;&#x7684;&#xFF0C;&#x76F8;&#x5F53;&#x4E0E;&#x56FE;&#x7247;&#x6570;&#x636E;&#x6E90;&#x3002;&#x8FD9;&#x4E9B;&#x90FD;&#x4F1A;&#x5728;&#x540E;&#x7EED;&#x7684;<strong>Controller</strong>&#x4E2D;&#x4F7F;&#x7528;&#x5230;&#x3002;</p>
+<h2 id="ImagePipeline"><a href="#ImagePipeline" class="headerlink" title="ImagePipeline"></a>ImagePipeline</h2><p>&#x65E2;&#x7136;&#x5B83;&#x662F;&#x6570;&#x636E;&#x7BA1;&#x9053;&#xFF0C;&#x81EA;&#x7136;&#x662F;&#x4E0E;&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#x4E0E;&#x7F13;&#x5B58;&#x6570;&#x636E;&#x6709;&#x5173;&#x3002;&#x5176;&#x5B9E;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x628A;&#x5B83;&#x7406;&#x89E3;&#x4E3A;&#x591A;&#x4E2A;&#x7BA1;&#x9053;&#x7684;&#x96C6;&#x5408;&#xFF0C;&#x6700;&#x7EC8;&#x663E;&#x793A;&#x7684;&#x56FE;&#x7247;&#x8D44;&#x6E90;&#x5C31;&#x662F;&#x6765;&#x81EA;&#x4E8E;&#x5B83;&#x4EEC;&#x4E2D;&#x7684;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;&#x3002;&#x4E0B;&#x9762;&#x4ECB;&#x7ECD;&#x5176;&#x4E2D;&#x7684;&#x4E3B;&#x8981;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<ul>
+<li><em>fetchDecodedImage()</em> &#x53D1;&#x9001;&#x8BF7;&#x6C42;&#xFF0C;&#x8FD4;&#x56DE;<strong>decode image</strong>&#x7684;&#x6570;&#x636E;&#x6E90;&#x3002;</li>
+<li><em>fetchEncodedImage()</em> &#x53D1;&#x9001;&#x8BF7;&#x6C42;&#xFF0C;&#x8FD4;&#x56DE;<strong>encoded image</strong>&#x7684;&#x6570;&#x636E;&#x6E90;&#x3002;</li>
+<li><em>prefetchToBitmapCache()</em> &#x53D1;&#x9001;&#x9884;&#x5904;&#x7406;&#x8BF7;&#x6C42;&#xFF0C;&#x83B7;&#x53D6;&#x9884;&#x5904;&#x7406;&#x7684;<strong>bitmap</strong>&#x7F13;&#x5B58;&#x6570;&#x636E;&#x3002;</li>
+<li><em>prefetchToDiskCache()</em> &#x53D1;&#x9001;&#x9884;&#x5904;&#x7406;&#x8BF7;&#x6C42;&#xFF0C;&#x83B7;&#x53D6;&#x9884;&#x5904;&#x7406;&#x7684;&#x78C1;&#x76D8;&#x7F13;&#x5B58;&#x6570;&#x636E;&#x3002;</li>
+<li><em>submitFetchRequest()</em> &#x53D1;&#x9001;&#x8BF7;&#x6C42;&#xFF0C;&#x83B7;&#x53D6;&#x76F8;&#x5E94;&#x7C7B;&#x578B;&#x7684;&#x6570;&#x636E;&#x6E90;&#x3002;</li>
+<li><em>submitPrefetchRequest()</em> &#x53D1;&#x9001;&#x9884;&#x5904;&#x7406;&#x8BF7;&#x6C42;&#xFF0C;&#x83B7;&#x53D6;&#x76F8;&#x5E94;&#x7C7B;&#x578B;&#x7684;&#x7F13;&#x5B58;&#x6570;&#x636E;&#x3002;</li>
+</ul>
+<p>&#x8FD9;&#x91CC;&#x7528;&#x7684;&#x6700;&#x591A;&#x7684;&#x8FD8;&#x662F;<em>fetchDecodedImage()</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public DataSource&lt;CloseableReference&lt;CloseableImage&gt;&gt; fetchDecodedImage(</span><br><span class="line">    ImageRequest imageRequest,</span><br><span class="line">    Object callerContext,</span><br><span class="line">    ImageRequest.RequestLevel lowestPermittedRequestLevelOnSubmit) {</span><br><span class="line">  try {</span><br><span class="line">    Producer&lt;CloseableReference&lt;CloseableImage&gt;&gt; producerSequence =</span><br><span class="line">         mProducerSequenceFactory.getDecodedImageProducerSequence(imageRequest);</span><br><span class="line">    return submitFetchRequest(</span><br><span class="line">        producerSequence,</span><br><span class="line">        imageRequest,</span><br><span class="line">        lowestPermittedRequestLevelOnSubmit,</span><br><span class="line">        callerContext);</span><br><span class="line">  } catch (Exception exception) {</span><br><span class="line">    return DataSources.immediateFailedDataSource(exception);</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x6D89;&#x53CA;&#x5230;<strong>Producer</strong>&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x751F;&#x4EA7;&#x8005;&#xFF0C;&#x5185;&#x90E8;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x516C;&#x5171;&#x63A5;&#x53E3;&#x65B9;&#x6CD5;<em>void produceResults(Consumer<t> consumer, ProducerContext context)</t></em>&#xFF0C;&#x7528;&#x6765;&#x83B7;&#x53D6;&#x6570;&#x636E;&#x6E90;&#x3002;&#x5176;&#x5B9E;&#x6211;&#x4EEC;&#x4F1A;&#x53D1;&#x73B0;<strong>submitFetchRequest</strong>&#x65B9;&#x6CD5;&#x4E2D;&#x7684;<strong>producer</strong>&#x4F20;&#x5165;&#x7684;&#x5176;&#x5B9E;&#x662F;&#x4E00;&#x4E2A;&#x961F;&#x5217;&#xFF0C;&#x56E0;&#x4E3A;&#x5185;&#x90E8;&#x4F1A;&#x9012;&#x5F52;&#x8C03;&#x7528;<em>produceResults()</em>&#x6765;&#x83B7;&#x53D6;&#x6700;&#x7EC8;&#x7684;&#x6570;&#x636E;&#x6E90;&#x3002;</p>
+<blockquote>
+<p>&#x5173;&#x4E8E;<strong>Producer</strong>&#x540E;&#x7EED;&#x6709;&#x65F6;&#x95F4;&#x7684;&#x8BDD;&#x4F1A;&#x5355;&#x72EC;&#x5F00;&#x7BC7;&#x6587;&#x7AE0;&#x8BE6;&#x7EC6;&#x5206;&#x6790;&#x3002;</p>
+</blockquote>
+<h2 id="ControllerListener"><a href="#ControllerListener" class="headerlink" title="ControllerListener"></a>ControllerListener</h2><p>&#x5982;&#x679C;&#x4F60;&#x5BF9;<strong>ControllerListener</strong>&#x4E0D;&#x719F;&#x6089;&#x7684;&#x8BDD;&#xFF0C;&#x90A3;&#x4E48;<strong>BaseControllerListener</strong>&#x5E94;&#x8BE5;&#x6216;&#x591A;&#x6216;&#x5C11;&#x4F7F;&#x7528;&#x8FC7;&#x5427;&#x3002;&#x5B83;&#x5176;&#x5B9E;&#x5C31;&#x662F;<strong>ControllerListener</strong>&#x7684;&#x7A7A;&#x5B9E;&#x73B0;&#x3002;&#x65E2;&#x7136;&#x662F;&#x76D1;&#x542C;&#x56DE;&#x8C03;&#xFF0C;&#x90A3;&#x4E48;&#x6765;&#x770B;&#x4E0B;&#x5B83;&#x63D0;&#x4F9B;&#x7684;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#x4E0E;&#x8C03;&#x7528;&#x65F6;&#x673A;&#x3002;</p>
+<ul>
+<li><em>void onSubmit(String id, Object callerContext)</em> &#x5728;&#x53D1;&#x9001;&#x8BF7;&#x6C42;&#x7684;&#x65F6;&#x5019;&#x56DE;&#x8C03;</li>
+<li><em>void onFinalImageSet(String id, @Nullable INFO imageInfo, @Nullable Animatable animatable)</em> &#x5728;&#x6700;&#x7EC8;&#x8BBE;&#x7F6E;<strong>image</strong>&#x56FE;&#x7247;&#x65F6;&#x56DE;&#x8C03;&#xFF0C;&#x5176;&#x4E2D;<strong>imageInfo</strong>&#x5305;&#x542B;&#x56FE;&#x7247;&#x7684;&#x76F8;&#x5173;&#x57FA;&#x672C;&#x4FE1;&#x606F;&#xFF08;width&#x3001;height&#x4E0E;quality&#xFF09;</li>
+<li><em>void onIntermediateImageSet(String id, @Nullable INFO imageInfo)</em> &#x5728;&#x53D1;&#x9001;&#x8BF7;&#x6C42;&#x4E0E;&#x6700;&#x7EC8;&#x56FE;&#x7247;&#x8BBE;&#x7F6E;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x56DE;&#x8C03;</li>
+<li><em>void onIntermediateImageFailed(String id, Throwable throwable)</em> &#x5728;&#x53D1;&#x9001;&#x8BF7;&#x6C42;&#x4E0E;&#x6700;&#x7EC8;&#x5931;&#x8D25;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x56DE;&#x8C03;</li>
+<li><em>void onFailure(String id, Throwable throwable)</em> &#x53D1;&#x9001;&#x8BF7;&#x6C42;&#x5931;&#x8D25;&#x65F6;&#x56DE;&#x8C03;</li>
+<li><em>void onRelease(String id)</em> &#x8D44;&#x6E90;&#x91CA;&#x653E;&#x65F6;&#x56DE;&#x8C03;</li>
+</ul>
+<h1 id="ControllerBuilder"><a href="#ControllerBuilder" class="headerlink" title="ControllerBuilder"></a>ControllerBuilder</h1><p>&#x65E2;&#x7136;&#x662F;<strong>builder</strong>&#x6A21;&#x5F0F;&#xFF0C;&#x6700;&#x7EC8;&#x7684;&#x76EE;&#x7684;&#x81EA;&#x7136;&#x5C31;&#x662F;&#x7528;&#x6765;&#x521B;&#x5EFA;<strong>Controller</strong>&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x5954;&#x7740;&#x5B83;&#x7684;&#x76EE;&#x7684;&#x6765;&#x5206;&#x6790;&#x3002;&#x5728;&#x8FD9;&#x91CC;<strong>Controller</strong>&#x7684;<strong>builder</strong>&#x7C7B;&#x662F;<strong>PipelineDraweeControllerBuilder</strong>&#x3002;&#x6211;&#x4EEC;&#x627E;&#x5230;&#x5B83;&#x7684;<em>build()</em>&#x53D1;&#x73B0;&#x5728;&#x5B83;&#x7684;&#x7236;&#x7C7B;<strong>AbstractDraweeControllerBuilder</strong>&#x4E2D;&#x3002;&#x4F46;&#x6700;&#x7EC8;&#x7684;&#x521B;&#x5EFA;&#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;&#x8FD8;&#x662F;&#x8C03;&#x7528;&#x4E86;<em>obtainController()</em>&#x62BD;&#x8C61;&#x65B9;&#x6CD5;&#x3002;&#x6240;&#x4EE5;&#x7ECF;&#x8FC7;&#x53CD;&#x8F6C;&#x8FD8;&#x662F;&#x56DE;&#x5230;&#x4E86;<strong>PipelineDraweeControllerBuilder</strong>&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x76F4;&#x63A5;&#x6765;&#x770B;&#x4E0B;&#x5B83;&#x521B;&#x5EFA;&#x65B9;&#x5F0F;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">protected PipelineDraweeController obtainController() {</span><br><span class="line">  DraweeController oldController = getOldController();</span><br><span class="line">  PipelineDraweeController controller;</span><br><span class="line">  if (oldController instanceof PipelineDraweeController) {</span><br><span class="line">    controller = (PipelineDraweeController) oldController;</span><br><span class="line">    controller.initialize(</span><br><span class="line">        obtainDataSourceSupplier(),</span><br><span class="line">        generateUniqueControllerId(),</span><br><span class="line">        getCacheKey(),</span><br><span class="line">        getCallerContext(),</span><br><span class="line">        mCustomDrawableFactories);</span><br><span class="line">  } else {</span><br><span class="line">    controller = mPipelineDraweeControllerFactory.newController(</span><br><span class="line">        obtainDataSourceSupplier(),</span><br><span class="line">        generateUniqueControllerId(),</span><br><span class="line">        getCacheKey(),</span><br><span class="line">        getCallerContext(),</span><br><span class="line">        mCustomDrawableFactories);</span><br><span class="line">  }</span><br><span class="line">  return controller;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x901A;&#x8FC7;&#x4E0A;&#x9762;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x903B;&#x8F91;&#x5DF2;&#x7ECF;&#x5F88;&#x660E;&#x663E;&#x4E86;&#x3002;&#x9996;&#x5148;&#x5224;&#x65AD;&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;<strong>Controller</strong>&#xFF0C;&#x5982;&#x679C;&#x5B58;&#x5728;&#x7684;&#x8BDD;&#x5C31;&#x65E0;&#x9700;&#x521B;&#x5EFA;&#x65B0;&#x7684;&#x5B9E;&#x4F8B;&#xFF0C;&#x53EA;&#x9700;&#x8C03;&#x7528;<em>initialize()</em>&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x91CD;&#x5199;&#x521D;&#x59CB;&#x5316;&#xFF1B;&#x5982;&#x679C;&#x4E0D;&#x5B58;&#x5728;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x8C03;&#x7528;&#x6211;&#x4EEC;&#x6587;&#x7AE0;&#x4E4B;&#x524D;&#x5206;&#x6790;&#x7684;<strong>PipelineDraweeControllerFactory</strong>&#x4E2D;&#x7684;<em>newController()</em>&#x6765;&#x521B;&#x5EFA;&#x65B0;&#x7684;&#x5B9E;&#x4F8B;&#x3002;&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x7684;&#x53C2;&#x6570;&#x8FD8;&#x662F;<em>obtainDataSourceSupplier()</em>&#xFF0C;&#x4E4B;&#x524D;&#x4E5F;&#x7B80;&#x5355;&#x63D0;&#x5230;&#x4E86;&#xFF0C;&#x5B83;&#x662F;<strong>DataSource</strong>&#x7684;&#x4F9B;&#x5E94;&#x8005;&#x3002;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4E0B;<strong>Supplier</strong>&#x7684;&#x521B;&#x5EFA;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">protected Supplier&lt;DataSource&lt;IMAGE&gt;&gt; getDataSourceSupplierForRequest(</span><br><span class="line">    final REQUEST imageRequest,</span><br><span class="line">    final CacheLevel cacheLevel) {</span><br><span class="line">  final Object callerContext = getCallerContext();</span><br><span class="line">  return new Supplier&lt;DataSource&lt;IMAGE&gt;&gt;() {</span><br><span class="line">    @Override</span><br><span class="line">    public DataSource&lt;IMAGE&gt; get() {</span><br><span class="line">      return getDataSourceForRequest(imageRequest, callerContext, cacheLevel);</span><br><span class="line">    }</span><br><span class="line">    @Override</span><br><span class="line">    public String toString() {</span><br><span class="line">      return Objects.toStringHelper(this)</span><br><span class="line">          .add(&quot;request&quot;, imageRequest.toString())</span><br><span class="line">          .toString();</span><br><span class="line">    }</span><br><span class="line">  };</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x4E00;&#x773C;&#x5C31;&#x770B;&#x5230;&#x4E86;<strong>Supplier</strong>&#x7684;&#x521B;&#x5EFA;&#xFF0C;&#x4E4B;&#x524D;&#x4E5F;&#x63D0;&#x5230;&#x5B83;&#x53EA;&#x6709;&#x4E00;&#x4E2A;<em>get()</em>&#x65B9;&#x6CD5;&#xFF0C;&#x5C31;&#x662F;&#x7528;&#x6765;&#x63D0;&#x4F9B;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x7684;<strong>DataSource</strong>&#x3002;&#x5728;&#x8FD9;&#x91CC;&#x4E5F;&#x662F;&#x5982;&#x6B64;&#xFF0C;&#x8FD9;&#x91CC;&#x5B83;&#x8C03;&#x7528;&#x4E86;<em>getDataSourceForRequest()</em>&#x65B9;&#x6CD5;&#xFF0C;&#x8BE5;&#x65B9;&#x6CD5;&#x662F;&#x4E00;&#x4E2A;&#x62BD;&#x8C61;&#x65B9;&#x6CD5;&#xFF0C;&#x7EC6;&#x8282;&#x5B9E;&#x73B0;&#x7531;&#x5B83;&#x7684;&#x5B50;&#x7C7B;&#x5B9E;&#x73B0;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x518D;&#x6B21;&#x56DE;&#x5230;<strong>getDataSourceForRequest</strong>&#xFF0C;&#x5728;&#x5176;&#x4E2D;&#x5C31;&#x80FD;&#x591F;&#x641C;&#x7D22;&#x5230;<em>getDataSourceForRequest()</em>&#x65B9;&#x6CD5;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">protected DataSource&lt;CloseableReference&lt;CloseableImage&gt;&gt; getDataSourceForRequest(</span><br><span class="line">    ImageRequest imageRequest,</span><br><span class="line">    Object callerContext,</span><br><span class="line">    CacheLevel cacheLevel) {</span><br><span class="line">  return mImagePipeline.fetchDecodedImage(</span><br><span class="line">      imageRequest,</span><br><span class="line">      callerContext,</span><br><span class="line">      convertCacheLevelToRequestLevel(cacheLevel));</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x770B;&#x5230;&#x4E0A;&#x9762;&#x7684;&#x65B9;&#x6CD5;&#x5B9E;&#x73B0;&#x65B9;&#x6CD5;&#x662F;&#x5426;&#x773C;&#x719F;&#x5462;&#xFF1F;&#x8FD9;&#x4E5F;&#x662F;&#x6211;&#x4EEC;&#x4E0A;&#x9762;&#x6240;&#x63D0;&#x5230;&#x7684;<strong>ImagePipleline</strong>&#x4E2D;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x8FD9;&#x91CC;&#x5C31;&#x4E0D;&#x5728;&#x591A;&#x505A;&#x5206;&#x6790;&#x4E86;&#x3002;&#x8FD9;&#x6837;<strong>Controller</strong>&#x5C31;&#x4E0E;&#x83B7;&#x53D6;&#x6570;&#x636E;&#x7684;&#x901A;&#x9053;&#x5EFA;&#x7ACB;&#x4E86;&#x8054;&#x7CFB;&#x3002;&#x90A3;&#x4E48;&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x5C31;&#x8F6C;&#x6218;&#x5230;<strong>Controller</strong>&#x4E2D;&#xFF0C;&#x770B;&#x770B;&#x5B83;&#x5230;&#x5E95;&#x505A;&#x4E86;&#x4EC0;&#x4E48;&#x3002;</p>
+<h1 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h1><p><strong>PipelineDraweeController</strong>&#x7EE7;&#x627F;&#x4E8E;<strong>AbstractDraweeController</strong>&#xFF0C;&#x5728;<strong>PipelineDraweeController</strong>&#x4E2D;&#x4E3B;&#x8981;&#x7684;&#x65B9;&#x6CD5;&#x6709;&#x4E09;&#x4E2A;</p>
+<ul>
+<li><em>Drawable createDrawable(CloseableImage closeableImage)</em> &#x8FD9;&#x662F;&#x5185;&#x90E8;&#x7C7B;<strong>DrawableFactory</strong>&#x4E2D;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x662F;&#x4E00;&#x4E2A;&#x5DE5;&#x5382;&#xFF0C;&#x4E0D;&#x8A00;&#x800C;&#x55BB;&#x5B83;&#x662F;&#x7528;&#x6765;&#x521B;&#x5EFA;<strong>Drawable</strong>&#x7684;&#xFF0C;&#x5728;&#x6570;&#x636E;&#x6E90;&#x8FD4;&#x56DE;&#x7684;&#x65F6;&#x5019;&#x56DE;&#x8C03;&#xFF0C;&#x8FDB;&#x800C;&#x663E;&#x793A;&#x5230;<strong>Hierarchy</strong>&#x5C42;&#x3002;</li>
+<li><em>getDataSource()</em> &#x83B7;&#x53D6;&#x6570;&#x636E;&#x6E90;&#x901A;&#x9053;&#xFF0C;&#x4E0E;&#x5176;&#x5EFA;&#x7ACB;&#x8054;&#x7CFB;&#x3002;</li>
+<li><em>void setHierarchy(@Nullable DraweeHierarchy hierarchy)</em> &#x8BBE;&#x7F6E;<strong>Hierarchy</strong>&#x56FE;&#x5C42;&#xFF0C;&#x5185;&#x90E8;&#x6301;&#x6709;&#x7684;&#x5176;&#x5B9E;&#x662F;<strong>SettableDraweeHierarchy</strong>&#x63A5;&#x53E3;&#x5BF9;&#x8C61;&#x3002;&#x6240;&#x4EE5;&#x5185;&#x90E8;&#x8C03;&#x7528;&#x7684;&#x4E5F;&#x5C31;&#x662F;&#x5B83;&#x7684;6&#x4E2A;&#x63A5;&#x53E3;&#x65B9;&#x6CD5;&#x3002;&#x4E4B;&#x524D;&#x7684;&#x6587;&#x7AE0;&#x4E5F;&#x6709;&#x63D0;&#x53CA;&#xFF0C;&#x7528;&#x6765;&#x63A7;&#x5236;&#x56FE;&#x7247;&#x52A0;&#x8F7D;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x663E;&#x793A;&#x903B;&#x8F91;&#x3002;</li>
+</ul>
+<p>&#x5176;&#x4F59;&#x7684;&#x903B;&#x8F91;&#x5904;&#x7406;&#x90FD;&#x5728;&#x5B83;&#x7684;&#x7236;&#x7C7B;<strong>AbstractDraweeController</strong>&#x4E2D;&#x3002;&#x5728;&#x4E4B;&#x524D;&#x6211;&#x4EEC;&#x591A;&#x6B21;&#x63D0;&#x53CA;&#x5230;<strong>onAttach</strong>&#x4E0E;<strong>onDetach</strong>&#x65B9;&#x6CD5;&#xFF0C;&#x5B83;&#x4EEC;&#x5206;&#x522B;&#x662F;&#x5904;&#x7406;&#x6570;&#x636E;&#x52A0;&#x8F7D;&#x4E0E;&#x91CA;&#x653E;&#x3002;</p>
+<h2 id="onAttach"><a href="#onAttach" class="headerlink" title="onAttach"></a>onAttach</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> @Override</span><br><span class="line"> public void onAttach() {</span><br><span class="line">   if (FLog.isLoggable(FLog.VERBOSE)) {</span><br><span class="line">     FLog.v(</span><br><span class="line">         TAG,</span><br><span class="line">         &quot;controller %x %s: onAttach: %s&quot;,</span><br><span class="line">         System.identityHashCode(this),</span><br><span class="line">         mId,</span><br><span class="line">         mIsRequestSubmitted ? &quot;request already submitted&quot; : &quot;request needs submit&quot;);</span><br><span class="line">   }</span><br><span class="line">   //&#x4E8B;&#x4EF6;&#x8BB0;&#x5F55;&#x5668;</span><br><span class="line">mEventTracker.recordEvent(Event.ON_ATTACH_CONTROLLER);</span><br><span class="line"> Preconditions.checkNotNull(mSettableDraweeHierarchy);</span><br><span class="line">   //&#x53D6;&#x6D88;&#x8D44;&#x6E90;&#x63A8;&#x8FDF;&#x91CA;&#x653E;&#x673A;&#x5236;&#xFF0C;&#x9632;&#x6B62;&#x8D44;&#x6E90;&#x88AB;&#x91CA;&#x653E;</span><br><span class="line">   mDeferredReleaser.cancelDeferredRelease(this);</span><br><span class="line">   mIsAttached = true;</span><br><span class="line">   if (!mIsRequestSubmitted) {</span><br><span class="line">     submitRequest();</span><br><span class="line">   }</span><br><span class="line"> }</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x4E2D;<strong>mEventTracker</strong>&#x662F;&#x4E8B;&#x4EF6;&#x8BB0;&#x5F55;&#x5668;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F;&#x5F00;&#x542F;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x8981;&#x5173;&#x95ED;&#x5219;&#x9700;&#x8981;&#x5728;<em>Fresco.initialize()</em>&#x4E4B;&#x524D;&#x8C03;&#x7528;<em>DraweeEventTracker.disable()</em>&#x5173;&#x95ED;&#xFF1B;&#x7136;&#x540E;&#x5C31;&#x662F;&#x5C06;&#x5176;&#x4ECE;&#x8D44;&#x6E90;&#x63A8;&#x8FDF;&#x91CA;&#x653E;&#x673A;&#x5236;&#x4E2D;&#x53D6;&#x6D88;&#xFF1B;&#x6700;&#x540E;&#x5C31;&#x662F;&#x8C03;&#x7528;<em>submitRequest()</em>&#x53D1;&#x9001;&#x6570;&#x636E;&#x6E90;&#x8BF7;&#x6C42;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">protected void submitRequest() {</span><br><span class="line">  final T closeableImage = getCachedImage();</span><br><span class="line">  //1.&#x5224;&#x65AD;&#x5185;&#x5B58;&#x7F13;&#x5B58;&#x4E2D;&#x662F;&#x5426;&#x5B58;&#x5728;</span><br><span class="line">  if (closeableImage != null) {</span><br><span class="line">    mDataSource = null;</span><br><span class="line">    mIsRequestSubmitted = true;</span><br><span class="line">    mHasFetchFailed = false;</span><br><span class="line">     mEventTracker.recordEvent(Event.ON_SUBMIT_CACHE_HIT);</span><br><span class="line">    //1.1&#x6570;&#x636E;&#x83B7;&#x53D6;&#x4E2D;&#x901A;&#x77E5;&#x56DE;&#x8C03;</span><br><span class="line">    getControllerListener().onSubmit(mId, mCallerContext);</span><br><span class="line">    //1.2&#x6570;&#x636E;&#x5904;&#x7406;</span><br><span class="line">    onNewResultInternal(mId, mDataSource, closeableImage, 1.0f, true, true);</span><br><span class="line">    return;</span><br><span class="line">  }</span><br><span class="line">   mEventTracker.recordEvent(Event.ON_DATASOURCE_SUBMIT);</span><br><span class="line">  //2.&#x901A;&#x8FC7;DataSource&#x83B7;&#x53D6;&#x6570;&#x636E;&#x6E90;</span><br><span class="line">  //2.1&#x6570;&#x636E;&#x83B7;&#x53D6;&#x4E2D;&#x901A;&#x77E5;&#x56DE;&#x8C03;</span><br><span class="line">  getControllerListener().onSubmit(mId, mCallerContext);</span><br><span class="line">  mSettableDraweeHierarchy.setProgress(0, true);</span><br><span class="line">  mIsRequestSubmitted = true;</span><br><span class="line">  mHasFetchFailed = false;</span><br><span class="line">  mDataSource = getDataSource();</span><br><span class="line">  if (FLog.isLoggable(FLog.VERBOSE)) {</span><br><span class="line">    FLog.v(</span><br><span class="line">        TAG,</span><br><span class="line">        &quot;controller %x %s: submitRequest: dataSource: %x&quot;,</span><br><span class="line">        System.identityHashCode(this),</span><br><span class="line">        mId,</span><br><span class="line">        System.identityHashCode(mDataSource));</span><br><span class="line">  }</span><br><span class="line">  final String id = mId;</span><br><span class="line">  final boolean wasImmediate = mDataSource.hasResult();</span><br><span class="line">  //&#x5185;&#x90E8;&#x8BF7;&#x6C42;&#x6570;&#x636E;&#x56DE;&#x8C03;&#xFF0C;&#x5F53;&#x6570;&#x636E;&#x6E90;&#x8FD4;&#x56DE;&#x65F6;&#x56DE;&#x8C03;</span><br><span class="line">  final DataSubscriber&lt;T&gt; dataSubscriber =</span><br><span class="line">      new BaseDataSubscriber&lt;T&gt;() {</span><br><span class="line">        @Override</span><br><span class="line">        public void onNewResultImpl(DataSource&lt;T&gt; dataSource) {</span><br><span class="line">          // isFinished must be obtained before image, otherwise we might set intermediate result</span><br><span class="line">          // as final image.</span><br><span class="line">          boolean isFinished = dataSource.isFinished();</span><br><span class="line">          float progress = dataSource.getProgress();</span><br><span class="line">          T image = dataSource.getResult();</span><br><span class="line">          //2.2&#x6570;&#x636E;&#x5904;&#x7406;</span><br><span class="line">          if (image != null) {</span><br><span class="line">            //&#x6210;&#x529F;&#x5904;&#x7406;</span><br><span class="line">            onNewResultInternal(id, dataSource, image, progress, isFinished, wasImmediate);</span><br><span class="line">          } else if (isFinished) {</span><br><span class="line">            //&#x5931;&#x8D25;&#x5904;&#x7406;</span><br><span class="line">            onFailureInternal(id, dataSource, new NullPointerException(), /* isFinished */ true);</span><br><span class="line">          }</span><br><span class="line">        }</span><br><span class="line">        @Override</span><br><span class="line">        public void onFailureImpl(DataSource&lt;T&gt; dataSource) {</span><br><span class="line">          //&#x5931;&#x8D25;&#x5904;&#x7406;</span><br><span class="line">          onFailureInternal(id, dataSource, dataSource.getFailureCause(), /* isFinished */ true);</span><br><span class="line">        }</span><br><span class="line">        @Override</span><br><span class="line">        public void onProgressUpdate(DataSource&lt;T&gt; dataSource) {</span><br><span class="line">          boolean isFinished = dataSource.isFinished();</span><br><span class="line">          float progress = dataSource.getProgress();</span><br><span class="line">          //&#x6570;&#x636E;&#x8FDB;&#x5EA6;&#x5904;&#x7406;</span><br><span class="line">          onProgressUpdateInternal(id, dataSource, progress, isFinished);</span><br><span class="line">        }</span><br><span class="line">      };</span><br><span class="line">  //&#x6570;&#x636E;&#x6E90;&#x8BA2;&#x9605;&#x56DE;&#x8C03;&#x6CE8;&#x518C;</span><br><span class="line">  mDataSource.subscribe(dataSubscriber, mUiThreadImmediateExecutor);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x903B;&#x8F91;&#x65B9;&#x9762;&#x7684;&#x5904;&#x7406;&#xFF0C;&#x4E0A;&#x9762;&#x4EE3;&#x7801;&#x4E2D;&#x5DF2;&#x7ECF;&#x8BE6;&#x7EC6;&#x6CE8;&#x91CA;&#x4E86;&#xFF0C;&#x603B;&#x7684;&#x6765;&#x8BF4;&#x5C31;&#x662F;&#x5148;&#x4ECE;&#x5185;&#x5B58;&#x4E2D;&#x83B7;&#x53D6;&#x5982;&#x679C;&#x5B58;&#x5728;&#x5C31;&#x76F4;&#x63A5;&#x62FF;&#x6765;&#x7528;&#xFF0C;&#x5426;&#x5219;&#x5C31;&#x901A;&#x8FC7;<strong>DataSource</strong>&#x4ECE;&#x7F51;&#x7EDC;&#x6216;&#x8005;&#x662F;&#x672C;&#x5730;&#x8D44;&#x6E90;&#x4E2D;&#x83B7;&#x53D6;&#x3002;&#x4F7F;&#x7528;<strong>DataSource</strong>&#x65B9;&#x5F0F;&#x4F1A;&#x4F7F;&#x7528;&#x5230;<strong>DataSubscriber</strong>&#xFF0C;&#x5373;&#x8BA2;&#x9605;&#x65B9;&#x5F0F;&#x3002;&#x5F53;&#x6570;&#x636E;&#x6E90;&#x5DF2;&#x7ECF;&#x83B7;&#x53D6;&#x5230;&#x65F6;&#xFF0C;&#x53D1;&#x9001;&#x901A;&#x77E5;&#x7ED9;&#x8BA2;&#x9605;&#x8005;&#xFF0C;&#x56E0;&#x6B64;&#x5206;&#x522B;&#x56DE;&#x8C03;&#x8BA2;&#x9605;&#x8005;&#x7684;&#x65B9;&#x6CD5;&#x3002;&#x4E0A;&#x8FF0;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#x53EA;&#x8981;&#x6210;&#x529F;&#x4E86;&#x90FD;&#x4F1A;&#x4EA4;&#x7531;<em>onNewResultInternal()</em>&#x5904;&#x7406;&#xFF0C;&#x800C;&#x5931;&#x8D25;&#x5219;&#x7531;<em>onFailureInternal()</em>&#x5904;&#x7406;&#xFF0C;&#x540C;&#x65F6;&#x8BF7;&#x6C42;&#x8FDB;&#x5EA6;&#x5904;&#x7406;&#x7531;<em>onProgressUpdateInternal()</em>&#x5904;&#x7406;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">private void onNewResultInternal(</span><br><span class="line">    String id,</span><br><span class="line">    DataSource&lt;T&gt; dataSource,</span><br><span class="line">    @Nullable T image,</span><br><span class="line">    float progress,</span><br><span class="line">    boolean isFinished,</span><br><span class="line">    boolean wasImmediate) {</span><br><span class="line">  // ignore late callbacks (data source that returned the new result is not the one we expected)</span><br><span class="line">  if (!isExpectedDataSource(id, dataSource)) {</span><br><span class="line">    logMessageAndImage(&quot;ignore_old_datasource @ onNewResult&quot;, image);</span><br><span class="line">    releaseImage(image);</span><br><span class="line">    dataSource.close();</span><br><span class="line">    return;</span><br><span class="line">  }</span><br><span class="line">  mEventTracker.recordEvent(</span><br><span class="line">      isFinished ? Event.ON_DATASOURCE_RESULT : Event.ON_DATASOURCE_RESULT_INT);</span><br><span class="line">  // create drawable</span><br><span class="line">  Drawable drawable;</span><br><span class="line">  try {</span><br><span class="line">    drawable = createDrawable(image);</span><br><span class="line">  } catch (Exception exception) {</span><br><span class="line">    logMessageAndImage(&quot;drawable_failed @ onNewResult&quot;, image);</span><br><span class="line">    releaseImage(image);</span><br><span class="line">    onFailureInternal(id, dataSource, exception, isFinished);</span><br><span class="line">    return;</span><br><span class="line">  }</span><br><span class="line">  T previousImage = mFetchedImage;</span><br><span class="line">  Drawable previousDrawable = mDrawable;</span><br><span class="line">  mFetchedImage = image;</span><br><span class="line">  mDrawable = drawable;</span><br><span class="line">  try {</span><br><span class="line">    // set the new image</span><br><span class="line">    if (isFinished) {</span><br><span class="line">      logMessageAndImage(&quot;set_final_result @ onNewResult&quot;, image);</span><br><span class="line">      mDataSource = null;</span><br><span class="line">      //&#x901A;&#x8FC7;hierarchy&#xFF08;GenericDraweeHierarchy&#xFF09;&#x6765;&#x8BBE;&#x7F6E;image</span><br><span class="line">      mSettableDraweeHierarchy.setImage(drawable, 1f, wasImmediate);</span><br><span class="line">      getControllerListener().onFinalImageSet(id, getImageInfo(image), getAnimatable());</span><br><span class="line">      // IMPORTANT: do not execute any instance-specific code after this point</span><br><span class="line">    } else {</span><br><span class="line">      logMessageAndImage(&quot;set_intermediate_result @ onNewResult&quot;, image);</span><br><span class="line">      mSettableDraweeHierarchy.setImage(drawable, progress, wasImmediate);</span><br><span class="line">       getControllerListener().onIntermediateImageSet(id, getImageInfo(image));</span><br><span class="line">      // IMPORTANT: do not execute any instance-specific code after this point</span><br><span class="line">    }</span><br><span class="line">  } finally {</span><br><span class="line">    if (previousDrawable != null &amp;&amp; previousDrawable != drawable) {</span><br><span class="line">      releaseDrawable(previousDrawable);</span><br><span class="line">    }</span><br><span class="line">    if (previousImage != null &amp;&amp; previousImage != image) {</span><br><span class="line">      logMessageAndImage(&quot;release_previous_result @ onNewResult&quot;, previousImage);</span><br><span class="line">      releaseImage(previousImage);</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x4E3B;&#x8981;&#x5C31;&#x770B;&#x91CC;&#x9762;&#x7684;&#x4E24;&#x4E2A;<strong>try</strong>&#x3002;<br>&#x7B2C;&#x4E00;&#x4E2A;&#x4F7F;&#x7528;<em>createDrawable(image)</em>&#x5C06;&#x62FF;&#x5230;&#x7684;&#x6570;&#x636E;&#x6E90;&#x8F6C;&#x53D8;&#x6210;<strong>Drawable</strong>&#xFF0C;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#x662F;&#x5728;&#x5B50;&#x7C7B;&#x4E2D;&#x5B9E;&#x73B0;(&#x4E0A;&#x9762;&#x4E5F;&#x6709;&#x63D0;&#x53CA;)&#x3002;<br>&#x7B2C;&#x4E8C;&#x4E2A;&#x5206;&#x4E3A;&#x4E24;&#x79CD;&#x60C5;&#x51B5;&#xFF0C;&#x4E00;&#x65B9;&#x9762;&#x5982;&#x679C;&#x6570;&#x636E;&#x6E90;&#x5DF2;&#x7ECF;&#x5168;&#x90E8;&#x83B7;&#x53D6;&#x5B8C;&#xFF0C;&#x5219;&#x76F4;&#x63A5;&#x8C03;&#x7528;<strong>SettableDraweeHierarchy</strong>&#x63A5;&#x53E3;&#x7684;<em>setImage()</em>&#x65B9;&#x6CD5;&#x5C06;&#x56FE;&#x7247;&#x8BBE;&#x7F6E;&#x5230;<strong>Hierarchy</strong>&#x56FE;&#x5C42;&#x4E0A;&#xFF0C;&#x540C;&#x65F6;&#x8C03;&#x7528;<strong>Listener</strong>&#x7684;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;<em>onFinalImageSet()</em>;&#x53E6;&#x4E00;&#x65B9;&#x9762;&#x5982;&#x679C;&#x6570;&#x636E;&#x6E90;&#x8FD8;&#x5728;&#x83B7;&#x53D6;&#x4E2D;&#xFF0C;&#x4E5F;&#x662F;&#x8C03;&#x7528;<strong>SettableDraweeHierarchy</strong>&#x63A5;&#x53E3;&#x7684;<em>setImage()</em>&#x65B9;&#x6CD5;&#xFF0C;&#x53EA;&#x662F;&#x5176;&#x4E2D;&#x7684;&#x53C2;&#x6570;<strong>progress</strong>&#x6839;&#x636E;&#x8FDB;&#x5EA6;&#x6765;&#x8BBE;&#x7F6E;&#x800C;&#x5DF2;&#xFF0C;&#x7531;&#x4E8E;&#x8FD8;&#x5904;&#x4E8E;&#x8D44;&#x6E90;&#x83B7;&#x53D6;&#x4E2D;&#x6240;&#x4EE5;&#x8C03;&#x7528;<em>onIntermediateImageSet()</em>&#x56DE;&#x8C03;&#x3002;<br>&#x8FD9;&#x6837;<strong>Controller</strong>&#x5C31;&#x4E0E;<strong>Hierarchy</strong>&#x8054;&#x7CFB;&#x8D77;&#x6765;&#x4E86;&#xFF0C;&#x5C06;&#x9700;&#x8981;&#x7684;&#x56FE;&#x7247;&#x8BBE;&#x7F6E;&#x5230;&#x663E;&#x793A;&#x7684;&#x56FE;&#x7247;&#x4E2D;&#x3002;</p>
+<blockquote>
+<p>&#x5BF9;&#x4E8E;<strong>SettableDraweeHierarchy</strong>&#x4E2D;&#x7684;&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x5982;&#x679C;&#x4E0D;&#x7406;&#x89E3;&#x7684;&#x53EF;&#x4EE5;&#x56DE;&#x8FC7;&#x5934;&#x53BB;&#x770B;&#x6211;&#x4E4B;&#x524D;&#x7684;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;<a href="https://idisfkj.github.io/2017/12/07/Fresco%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BHierarchy/" target="_blank" rel="noopener">Fresco&#x6E90;&#x7801;&#x5206;&#x6790;&#x4E4B;Hierarchy</a></p>
+</blockquote>
+<p>&#x7531;&#x4E8E;&#x6E90;&#x7801;&#x592A;&#x591A;&#xFF0C;&#x5BF9;&#x4E8E;<em>onFailureInternal()</em>&#x4E0E;<em>onProgressUpdateInternal()</em>&#x8FD9;&#x91CC;&#x5C31;&#x4E0D;&#x8D34;&#x51FA;&#x6E90;&#x7801;&#x6765;&#x8FDB;&#x884C;&#x5206;&#x6790;&#x4E86;&#x3002;&#x539F;&#x7406;&#x4E0E;&#x8C03;&#x7528;&#x7684;&#x65B9;&#x6CD5;&#x57FA;&#x672C;&#x7C7B;&#x4F3C;&#xFF0C;&#x5982;&#x679C;&#x60F3;&#x770B;&#x6E90;&#x7801;&#x7684;&#x53EF;&#x4EE5;&#x70B9;<a href="https://github.com/facebook/fresco/blob/master/drawee/src/main/java/com/facebook/drawee/controller/AbstractDraweeController.java" target="_blank" rel="noopener">&#x8FD9;&#x91CC;</a></p>
+<h2 id="onDetach"><a href="#onDetach" class="headerlink" title="onDetach"></a>onDetach</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void onDetach() {</span><br><span class="line">  if (FLog.isLoggable(FLog.VERBOSE)) {</span><br><span class="line">    FLog.v(TAG, &quot;controller %x %s: onDetach&quot;, System.identityHashCode(this), mId);</span><br><span class="line">  }</span><br><span class="line">  mEventTracker.recordEvent(Event.ON_DETACH_CONTROLLER);</span><br><span class="line">  mIsAttached = false;</span><br><span class="line">  mDeferredReleaser.scheduleDeferredRelease(this);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x76F8;&#x5BF9;&#x4E8E;&#x4E4B;&#x524D;&#x7684;&#x5206;&#x6790;<em>onDetach()</em>&#x5C31;&#x7B80;&#x5355;&#x591A;&#x4E86;&#xFF0C;&#x8FD9;&#x91CC;&#x5B83;&#x53EA;&#x662F;&#x5BF9;&#x8D44;&#x6E90;&#x8FDB;&#x884C;&#x91CA;&#x653E;&#xFF0C;&#x91CA;&#x653E;&#x7684;&#x7B56;&#x7565;&#x4E5F;&#x662F;&#x63A8;&#x8FDF;&#x91CA;&#x653E;&#x7B56;&#x7565;<a href="https://github.com/facebook/fresco/blob/master/drawee/src/main/java/com/facebook/drawee/components/DeferredReleaser.java" target="_blank" rel="noopener">DeferredReleaser</a>&#x3002;</p>
+<h1 id="End"><a href="#End" class="headerlink" title="End"></a>End</h1><p>&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x4E3B;&#x8981;&#x5206;&#x6790;&#x4E86;<strong>Fresco</strong>&#x4E2D;&#x7684;<strong>Controller</strong>&#x76F8;&#x5173;&#x5904;&#x7406;&#x903B;&#x8F91;&#xFF0C;&#x5B83;&#x63A7;&#x5236;&#x7740;<strong>Hierarchy</strong>&#x663E;&#x793A;&#x903B;&#x8F91;&#xFF0C;&#x540C;&#x65F6;&#x5B83;&#x662F;&#x6570;&#x636E;&#x6E90;&#x7684;&#x83B7;&#x53D6;&#x6865;&#x6881;&#x901A;&#x8FC7;<strong>DataSource</strong>&#x6765;&#x94FE;&#x63A5;&#x6570;&#x636E;&#x6E90;&#x7684;&#x83B7;&#x53D6;&#x3002;&#x90A3;&#x4E48;&#x95EE;&#x9898;&#x53C8;&#x6765;&#x4E86;&#xFF0C;<strong>DataSource</strong>&#x53C8;&#x662F;&#x5982;&#x4F55;&#x4EA7;&#x751F;&#x7684;&#x5462;&#xFF1F;&#x540C;&#x65F6;&#x5B83;&#x7684;&#x5185;&#x90E8;&#x903B;&#x8F91;&#x53C8;&#x662F;&#x5982;&#x4F55;&#x7684;&#x5462;&#xFF1F;&#x8FD9;&#x5C31;&#x6D89;&#x53CA;&#x5230;<strong>Producer</strong>&#x4E86;&#xFF0C;&#x656C;&#x8BF7;&#x5173;&#x6CE8;&#x4E0B;&#x7BC7;&#x6587;&#x7AE0;<code>Fresco&#x6E90;&#x7801;&#x5206;&#x6790;&#x4E4B;Producer</code></p>
+<p><a href="https://github.com/idisfkj/Fresco-Source-Analysis" target="_blank" rel="noopener">Fresco&#x6E90;&#x7801;&#x5206;&#x6790;&#x7CFB;&#x5217;Github&#x5730;&#x5740;</a></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/12/07/Fresco源码分析之Hierarchy/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/12/28/Fresco源码分析之Producer/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Thu Dec 14 2017 08:32:26 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

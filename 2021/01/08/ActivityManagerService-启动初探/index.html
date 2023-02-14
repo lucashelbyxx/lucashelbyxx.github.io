@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>ActivityManagerService 启动初探 | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="启动,">
+  
+
+  <meta name="description" content="&amp;#x5728;&amp;#x4E4B;&amp;#x524D;&amp;#x7684;Android SystemServer&amp;#x542F;&amp;#x52A8;(&amp;#x4E8C;)&amp;#x4E2D;&amp;#xFF0C;&amp;#x5206;&amp;#x6790;&amp;#x5230;&amp;#x5728;SystemServer&amp;#x4E2D;&amp;#x4F1A;&amp;#x542F;&amp;#x52A8;&amp;#x5927;&amp;#x91CF;&amp;#x7684;Servic">
+<meta name="keywords" content="启动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ActivityManagerService 启动初探">
+<meta property="og:url" content="https://www.rousetime.com/2021/01/08/ActivityManagerService-启动初探/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="&amp;#x5728;&amp;#x4E4B;&amp;#x524D;&amp;#x7684;Android SystemServer&amp;#x542F;&amp;#x52A8;(&amp;#x4E8C;)&amp;#x4E2D;&amp;#xFF0C;&amp;#x5206;&amp;#x6790;&amp;#x5230;&amp;#x5728;SystemServer&amp;#x4E2D;&amp;#x4F1A;&amp;#x542F;&amp;#x52A8;&amp;#x5927;&amp;#x91CF;&amp;#x7684;Servic">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2022-12-01T13:16:00.298Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ActivityManagerService 启动初探">
+<meta name="twitter:description" content="&amp;#x5728;&amp;#x4E4B;&amp;#x524D;&amp;#x7684;Android SystemServer&amp;#x542F;&amp;#x52A8;(&amp;#x4E8C;)&amp;#x4E2D;&amp;#xFF0C;&amp;#x5206;&amp;#x6790;&amp;#x5230;&amp;#x5728;SystemServer&amp;#x4E2D;&amp;#x4F1A;&amp;#x542F;&amp;#x52A8;&amp;#x5927;&amp;#x91CF;&amp;#x7684;Servic">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#启动AMS"><span class="toc-text">启动AMS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#startBootstrapServices"><span class="toc-text">startBootstrapServices</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#initPowerManagement"><span class="toc-text">initPowerManagement</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#setSystemProcess"><span class="toc-text">setSystemProcess</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#startCoreServices"><span class="toc-text">startCoreServices</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#startOtherServices"><span class="toc-text">startOtherServices</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#installSystemProviders"><span class="toc-text">installSystemProviders</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WindowManagerService"><span class="toc-text">WindowManagerService</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#systemReady"><span class="toc-text">systemReady</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目"><span class="toc-text">项目</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-ActivityManagerService-启动初探" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">ActivityManagerService 启动初探</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2021.01.08</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>&#x5728;&#x4E4B;&#x524D;&#x7684;<a href="https://mp.weixin.qq.com/s?__biz=MzIzNTc5NDY4Nw==&amp;mid=2247484991&amp;idx=1&amp;sn=7a4701c30ade3569c75591a12644c4f3&amp;chksm=e8e0ffafdf9776b9a00e9b912a47578622379e667e45a16f5d814b638e8ab04786e38403542b&amp;token=694410729&amp;lang=zh_CN#rd" target="_blank" rel="noopener">Android SystemServer&#x542F;&#x52A8;(&#x4E8C;)</a>&#x4E2D;&#xFF0C;&#x5206;&#x6790;&#x5230;&#x5728;SystemServer&#x4E2D;&#x4F1A;&#x542F;&#x52A8;&#x5927;&#x91CF;&#x7684;Service&#xFF0C;&#x5176;&#x4E2D;&#x5C31;&#x6709;&#x4E00;&#x4E2A;&#x6BD4;&#x8F83;&#x7279;&#x6B8A;&#x7684;Service&#xFF0C;&#x5B83;&#x5C31;&#x662F;ActivityManagerService&#x3002;</p>
+<p>&#x4ECA;&#x5929;&#x6211;&#x4EEC;&#x5C31;&#x6765;&#x4E86;&#x89E3;&#x4E00;&#x4E0B;ActivityManageerService&#x7684;&#x542F;&#x52A8;&#xFF0C;&#x4E0B;&#x9762;&#x90FD;&#x5C06;&#x5176;&#x7B80;&#x79F0;&#x4E3A;AMS&#x3002;</p>
+<h2 id="&#x542F;&#x52A8;AMS"><a href="#&#x542F;&#x52A8;AMS" class="headerlink" title="&#x542F;&#x52A8;AMS"></a>&#x542F;&#x52A8;AMS</h2><p>AMS&#x7684;&#x542F;&#x52A8;&#x53D1;&#x751F;&#x5728;SystemServer&#x542F;&#x52A8;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;BootPhase 0&#x9636;&#x6BB5;&#x3002;</p>
+<p>&#x5728;&#x4E09;&#x5927;&#x5206;&#x7C7B;&#x670D;&#x52A1;&#x7684;&#x542F;&#x52A8;&#x670D;&#x52A1;&#x4E2D;&#xFF0C;&#x5373;startBootstrapServices&#x65B9;&#x6CD5;&#x4E2D;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">private void startBootstrapServices() {</span><br><span class="line">	...</span><br><span class="line"> </span><br><span class="line">    ActivityTaskManagerService atm = mSystemServiceManager.startService(</span><br><span class="line">            ActivityTaskManagerService.Lifecycle.class).getService();</span><br><span class="line">    mActivityManagerService = ActivityManagerService.Lifecycle.startService(</span><br><span class="line">            mSystemServiceManager, atm);</span><br><span class="line">    mActivityManagerService.setSystemServiceManager(mSystemServiceManager);</span><br><span class="line">    mActivityManagerService.setInstaller(installer);</span><br><span class="line">    mWindowManagerGlobalLock = atm.getGlobalLock();</span><br><span class="line"> </span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>AMS&#x7684;&#x662F;&#x901A;&#x8FC7;AMS&#x7684;&#x5185;&#x90E8;&#x7C7B;Lifecycle&#x6765;&#x521B;&#x5EFA;&#x7684;&#xFF0C;&#x540C;&#x65F6;&#x8C03;&#x7528;Lifecycle.onStart()&#x6765;&#x542F;&#x52A8;AMS&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public static final class Lifecycle extends SystemService {</span><br><span class="line">    private final ActivityManagerService mService;</span><br><span class="line">    private static ActivityTaskManagerService sAtm;</span><br><span class="line"> </span><br><span class="line">    public Lifecycle(Context context) {</span><br><span class="line">        super(context);</span><br><span class="line">        mService = new ActivityManagerService(context, sAtm);</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    public static ActivityManagerService startService(</span><br><span class="line">            SystemServiceManager ssm, ActivityTaskManagerService atm) {</span><br><span class="line">        sAtm = atm;</span><br><span class="line">        return ssm.startService(ActivityManagerService.Lifecycle.class).getService();</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    @Override</span><br><span class="line">    public void onStart() {</span><br><span class="line">        mService.start();</span><br><span class="line">    }</span><br><span class="line">     </span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>Lifecycle&#x7EE7;&#x627F;&#x4E8E;SystemService&#xFF0C;&#x901A;&#x8FC7;ssm&#x5373;SystemServiceManager&#x6765;&#x542F;&#x52A8;&#x8FD9;&#x4E2A;Service&#x3002;</p>
+<p>&#x5185;&#x90E8;&#x662F;&#x901A;&#x8FC7;&#x53CD;&#x5C04;&#x6765;&#x521B;&#x5EFA;Lifecycle&#x5B9E;&#x4F8B;&#xFF0C;&#x800C;&#x5728;Lifecycle&#x5B9E;&#x4F8B;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x4F1A;&#x521B;&#x5EFA;AMS&#x3002;</p>
+<p>&#x6240;&#x4EE5;&#x63A5;&#x4E0B;&#x6765;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4E0B;AMS&#x5B9E;&#x4F8B;&#x5316;&#x8FC7;&#x7A0B;&#x4E2D;&#x505A;&#x4E86;&#x4EC0;&#x4E48;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br></pre></td><td class="code"><pre><span class="line">public ActivityManagerService(Context systemContext, ActivityTaskManagerService atm) {</span><br><span class="line">	...</span><br><span class="line"> </span><br><span class="line">	// &#x521B;&#x5EFA;&#x540D;&#x4E3A;ActivityManager&#x7684;&#x7EBF;&#x7A0B;&#xFF0C;&#x5E76;&#x521B;&#x5EFA;MainHandler </span><br><span class="line">	// &#x5904;&#x7406;&#x5404;&#x79CD;&#x72B6;&#x6001;&#x4FE1;&#x606F;&#x7684;&#x7EBF;&#x7A0B;&#xFF08;GC&#x3001;service_timeout&#x3001;update_time_zone&#x3001;kill_application&#x3001;kill_zygote&#xFF09;</span><br><span class="line">    mHandlerThread = new ServiceThread(TAG,</span><br><span class="line">            THREAD_PRIORITY_FOREGROUND, false /*allowIo*/);</span><br><span class="line">    mHandlerThread.start();</span><br><span class="line">    mHandler = new MainHandler(mHandlerThread.getLooper());</span><br><span class="line">    // &#x83B7;&#x53D6;UiHandler</span><br><span class="line">    mUiHandler = mInjector.getUiHandler(this);</span><br><span class="line"> </span><br><span class="line">    // &#x521B;&#x5EFA;&#x4E0E;&#x542F;&#x52A8;proc&#x7EBF;&#x7A0B;</span><br><span class="line">    mProcStartHandlerThread = new ServiceThread(TAG + &quot;:procStart&quot;,</span><br><span class="line">            THREAD_PRIORITY_FOREGROUND, false /* allowIo */);</span><br><span class="line">    mProcStartHandlerThread.start();</span><br><span class="line">    mProcStartHandler = new Handler(mProcStartHandlerThread.getLooper());</span><br><span class="line"> </span><br><span class="line">    // &#x5B9A;&#x4E49;&#x4E00;&#x4E9B;&#x5E38;&#x91CF;&#xFF0C;&#x7BA1;&#x7406;ActivityManager&#x7684;&#x884C;&#x4E3A;</span><br><span class="line">    mConstants = new ActivityManagerConstants(mContext, this, mHandler);</span><br><span class="line">    // &#x8FFD;&#x8E2A;&#x6D3B;&#x8DC3;&#x7684;uid</span><br><span class="line">    final ActiveUids activeUids = new ActiveUids(this, true /* postChangesToAtm */);</span><br><span class="line">    mProcessList.init(this, activeUids);</span><br><span class="line">    // &#x4F4E;&#x5185;&#x5B58;&#x63A2;&#x6D4B;&#x5668;</span><br><span class="line">    mLowMemDetector = new LowMemDetector(this);</span><br><span class="line">    mOomAdjuster = new OomAdjuster(this, mProcessList, activeUids);</span><br><span class="line"> </span><br><span class="line">    // &#x524D;&#x53F0;&#x5E7F;&#x64AD;&#x63A5;&#x6536;&#x5668;</span><br><span class="line">    final BroadcastConstants foreConstants = new BroadcastConstants(</span><br><span class="line">            Settings.Global.BROADCAST_FG_CONSTANTS);</span><br><span class="line">    foreConstants.TIMEOUT = BROADCAST_FG_TIMEOUT;</span><br><span class="line"> </span><br><span class="line">    // &#x540E;&#x53F0;&#x5E7F;&#x64AD;&#x63A5;&#x6536;&#x5668;</span><br><span class="line">    final BroadcastConstants backConstants = new BroadcastConstants(</span><br><span class="line">            Settings.Global.BROADCAST_BG_CONSTANTS);</span><br><span class="line">    backConstants.TIMEOUT = BROADCAST_BG_TIMEOUT;</span><br><span class="line"> </span><br><span class="line">    // &#x5378;&#x8F7D;&#x5E7F;&#x64AD;&#x63A5;&#x6536;&#x5668;</span><br><span class="line">    final BroadcastConstants offloadConstants = new BroadcastConstants(</span><br><span class="line">            Settings.Global.BROADCAST_OFFLOAD_CONSTANTS);</span><br><span class="line">    offloadConstants.TIMEOUT = BROADCAST_BG_TIMEOUT;</span><br><span class="line"> </span><br><span class="line">    offloadConstants.SLOW_TIME = Integer.MAX_VALUE;</span><br><span class="line"> </span><br><span class="line">    mEnableOffloadQueue = SystemProperties.getBoolean(</span><br><span class="line">            &quot;persist.device_config.activity_manager_native_boot.offload_queue_enabled&quot;, false);</span><br><span class="line"> </span><br><span class="line">    mFgBroadcastQueue = new BroadcastQueue(this, mHandler,</span><br><span class="line">            &quot;foreground&quot;, foreConstants, false);</span><br><span class="line">    mBgBroadcastQueue = new BroadcastQueue(this, mHandler,</span><br><span class="line">            &quot;background&quot;, backConstants, true);</span><br><span class="line">    mOffloadBroadcastQueue = new BroadcastQueue(this, mHandler,</span><br><span class="line">            &quot;offload&quot;, offloadConstants, true);</span><br><span class="line">    mBroadcastQueues[0] = mFgBroadcastQueue;</span><br><span class="line">    mBroadcastQueues[1] = mBgBroadcastQueue;</span><br><span class="line">    mBroadcastQueues[2] = mOffloadBroadcastQueue;</span><br><span class="line"> </span><br><span class="line">    mServices = new ActiveServices(this);</span><br><span class="line">    mProviderMap = new ProviderMap(this);</span><br><span class="line">    mPackageWatchdog = PackageWatchdog.getInstance(mUiContext);</span><br><span class="line">    mAppErrors = new AppErrors(mUiContext, this, mPackageWatchdog);</span><br><span class="line"> </span><br><span class="line">    final File systemDir = SystemServiceManager.ensureSystemDir();</span><br><span class="line"> </span><br><span class="line">    // &#x7535;&#x6C60;&#x72B6;&#x6001;</span><br><span class="line">    mBatteryStatsService = new BatteryStatsService(systemContext, systemDir,</span><br><span class="line">            BackgroundThread.get().getHandler());</span><br><span class="line">    mBatteryStatsService.getActiveStatistics().readLocked();</span><br><span class="line">    mBatteryStatsService.scheduleWriteToDisk();</span><br><span class="line">    mOnBattery = DEBUG_POWER ? true</span><br><span class="line">            : mBatteryStatsService.getActiveStatistics().getIsOnBattery();</span><br><span class="line">    mBatteryStatsService.getActiveStatistics().setCallback(this);</span><br><span class="line">    mOomAdjProfiler.batteryPowerChanged(mOnBattery);</span><br><span class="line"> </span><br><span class="line">    // &#x8FDB;&#x7A0B;&#x72B6;&#x6001;</span><br><span class="line">    mProcessStats = new ProcessStatsService(this, new File(systemDir, &quot;procstats&quot;));</span><br><span class="line"> </span><br><span class="line">    mAppOpsService = mInjector.getAppOpsService(new File(systemDir, &quot;appops.xml&quot;), mHandler);</span><br><span class="line"> </span><br><span class="line">    ... </span><br><span class="line"> </span><br><span class="line">    mActivityTaskManager = atm;</span><br><span class="line">    mActivityTaskManager.initialize(mIntentFirewall, mPendingIntentController,</span><br><span class="line">            DisplayThread.get().getLooper());</span><br><span class="line">    mAtmInternal = LocalServices.getService(ActivityTaskManagerInternal.class);</span><br><span class="line"> </span><br><span class="line">    // &#x8FDB;&#x7A0B;cpu&#x7EDF;&#x8BA1;&#x7EBF;&#x7A0B;</span><br><span class="line">    mProcessCpuThread = new Thread(&quot;CpuTracker&quot;) {</span><br><span class="line">        @Override</span><br><span class="line">        public void run() {</span><br><span class="line">            synchronized (mProcessCpuTracker) {</span><br><span class="line">                mProcessCpuInitLatch.countDown();</span><br><span class="line">                mProcessCpuTracker.init();</span><br><span class="line">            }</span><br><span class="line">            while (true) {</span><br><span class="line">                try {</span><br><span class="line">                    try {</span><br><span class="line">                        synchronized(this) {</span><br><span class="line">                            final long now = SystemClock.uptimeMillis();</span><br><span class="line">                            long nextCpuDelay = (mLastCpuTime.get()+MONITOR_CPU_MAX_TIME)-now;</span><br><span class="line">                            long nextWriteDelay = (mLastWriteTime+BATTERY_STATS_TIME)-now;</span><br><span class="line">                            //Slog.i(TAG, &quot;Cpu delay=&quot; + nextCpuDelay</span><br><span class="line">                            //        + &quot;, write delay=&quot; + nextWriteDelay);</span><br><span class="line">                            if (nextWriteDelay &lt; nextCpuDelay) {</span><br><span class="line">                                nextCpuDelay = nextWriteDelay;</span><br><span class="line">                            }</span><br><span class="line">                            if (nextCpuDelay &gt; 0) {</span><br><span class="line">                                mProcessCpuMutexFree.set(true);</span><br><span class="line">                                this.wait(nextCpuDelay);</span><br><span class="line">                            }</span><br><span class="line">                        }</span><br><span class="line">                    } catch (InterruptedException e) {</span><br><span class="line">                    }</span><br><span class="line">                    // &#x66F4;&#x65B0;cpu&#x7684;&#x4FE1;&#x606F;</span><br><span class="line">                    updateCpuStatsNow();</span><br><span class="line">                } catch (Exception e) {</span><br><span class="line">                    Slog.e(TAG, &quot;Unexpected exception collecting process stats&quot;, e);</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    };</span><br><span class="line"> </span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x505A;&#x7684;&#x4E8B;&#x662F;&#x521B;&#x5EFA;ActivityManager&#x3001;proc&#x4E0E;CpuTracker&#x7EBF;&#x7A0B;&#xFF1B;&#x540C;&#x65F6;&#x521B;&#x5EFA;&#x5BF9;&#x5E94;&#x7684;&#x5E7F;&#x64AD;&#x63A5;&#x6536;&#x5668;&#x3002;</p>
+<p>&#x521B;&#x5EFA;&#x5B8C;AMS&#x5B9E;&#x4F8B;&#x4E4B;&#x540E;&#x4F1A;&#x8C03;&#x7528;start()&#x65B9;&#x6CD5;&#x6765;&#x542F;&#x52A8;AMS</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">private void start() {</span><br><span class="line">	// &#x79FB;&#x9664;&#x6240;&#x6709;&#x8FDB;&#x7A0B;&#x7EC4;</span><br><span class="line">    removeAllProcessGroups();</span><br><span class="line">    // &#x5F00;&#x542F;&#x8FDB;&#x7A0B;cpu&#x7EDF;&#x8BA1;&#x7EBF;&#x7A0B;</span><br><span class="line">    mProcessCpuThread.start();</span><br><span class="line"> </span><br><span class="line">    // &#x542F;&#x52A8;&#x7535;&#x6C60;&#x7EDF;&#x8BA1;&#x670D;&#x52A1;</span><br><span class="line">    mBatteryStatsService.publish();</span><br><span class="line">    mAppOpsService.publish(mContext);</span><br><span class="line"> </span><br><span class="line">    // &#x6DFB;&#x52A0;&#x5230;&#x672C;&#x5730;LocalServices&#x4E2D;</span><br><span class="line">    LocalServices.addService(ActivityManagerInternal.class, new LocalService());</span><br><span class="line">    mActivityTaskManager.onActivityManagerInternalAdded();</span><br><span class="line">    mUgmInternal.onActivityManagerInternalAdded();</span><br><span class="line">    mPendingIntentController.onActivityManagerInternalAdded();</span><br><span class="line"> </span><br><span class="line">    try {</span><br><span class="line">    	// &#x7B49;&#x5F85;&#x8FDB;&#x7A0B;cpu&#x7EDF;&#x8BA1;&#x7EBF;&#x7A0B;&#x8FD0;&#x884C;</span><br><span class="line">        mProcessCpuInitLatch.await();</span><br><span class="line">    } catch (InterruptedException e) {</span><br><span class="line">        Slog.wtf(TAG, &quot;Interrupted wait during start&quot;, e);</span><br><span class="line">        Thread.currentThread().interrupt();</span><br><span class="line">        throw new IllegalStateException(&quot;Interrupted wait during start&quot;);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x4E2A;&#x65F6;&#x5019;AMS&#x5C31;&#x5DF2;&#x7ECF;&#x542F;&#x52A8;&#x5B8C;&#x6BD5;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x5728;&#x6765;&#x770B;&#x4E0B;AMS&#x5728;SystemServer&#x4E2D;&#x90FD;&#x5E72;&#x4E86;&#x4EC0;&#x4E48;</p>
+<h2 id="startBootstrapServices"><a href="#startBootstrapServices" class="headerlink" title="startBootstrapServices"></a>startBootstrapServices</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">private void startBootstrapServices() {</span><br><span class="line">	...</span><br><span class="line"> </span><br><span class="line">	mActivityManagerService.initPowerManagement();</span><br><span class="line">	...</span><br><span class="line"> </span><br><span class="line">	mActivityManagerService.setSystemProcess();</span><br><span class="line">	...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h3 id="initPowerManagement"><a href="#initPowerManagement" class="headerlink" title="initPowerManagement"></a>initPowerManagement</h3><p>&#x9996;&#x5148;&#x4F1A;&#x521D;&#x59CB;&#x5316;PowerManagement</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public void initPowerManagement() {</span><br><span class="line">    mActivityTaskManager.onInitPowerManagement();</span><br><span class="line">    mBatteryStatsService.initPowerManagement();</span><br><span class="line">    mLocalPowerManager = LocalServices.getService(PowerManagerInternal.class);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6700;&#x7EC8;&#x4F1A;&#x901A;&#x8FC7;BatterStateService&#x6765;&#x521D;&#x59CB;&#x5316;PowerManagement&#x3002;</p>
+<h3 id="setSystemProcess"><a href="#setSystemProcess" class="headerlink" title="setSystemProcess"></a>setSystemProcess</h3><p>&#x63A5;&#x4E0B;&#x6765;&#x662F;setSystemProcess&#xFF0C;&#x6CE8;&#x518C;&#x76F8;&#x5173;&#x7684;&#x670D;&#x52A1;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public void setSystemProcess() {</span><br><span class="line">    try {</span><br><span class="line">    	// &#x6CE8;&#x518C;ActivityManagerService</span><br><span class="line">        ServiceManager.addService(Context.ACTIVITY_SERVICE, this, /* allowIsolated= */ true,</span><br><span class="line">                DUMP_FLAG_PRIORITY_CRITICAL | DUMP_FLAG_PRIORITY_NORMAL | DUMP_FLAG_PROTO);</span><br><span class="line">        // &#x6CE8;&#x518C; ProcessStatsService</span><br><span class="line">        ServiceManager.addService(ProcessStats.SERVICE_NAME, mProcessStats);</span><br><span class="line">        // &#x6CE8;&#x518C;MemBinder</span><br><span class="line">        ServiceManager.addService(&quot;meminfo&quot;, new MemBinder(this), /* allowIsolated= */ false,</span><br><span class="line">                DUMP_FLAG_PRIORITY_HIGH);</span><br><span class="line">        // &#x6CE8;&#x518C;GraphicsBinder</span><br><span class="line">        ServiceManager.addService(&quot;gfxinfo&quot;, new GraphicsBinder(this));</span><br><span class="line">        // &#x6CE8;&#x518C;DbBinder</span><br><span class="line">        ServiceManager.addService(&quot;dbinfo&quot;, new DbBinder(this));</span><br><span class="line">        if (MONITOR_CPU_USAGE) {</span><br><span class="line">        	// &#x6CE8;&#x518C;CpuBinder</span><br><span class="line">            ServiceManager.addService(&quot;cpuinfo&quot;, new CpuBinder(this),</span><br><span class="line">                    /* allowIsolated= */ false, DUMP_FLAG_PRIORITY_CRITICAL);</span><br><span class="line">        }</span><br><span class="line">        // &#x6CE8;&#x518C;PermissionController</span><br><span class="line">        ServiceManager.addService(&quot;permission&quot;, new PermissionController(this));</span><br><span class="line">        // &#x6CE8;&#x518C;ProcessInfoService</span><br><span class="line">        ServiceManager.addService(&quot;processinfo&quot;, new ProcessInfoService(this));</span><br><span class="line"> </span><br><span class="line">        // &#x52A0;&#x8F7D;&#x5305;&#x540D;&#x4E3A;android&#x7684;&#x5305;&#xFF0C;&#x6700;&#x7EC8;&#x901A;&#x8FC7;LoadedApk&#x6765;&#x52A0;&#x8F7D;</span><br><span class="line">        ApplicationInfo info = mContext.getPackageManager().getApplicationInfo(</span><br><span class="line">                &quot;android&quot;, STOCK_PM_FLAGS | MATCH_SYSTEM_ONLY);</span><br><span class="line">        mSystemThread.installSystemApplicationInfo(info, getClass().getClassLoader());</span><br><span class="line"> </span><br><span class="line">        ...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x8FD9;&#x91CC;&#x5C06;AMS&#x6CE8;&#x518C;&#x5230;ServiceManager&#x4E2D;&#xFF0C;&#x540E;&#x7EED;&#x901A;&#x8FC7;ActivityManager&#x6765;&#x83B7;&#x53D6;&#x6CE8;&#x518C;&#x7684;AMS&#x3002;</p>
+<p>&#x63A5;&#x4E0B;&#x6765;&#x5C31;&#x8FDB;&#x5165;&#x4E86;startCoreServices&#xFF0C;&#x542F;&#x52A8;&#x6838;&#x5FC3;&#x670D;&#x52A1;</p>
+<h2 id="startCoreServices"><a href="#startCoreServices" class="headerlink" title="startCoreServices"></a>startCoreServices</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">private void startCoreServices() {</span><br><span class="line">	...</span><br><span class="line">	mActivityManagerService.setUsageStatsManager(</span><br><span class="line">                LocalServices.getService(UsageStatsManagerInternal.class));</span><br><span class="line">	...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x505A;&#x7684;&#x4E8B;&#x60C5;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x8BBE;&#x7F6E;UsageStateManager</p>
+<h2 id="startOtherServices"><a href="#startOtherServices" class="headerlink" title="startOtherServices"></a>startOtherServices</h2><p>&#x7EE7;&#x7EED;&#x6765;&#x5230;&#x542F;&#x52A8;&#x5176;&#x5B83;&#x7684;&#x670D;&#x52A1;&#x6A21;&#x5757;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">private void startOtherServices() {</span><br><span class="line">	...</span><br><span class="line">	mActivityManagerService.installSystemProviders();</span><br><span class="line"> </span><br><span class="line">	mActivityManagerService.setWindowManager(wm);</span><br><span class="line"> </span><br><span class="line">	mActivityManagerService.systemReady(...)</span><br><span class="line">	...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x505A;&#x7684;&#x662F;&#x5B89;&#x88C5;&#x7CFB;&#x7EDF;&#x7684;Provider&#x3001;&#x8BBE;&#x7F6E;WindowManagerService&#x4E0E;systemReady&#x7684;&#x51C6;&#x5907;&#x5DE5;&#x4F5C;&#x3002;</p>
+<h3 id="installSystemProviders"><a href="#installSystemProviders" class="headerlink" title="installSystemProviders"></a>installSystemProviders</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public final void installSystemProviders() {</span><br><span class="line">    List&lt;ProviderInfo&gt; providers;</span><br><span class="line">    synchronized (this) {</span><br><span class="line">        ProcessRecord app = mProcessList.mProcessNames.get(&quot;system&quot;, SYSTEM_UID);</span><br><span class="line">        // &#x83B7;&#x53D6;Providers</span><br><span class="line">        providers = generateApplicationProvidersLocked(app);</span><br><span class="line">        if (providers != null) {</span><br><span class="line">            for (int i=providers.size()-1; i&gt;=0; i--) {</span><br><span class="line">                ProviderInfo pi = (ProviderInfo)providers.get(i);</span><br><span class="line">                // &#x6E05;&#x9664;&#x975E;&#x7CFB;&#x7EDF;&#x7684;Providers</span><br><span class="line">                if ((pi.applicationInfo.flags&amp;ApplicationInfo.FLAG_SYSTEM) == 0) {</span><br><span class="line">                    providers.remove(i);</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    // &#x901A;&#x8FC7;ActivityThread&#x6765;&#x5B89;&#x88C5;&#x7CFB;&#x7EDF;&#x7684;Providers</span><br><span class="line">    if (providers != null) {</span><br><span class="line">        mSystemThread.installSystemProviders(providers);</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    synchronized (this) {</span><br><span class="line">        mSystemProvidersInstalled = true;</span><br><span class="line">    }</span><br><span class="line">    mConstants.start(mContext.getContentResolver());</span><br><span class="line">    mCoreSettingsObserver = new CoreSettingsObserver(this);</span><br><span class="line">    mActivityTaskManager.installSystemProviders();</span><br><span class="line">    mDevelopmentSettingsObserver = new DevelopmentSettingsObserver();</span><br><span class="line">    SettingsToPropertiesMapper.start(mContext.getContentResolver());</span><br><span class="line">    mOomAdjuster.initSettings();</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x505A;&#x7684;&#x5C31;&#x662F;&#x5B89;&#x88C5;&#x7CFB;&#x7EDF;&#x7684;Providers</p>
+<h3 id="WindowManagerService"><a href="#WindowManagerService" class="headerlink" title="WindowManagerService"></a>WindowManagerService</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public void setWindowManager(WindowManagerService wm) {</span><br><span class="line">    synchronized (this) {</span><br><span class="line">        mWindowManager = wm;</span><br><span class="line">        mActivityTaskManager.setWindowManager(wm);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8BBE;&#x7F6E;WindowManagerService&#x670D;&#x52A1;</p>
+<h3 id="systemReady"><a href="#systemReady" class="headerlink" title="systemReady"></a>systemReady</h3><p>systemReady&#x7684;&#x903B;&#x8F91;&#x6BD4;&#x8F83;&#x591A;&#xFF0C;&#x6211;&#x4EEC;&#x62C6;&#x5F00;&#x6765;&#x8BF4;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public void systemReady(final Runnable goingCallback, TimingsTraceLog traceLog) {</span><br><span class="line">	goingCallback before</span><br><span class="line"> </span><br><span class="line">	if (goingCallback != null) goingCallback.run();</span><br><span class="line"> </span><br><span class="line">	goingCallback after</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x8C03;&#x7528;goingCallback.run&#x4E4B;&#x524D;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">public void systemReady(final Runnable goingCallback, TimingsTraceLog traceLog) {</span><br><span class="line">	 synchronized(this) {</span><br><span class="line">        // &#x7B2C;&#x4E00;&#x6B21;&#x8FDB;&#x6765;&#x4E3A;false&#xFF0C;&#x8DF3;&#x8FC7;</span><br><span class="line">        if (mSystemReady) {</span><br><span class="line">            if (goingCallback != null) {</span><br><span class="line">                goingCallback.run();</span><br><span class="line">            }</span><br><span class="line">            return;</span><br><span class="line">        }</span><br><span class="line"> </span><br><span class="line">        ...</span><br><span class="line"> </span><br><span class="line">        mSystemReady = true;</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line">    ArrayList&lt;ProcessRecord&gt; procsToKill = null;</span><br><span class="line">    synchronized(mPidsSelfLocked) {</span><br><span class="line">        for (int i=mPidsSelfLocked.size()-1; i&gt;=0; i--) {</span><br><span class="line">            ProcessRecord proc = mPidsSelfLocked.valueAt(i);</span><br><span class="line">            // &#x975E;president&#x8FDB;&#x7A0B;</span><br><span class="line">            if (!isAllowedWhileBooting(proc.info)){</span><br><span class="line">                if (procsToKill == null) {</span><br><span class="line">                    procsToKill = new ArrayList&lt;ProcessRecord&gt;();</span><br><span class="line">                }</span><br><span class="line">                // &#x52A0;&#x5165;&#x5230;procsTokill&#x4E2D;</span><br><span class="line">                procsToKill.add(proc);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    synchronized(this) {</span><br><span class="line">        if (procsToKill != null) {</span><br><span class="line">        	// kill procsToKill&#x4E2D;&#x7684;&#x8FDB;&#x7A0B;</span><br><span class="line">            for (int i=procsToKill.size()-1; i&gt;=0; i--) {</span><br><span class="line">                ProcessRecord proc = procsToKill.get(i);</span><br><span class="line">                mProcessList.removeProcessLocked(proc, true, false, &quot;system update done&quot;);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"> </span><br><span class="line">        mProcessesReady = true;</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line">    if (goingCallback != null) goingCallback.run();</span><br><span class="line"> </span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E3B;&#x8981;&#x505A;&#x7684;&#x4E8B;&#x60C5;&#x6740;&#x6389;procsToKill&#x4E2D;&#x7684;&#x8FDB;&#x7A0B;&#xFF0C;&#x6B64;&#x65F6;&#x7CFB;&#x7EDF;&#x4E0E;&#x8FDB;&#x7A0B;&#x90FD;&#x5DF2;&#x7ECF;&#x51C6;&#x5907;&#x5C31;&#x7EEA;</p>
+<p>&#x4E4B;&#x540E;&#x518D;&#x8C03;&#x7528;goingCallback.run</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">mActivityManagerService.systemReady(() -&gt; {</span><br><span class="line">    </span><br><span class="line">    // BootPhase 550</span><br><span class="line">    mSystemServiceManager.startBootPhase(</span><br><span class="line">            SystemService.PHASE_ACTIVITY_MANAGER_READY);</span><br><span class="line"> </span><br><span class="line">    try {</span><br><span class="line">        mActivityManagerService.startObservingNativeCrashes();</span><br><span class="line">    } catch (Throwable e) {</span><br><span class="line">        reportWtf(&quot;observing native crashes&quot;, e);</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    traceBeginAndSlog(&quot;MakeConnectivityServiceReady&quot;);</span><br><span class="line">    try {</span><br><span class="line">        if (connectivityF != null) {</span><br><span class="line">            connectivityF.systemReady();</span><br><span class="line">        }</span><br><span class="line">    } catch (Throwable e) {</span><br><span class="line">        reportWtf(&quot;making Connectivity Service ready&quot;, e);</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    ...</span><br><span class="line">     </span><br><span class="line">    // BootPhase 600</span><br><span class="line">    mSystemServiceManager.startBootPhase(</span><br><span class="line">            SystemService.PHASE_THIRD_PARTY_APPS_CAN_START);</span><br><span class="line"> </span><br><span class="line">    try {</span><br><span class="line">        if (locationF != null) {</span><br><span class="line">            locationF.systemRunning();</span><br><span class="line">        }</span><br><span class="line">    } catch (Throwable e) {</span><br><span class="line">        reportWtf(&quot;Notifying Location Service running&quot;, e);</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    try {</span><br><span class="line">        if (countryDetectorF != null) {</span><br><span class="line">            countryDetectorF.systemRunning();</span><br><span class="line">        }</span><br><span class="line">    } catch (Throwable e) {</span><br><span class="line">        reportWtf(&quot;Notifying CountryDetectorService running&quot;, e);</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line">}, BOOT_TIMINGS_TRACE_LOG);</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x4E2A;&#x5728;<a href="https://mp.weixin.qq.com/s?__biz=MzIzNTc5NDY4Nw==&amp;mid=2247484991&amp;idx=1&amp;sn=7a4701c30ade3569c75591a12644c4f3&amp;chksm=e8e0ffafdf9776b9a00e9b912a47578622379e667e45a16f5d814b638e8ab04786e38403542b&amp;token=694410729&amp;lang=zh_CN#rd" target="_blank" rel="noopener">Android SystemServer&#x542F;&#x52A8;(&#x4E8C;)</a>&#x4E2D;&#x5DF2;&#x7ECF;&#x5206;&#x6790;&#x4E86;&#xFF0C;&#x8FD9;&#x91CC;&#x5C31;&#x4E0D;&#x591A;&#x4ECB;&#x7ECD;&#x4E86;&#x3002;</p>
+<p>&#x4E3B;&#x8981;&#x662F;&#x5BF9;&#x4E00;&#x4E9B;&#x670D;&#x52A1;&#x8FDB;&#x884C;systemReady&#x4E0E;systemRuning&#x64CD;&#x4F5C;&#x3002;</p>
+<p>&#x6700;&#x540E;&#x6765;&#x5230;systemReady&#x7684;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x6B65;&#x9AA4;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line">public void systemReady(final Runnable goingCallback, TimingsTraceLog traceLog) {</span><br><span class="line">	...</span><br><span class="line"> </span><br><span class="line">	if (goingCallback != null) goingCallback.run();</span><br><span class="line"> </span><br><span class="line">    final int currentUserId = mUserController.getCurrentUserId();</span><br><span class="line">    if (currentUserId != UserHandle.USER_SYSTEM &amp;&amp; !mUserController.isSystemUserStarted()) {</span><br><span class="line">        throw new RuntimeException(&quot;System user not started while current user is:&quot;</span><br><span class="line">                + currentUserId);</span><br><span class="line">    }</span><br><span class="line">    mBatteryStatsService.noteEvent(BatteryStats.HistoryItem.EVENT_USER_RUNNING_START,</span><br><span class="line">            Integer.toString(currentUserId), currentUserId);</span><br><span class="line">    mBatteryStatsService.noteEvent(BatteryStats.HistoryItem.EVENT_USER_FOREGROUND_START,</span><br><span class="line">            Integer.toString(currentUserId), currentUserId);</span><br><span class="line"> </span><br><span class="line">    // &#x8C03;&#x7528;&#x6240;&#x6709;SystemService&#x7684;onStartUser&#x65B9;&#x6CD5;</span><br><span class="line">    mSystemServiceManager.startUser(currentUserId);</span><br><span class="line"> </span><br><span class="line">    synchronized (this) {</span><br><span class="line">        // &#x5F00;&#x542F;Persistent app</span><br><span class="line">        startPersistentApps(PackageManager.MATCH_DIRECT_BOOT_AWARE);</span><br><span class="line"> </span><br><span class="line">        mBooting = true;</span><br><span class="line">        if (UserManager.isSplitSystemUser() &amp;&amp;</span><br><span class="line">                Settings.Secure.getInt(mContext.getContentResolver(),</span><br><span class="line">                     Settings.Secure.USER_SETUP_COMPLETE, 0) != 0) {</span><br><span class="line">            ComponentName cName = new ComponentName(mContext, SystemUserHomeActivity.class);</span><br><span class="line">            try {</span><br><span class="line">                AppGlobals.getPackageManager().setComponentEnabledSetting(cName,</span><br><span class="line">                        PackageManager.COMPONENT_ENABLED_STATE_ENABLED, 0,</span><br><span class="line">                        UserHandle.USER_SYSTEM);</span><br><span class="line">            } catch (RemoteException e) {</span><br><span class="line">                throw e.rethrowAsRuntimeException();</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        // &#x542F;&#x52A8;&#x7CFB;&#x7EDF;&#x684C;&#x9762;Activity</span><br><span class="line">        mAtmInternal.startHomeOnAllDisplays(currentUserId, &quot;systemReady&quot;);</span><br><span class="line"> </span><br><span class="line">        mAtmInternal.showSystemReadyErrorDialogsIfNeeded();</span><br><span class="line"> </span><br><span class="line">        final int callingUid = Binder.getCallingUid();</span><br><span class="line">        final int callingPid = Binder.getCallingPid();</span><br><span class="line">        long ident = Binder.clearCallingIdentity();</span><br><span class="line">        try {</span><br><span class="line">        	// &#x53D1;&#x9001;USER_STARTED&#x5E7F;&#x64AD;</span><br><span class="line">            Intent intent = new Intent(Intent.ACTION_USER_STARTED);</span><br><span class="line">            intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY</span><br><span class="line">                    | Intent.FLAG_RECEIVER_FOREGROUND);</span><br><span class="line">            intent.putExtra(Intent.EXTRA_USER_HANDLE, currentUserId);</span><br><span class="line">            broadcastIntentLocked(null, null, intent,</span><br><span class="line">                    null, null, 0, null, null, null, OP_NONE,</span><br><span class="line">                    null, false, false, MY_PID, SYSTEM_UID, callingUid, callingPid,</span><br><span class="line">                    currentUserId);</span><br><span class="line"> </span><br><span class="line">            // &#x53D1;&#x9001;USER_STARTING&#x5E7F;&#x64AD;</span><br><span class="line">            intent = new Intent(Intent.ACTION_USER_STARTING);</span><br><span class="line">            intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);</span><br><span class="line">            intent.putExtra(Intent.EXTRA_USER_HANDLE, currentUserId);</span><br><span class="line">            broadcastIntentLocked(null, null, intent,</span><br><span class="line">                    null, new IIntentReceiver.Stub() {</span><br><span class="line">                        @Override</span><br><span class="line">                        public void performReceive(Intent intent, int resultCode, String data,</span><br><span class="line">                                Bundle extras, boolean ordered, boolean sticky, int sendingUser)</span><br><span class="line">                                throws RemoteException {</span><br><span class="line">                        }</span><br><span class="line">                    }, 0, null, null,</span><br><span class="line">                    new String[] {INTERACT_ACROSS_USERS}, OP_NONE,</span><br><span class="line">                    null, true, false, MY_PID, SYSTEM_UID, callingUid, callingPid,</span><br><span class="line">                    UserHandle.USER_ALL);</span><br><span class="line">        } catch (Throwable t) {</span><br><span class="line">            Slog.wtf(TAG, &quot;Failed sending first user broadcasts&quot;, t);</span><br><span class="line">        } finally {</span><br><span class="line">            Binder.restoreCallingIdentity(ident);</span><br><span class="line">        }</span><br><span class="line">        mAtmInternal.resumeTopActivities(false /* scheduleIdle */);</span><br><span class="line">        mUserController.sendUserSwitchBroadcasts(-1, currentUserId);</span><br><span class="line"> </span><br><span class="line">        BinderInternal.nSetBinderProxyCountWatermarks(BINDER_PROXY_HIGH_WATERMARK,</span><br><span class="line">                BINDER_PROXY_LOW_WATERMARK);</span><br><span class="line">        BinderInternal.nSetBinderProxyCountEnabled(true);</span><br><span class="line">        BinderInternal.setBinderProxyCountCallback(</span><br><span class="line">                new BinderInternal.BinderProxyLimitListener() {</span><br><span class="line">                    @Override</span><br><span class="line">                    public void onLimitReached(int uid) {</span><br><span class="line">                        Slog.wtf(TAG, &quot;Uid &quot; + uid + &quot; sent too many Binders to uid &quot;</span><br><span class="line">                                + Process.myUid());</span><br><span class="line">                        BinderProxy.dumpProxyDebugInfo();</span><br><span class="line">                        if (uid == Process.SYSTEM_UID) {</span><br><span class="line">                            Slog.i(TAG, &quot;Skipping kill (uid is SYSTEM)&quot;);</span><br><span class="line">                        } else {</span><br><span class="line">                            killUid(UserHandle.getAppId(uid), UserHandle.getUserId(uid),</span><br><span class="line">                                    &quot;Too many Binders sent to SYSTEM&quot;);</span><br><span class="line">                        }</span><br><span class="line">                    }</span><br><span class="line">                }, mHandler);</span><br><span class="line"> </span><br><span class="line">        // &#x6062;&#x590D;&#x6808;&#x9876;Activity</span><br><span class="line">        mAtmInternal.resumeTopActivities(false /* scheduleIdle */);</span><br><span class="line">        // &#x53D1;&#x9001;User_SWITCH &#x5E7F;&#x64AD;</span><br><span class="line">        mUserController.sendUserSwitchBroadcasts(-1, currentUserId);</span><br><span class="line"> </span><br><span class="line">        ...</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5176;&#x4E2D;startUser&#x4F1A;&#x56DE;&#x8C03;&#x4E4B;&#x524D;&#x7684;SystemService&#x7684;onStartUser&#x65B9;&#x6CD5;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public void startUser(final int userHandle) {</span><br><span class="line">    final int serviceLen = mServices.size();</span><br><span class="line">    // &#x904D;&#x5386;mServices</span><br><span class="line">    for (int i = 0; i &lt; serviceLen; i++) {</span><br><span class="line">        final SystemService service = mServices.get(i);</span><br><span class="line">        Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, &quot;onStartUser &quot;</span><br><span class="line">                + service.getClass().getName());</span><br><span class="line">        long time = SystemClock.elapsedRealtime();</span><br><span class="line">        try {</span><br><span class="line">        	// &#x56DE;&#x8C03;onStartUser</span><br><span class="line">            service.onStartUser(userHandle);</span><br><span class="line">        } catch (Exception ex) {</span><br><span class="line">            Slog.wtf(TAG, &quot;Failure reporting start of user &quot; + userHandle</span><br><span class="line">                    + &quot; to service &quot; + service.getClass().getName(), ex);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>startHomeOnAllDisplays&#x6700;&#x7EC8;&#x4F1A;&#x6765;&#x5230;RootActivityContainer&#x7684;startHomeOnDisplay&#x65B9;&#x6CD5;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">boolean startHomeOnDisplay(int userId, String reason, int displayId, boolean allowInstrumenting,</span><br><span class="line">        boolean fromHomeKey) {</span><br><span class="line">    if (displayId == INVALID_DISPLAY) {</span><br><span class="line">        displayId = getTopDisplayFocusedStack().mDisplayId;</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    Intent homeIntent = null;</span><br><span class="line">    ActivityInfo aInfo = null;</span><br><span class="line">    if (displayId == DEFAULT_DISPLAY) {</span><br><span class="line">        homeIntent = mService.getHomeIntent();</span><br><span class="line">        aInfo = resolveHomeActivity(userId, homeIntent);</span><br><span class="line">    } else if (shouldPlaceSecondaryHomeOnDisplay(displayId)) {</span><br><span class="line">        Pair&lt;ActivityInfo, Intent&gt; info = resolveSecondaryHomeActivity(userId, displayId);</span><br><span class="line">        aInfo = info.first;</span><br><span class="line">        homeIntent = info.second;</span><br><span class="line">    }</span><br><span class="line">    if (aInfo == null || homeIntent == null) {</span><br><span class="line">        return false;</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    if (!canStartHomeOnDisplay(aInfo, displayId, allowInstrumenting)) {</span><br><span class="line">        return false;</span><br><span class="line">    } </span><br><span class="line"> </span><br><span class="line">    // &#x8BBE;&#x7F6E;home Intent &#x7684;Component&#x4FE1;&#x606F;</span><br><span class="line">    homeIntent.setComponent(new ComponentName(aInfo.applicationInfo.packageName, aInfo.name));</span><br><span class="line">    homeIntent.setFlags(homeIntent.getFlags() | FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line"> </span><br><span class="line">    // &#x8BBE;&#x7F6E;extra</span><br><span class="line">    if (fromHomeKey) {</span><br><span class="line">        homeIntent.putExtra(WindowManagerPolicy.EXTRA_FROM_HOME_KEY, true);</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    final String myReason = reason + &quot;:&quot; + userId + &quot;:&quot; + UserHandle.getUserId(</span><br><span class="line">            aInfo.applicationInfo.uid) + &quot;:&quot; + displayId;</span><br><span class="line"> </span><br><span class="line">    // &#x542F;&#x52A8;&#x684C;&#x9762;Activity</span><br><span class="line">    mService.getActivityStartController().startHomeActivity(homeIntent, aInfo, myReason,</span><br><span class="line">            displayId);</span><br><span class="line">    return true;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x603B;&#x7ED3;&#x4E00;&#x4E0B;&#xFF0C;&#x5728;goingCallback.run&#x4E4B;&#x540E;&#xFF0C;&#x8BE5;&#x9636;&#x6BB5;&#x4E3B;&#x8981;&#x505A;&#x7684;&#x4E8B;&#x60C5;&#x662F;&#xFF1A;</p>
+<ol>
+<li>&#x8C03;&#x7528;&#x6240;&#x6709;&#x4E4B;&#x524D;&#x6DFB;&#x52A0;&#x7684;SystemService&#x7684;onStartUser&#x65B9;&#x6CD5;</li>
+<li>&#x542F;&#x52A8;Persistent&#x8FDB;&#x7A0B;</li>
+<li>&#x542F;&#x52A8;&#x7CFB;&#x7EDF;&#x684C;&#x9762;Activity</li>
+<li>&#x53D1;&#x9001;USER_STARTED&#x5E7F;&#x64AD;</li>
+<li>&#x53D1;&#x9001;USER_STARTING&#x5E7F;&#x64AD;</li>
+<li>&#x6062;&#x590D;&#x6808;&#x9876;Activity</li>
+<li>&#x53D1;&#x9001;User_SWITCH&#x5E7F;&#x64AD;</li>
+</ol>
+<p>&#x4EE5;&#x4E0A;&#x5C31;&#x662F;AMS&#x5728;SystemServer&#x4E2D;&#x7684;&#x5168;&#x90E8;&#x8FC7;&#x7A0B;, &#x4E5F;&#x662F;AMS&#x7684;&#x542F;&#x52A8;&#x8FC7;&#x7A0B;&#x3002;</p>
+<p>&#x6574;&#x4E2A;&#x8FC7;&#x7A0B;&#x4E3B;&#x8981;&#x505A;&#x7684;&#x4E8B;&#x60C5;&#x662F;&#xFF1A;</p>
+<ol>
+<li>&#x901A;&#x8FC7;Lifecycle&#x521B;&#x5EFA;AMS&#x5B9E;&#x4F8B;&#xFF0C;&#x540C;&#x65F6;&#x8C03;&#x7528;onStart()&#x65B9;&#x6CD5;&#x542F;&#x52A8;AMS</li>
+<li>&#x901A;&#x8FC7;setSystemProcess&#x6CE8;&#x518C;AMS&#x3001;meminfo&#x3001;gfxinfo&#x3001;dbinfo&#x3001;cpuinfo&#x7B49;&#x670D;&#x52A1;&#x5230;ServiceManager&#x4E2D;</li>
+<li>&#x901A;&#x8FC7;installSystemProviders&#x6765;&#x52A0;&#x8F7D;&#x7CFB;&#x7EDF;&#x7684;providers</li>
+<li>&#x901A;&#x8FC7;systemReady&#x6765;ready&#x4E0E;running&#x5404;&#x79CD;&#x670D;&#x52A1;&#xFF0C;&#x540C;&#x65F6;&#x542F;&#x52A8;&#x684C;&#x9762;&#x5E94;&#x7528;&#xFF0C;&#x53D1;&#x9001;&#x76F8;&#x5173;&#x5E7F;&#x64AD;&#x4E0E;&#x6062;&#x590D;&#x6808;&#x9876;Activity</li>
+</ol>
+<h2 id="&#x9879;&#x76EE;"><a href="#&#x9879;&#x76EE;" class="headerlink" title="&#x9879;&#x76EE;"></a>&#x9879;&#x76EE;</h2><p><a href="https://github.com/idisfkj/android-startup" target="_blank" rel="noopener">android_startup</a>: &#x63D0;&#x4F9B;&#x4E00;&#x79CD;&#x5728;&#x5E94;&#x7528;&#x542F;&#x52A8;&#x65F6;&#x80FD;&#x591F;&#x66F4;&#x52A0;&#x7B80;&#x5355;&#x3001;&#x9AD8;&#x6548;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x521D;&#x59CB;&#x5316;&#x7EC4;&#x4EF6;&#xFF0C;&#x4F18;&#x5316;&#x542F;&#x52A8;&#x901F;&#x5EA6;&#x3002;&#x4E0D;&#x4EC5;&#x652F;&#x6301;Jetpack App Startup&#x7684;&#x5168;&#x90E8;&#x529F;&#x80FD;&#xFF0C;&#x8FD8;&#x63D0;&#x4F9B;&#x989D;&#x5916;&#x7684;&#x540C;&#x6B65;&#x4E0E;&#x5F02;&#x6B65;&#x7B49;&#x5F85;&#x3001;&#x7EBF;&#x7A0B;&#x63A7;&#x5236;&#x4E0E;&#x591A;&#x8FDB;&#x7A0B;&#x652F;&#x6301;&#x7B49;&#x529F;&#x80FD;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/AwesomeGithub" target="_blank" rel="noopener">AwesomeGithub</a>: &#x57FA;&#x4E8E;Github&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x7EAF;&#x7EC3;&#x4E60;&#x9879;&#x76EE;&#xFF0C;&#x652F;&#x6301;&#x7EC4;&#x4EF6;&#x5316;&#x5F00;&#x53D1;&#xFF0C;&#x652F;&#x6301;&#x8D26;&#x6237;&#x5BC6;&#x7801;&#x4E0E;&#x8BA4;&#x8BC1;&#x767B;&#x9646;&#x3002;&#x4F7F;&#x7528;Kotlin&#x8BED;&#x8A00;&#x8FDB;&#x884C;&#x5F00;&#x53D1;&#xFF0C;&#x9879;&#x76EE;&#x67B6;&#x6784;&#x662F;&#x57FA;&#x4E8E;JetPack&amp;DataBinding&#x7684;MVVM&#xFF1B;&#x9879;&#x76EE;&#x4E2D;&#x4F7F;&#x7528;&#x4E86;Arouter&#x3001;Retrofit&#x3001;Coroutine&#x3001;Glide&#x3001;Dagger&#x4E0E;Hilt&#x7B49;&#x6D41;&#x884C;&#x5F00;&#x6E90;&#x6280;&#x672F;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/flutter_github" target="_blank" rel="noopener">flutter_github</a>: &#x57FA;&#x4E8E;Flutter&#x7684;&#x8DE8;&#x5E73;&#x53F0;&#x7248;&#x672C;Github&#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x4E0E;AwesomeGithub&#x76F8;&#x5BF9;&#x5E94;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/android-api-analysis" target="_blank" rel="noopener">android-api-analysis</a>: &#x7ED3;&#x5408;&#x8BE6;&#x7EC6;&#x7684;Demo&#x6765;&#x5168;&#x9762;&#x89E3;&#x6790;Android&#x76F8;&#x5173;&#x7684;&#x77E5;&#x8BC6;&#x70B9;, &#x5E2E;&#x52A9;&#x8BFB;&#x8005;&#x80FD;&#x591F;&#x66F4;&#x5FEB;&#x7684;&#x638C;&#x63E1;&#x4E0E;&#x7406;&#x89E3;&#x6240;&#x9610;&#x8FF0;&#x7684;&#x8981;&#x70B9;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/daily_algorithm" target="_blank" rel="noopener">daily_algorithm</a>: &#x6BCF;&#x65E5;&#x4E00;&#x7B97;&#x6CD5;&#xFF0C;&#x7531;&#x6D45;&#x5165;&#x6DF1;&#xFF0C;&#x6B22;&#x8FCE;&#x52A0;&#x5165;&#x4E00;&#x8D77;&#x5171;&#x52C9;&#x3002;</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2021/01/07/一文彻底搞懂Kotlin-inline/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2021/01/18/链表：由浅入深/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Fri Jan 08 2021 21:09:30 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

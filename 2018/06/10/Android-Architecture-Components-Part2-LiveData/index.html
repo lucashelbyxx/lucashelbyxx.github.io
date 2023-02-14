@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Android Architecture Components Part2:LiveData | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Android Architecture Components,">
+  
+
+  <meta name="description" content="&amp;#x611F;&amp;#x8C22;&amp;#x4F60;&amp;#x7684;&amp;#x518D;&amp;#x6B21;&amp;#x5149;&amp;#x4E34;&amp;#xFF0C;&amp;#x6B22;&amp;#x8FCE;&amp;#x6765;&amp;#x5230;Android Architecture Components&amp;#xFF08;ACC&amp;#xFF09;&amp;#x7CFB;&amp;#x5217;&amp;#x6587;&amp;#x7AE0;&amp;#x3002;&amp;#x4E">
+<meta name="keywords" content="Android Architecture Components">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Architecture Components Part2:LiveData">
+<meta property="og:url" content="https://www.rousetime.com/2018/06/10/Android-Architecture-Components-Part2-LiveData/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="&amp;#x611F;&amp;#x8C22;&amp;#x4F60;&amp;#x7684;&amp;#x518D;&amp;#x6B21;&amp;#x5149;&amp;#x4E34;&amp;#xFF0C;&amp;#x6B22;&amp;#x8FCE;&amp;#x6765;&amp;#x5230;Android Architecture Components&amp;#xFF08;ACC&amp;#xFF09;&amp;#x7CFB;&amp;#x5217;&amp;#x6587;&amp;#x7AE0;&amp;#x3002;&amp;#x4E">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.rousetime.com/2018/06/10/Android-Architecture-Components-Part2-LiveData/cover.png">
+<meta property="og:image" content="https://www.rousetime.com/2018/06/10/Android-Architecture-Components-Part2-LiveData/wx.jpg">
+<meta property="og:updated_time" content="2018-06-23T14:31:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Architecture Components Part2:LiveData">
+<meta name="twitter:description" content="&amp;#x611F;&amp;#x8C22;&amp;#x4F60;&amp;#x7684;&amp;#x518D;&amp;#x6B21;&amp;#x5149;&amp;#x4E34;&amp;#xFF0C;&amp;#x6B22;&amp;#x8FCE;&amp;#x6765;&amp;#x5230;Android Architecture Components&amp;#xFF08;ACC&amp;#xFF09;&amp;#x7CFB;&amp;#x5217;&amp;#x6587;&amp;#x7AE0;&amp;#x3002;&amp;#x4E">
+<meta name="twitter:image" content="https://www.rousetime.com/2018/06/10/Android-Architecture-Components-Part2-LiveData/cover.png">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简述"><span class="toc-text">简述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用场景"><span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Extend"><span class="toc-text">Extend</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Transform"><span class="toc-text">Transform</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Transformations-map"><span class="toc-text">Transformations.map()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Transformations-switchMap"><span class="toc-text">Transformations.switchMap()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MediatorLiveData"><span class="toc-text">MediatorLiveData</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关文章"><span class="toc-text">相关文章</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关注"><span class="toc-text">关注</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Android-Architecture-Components-Part2-LiveData" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Android Architecture Components Part2:LiveData</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.06.10</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><img src="/2018/06/10/Android-Architecture-Components-Part2-LiveData/cover.png" alt></p>
+<p>&#x611F;&#x8C22;&#x4F60;&#x7684;&#x518D;&#x6B21;&#x5149;&#x4E34;&#xFF0C;&#x6B22;&#x8FCE;&#x6765;&#x5230;Android Architecture Components&#xFF08;ACC&#xFF09;&#x7CFB;&#x5217;&#x6587;&#x7AE0;&#x3002;&#x4E0A;&#x7BC7;&#x6587;&#x7AE0;&#x6211;&#x4EEC;&#x4E00;&#x8D77;&#x8BA8;&#x8BBA;&#x4E86;Room&#xFF0C;&#x901A;&#x8FC7;Room&#x6211;&#x4EEC;&#x80FD;&#x591F;&#x65B9;&#x4FBF;&#x7684;&#x64CD;&#x4F5C;App&#x7684;&#x6570;&#x636E;&#x5E93;&#x3002;&#x5982;&#x679C;&#x4F60;&#x7684;App&#x5BF9;&#x672C;&#x5730;&#x6570;&#x636E;&#x5E93;&#x6709;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x8BDD;&#xFF0C;Room&#x4F60;&#x503C;&#x5F97;&#x62E5;&#x6709;&#x3002;</p>
+<p>&#x4ECA;&#x5929;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x7EE7;&#x7EED;&#x4E0A;&#x7BC7;&#x6587;&#x7AE0;&#x7684;&#x6B65;&#x4F10;&#xFF0C;&#x8BA9;&#x6211;&#x4EEC;&#x4E00;&#x8D77;&#x6765;&#x5168;&#x9762;&#x4E86;&#x89E3;ACC&#x53E6;&#x4E00;&#x5F3A;&#x5927;&#x7684;&#x7EC4;&#x4EF6;LiveData&#x3002;&#x76F8;&#x4FE1;&#x4F60;&#x9A6C;&#x4E0A;&#x4F1A;&#x559C;&#x6B22;&#x4E0A;&#x5979;&#xFF01;&#x1F60D;&#x1F60D;&#x1F60D;</p>
+<h2 id="&#x7B80;&#x8FF0;"><a href="#&#x7B80;&#x8FF0;" class="headerlink" title="&#x7B80;&#x8FF0;"></a>&#x7B80;&#x8FF0;</h2><p>LiveData&#x662F;&#x4E00;&#x79CD;&#x53EF;&#x89C2;&#x6D4B;&#x6570;&#x636E;&#x5BB9;&#x5668;&#xFF0C;&#x5B83;&#x4F1A;&#x5728;&#x6570;&#x636E;&#x53D8;&#x5316;&#x65F6;&#x901A;&#x77E5;&#x89C2;&#x6D4B;&#x5668;&#xFF0C;&#x4EE5;&#x4FBF;&#x66F4;&#x65B0;&#x9875;&#x9762;&#xFF1B;&#x540C;&#x65F6;&#x5B83;&#x5177;&#x5907;&#x751F;&#x547D;&#x611F;&#x77E5;&#x80FD;&#x529B;&#xFF0C;&#x53EF;&#x4EE5;&#x5B9E;&#x65F6;&#x89C2;&#x5BDF;Activity/Fragment&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x72B6;&#x6001;&#x3002;</p>
+<p>&#x65E2;&#x7136;&#x5B83;&#x662F;&#x53EF;&#x89C2;&#x5BDF;&#x6570;&#x636E;&#x5BB9;&#x5668;&#x4E0E;&#x5177;&#x5907;&#x751F;&#x547D;&#x611F;&#x77E5;&#x80FD;&#x529B;&#xFF0C;&#x90A3;&#x4E48;&#x5B83;&#x7684;&#x4F18;&#x70B9;&#x4E5F;&#x5F88;&#x660E;&#x663E;&#xFF0C;&#x53EF;&#x4EE5;&#x5F52;&#x7EB3;&#x4E0E;&#x4EE5;&#x4E0B;&#x51E0;&#x70B9;</p>
+<ol>
+<li>&#x786E;&#x4FDD;ui&#x8DDF;&#x968F;&#x6570;&#x636E;&#x66F4;&#x65B0;</li>
+<li>&#x5177;&#x5907;&#x751F;&#x547D;&#x611F;&#x77E5;&#x80FD;&#x529B;&#x4ECE;&#x800C;&#x51CF;&#x5C11;&#x5185;&#x5B58;&#x6CC4;&#x9732;</li>
+<li>&#x9632;&#x6B62;&#x5F02;&#x5E38;crashs</li>
+<li>&#x65E0;&#x9700;&#x7BA1;&#x7406;&#x7ED1;&#x5B9A;&#x8005;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;</li>
+<li>ui&#x83B7;&#x53D6;&#x7684;&#x6570;&#x636E;&#x90FD;&#x662F;&#x6700;&#x8FD1;&#x6700;&#x7EC8;&#x7684;&#x66F4;&#x65B0;&#x6570;&#x636E;</li>
+</ol>
+<h2 id="&#x4F7F;&#x7528;&#x573A;&#x666F;"><a href="#&#x4F7F;&#x7528;&#x573A;&#x666F;" class="headerlink" title="&#x4F7F;&#x7528;&#x573A;&#x666F;"></a>&#x4F7F;&#x7528;&#x573A;&#x666F;</h2><p>&#x5F53;&#x6211;&#x4EEC;&#x8981;&#x76D1;&#x542C;&#x67D0;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x7684;&#x53D8;&#x5316;&#x65F6;&#xFF0C;LiveData&#x5C06;&#x5927;&#x663E;&#x8EAB;&#x624B;&#x3002;&#x4F8B;&#x5982;&#x754C;&#x9762;&#x6570;&#x636E;&#x7684;&#x66F4;&#x65B0;&#xFF0C;&#x5F53;&#x6570;&#x636E;&#x53D1;&#x751F;&#x53D8;&#x5316;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x8981;&#x901A;&#x77E5;&#x754C;&#x9762;&#x8FDB;&#x884C;&#x66F4;&#x65B0;ui&#xFF0C;&#x8FD9;&#x65F6;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;LiveData&#x5728;&#x5F53;&#x524D;Activity/Fragment&#x4E2D;&#x5BF9;&#x8BE5;&#x6570;&#x636E;&#x6CE8;&#x518C;&#x4E00;&#x4E2A;&#x89C2;&#x5BDF;&#x8005;&#xFF0C;&#x5B9E;&#x65F6;&#x76D1;&#x542C;&#x6570;&#x636E;&#x7684;&#x4EFB;&#x4F55;&#x6539;&#x52A8;&#x3002;&#x6BCF;&#x4E00;&#x6B21;&#x6539;&#x52A8;LiveData&#x90FD;&#x4F1A;&#x53D1;&#x9001;&#x901A;&#x77E5;&#x7ED9;&#x89C2;&#x5BDF;&#x8005;&#x3002;</p>
+<p>&#x53E6;&#x4E00;&#x65B9;&#x9762;&#xFF0C;LiveData&#x611F;&#x77E5;&#x754C;&#x9762;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#xFF0C;&#x6240;&#x4EE5;&#x53EA;&#x6709;&#x5728;&#x754C;&#x9762;&#x751F;&#x547D;&#x5468;&#x671F;&#x7684;<strong>STARTED</strong>&#x6216;&#x8005;<strong>RESUMED</strong>&#x72B6;&#x6001;&#x624D;&#x4F1A;&#x901A;&#x77E5;&#x89C2;&#x5BDF;&#x8005;&#x3002;&#x5982;&#x679C;&#x4F60;&#x4E00;&#x76F4;&#x5904;&#x4E8E;&#x540E;&#x53F0;&#x4E14;&#x6570;&#x636E;&#x4E00;&#x76F4;&#x5728;&#x53D8;&#x5316;&#xFF0C;LiveData&#x662F;&#x4E0D;&#x4F1A;&#x53D1;&#x751F;&#x901A;&#x77E5;&#xFF0C;&#x53EA;&#x6709;&#x5728;&#x754C;&#x9762;&#x518D;&#x4E00;&#x6B21;&#x56DE;&#x5230;&#x524D;&#x53F0;&#xFF0C;&#x8FD9;&#x65F6;LiveData&#x624D;&#x4F1A;&#x53D1;&#x751F;&#x901A;&#x77E5;&#x4E14;&#x53EA;&#x4F1A;&#x53D1;&#x9001;&#x4E00;&#x6B21;&#xFF0C;&#x6570;&#x636E;&#x7684;&#x66F4;&#x65B0;&#x53D6;&#x7684;&#x662F;&#x6700;&#x540E;&#x4E00;&#x6B21;&#x7684;&#x53D8;&#x5316;&#x6570;&#x636E;&#x3002;&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x6709;&#x6548;&#x7684;&#x907F;&#x514D;&#x5185;&#x5B58;&#x6CC4;&#x9732;&#x4E0E;ui&#x4E0D;&#x5B58;&#x5728;&#x65F6;&#x5BFC;&#x81F4;&#x7684;<strong>NullPointerException</strong></p>
+<h2 id="&#x4F7F;&#x7528;"><a href="#&#x4F7F;&#x7528;" class="headerlink" title="&#x4F7F;&#x7528;"></a>&#x4F7F;&#x7528;</h2><p>&#x9996;&#x9875;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5728;&#x6211;&#x4EEC;&#x7684;app&#x4E0B;&#x7684;build.gradle&#x4E2D;&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x4F9D;&#x8D56;&#x4EE3;&#x7801;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">dependencies {</span><br><span class="line">    def lifecycle_version = &quot;1.1.1&quot;</span><br><span class="line"> </span><br><span class="line">    // ViewModel and LiveData</span><br><span class="line">    implementation &quot;android.arch.lifecycle:extensions:$lifecycle_version&quot;</span><br><span class="line">    // alternatively - just LiveData</span><br><span class="line">    implementation &quot;android.arch.lifecycle:livedata:$lifecycle_version&quot;</span><br><span class="line"> </span><br><span class="line">    annotationProcessor &quot;android.arch.lifecycle:compiler:$lifecycle_version&quot;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x7136;&#x540E;&#x6211;&#x4EEC;&#x5C31;&#x80FD;&#x6B63;&#x5F0F;&#x4F7F;&#x7528;LiveData&#xFF0C;&#x770B;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">class ContactsViewModel(application: Application, private val defTitle: String = &quot;Contacts&quot;) : AndroidViewModel(application) {</span><br><span class="line">    val message: MutableLiveData&lt;String&gt; by lazy { MutableLiveData&lt;String&gt;() }</span><br><span class="line">    val contactsList: MutableLiveData&lt;List&lt;ContactsModel&gt;&gt; = MutableLiveData()</span><br><span class="line">     </span><br><span class="line">   fun getContacts(refresh: Boolean): LiveData&lt;List&lt;ContactsModel&gt;&gt; {</span><br><span class="line">        message.value = &quot;&quot;</span><br><span class="line">        if (refresh) {</span><br><span class="line">            getDataFromRemote()</span><br><span class="line">        } else if (contactsList.value == null || contactsList.value?.size ?: 0 &lt;= 0) {</span><br><span class="line">            message.value = &quot;&#x6570;&#x636E;&#x8BF7;&#x6C42;&#x4E2D;&#xFF0C;&#x8BF7;&#x7A0D;&#x540E;&#xFF01;&quot;</span><br><span class="line">            if (mLocalData.isEmpty()) {</span><br><span class="line">                getDataFromLocal()</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        return contactsList</span><br><span class="line">    }</span><br><span class="line">     </span><br><span class="line">    private fun getDataFromLocal() {</span><br><span class="line">        val runnable = Runnable {</span><br><span class="line">            val dao = mContactsDao.getAllContacts()</span><br><span class="line">            if (dao.isNotEmpty()) {</span><br><span class="line">                contactsList.postValue(dao)</span><br><span class="line">            } else {</span><br><span class="line">                getDataFromRemote()</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        mExecutors.disIoExecutor.execute(runnable)</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    private fun getDataFromRemote() {</span><br><span class="line">        Handler().postDelayed({</span><br><span class="line">            contactsList.value = mRemoteData</span><br><span class="line">            mLocalData = mRemoteData</span><br><span class="line">            saveContacts(mRemoteData)</span><br><span class="line">            Thread(Runnable {</span><br><span class="line">                title.postValue(&quot;Remote Contacts&quot;)</span><br><span class="line">            }).start()</span><br><span class="line">            message.value = &quot;&#x6570;&#x636E;&#x52A0;&#x8F7D;&#x5B8C;&#x6210;~&quot;</span><br><span class="line">        }, MDELAY_MILLIS)</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x9996;&#x5148;&#x6211;&#x4EEC;&#x4F7F;&#x7528;MutableLiveDat&#x5BF9;&#x6211;&#x4EEC;&#x6240;&#x9700;&#x8981;&#x7684;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x4E86;&#x5305;&#x88F9;&#xFF0C;MutableLiveData&#x5B83;&#x7EE7;&#x627F;&#x4E0E;LiveData&#xFF0C;&#x66B4;&#x9732;&#x4E86;<strong>postValue()</strong>&#x4E0E;<strong>setValue()</strong>&#x65B9;&#x6CD5;&#x3002;&#x4E00;&#x65E6;MutableLiveData&#x6240;&#x5305;&#x88F9;&#x7684;&#x6570;&#x636E;&#x53D1;&#x751F;&#x53D8;&#x5316;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<strong>postValue()</strong>(asynchronously)&#x4E0E;<strong>setValue()</strong>(synchronously)&#x6765;&#x8BBE;&#x7F6E;&#x503C;&#x4E0E;&#x53D1;&#x9001;&#x901A;&#x77E5;&#xFF0C;&#x544A;&#x8BC9;&#x89C2;&#x5BDF;&#x8005;&#x6570;&#x636E;&#x5DF2;&#x7ECF;&#x6539;&#x53D8;&#x3002;</p>
+<blockquote>
+<p>&#x5728;<strong>getDataFromLocal()</strong>&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x4E86;Room&#x6765;&#x64CD;&#x4F5C;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x540C;&#x65F6;&#x76F4;&#x63A5;&#x901A;&#x8FC7;&#x8FD4;&#x56DE;LiveData&#x6570;&#x636E;&#x7C7B;&#x578B;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x4F7F;&#x5F97;Room&#x4E0E;LiveData&#x5B8C;&#x7F8E;&#x7ED3;&#x5408;&#x3002;</p>
+</blockquote>
+<p>&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x518D;&#x6765;&#x770B;&#x770B;&#x89C2;&#x5BDF;&#x8005;&#x7684;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class ContactsActivity : AppCompatActivity() {</span><br><span class="line"> </span><br><span class="line">    private lateinit var mViewModel: ContactsViewModel</span><br><span class="line"> </span><br><span class="line">    override fun onCreate(savedInstanceState: Bundle?) {</span><br><span class="line">        super.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_contacts_layout)</span><br><span class="line">        setupViewModel()</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    private fun setupViewModel() {</span><br><span class="line">        mViewModel = ViewModelProviders.of(this, ContactsFactory.getInstance(application))[ContactsViewModel::class.java]</span><br><span class="line">        //active STARTED&#x3001;RESUMED</span><br><span class="line">        mViewModel.getContacts(true).observe(this,</span><br><span class="line">                Observer {</span><br><span class="line">                    //todo ...</span><br><span class="line">                })</span><br><span class="line">        mViewModel.message.observe(this,</span><br><span class="line">                Observer {</span><br><span class="line">                    //todo ...</span><br><span class="line">                })</span><br><span class="line">    }   </span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6211;&#x4EEC;&#x4E3A;&#x6240;&#x9700;&#x8981;&#x89C2;&#x5BDF;&#x7684;&#x6570;&#x636E;&#x6DFB;&#x52A0;&#x4E86;observer&#x65B9;&#x6CD5;&#xFF0C;&#x8BE5;&#x65B9;&#x6CD5;&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x662F;LifecyleOwner&#xFF0C;&#x4EE5;&#x4FBF;&#x8BA9;LiveData&#x5177;&#x6709;&#x751F;&#x547D;&#x611F;&#x77E5;&#x80FD;&#x529B;&#xFF0C;&#x8FD9;&#x91CC;&#x8981;&#x611F;&#x77E5;&#x7684;&#x662F;ContactsActivity&#xFF0C;&#x6240;&#x4EE5;&#x4F20;&#x5165;this&#x5373;&#x53EF;&#x3002;&#x7B2C;&#x4E8C;&#x4E2A;&#x53C2;&#x6570;&#x662F;&#x4E00;&#x4E2A;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#xFF0C;&#x4E00;&#x65E6;&#x6570;&#x636E;&#x53D1;&#x751F;&#x53D8;&#x5316;&#x5B83;&#x7684;<strong>onChanged()</strong>&#x5C31;&#x4F1A;&#x56DE;&#x8C03;&#xFF0C;&#x5E76;&#x5C06;&#x6570;&#x636E;&#x5E26;&#x56DE;&#xFF0C;&#x8FD9;&#x6837;&#x754C;&#x9762;&#x5C31;&#x80FD;&#x5B9E;&#x65F6;&#x66F4;&#x65B0;&#x6570;&#x636E;&#x3002;</p>
+<p>&#x6700;&#x540E;&#x7531;&#x4E8E;LiveData&#x662F;&#x751F;&#x547D;&#x611F;&#x77E5;&#x7684;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x4E5F;&#x65E0;&#x9700;&#x62C5;&#x5FC3;&#x4ED6;&#x7684;register/unregister</p>
+<h2 id="Extend"><a href="#Extend" class="headerlink" title="Extend"></a>Extend</h2><p>&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x77E5;&#x9053;LiveData&#x4F1A;&#x5BF9;&#x5904;&#x4E8E;STATERD&#x6216;&#x8005;RESUMED&#x72B6;&#x6001;&#x8FDB;&#x884C;&#x53D1;&#x9001;&#x901A;&#x77E5;&#xFF0C;<strong>&#x5982;&#x679C;&#x8BE5;&#x72B6;&#x6001;&#x4E0B;&#x5B58;&#x5728;observer&#xFF0C;&#x7531;&#x65E0;&#x5230;&#x6709;&#xFF0C;&#x6211;&#x4EEC;&#x79F0;&#x4E4B;&#x4E3A;active&#xFF0C;&#x53CD;&#x6B63;&#x79F0;&#x4E4B;&#x4E3A;inactive</strong>&#x3002;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x80FD;&#x591F;&#x77E5;&#x9053;&#x4F55;&#x65F6;&#x4E3A;active&#x4E0E;&#x4F55;&#x65F6;&#x4E3A;inactive&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x81EA;&#x5DF1;&#x7684;LiveData&#x3002;&#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;LiveData&#x63D0;&#x4F9B;&#x4E86;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;&#x5206;&#x522B;&#x4E3A;<strong>onActive()</strong>&#x4E0E;<strong>onInactive()</strong>&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#x6211;&#x4EEC;&#x60F3;&#x4E3A;&#x4E00;&#x4E2A;&#x76D1;&#x542C;&#x5668;&#x5B9E;&#x73B0;&#x751F;&#x547D;&#x611F;&#x77E5;&#x80FD;&#x529B;&#xFF0C;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x5982;&#x4E0B;&#x64CD;&#x4F5C;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public class StockLiveData extends LiveData&lt;BigDecimal&gt; {</span><br><span class="line">    private static StockLiveData sInstance;</span><br><span class="line">    private StockManager mStockManager;</span><br><span class="line"> </span><br><span class="line">    private SimplePriceListener mListener = new SimplePriceListener() {</span><br><span class="line">        @Override</span><br><span class="line">        public void onPriceChanged(BigDecimal price) {</span><br><span class="line">            setValue(price);</span><br><span class="line">        }</span><br><span class="line">    };</span><br><span class="line"> </span><br><span class="line">    @MainThread</span><br><span class="line">    public static StockLiveData get(String symbol) {</span><br><span class="line">        if (sInstance == null) {</span><br><span class="line">            sInstance = new StockLiveData(symbol);</span><br><span class="line">        }</span><br><span class="line">        return sInstance;</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    private StockLiveData(String symbol) {</span><br><span class="line">        mStockManager = new StockManager(symbol);</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    @Override</span><br><span class="line">    protected void onActive() {</span><br><span class="line">        mStockManager.requestPriceUpdates(mListener);</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    @Override</span><br><span class="line">    protected void onInactive() {</span><br><span class="line">        mStockManager.removeUpdates(mListener);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E00;&#x65E6;observer&#x7531;&#x65E0;&#x5230;&#x6709;&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x5C31;&#x5728;<strong>onActive()</strong>&#x65B9;&#x6CD5;&#x4E2D;&#x8FDB;&#x884C;&#x76D1;&#x542C;&#x5668;&#x7684;&#x6CE8;&#x518C;&#x3002;observer&#x7531;&#x6709;&#x5230;&#x65E0;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;<strong>onInactive()</strong>&#x4E2D;&#x8FDB;&#x884C;&#x6CE8;&#x9500;&#x3002;&#x8FD9;&#x6837;&#x5C31;&#x53EF;&#x4EE5;&#x662F;&#x6211;&#x4EEC;&#x7684;&#x76D1;&#x542C;&#x5668;&#x5177;&#x5907;&#x751F;&#x547D;&#x611F;&#x77E5;&#x80FD;&#x529B;&#x3002;&#x907F;&#x514D;&#x4E0D;&#x5FC5;&#x8981;&#x7684;&#x5185;&#x5B58;&#x6CC4;&#x9732;&#x6216;&#x8005;&#x4E00;&#x6B21;crash&#x3002;&#x540C;&#x65F6;&#x4E00;&#x65E6;&#x76D1;&#x542C;&#x5668;&#x7684;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#x751F;&#x6548;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x53C8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;LiveData&#x7684;<strong>setValue()</strong>&#x6765;&#x5BF9;&#x89C2;&#x5BDF;&#x8005;&#x8FDB;&#x884C;&#x6570;&#x636E;&#x7684;&#x66F4;&#x65B0;&#x3002;&#x6240;&#x4EE5;&#x89C2;&#x5BDF;&#x8005;&#x7684;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class MyFragment extends Fragment {</span><br><span class="line">    @Override</span><br><span class="line">    public void onActivityCreated(Bundle savedInstanceState) {</span><br><span class="line">        StockLiveData.get(getActivity()).observe(this, price -&gt; {</span><br><span class="line">            // Update the UI.</span><br><span class="line">        });</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5982;&#x679C;&#x7EC6;&#x5FC3;&#x7684;&#x8BDD;&#xFF0C;&#x53EF;&#x4EE5;&#x53D1;&#x73B0;&#x4E0A;&#x9762;&#x7684;StockLiveData&#x5DF2;&#x7ECF;&#x5B9E;&#x73B0;&#x4E86;&#x76D1;&#x542C;&#x5668;&#x5171;&#x4EAB;&#x3002;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x591A;&#x4E2A;&#x754C;&#x9762;&#x4E2D;&#x4F7F;&#x7528;StockLiveData&#x8FDB;&#x884C;&#x6DFB;&#x52A0;observer&#x3002;&#x4F8B;&#x5982;&#x5728;Activity&#x4E2D;&#xFF0C;&#x53EA;&#x8981;&#x6709;&#x4E00;&#x4E2A;observer&#xFF0C;&#x90A3;&#x4E48;&#x5B83;&#x5C06;&#x4E00;&#x76F4;&#x76D1;&#x542C;&#x6570;&#x636E;&#x7684;&#x53D8;&#x5316;&#x3002;</p>
+<blockquote>
+<p>&#x6848;&#x4F8B;&#xFF1A;&#x5BF9;&#x4E8E;App&#x7EDF;&#x8BA1;&#x9700;&#x6C42;&#xFF0C;&#x4E00;&#x65E6;&#x6D89;&#x53CA;&#x5230;&#x591A;&#x4E2A;&#x9875;&#x9762;&#x95F4;&#x7684;&#x7EDF;&#x8BA1;&#x53C2;&#x6570;&#x4F20;&#x9012;&#xFF0C;&#x53EF;&#x4EE5;&#x81EA;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x6269;&#x5C55;LiveData&#x6765;&#x5168;&#x5C40;&#x76D1;&#x542C;&#x53C2;&#x6570;&#x7684;&#x4F20;&#x9012;&#x4E0E;&#x53D8;&#x5316;&#x3002;</p>
+</blockquote>
+<h2 id="Transform"><a href="#Transform" class="headerlink" title="Transform"></a>Transform</h2><p>&#x5728;&#x901A;&#x77E5;&#x89C2;&#x5BDF;&#x8005;&#x6570;&#x636E;&#x6539;&#x53D8;&#x4E4B;&#x524D;&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x60F3;&#x6539;&#x53D8;LiveData&#x4E2D;&#x7684;&#x503C;&#x7C7B;&#x578B;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;Transformations</p>
+<h3 id="Transformations-map"><a href="#Transformations-map" class="headerlink" title="Transformations.map()"></a>Transformations.map()</h3><p>&#x83B7;&#x53D6;&#x539F;&#x6709;&#x7C7B;&#x578B;&#x4E2D;&#x7684;&#x67D0;&#x4E2A;&#x7279;&#x5B9A;&#x7684;&#x7C7B;&#x578B;&#x503C;&#xFF0C;&#x53EF;&#x4EE5;&#x6BD4;&#x55BB;&#x4E3A;&#x89E3;&#x5305;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<strong>map()</strong>&#x65B9;&#x6CD5;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LiveData&lt;User&gt; userLiveData = ...;</span><br><span class="line">LiveData&lt;String&gt; userName = Transformations.map(userLiveData, user -&gt; {</span><br><span class="line">    user.name + &quot; &quot; + user.lastName</span><br><span class="line">});</span><br></pre></td></tr></table></figure>
+<h3 id="Transformations-switchMap"><a href="#Transformations-switchMap" class="headerlink" title="Transformations.switchMap()"></a>Transformations.switchMap()</h3><p>&#x4E0E;map&#x5BF9;&#x5E94;&#x7684;&#x662F;<strong>switchMap()</strong>&#x65B9;&#x6CD5;&#xFF0C;&#x8FD9;&#x91CC;&#x5C31;&#x662F;&#x6253;&#x5305;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">private LiveData&lt;User&gt; getUser(String id) {</span><br><span class="line">  ...;</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line">LiveData&lt;String&gt; userId = ...;</span><br><span class="line">LiveData&lt;User&gt; user = Transformations.switchMap(userId, id -&gt; getUser(id) );</span><br></pre></td></tr></table></figure>
+<h2 id="MediatorLiveData"><a href="#MediatorLiveData" class="headerlink" title="MediatorLiveData"></a>MediatorLiveData</h2><p>&#x4E0E;LiveData&#x76F8;&#x5173;&#x7684;&#x8FD8;&#x6709;&#x4E00;&#x4E2A;MediatorLiveData&#xFF0C;&#x5B83;&#x7684;&#x4F5C;&#x7528;&#x662F;&#xFF1A;&#x53EF;&#x4EE5;&#x540C;&#x65F6;&#x76D1;&#x542C;&#x591A;&#x4E2A;LiveData&#x3002;&#x4F8B;&#x5982;&#x540C;&#x65F6;&#x76D1;&#x542C;&#x672C;&#x5730;&#x6570;&#x636E;&#x4E0E;&#x8FDC;&#x7A0B;&#x6570;&#x636E;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">LiveData&lt;List&lt;User&gt;&gt; usersFromDatabase;</span><br><span class="line">LiveData&lt;List&lt;User&gt;&gt; usersFromNetwork;</span><br><span class="line"> </span><br><span class="line">MediatorLiveData&lt;List&lt;User&gt;&gt; usersLiveData = </span><br><span class="line">    new MediatorLiveData&lt;&gt;();</span><br><span class="line">     </span><br><span class="line">usersLiveData.addSource(usersFromDatabase, newUserList -&gt;</span><br><span class="line">    usersLiveData.setValue(value));</span><br><span class="line">     </span><br><span class="line">usersLiveData.addSource(usersFromNetwork, newUserList -&gt;</span><br><span class="line">    usersLiveData.setValue(value));</span><br></pre></td></tr></table></figure>
+<p>&#x4E00;&#x65E6;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;&#x53D1;&#x9001;&#x53D8;&#x5316;&#xFF0C;MediatorLiveData&#x90FD;&#x4F1A;&#x53D1;&#x9001;&#x901A;&#x77E5;&#x7ED9;observer&#x3002;</p>
+<p>&#x662F;&#x5426;&#x611F;&#x89C9;LiveData&#x5F88;&#x5F3A;&#x5927;&#x5462;&#xFF1F;&#x90A3;&#x4E48;&#x8D76;&#x7D27;&#x884C;&#x52A8;&#x8D77;&#x6765;&#x5427;&#xFF0C;&#x8BA9;&#x4F60;&#x7684;App&#x4E2D;&#x6570;&#x636E;&#x4E5F;&#x5177;&#x6709;&#x53EF;&#x89C2;&#x5BDF;&#x4E0E;&#x751F;&#x547D;&#x611F;&#x77E5;&#x80FD;&#x529B;&#x3002;</p>
+<p>&#x6700;&#x540E;&#x6587;&#x7AE0;&#x4E2D;&#x7684;&#x4EE3;&#x7801;&#x90FD;&#x53EF;&#x4EE5;&#x5728;<a href="https://github.com/idisfkj/android-api-analysis" target="_blank" rel="noopener">Github</a>&#x4E2D;&#x83B7;&#x53D6;&#x5230;&#x3002;&#x4F7F;&#x7528;&#x65F6;&#x8BF7;&#x5C06;&#x5206;&#x652F;&#x5207;&#x6362;&#x5230;<strong>feat_architecture_components</strong></p>
+<h2 id="&#x76F8;&#x5173;&#x6587;&#x7AE0;"><a href="#&#x76F8;&#x5173;&#x6587;&#x7AE0;" class="headerlink" title="&#x76F8;&#x5173;&#x6587;&#x7AE0;"></a>&#x76F8;&#x5173;&#x6587;&#x7AE0;</h2><p><a href="https://idisfkj.github.io/2018/06/07/Android-Architecture-Components-Part1-Room/" target="_blank" rel="noopener">Android Architecture Components Part1:Room</a><br><a href="https://idisfkj.github.io/2018/06/14/Android-Architecture-Components-Part3-Lifecycle/" target="_blank" rel="noopener">Android Architecture Components Part3:Lifecycle</a><br><a href="https://idisfkj.github.io/2018/06/22/Android-Architecture-Components-Part4-ViewModel/" target="_blank" rel="noopener">Android Architecture Components Part4:ViewModel</a></p>
+<h2 id="&#x5173;&#x6CE8;"><a href="#&#x5173;&#x6CE8;" class="headerlink" title="&#x5173;&#x6CE8;"></a>&#x5173;&#x6CE8;</h2><p><img src="/2018/06/10/Android-Architecture-Components-Part2-LiveData/wx.jpg" alt="&#x602A;&#x8C08;&#x65F6;&#x95F4;&#x5230;&#x4E86;"></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/06/07/Android-Architecture-Components-Part1-Room/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/06/14/Android-Architecture-Components-Part3-Lifecycle/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Sun Jun 10 2018 08:29:22 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

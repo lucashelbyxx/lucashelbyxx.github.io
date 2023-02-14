@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Android Gradle系列-运用篇 | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="gradle,">
+  
+
+  <meta name="description" content="&amp;#x4E0A;&amp;#x6B21;&amp;#x6211;&amp;#x4EEC;&amp;#x8BF4;&amp;#x5230;gradle&amp;#x7684;&amp;#x539F;&amp;#x7406;&amp;#xFF0C;&amp;#x4E3B;&amp;#x8981;&amp;#x662F;&amp;#x504F;&amp;#x7406;&amp;#x8BBA;&amp;#x4E0A;&amp;#x7684;&amp;#x77E5;&amp;#x8BC6;&amp;#x70B9;&amp;#xFF0C;&amp;#x76F4;&amp;#x901A;&amp;#">
+<meta name="keywords" content="gradle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Gradle系列-运用篇">
+<meta property="og:url" content="https://www.rousetime.com/2019/05/23/Gradle系列-运用篇/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="&amp;#x4E0A;&amp;#x6B21;&amp;#x6211;&amp;#x4EEC;&amp;#x8BF4;&amp;#x5230;gradle&amp;#x7684;&amp;#x539F;&amp;#x7406;&amp;#xFF0C;&amp;#x4E3B;&amp;#x8981;&amp;#x662F;&amp;#x504F;&amp;#x7406;&amp;#x8BBA;&amp;#x4E0A;&amp;#x7684;&amp;#x77E5;&amp;#x8BC6;&amp;#x70B9;&amp;#xFF0C;&amp;#x76F4;&amp;#x901A;&amp;#">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.rousetime.com/2019/05/23/Gradle系列-运用篇/Gradle系列-运用篇1.png">
+<meta property="og:image" content="https://www.rousetime.com/2019/05/23/Gradle系列-运用篇/Gradle系列-运用篇2.png">
+<meta property="og:image" content="https://www.rousetime.com/2019/05/23/Gradle系列-运用篇/Android补给站.jpg">
+<meta property="og:updated_time" content="2019-06-03T11:40:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Gradle系列-运用篇">
+<meta name="twitter:description" content="&amp;#x4E0A;&amp;#x6B21;&amp;#x6211;&amp;#x4EEC;&amp;#x8BF4;&amp;#x5230;gradle&amp;#x7684;&amp;#x539F;&amp;#x7406;&amp;#xFF0C;&amp;#x4E3B;&amp;#x8981;&amp;#x662F;&amp;#x504F;&amp;#x7406;&amp;#x8BBA;&amp;#x4E0A;&amp;#x7684;&amp;#x77E5;&amp;#x8BC6;&amp;#x70B9;&amp;#xFF0C;&amp;#x76F4;&amp;#x901A;&amp;#">
+<meta name="twitter:image" content="https://www.rousetime.com/2019/05/23/Gradle系列-运用篇/Gradle系列-运用篇1.png">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#android"><span class="toc-text">android</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#defaultConfig"><span class="toc-text">defaultConfig</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#signingConfigs"><span class="toc-text">signingConfigs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#buildTypes"><span class="toc-text">buildTypes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#productFlavors"><span class="toc-text">productFlavors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sourceSets"><span class="toc-text">sourceSets</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dependencies"><span class="toc-text">dependencies</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系列"><span class="toc-text">系列</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Gradle系列-运用篇" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Android Gradle系列-运用篇</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.05.23</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>&#x4E0A;&#x6B21;&#x6211;&#x4EEC;&#x8BF4;&#x5230;gradle&#x7684;&#x539F;&#x7406;&#xFF0C;&#x4E3B;&#x8981;&#x662F;&#x504F;&#x7406;&#x8BBA;&#x4E0A;&#x7684;&#x77E5;&#x8BC6;&#x70B9;&#xFF0C;&#x76F4;&#x901A;&#x8F66;&#x5728;&#x8FD9;<a href="https://www.rousetime.com/2019/05/13/Android-Gradle%E7%B3%BB%E5%88%97-%E5%8E%9F%E7%90%86%E7%AF%87/">Android Gradle&#x7CFB;&#x5217;-&#x539F;&#x7406;&#x7BC7;</a>&#x3002;&#x8FD9;&#x6B21;&#x6211;&#x4EEC;&#x6765;&#x70B9;&#x5B9E;&#x6218;&#x7684;&#xFF0C;&#x968F;&#x4FBF;&#x5DE9;&#x56FA;&#x4E0B;&#x4E4B;&#x524D;&#x7684;&#x77E5;&#x8BC6;&#x70B9;&#x3002;</p>
+<h2 id="android"><a href="#android" class="headerlink" title="android"></a>android</h2><p>&#x5728;app module&#x4E0B;&#x7684;gradle.build&#x4E2D;&#x90FD;&#x6709;&#x4E00;&#x4E2A;android&#x95ED;&#x5305;&#xFF0C;&#x4E3B;&#x8981;&#x914D;&#x7F6E;&#x90FD;&#x5728;&#x8FD9;&#x91CC;&#x8BBE;&#x7F6E;&#x3002;&#x4F8B;&#x5982;&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x9879;&#xFF1A;defaultConfig&#xFF1B;&#x7B7E;&#x540D;&#x76F8;&#x5173;&#xFF1A;signingConfig&#xFF1B;&#x6784;&#x5EFA;&#x53D8;&#x4F53;&#xFF1A;buildTypes&#xFF1B;&#x4EA7;&#x54C1;&#x98CE;&#x683C;&#xFF1A;productFlavors&#xFF1B;&#x6E90;&#x96C6;&#x914D;&#x7F6E;&#xFF1A;sourceSets&#x7B49;&#x3002;</p>
+<h3 id="defaultConfig"><a href="#defaultConfig" class="headerlink" title="defaultConfig"></a>defaultConfig</h3><p>&#x5BF9;&#x4E8E;defaultConfig&#x5176;&#x5B9E;&#x5B83;&#x662F;&#x4E5F;&#x4E00;&#x4E2A;productFlavor&#xFF0C;&#x53EA;&#x4E0D;&#x8FC7;&#x8FD9;&#x91CC;&#x662F;&#x7528;&#x6765;&#x63D0;&#x4F9B;&#x9ED8;&#x8BA4;&#x7684;&#x8BBE;&#x7F6E;&#x9879;&#xFF0C;&#x5982;&#x679C;&#x4E4B;&#x540E;&#x7684;productFlavor&#x6CA1;&#x6709;&#x7279;&#x6B8A;&#x6307;&#x5B9A;&#x7684;&#x914D;&#x7F6E;&#x90FD;&#x4F1A;&#x4F7F;&#x7528;defaultConfig&#x4E2D;&#x7684;&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class DefaultConfig extends BaseFlavor {</span><br><span class="line">    @Inject</span><br><span class="line">    public DefaultConfig(</span><br><span class="line">            @NonNull String name,</span><br><span class="line">            @NonNull Project project,</span><br><span class="line">            @NonNull ObjectFactory objectFactory,</span><br><span class="line">            @NonNull DeprecationReporter deprecationReporter,</span><br><span class="line">            @NonNull Logger logger) {</span><br><span class="line">        super(name, project, objectFactory, deprecationReporter, logger);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line">public abstract class BaseFlavor extends DefaultProductFlavor implements CoreProductFlavor {</span><br><span class="line">	...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;defaultConfig&#x7684;&#x8D85;&#x7EA7;&#x7236;&#x7C7B;&#x5C31;&#x662F;DefaultProductFlavor&#x3002;&#x800C;&#x5728;DefaultProductFlavor&#x4E2D;&#x5B9A;&#x4E49;&#x4E86;&#x8BB8;&#x591A;&#x6211;&#x4EEC;&#x7ECF;&#x5E38;&#x89C1;&#x5230;&#x7684;&#x914D;&#x7F6E;&#xFF1A;VersionCode&#x3001;VersionName&#x3001;minSdkVersion&#x3001;targetSdkVersion&#x4E0E;applicationId&#x7B49;&#x7B49;&#x3002;</p>
+<p>&#x6709;&#x4E86;&#x4E0A;&#x9762;&#x7684;&#x57FA;&#x7840;&#xFF0C;&#x90A3;&#x4E48;&#x5728;defaultConfig&#x4E2D;&#x6211;&#x4EEC;&#x8981;&#x914D;&#x7F6E;&#x7684;&#x53D8;&#x91CF;&#x5C31;&#x663E;&#x800C;&#x6613;&#x89C1;&#x4E86;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">defaultConfig {</span><br><span class="line">    applicationId &quot;com.idisfkj.androidapianalysis&quot;</span><br><span class="line">    minSdkVersion 16</span><br><span class="line">    targetSdkVersion 26</span><br><span class="line">    versionCode 1</span><br><span class="line">    versionName &quot;1.0&quot;</span><br><span class="line">    testInstrumentationRunner &quot;android.support.test.runner.AndroidJUnitRunner&quot;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h3 id="signingConfigs"><a href="#signingConfigs" class="headerlink" title="signingConfigs"></a>signingConfigs</h3><p>signingConfig&#x662F;&#x7528;&#x6765;&#x914D;&#x7F6E;keyStore&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x9488;&#x5BF9;&#x4E0D;&#x540C;&#x7684;&#x7248;&#x672C;&#x914D;&#x7F6E;&#x4E0D;&#x540C;&#x7684;keyStore&#xFF0C;&#x4F8B;&#x5982;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">signingConfigs {</span><br><span class="line">    config { //&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;</span><br><span class="line">        storeFile file(&apos;key.store&apos;)</span><br><span class="line">        storePassword &apos;android123&apos;</span><br><span class="line">        keyAlias &apos;android&apos;</span><br><span class="line">        keyPassword &apos;android123&apos;</span><br><span class="line">    }</span><br><span class="line">    dev { //dev&#x6D4B;&#x8BD5;&#x7248;&#x914D;&#x7F6E;</span><br><span class="line">        storeFile file(&apos;xxxx&apos;)</span><br><span class="line">        storePassword &apos;xxx&apos;</span><br><span class="line">        keyAlias &apos;xxx&apos;</span><br><span class="line">        keyPassword &apos;xxx&apos;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6709;&#x4EBA;&#x53EF;&#x80FD;&#x4F1A;&#x8BF4;&#x8FD9;&#x4E0D;&#x5B89;&#x5168;&#x7684;&#xFF0C;&#x5BC6;&#x7801;&#x90FD;&#x662F;&#x660E;&#x6587;&#xFF0C;&#x90FD;&#x66B4;&#x9732;&#x51FA;&#x53BB;&#x4E86;&#x3002;&#x662F;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x8FD9;&#x9879;&#x76EE;&#x53D1;&#x5E03;&#x5230;&#x8FDC;&#x7A0B;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x4E9B;&#x79D8;&#x94A5;&#x5C31;&#x6CC4;&#x9732;&#x51FA;&#x53BB;&#x4E86;&#x3002;&#x6240;&#x4EE5;&#x4E3A;&#x4E86;&#x5B89;&#x5168;&#x8D77;&#x89C1;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5BF9;&#x5176;&#x8FDB;&#x4E00;&#x4E9B;&#x7279;&#x6B8A;&#x5904;&#x7406;&#x3002;</p>
+<ol>
+<li>&#x901A;&#x8FC7;&#x73AF;&#x5883;&#x53D8;&#x91CF;&#x83B7;&#x53D6;&#x79D8;&#x94A5;</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">storePassword System.getenv(&quot;KSTOREPWD&quot;)</span><br><span class="line">keyPassword System.getenv(&quot;KEYPWD&quot;)</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>&#x4ECE;&#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x83B7;&#x53D6;&#x79D8;&#x94A5;</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">storePassword System.console().readLine(&quot;\nKeystore password: &quot;)</span><br><span class="line">keyPassword System.console().readLine(&quot;\nKey password: &quot;)</span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x9762;&#x4E24;&#x79CD;&#x662F;Android Develop&#x5B98;&#x7F51;&#x63D0;&#x4F9B;&#x7684;&#xFF0C;&#x4F46;&#x7ECF;&#x8FC7;&#x6D4B;&#x8BD5;&#x90FD;&#x4F1A;&#x62A5;null&#x5F02;&#x5E38;&#xFF0C;&#x67E5;&#x4E86;&#x4E0B;&#x8D44;&#x6599;&#x90FD;&#x8BF4;&#x662F;gradle&#x4E0D;&#x652F;&#x6301;(&#x5982;&#x679C;&#x6709;&#x6210;&#x529F;&#x7684;&#x53EF;&#x4EE5;&#x544A;&#x77E5;&#x6211;)&#xFF0C;&#x6240;&#x4EE5;&#x8FD8;&#x662F;&#x63A8;&#x8350;&#x4E0B;&#x9762;&#x7684;&#x8FD9;&#x79CD;&#x65B9;&#x6CD5;</p>
+<p>&#x5728;&#x9879;&#x76EE;&#x7684;&#x6839;&#x76EE;&#x5F55;&#x4E0B;(settings.gradle&#x5E73;&#x7EA7;)&#x521B;&#x5EFA;keystore.properties&#x6587;&#x4EF6;&#xFF0C;&#x6211;&#x4EEC;&#x5728;&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x4E2D;&#x8FDB;&#x884C;&#x5B58;&#x50A8;&#x79D8;&#x94A5;&#xFF0C;&#x5B83;&#x662F;&#x652F;&#x6301;key-value&#x6A21;&#x5F0F;&#x7684;&#x952E;&#x503C;&#x5BF9;&#x6570;&#x636E;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">storePassword = android123</span><br><span class="line">keyPassword = android123</span><br></pre></td></tr></table></figure>
+<p>&#x4E4B;&#x540E;&#x5C31;&#x662F;&#x8BFB;&#x53D6;&#x5176;&#x4E2D;&#x7684;password&#xFF0C;&#x5728;build.gradle&#x901A;&#x8FC7;afterEvaluate&#x56DE;&#x8C03;&#x8FDB;&#x884C;&#x8BFB;&#x53D6;&#x4E0E;&#x8BBE;&#x7F6E;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">afterEvaluate {</span><br><span class="line">    def propsFile = rootProject.file(&apos;keystore.properties&apos;)</span><br><span class="line">    def configName = &apos;config&apos;</span><br><span class="line">    if (propsFile.exists() &amp;&amp; android.signingConfigs.hasProperty(configName)) {</span><br><span class="line">        def props = new Properties()</span><br><span class="line">        props.load(new FileInputStream(propsFile))</span><br><span class="line">        android.signingConfigs[configName].keyPassword = props[&apos;keyPassword&apos;]</span><br><span class="line">        android.signingConfigs[configName].storePassword = props[&apos;storePassword&apos;]</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x901A;&#x8FC7;&#x52A8;&#x6001;&#x8BFB;&#x53D6;&#x4E86;password&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x4E4B;&#x524D;&#x7684;signingConfigs&#x4E2D;&#x5C31;&#x65E0;&#x9700;&#x518D;&#x914D;&#x7F6E;password</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">signingConfigs {</span><br><span class="line">    config {</span><br><span class="line">        storeFile file(&apos;key.store&apos;)</span><br><span class="line">        keyAlias &apos;android&apos;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6700;&#x540E;&#x4E00;&#x6B65;&#xFF0C;&#x4E3A;&#x4E86;&#x4FDD;&#x8BC1;&#x79D8;&#x94A5;&#x7684;&#x5B89;&#x5168;&#x6027;&#xFF0C;&#x5728;.gitignore&#x4E2D;&#x6DFB;&#x52A0;keystore.properties&#x7684;&#x5FFD;&#x7565;&#x914D;&#x7F6E;&#xFF0C;&#x9632;&#x6B62;&#x4E0A;&#x4F20;&#x5230;&#x8FDC;&#x7A0B;&#x4ED3;&#x50A8;&#x66B4;&#x9732;&#x79D8;&#x94A5;&#x3002;</p>
+<h3 id="buildTypes"><a href="#buildTypes" class="headerlink" title="buildTypes"></a>buildTypes</h3><p>&#x6784;&#x5EFA;&#x53D8;&#x4F53;&#x4E3B;&#x8981;&#x7528;&#x6765;&#x914D;&#x7F6E;shrinkResources&#xFF1A;&#x8D44;&#x6E90;&#x662F;&#x5426;&#x9700;&#x8981;&#x538B;&#x7F29;&#x3001;zipAlignEnabled&#xFF1A;&#x538B;&#x7F29;&#x662F;&#x5426;&#x5BF9;&#x9F50;&#x3001;minifyEnabled&#xFF1A;&#x662F;&#x5426;&#x4EE3;&#x7801;&#x6DF7;&#x6DC6;&#x4E0E;signingConfig&#xFF1A;&#x7B7E;&#x540D;&#x914D;&#x7F6E;&#x7B49;&#x7B49;&#x3002;&#x65B0;&#x5EFA;&#x9879;&#x76EE;&#x65F6;&#xFF0C;&#x9ED8;&#x8BA4;&#x6709;&#x4E00;&#x4E2A;release&#x914D;&#x7F6E;&#xFF0C;&#x4F46;&#x6211;&#x4EEC;&#x5B9E;&#x9645;&#x5F00;&#x53D1;&#x4E2D;&#x53EF;&#x80FD;&#x9700;&#x8981;&#x591A;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x4F8B;&#x5982;debug&#x6A21;&#x5F0F;&#xFF0C;&#x4E3A;&#x4E86;&#x65B9;&#x6CD5;&#x8C03;&#x8BD5;&#xFF0C;&#x4E00;&#x822C;&#x90FD;&#x4E0D;&#x9700;&#x8981;&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x4EE3;&#x7801;&#x6DF7;&#x6DC6;&#x3001;&#x538B;&#x7F29;&#x7B49;&#x5904;&#x7406;&#x3002;&#x6216;&#x8005;outer&#x6A21;&#x5F0F;&#xFF0C;&#x9700;&#x8981;&#x7684;&#x7B7E;&#x540D;&#x914D;&#x7F6E;&#x4E0D;&#x540C;&#xFF0C;&#x6240;&#x4EE5;&#x6700;&#x7EC8;&#x7684;&#x914D;&#x7F6E;&#x53EF;&#x4EE5;&#x662F;&#x8FD9;&#x6837;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">buildTypes {</span><br><span class="line">    debug {</span><br><span class="line">        minifyEnabled false</span><br><span class="line">        zipAlignEnabled false</span><br><span class="line">        shrinkResources false</span><br><span class="line">        signingConfig signingConfigs.config</span><br><span class="line">    }</span><br><span class="line">    outer {</span><br><span class="line">        minifyEnabled false</span><br><span class="line">        zipAlignEnabled false</span><br><span class="line">        shrinkResources false</span><br><span class="line">        signingConfig signingConfigs.outConfig</span><br><span class="line">    }</span><br><span class="line">    release {</span><br><span class="line">        minifyEnabled true</span><br><span class="line">        zipAlignEnabled true</span><br><span class="line">        shrinkResources true</span><br><span class="line">        signingConfig signingConfigs.config</span><br><span class="line">        proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.pro&apos;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>Sync Now&#x4E4B;&#x540E;&#xFF0C;&#x6253;&#x5F00;Android Studio &#x53F3;&#x8FB9;&#x7684;Gradle&#xFF0C;&#x627E;&#x5230;app-&gt;Tasks-&gt;build&#xFF0C;&#x53D1;&#x73B0;&#x5DF2;&#x7ECF;&#x6DFB;&#x52A0;&#x4E86;assembleDebug&#x4E0E;assembleOuter&#x6784;&#x5EFA;task&#x3002;</p>
+<h3 id="productFlavors"><a href="#productFlavors" class="headerlink" title="productFlavors"></a>productFlavors</h3><p>&#x4E00;&#x4E2A;&#x9879;&#x76EE;&#x53EF;&#x80FD;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x7248;&#x672C;&#x73AF;&#x5883;&#xFF0C;&#x4F8B;&#x5982;&#x5F00;&#x53D1;&#x529F;&#x80FD;&#x4E2D;&#x7684;&#x5F00;&#x53D1;&#x7248;&#x3001;&#x9879;&#x76EE;&#x4E0A;&#x7EBF;&#x7684;&#x6B63;&#x5F0F;&#x7248;&#x3002;&#x5F00;&#x53D1;&#x7248;&#x4E0E;&#x6B63;&#x5F0F;&#x7248;&#x8BF7;&#x6C42;&#x7684;&#x6570;&#x636E;api&#x53EF;&#x80FD;&#x4E0D;&#x540C;&#xFF0C;&#x5BF9;&#x4E8E;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;productFlavor&#x6765;&#x6784;&#x5EFA;&#x4E0D;&#x540C;&#x7684;&#x4EA7;&#x54C1;&#x98CE;&#x683C;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x4E0B;&#x9762;&#x7684;dev&#x4E0E;prod&#x914D;&#x7F6E;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">flavorDimensions &quot;mode&quot;</span><br><span class="line">productFlavors {</span><br><span class="line">    dev {</span><br><span class="line">        applicationIdSuffix &quot;.dev&quot;</span><br><span class="line">        dimension &quot;mode&quot;</span><br><span class="line">        manifestPlaceholders = [PROJECT_NAME: &quot;@string/app_name_dev&quot;,</span><br><span class="line">                                APP_ID      : &quot;21321843&quot;]</span><br><span class="line">        buildConfigField &apos;String&apos;, &apos;API_URL&apos;, &apos;&quot;https://dev.idisfkj.android.com&quot;&apos;</span><br><span class="line">        buildConfigField &apos;String&apos;, &apos;APP_KEY&apos;, &apos;&quot;3824yk32&quot;&apos;</span><br><span class="line">    }</span><br><span class="line">    prod {</span><br><span class="line">        applicationIdSuffix &quot;.prod&quot;</span><br><span class="line">        dimension &quot;mode&quot;</span><br><span class="line">        manifestPlaceholders = [PROJECT_NAME: &quot;@string/app_name&quot;,</span><br><span class="line">                                APP_ID      : &quot;12932843&quot;]</span><br><span class="line">        buildConfigField &apos;String&apos;, &apos;API_URL&apos;, &apos;&quot;https://prod.idisfkj.android.com&quot;&apos;</span><br><span class="line">        buildConfigField &apos;String&apos;, &apos;APP_KEY&apos;, &apos;&quot;32143dsk2&quot;&apos;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5BF9;&#x4E8E;&#x5224;&#x65AD;&#x662F;&#x5426;&#x4E3A;&#x540C;&#x4E00;&#x4E2A;app&#xFF0C;&#x624B;&#x673A;&#x7CFB;&#x7EDF;&#x662F;&#x6839;&#x636E;app&#x7684;applicationId&#x6765;&#x8BC6;&#x522B;&#x7684;&#xFF0C;&#x9ED8;&#x8BA4;applicationId&#x662F;packageName&#x3002;&#x6240;&#x4EE5;&#x4E3A;&#x4E86;&#x8BA9;dev&#x4E0E;prod&#x7684;&#x7248;&#x672C;&#x90FD;&#x80FD;&#x5171;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x624B;&#x673A;&#x4E0A;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;applicationIdSuffix&#x6765;&#x4E3A;applicationId&#x589E;&#x52A0;&#x540E;&#x7F00;&#xFF0C;&#x6539;&#x53D8;&#x5B89;&#x88C5;&#x5305;&#x7684;&#x552F;&#x4E00;&#x6807;&#x8BC6;&#x3002;</p>
+<p>&#x8FD8;&#x6709;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;manifestPlaceholders&#x6765;&#x914D;&#x7F6E;&#x53EF;&#x7528;&#x4E8E;AndroidManifest&#x4E2D;&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x4F8B;&#x5982;&#x6839;&#x636E;&#x4E0D;&#x540C;&#x7684;&#x4EA7;&#x54C1;&#x98CE;&#x683C;&#x663E;&#x793A;&#x4E0D;&#x540C;&#x7684;app&#x540D;&#x79F0;</p>
+<p>dev&#x4E0E;prod&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#x65F6;&#x4F7F;&#x7528;&#x4E0D;&#x540C;&#x7684;api host&#xFF0C;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;buildConfigField&#xFF0C;&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x5728;&#x4EE3;&#x7801;&#x4E2D;&#x901A;&#x8FC7;BuildConfig&#x83B7;&#x53D6;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fun getApiUlr(): String {</span><br><span class="line">    return BuildConfig.API_URL</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x7684;BuildConfig&#x4F1A;&#x6839;&#x636E;&#x4F60;&#x6784;&#x5EFA;&#x7684;&#x4EA7;&#x54C1;&#x98CE;&#x683C;&#x8FD4;&#x56DE;&#x4E0D;&#x540C;&#x7684;&#x503C;&#xFF0C;&#x5B83;&#x4F4D;&#x4E8E;build-&gt;generated-&gt;source-&gt;buildConfig-&gt;&#x53D8;&#x4F53;&#xFF0C;&#x5927;&#x81F4;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public final class BuildConfig {</span><br><span class="line">  public static final boolean DEBUG = Boolean.parseBoolean(&quot;true&quot;);</span><br><span class="line">  public static final String APPLICATION_ID = &quot;com.idisfkj.androidapianalysis.dev&quot;;</span><br><span class="line">  public static final String BUILD_TYPE = &quot;debug&quot;;</span><br><span class="line">  public static final String FLAVOR = &quot;devMinApi21&quot;;</span><br><span class="line">  public static final int VERSION_CODE = 20001;</span><br><span class="line">  public static final String VERSION_NAME = &quot;1.0-minApi21&quot;;</span><br><span class="line">  public static final String FLAVOR_mode = &quot;dev&quot;;</span><br><span class="line">  public static final String FLAVOR_api = &quot;minApi21&quot;;</span><br><span class="line">  // Fields from product flavor: dev</span><br><span class="line">  public static final String API_URL = &quot;https://dev.idisfkj.android.com&quot;;</span><br><span class="line">  public static final String APP_KEY = &quot;3824yk32&quot;;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>Sync Now&#x4E4B;&#x540E;&#xFF0C;&#x6253;&#x5F00;Android Studio &#x53F3;&#x8FB9;&#x7684;Gradle&#xFF0C;&#x627E;&#x5230;app-&gt;Tasks-&gt;build&#xFF0C;&#x53D1;&#x73B0;&#x65B0;&#x6DFB;&#x52A0;&#x4E86;assembleDev&#x4E0E;assembleProd&#x6784;&#x5EFA;task&#x3002;</p>
+<p>flavorDimensions&#x662F;&#x7528;&#x6765;&#x8BBE;&#x7F6E;&#x591A;&#x7EF4;&#x5EA6;&#x7684;&#xFF0C;&#x4E0A;&#x9762;&#x7684;&#x4F8B;&#x5B50;&#x53EA;&#x5C55;&#x793A;&#x4E86;&#x4E00;&#x4E2A;&#x7EF4;&#x5EA6;&#xFF0C;&#x6240;&#x4EE5;dimension&#x4E3A;mode&#x7684;&#x5F62;&#x5F0F;&#x3002;&#x6211;&#x4EEC;&#x65B0;&#x589E;&#x4E00;&#x4E2A;api&#x7EF4;&#x5EA6;&#xFF0C;&#x6784;&#x5EFA;&#x4E0D;&#x540C;&#x7684;minSkdVerison&#x7248;&#x672C;&#x7684;apk</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">flavorDimensions &quot;mode&quot;, &quot;api&quot;</span><br><span class="line">productFlavors {</span><br><span class="line">    dev {</span><br><span class="line">        applicationIdSuffix &quot;.dev&quot;</span><br><span class="line">        dimension &quot;mode&quot;</span><br><span class="line">        manifestPlaceholders = [PROJECT_NAME: &quot;@string/app_name_dev&quot;,</span><br><span class="line">                                APP_ID      : &quot;21321843&quot;]</span><br><span class="line">        buildConfigField &apos;String&apos;, &apos;API_URL&apos;, &apos;&quot;https://dev.idisfkj.android.com&quot;&apos;</span><br><span class="line">        buildConfigField &apos;String&apos;, &apos;APP_KEY&apos;, &apos;&quot;3824yk32&quot;&apos;</span><br><span class="line">    }</span><br><span class="line">    prod {</span><br><span class="line">        applicationIdSuffix &quot;.prod&quot;</span><br><span class="line">        dimension &quot;mode&quot;</span><br><span class="line">        manifestPlaceholders = [PROJECT_NAME: &quot;@string/app_name&quot;,</span><br><span class="line">                                APP_ID      : &quot;12932843&quot;]</span><br><span class="line">        buildConfigField &apos;String&apos;, &apos;API_URL&apos;, &apos;&quot;https://prod.idisfkj.android.com&quot;&apos;</span><br><span class="line">        buildConfigField &apos;String&apos;, &apos;APP_KEY&apos;, &apos;&quot;32143dsk2&quot;&apos;</span><br><span class="line">    }</span><br><span class="line">    minApi16 {</span><br><span class="line">        dimension &quot;api&quot;</span><br><span class="line">        minSdkVersion 16</span><br><span class="line">        versionCode 10000 + android.defaultConfig.versionCode</span><br><span class="line">        versionNameSuffix &quot;-minApi16&quot;</span><br><span class="line">    }</span><br><span class="line">    minApi21 {</span><br><span class="line">        dimension &quot;api&quot;</span><br><span class="line">        minSdkVersion 21</span><br><span class="line">        versionCode 20000 + android.defaultConfig.versionCode</span><br><span class="line">        versionNameSuffix &quot;-minApi21&quot;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>gradle&#x521B;&#x5EFA;&#x7684;&#x6784;&#x5EFA;&#x53D8;&#x4F53;&#x6570;&#x91CF;&#x7B49;&#x4E8E;&#x6BCF;&#x4E2A;&#x98CE;&#x683C;&#x7EF4;&#x5EA6;&#x4E2D;&#x7684;&#x98CE;&#x683C;&#x6570;&#x91CF;&#x4E0E;&#x4F60;&#x914D;&#x7F6E;&#x7684;&#x6784;&#x5EFA;&#x7C7B;&#x578B;&#x6570;&#x91CF;&#x7684;&#x4E58;&#x79EF;&#xFF0C;&#x6240;&#x4EE5;&#x4E0A;&#x9762;&#x4F8B;&#x5B50;&#x7684;&#x6784;&#x5EFA;&#x53D8;&#x4F53;&#x6570;&#x91CF;&#x4E3A;12&#x4E2A;&#x3002;&#x5728;gradle&#x4E3A;&#x6BCF;&#x4E2A;&#x6784;&#x5EFA;&#x53D8;&#x4F53;&#x6216;&#x5BF9;&#x5E94;apk&#x547D;&#x540D;&#x65F6;&#xFF0C;&#x5C5E;&#x4E8E;&#x8F83;&#x9AD8;&#x4F18;&#x5148;&#x7EA7;&#x98CE;&#x683C;&#x7EF4;&#x5EA6;&#x7684;&#x4EA7;&#x54C1;&#x98CE;&#x683C;&#x9996;&#x5148;&#x663E;&#x793A;&#xFF0C;&#x4E4B;&#x540E;&#x662F;&#x8F83;&#x4F4E;&#x4F18;&#x5148;&#x7EA7;&#x7EF4;&#x5EA6;&#x7684;&#x4EA7;&#x54C1;&#x98CE;&#x683C;&#xFF0C;&#x518D;&#x4E4B;&#x540E;&#x662F;&#x6784;&#x5EFA;&#x7C7B;&#x578B;&#x3002;&#x800C;&#x4F18;&#x5148;&#x7EA7;&#x7684;&#x5224;&#x65AD;&#x5219;&#x4EE5;flavorDimensions&#x7684;&#x503C;&#x987A;&#x5E8F;&#x4E3A;&#x4F9D;&#x636E;&#xFF0C;&#x4EE5;&#x4E0A;&#x9762;&#x7684;&#x6784;&#x5EFA;&#x914D;&#x7F6E;&#x4E3A;&#x4F8B;&#xFF1A;</p>
+<p>&#x6784;&#x5EFA;&#x53D8;&#x4F53;&#xFF1A;[dev, prod][minApi16, minApi21][debug, outer, release]<br>&#x5BF9;&#x5E94;apk&#xFF1A;app-[dev, prod]-[minApi16, minApi21]-[debug, outer, release].apk</p>
+<p>&#x6784;&#x5EFA;&#x53D8;&#x4F53;&#x6709;&#x8FD9;&#x4E48;&#x591A;&#xFF0C;&#x4F46;&#x6709;&#x65F6;&#x6211;&#x4EEC;&#x5E76;&#x4E0D;&#x5168;&#x90E8;&#x9700;&#x8981;&#xFF0C;&#x4F8B;&#x5982;&#x4F60;&#x4E0D;&#x9700;&#x8981;mode&#x4E3A;dev&#xFF0C;api&#x4E3A;minApi16&#x7684;&#x53D8;&#x4F53;&#xFF0C;&#x8FD9;&#x65F6;&#x4F60;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;variantFilter&#x65B9;&#x6CD5;&#x6765;&#x8FC7;&#x6EE4;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">variantFilter { variant -&gt;</span><br><span class="line">    def names = variant.flavors*.name</span><br><span class="line">    if (names.contains(&quot;minApi16&quot;) &amp;&amp; names.contains(&quot;dev&quot;)) {</span><br><span class="line">        setIgnore(true)</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4F60;&#x518D;&#x56DE;&#x5230;app-&gt;Tasks&#x4E2D;&#x67E5;&#x770B;&#x53D8;&#x4F53;&#xFF0C;&#x4F1A;&#x53D1;&#x73B0;&#x5DF2;&#x7ECF;&#x5C06;devMinApi16&#x76F8;&#x5173;&#x7684;&#x53D8;&#x4F53;&#x8FC7;&#x6EE4;&#x4E86;&#x3002;</p>
+<p>&#x4F60;&#x4E0D;&#x4EC5;&#x53EF;&#x4EE5;&#x8FC7;&#x6EE4;&#x6784;&#x5EFA;&#x53D8;&#x4F53;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x6539;&#x53D8;&#x9ED8;&#x8BA4;&#x7684;apk&#x8F93;&#x51FA;&#x540D;&#x79F0;&#x3002;&#x4F8B;&#x5982;&#x4F60;&#x60F3;&#x4FEE;&#x6539;buildType&#x4E3A;release&#x7684;apk&#x540D;&#x79F0;&#xFF0C;&#x8FD9;&#x65F6;&#x4F60;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;android.applicationVariants.all</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">android.applicationVariants.all { variant -&gt;</span><br><span class="line">    if (variant.buildType.name == buildTypes.release.name) {</span><br><span class="line">        variant.outputs.all {</span><br><span class="line">            outputFileName = &quot;analysis-release-${defaultConfig.versionName}.apk&quot;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x6837;&#x5728;release&#x4E0B;&#x7684;&#x5305;&#x540D;&#x90FD;&#x662F;&#x4EE5;analysis&#x6253;&#x5934;</p>
+<h3 id="sourceSets"><a href="#sourceSets" class="headerlink" title="sourceSets"></a>sourceSets</h3><p>Android Studio&#x4F1A;&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x521B;&#x5EFA;&#x9ED8;&#x8BA4;&#x7684;main&#x6E90;&#x96C6;&#x4E0E;&#x76EE;&#x5F55;(&#x4F4D;&#x4E8E;app/src/main)&#xFF0C;&#x7528;&#x6765;&#x5B58;&#x50A8;&#x6240;&#x6709;&#x6784;&#x5EFA;&#x53D8;&#x4F53;&#x95F4;&#x7684;&#x5171;&#x4EAB;&#x8D44;&#x6E90;&#x3002;&#x6240;&#x4EE5;&#x4F60;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;main&#x6E90;&#x96C6;&#x6765;&#x66F4;&#x6539;&#x9ED8;&#x8BA4;&#x7684;&#x914D;&#x7F6E;&#x3002;&#x4F8B;&#x5982;&#x73B0;&#x5728;&#x4F60;&#x60F3;&#x5C06;res&#x7684;&#x8DEF;&#x5F84;&#x4FEE;&#x6539;&#x6210;src/custom/res</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sourceSets {</span><br><span class="line">    main {</span><br><span class="line">        res.srcDirs = [&apos;src/custom/res&apos;]</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x6837;res&#x8D44;&#x6E90;&#x8DEF;&#x5F84;&#x5C31;&#x5B9A;&#x4F4D;&#x5230;&#x4E86;src/custom/res&#x4E0B;&#xFF0C;&#x5F53;&#x7136;&#x4F60;&#x4E5F;&#x53EF;&#x4EE5;&#x4FEE;&#x6539;&#x5176;&#x5B83;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x4F8B;&#x5982;java&#x3001;assets&#x3001;jni&#x7B49;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x4F60;&#x914D;&#x7F6E;&#x4E86;&#x591A;&#x4E2A;&#x8DEF;&#x5F84;&#xFF0C;&#x5373;&#x8DEF;&#x5F84;&#x96C6;&#x5408;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sourceSets {</span><br><span class="line">    main {</span><br><span class="line">        res.srcDirs = [&apos;src/custom/res&apos;, &apos;scr/main/res&apos;]</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x65F6;&#x4F60;&#x8981;&#x4FDD;&#x8BC1;&#x4E0D;&#x80FD;&#x6709;&#x76F8;&#x540C;&#x7684;&#x540D;&#x79F0;&#xFF0C;&#x5373;&#x6BCF;&#x4E2A;&#x6587;&#x4EF6;&#x53EA;&#x80FD;&#x552F;&#x4E00;&#x5B58;&#x5728;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#x4E0B;&#x3002;</p>
+<p>&#x4F60;&#x4E5F;&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x6240;&#x4EE5;&#x7684;&#x6784;&#x5EFA;&#x53D8;&#x4F53;&#x7684;&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x8DEF;&#x5F84;: &#x70B9;&#x51FB;&#x53F3;&#x8FB9;gradle-&gt;app-&gt;android-&gt;sourceSets&#xFF0C;&#x4F60;&#x5C06;&#x4F1A;&#x770B;&#x5230;&#x5982;&#x4E0B;&#x7C7B;&#x4F3C;&#x4FE1;&#x606F;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">------------------------------------------------------------</span><br><span class="line">Project :app</span><br><span class="line">------------------------------------------------------------</span><br><span class="line"> </span><br><span class="line">androidTest</span><br><span class="line">-----------</span><br><span class="line">Compile configuration: androidTestCompile</span><br><span class="line">build.gradle name: android.sourceSets.androidTest</span><br><span class="line">Java sources: [app/src/androidTest/java]</span><br><span class="line">Manifest file: app/src/androidTest/AndroidManifest.xml</span><br><span class="line">Android resources: [app/src/androidTest/res]</span><br><span class="line">Assets: [app/src/androidTest/assets]</span><br><span class="line">AIDL sources: [app/src/androidTest/aidl]</span><br><span class="line">RenderScript sources: [app/src/androidTest/rs]</span><br><span class="line">JNI sources: [app/src/androidTest/jni]</span><br><span class="line">JNI libraries: [app/src/androidTest/jniLibs]</span><br><span class="line">Java-style resources: [app/src/androidTest/resources]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x9762;&#x662F;androidTest&#x53D8;&#x4F53;&#x7684;&#x9ED8;&#x8BA4;&#x8DEF;&#x5F84;&#xFF0C;&#x9996;&#x5148;&#x5B83;&#x4F1A;&#x53BB;&#x67E5;&#x627E;&#x76F8;&#x5E94;&#x7684;&#x6784;&#x5EFA;&#x53D8;&#x4F53;&#x7684;&#x9ED8;&#x8BA4;&#x4F4D;&#x7F6E;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x627E;&#x5230;&#xFF0C;&#x5C31;&#x4F1A;&#x4F7F;&#x7528;main&#x6E90;&#x96C6;&#x4E0B;&#x7684;&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x3002;&#x4E5F;&#x5C31;&#x662F;&#x6211;&#x4EEC;&#x6240;&#x719F;&#x6089;&#x7684;app/src/main&#x8DEF;&#x5F84;&#x4E0B;&#x7684;&#x8D44;&#x6E90;&#x3002;</p>
+<p>&#x56E0;&#x4E3A;&#x5B83;&#x662F;&#x8DDF;&#x6784;&#x5EFA;&#x53D8;&#x4F53;&#x6765;&#x641C;&#x7D22;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x5B83;&#x6709;&#x4E2A;&#x4F18;&#x5148;&#x7EA7;&#xFF1A;</p>
+<ol>
+<li>src/modeApiDebug: &#x6784;&#x5EFA;&#x53D8;&#x4F53;</li>
+<li>src/debug&#xFF1A;&#x6784;&#x5EFA;&#x7C7B;&#x578B;</li>
+<li>src/modeApi&#xFF1A;&#x4EA7;&#x54C1;&#x98CE;&#x683C;</li>
+<li>src/main&#xFF1A;&#x9ED8;&#x8BA4;main&#x6E90;</li>
+</ol>
+<p>&#x5BF9;&#x4E8E;&#x6E90;&#x96C6;&#x7684;&#x521B;&#x5EFA;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#x5728;app/src&#x4E0B;&#x53F3;&#x952E;&#x65B0;&#x5EFA;&#xFF0C;&#x4F46;&#x5B83;&#x53EA;&#x4F1A;&#x5E2E;&#x4F60;&#x521B;&#x5EFA;&#x6E90;&#x96C6;&#x4E0B;&#x7684;java&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x5176;&#x5B83;&#x7684;&#x90FD;&#x8981;&#x4F60;&#x81EA;&#x5DF1;&#x9010;&#x4E2A;&#x521B;&#x5EFA;</p>
+<p><img src="/2019/05/23/Gradle&#x7CFB;&#x5217;-&#x8FD0;&#x7528;&#x7BC7;/Gradle&#x7CFB;&#x5217;-&#x8FD0;&#x7528;&#x7BC7;1.png" alt></p>
+<p>&#x6211;&#x4EEC;&#x81EA;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;debug&#x6E90;&#x96C6;&#xFF0C;&#x6240;&#x4EE5;&#x8FDB;&#x53BB;&#x4E4B;&#x540E;Target Source Set&#x9009;&#x62E9;debug&#xFF0C;&#x518D;&#x70B9;&#x51FB;finish&#x7ED3;&#x675F;&#x3002;&#x8FD9;&#x65F6;&#x4F60;&#x5C06;&#x4F1A;&#x5728;src&#x4E0B;&#x770B;&#x5230;debug&#x6587;&#x4EF6;&#x5939;</p>
+<p>&#x73B0;&#x5728;&#x4F60;&#x5DF2;&#x7ECF;&#x6709;&#x4E86;debug&#x7684;&#x6E90;&#x96C6;&#x76EE;&#x5F55;&#xFF0C;&#x5047;&#x8BBE;&#x4F60;&#x73B0;&#x5728;&#x8981;&#x4F7F;debug&#x4E0B;&#x7684;app&#x540D;&#x79F0;&#x5C55;&#x793A;&#x6210;Android&#x7CBE;&#x534E;&#x5F55;debug(&#x9ED8;&#x8BA4;&#x662F;Android&#x7CBE;&#x534E;&#x5F55;)&#x3002;&#x8FD9;&#x65F6;&#x4F60;&#x53EF;&#x4EE5;&#x53F3;&#x952E;debug&#x65B0;&#x5EFA;values</p>
+<p><img src="/2019/05/23/Gradle&#x7CFB;&#x5217;-&#x8FD0;&#x7528;&#x7BC7;/Gradle&#x7CFB;&#x5217;-&#x8FD0;&#x7528;&#x7BC7;2.png" alt></p>
+<p>&#x5728;values&#x76EE;&#x5F55;&#x4E0B;&#x65B0;&#x5EFA;strings.xml&#xFF0C;&#x7136;&#x540E;&#x5728;&#x5176;&#x4E2D;&#x914D;&#x7F6E;app_name</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;resources&gt;</span><br><span class="line">    &lt;string name=&quot;app_name&quot;&gt;Android&#x7CBE;&#x534E;&#x5F55;debug&lt;/string&gt;</span><br><span class="line">&lt;/resources&gt;</span><br></pre></td></tr></table></figure>
+<p>&#x6700;&#x540E;&#x4F60;&#x518D;&#x53BB;&#x6784;&#x5EFA;debug&#x76F8;&#x5173;&#x7684;&#x53D8;&#x4F53;&#x65F6;&#xFF0C;&#x4F60;&#x5B89;&#x88C5;&#x7684;app&#x5C55;&#x793A;&#x7684;&#x540D;&#x79F0;&#x5C06;&#x662F;Android&#x7CBE;&#x534E;&#x5F55;debug&#x3002;</p>
+<p>&#x6240;&#x4EE5;&#x901A;&#x8FC7;&#x4FEE;&#x6539;mian&#x6E90;&#x96C6;&#x6216;&#x8005;&#x914D;&#x7F6E;&#x5176;&#x5B83;&#x7684;&#x53D8;&#x4F53;&#x6E90;&#x96C6;&#xFF0C;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x6839;&#x636E;&#x53D8;&#x4F53;&#x52A0;&#x8F7D;&#x4E0D;&#x540C;&#x7684;&#x6570;&#x636E;&#x6E90;&#x3002;&#x8FD9;&#x6837;&#x7CFB;&#x7EDF;&#x5316;&#x7684;&#x914D;&#x7F6E;&#x52A0;&#x8F7D;&#x8D44;&#x6E90;&#x5C06;&#x66F4;&#x52A0;&#x65B9;&#x4FBF;&#x9879;&#x76EE;&#x6D4B;&#x8BD5;&#x4E0E;&#x7248;&#x672C;&#x9700;&#x8981;&#x7684;&#x914D;&#x7F6E;&#x3002;</p>
+<h2 id="dependencies"><a href="#dependencies" class="headerlink" title="dependencies"></a>dependencies</h2><p>dependencies&#x95ED;&#x5305;&#x4E0A;&#x7528;&#x6765;&#x914D;&#x7F6E;&#x9879;&#x76EE;&#x7684;&#x7B2C;&#x4E09;&#x65B9;&#x4F9D;&#x8D56;&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x6839;&#x636E;&#x4E0A;&#x9762;&#x7684;&#x914D;&#x7F6E;&#x6709;&#x8BBE;&#x7F6E;&#x53D8;&#x4F53;&#xFF0C;&#x90A3;&#x4E48;&#x4F60;&#x5C06;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x53D8;&#x4F53;&#x6765;&#x9009;&#x62E9;&#x6027;&#x7684;&#x4F9D;&#x8D56;&#x7B2C;&#x4E09;&#x65B9;&#x5E93;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">dependencies {</span><br><span class="line">    implementation fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])</span><br><span class="line">    implementation &quot;org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version&quot;</span><br><span class="line">    implementation &apos;com.android.support:appcompat-v7:26.1.0&apos;</span><br><span class="line">    implementation &apos;com.android.support.constraint:constraint-layout:1.0.2&apos;</span><br><span class="line">    testImplementation &apos;junit:junit:4.12&apos;</span><br><span class="line">    androidTestImplementation &apos;com.android.support.test:runner:1.0.1&apos;</span><br><span class="line">    androidTestImplementation &apos;com.android.support.test.espresso:espresso-core:3.0.1&apos;</span><br><span class="line">    //&#x6839;&#x636E;&#x53D8;&#x4F53;&#x9009;&#x62E9;&#x6027;&#x4F9D;&#x8D56;</span><br><span class="line">    outerImplementation &apos;...&apos;</span><br><span class="line">    prodMinApi21Implementation &apos;...&apos;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5173;&#x4E8E;dependencies&#xFF0C;&#x8FD9;&#x53EA;&#x662F;&#x7B80;&#x5355;&#x7684;&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#xFF0C;&#x4E4B;&#x540E;&#x6211;&#x8FD8;&#x4F1A;&#x5355;&#x72EC;&#x62BD;&#x51FA;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;&#x6765;&#x5199;&#x7CFB;&#x7EDF;&#x5316;&#x7684;&#x914D;&#x7F6E;dependencies&#xFF0C;&#x611F;&#x5174;&#x8DA3;&#x7684;&#x53EF;&#x4EE5;&#x5173;&#x6CE8;&#x4E0B;&#x3002;</p>
+<p>gradle&#x76F8;&#x5173;&#x7684;&#x914D;&#x7F6E;&#x8FD8;&#x6709;&#x5F88;&#x591A;&#xFF0C;&#x8FD9;&#x91CC;&#x53EA;&#x662F;&#x51B0;&#x5C71;&#x4E00;&#x89D2;&#xFF0C;&#x4F46;&#x6211;&#x7684;&#x5EFA;&#x8BAE;&#x662F;&#x6839;&#x636E;&#x4F60;&#x7684;&#x5B9E;&#x9645;&#x9700;&#x6C42;&#x53BB;&#x5B66;&#x4E60;&#x4E0E;&#x7814;&#x7A76;&#xFF0C;&#x76F8;&#x4FE1;&#x4F60;&#x4E5F;&#x4F1A;&#x6709;&#x610F;&#x60F3;&#x4E0D;&#x5230;&#x7684;&#x6210;&#x957F;&#x3002;</p>
+<p>&#x6700;&#x540E;&#x9644;&#x4E0A;&#x6E90;&#x7801;&#x5730;&#x5740;&#xFF1A;<a href="https://github.com/idisfkj/android-api-analysis" target="_blank" rel="noopener">https://github.com/idisfkj/android-api-analysis</a></p>
+<h2 id="&#x7CFB;&#x5217;"><a href="#&#x7CFB;&#x5217;" class="headerlink" title="&#x7CFB;&#x5217;"></a>&#x7CFB;&#x5217;</h2><p><a href="https://www.rousetime.com/2019/05/05/Android-Gradle%E7%B3%BB%E5%88%97-%E5%85%A5%E9%97%A8%E7%AF%87/">Android Gradle&#x7CFB;&#x5217;-&#x5165;&#x95E8;&#x7BC7;</a><br><a href="https://www.rousetime.com/2019/05/13/Android-Gradle%E7%B3%BB%E5%88%97-%E5%8E%9F%E7%90%86%E7%AF%87/">Android Gradle&#x7CFB;&#x5217;-&#x539F;&#x7406;&#x7BC7;</a></p>
+<p><img src="/2019/05/23/Gradle&#x7CFB;&#x5217;-&#x8FD0;&#x7528;&#x7BC7;/Android&#x8865;&#x7ED9;&#x7AD9;.jpg" alt></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/05/13/Android-Gradle系列-原理篇/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/06/03/Android-Gradle系列-进阶篇/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Thu May 23 2019 19:49:12 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

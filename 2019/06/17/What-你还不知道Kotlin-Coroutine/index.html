@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>What? 你还不知道Kotlin Coroutine? | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="kotlin,">
+  
+
+  <meta name="description" content="&amp;#x4ECA;&amp;#x5929;&amp;#x6211;&amp;#x4EEC;&amp;#x6765;&amp;#x804A;&amp;#x804A;Kotlin Coroutine&amp;#xFF0C;&amp;#x5982;&amp;#x679C;&amp;#x4F60;&amp;#x8FD8;&amp;#x6CA1;&amp;#x6709;&amp;#x4E86;&amp;#x89E3;&amp;#x8FC7;&amp;#xFF0C;&amp;#x90A3;&amp;#x4E48;&amp;#x6211;&amp;#x8981;&amp;#x63D0;">
+<meta name="keywords" content="kotlin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What? 你还不知道Kotlin Coroutine?">
+<meta property="og:url" content="https://www.rousetime.com/2019/06/17/What-你还不知道Kotlin-Coroutine/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="&amp;#x4ECA;&amp;#x5929;&amp;#x6211;&amp;#x4EEC;&amp;#x6765;&amp;#x804A;&amp;#x804A;Kotlin Coroutine&amp;#xFF0C;&amp;#x5982;&amp;#x679C;&amp;#x4F60;&amp;#x8FD8;&amp;#x6CA1;&amp;#x6709;&amp;#x4E86;&amp;#x89E3;&amp;#x8FC7;&amp;#xFF0C;&amp;#x90A3;&amp;#x4E48;&amp;#x6211;&amp;#x8981;&amp;#x63D0;">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.rousetime.com/2019/06/17/What-你还不知道Kotlin-Coroutine/coroutine.png">
+<meta property="og:image" content="https://www.rousetime.com/2019/06/17/What-你还不知道Kotlin-Coroutine/Android补给站.jpg">
+<meta property="og:updated_time" content="2019-06-27T23:59:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="What? 你还不知道Kotlin Coroutine?">
+<meta name="twitter:description" content="&amp;#x4ECA;&amp;#x5929;&amp;#x6211;&amp;#x4EEC;&amp;#x6765;&amp;#x804A;&amp;#x804A;Kotlin Coroutine&amp;#xFF0C;&amp;#x5982;&amp;#x679C;&amp;#x4F60;&amp;#x8FD8;&amp;#x6CA1;&amp;#x6709;&amp;#x4E86;&amp;#x89E3;&amp;#x8FC7;&amp;#xFF0C;&amp;#x90A3;&amp;#x4E48;&amp;#x6211;&amp;#x8981;&amp;#x63D0;">
+<meta name="twitter:image" content="https://www.rousetime.com/2019/06/17/What-你还不知道Kotlin-Coroutine/coroutine.png">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-Coroutine"><span class="toc-text">What Coroutine</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Callback"><span class="toc-text">Callback</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rx系列"><span class="toc-text">Rx系列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Coroutine在Kotlin中的基本要点"><span class="toc-text">Coroutine在Kotlin中的基本要点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dispatchers"><span class="toc-text">Dispatchers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建Coroutine"><span class="toc-text">创建Coroutine</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Architecture-Components"><span class="toc-text">Architecture Components</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ViewModelScope"><span class="toc-text">ViewModelScope</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LifecycleScope"><span class="toc-text">LifecycleScope</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LiveData"><span class="toc-text">LiveData</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推荐阅读"><span class="toc-text">推荐阅读</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-What-你还不知道Kotlin-Coroutine" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">What? 你还不知道Kotlin Coroutine?</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.06.17</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>&#x4ECA;&#x5929;&#x6211;&#x4EEC;&#x6765;&#x804A;&#x804A;Kotlin Coroutine&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x8FD8;&#x6CA1;&#x6709;&#x4E86;&#x89E3;&#x8FC7;&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x8981;&#x63D0;&#x524D;&#x606D;&#x559C;&#x4F60;&#xFF0C;&#x56E0;&#x4E3A;&#x4F60;&#x5C06;&#x638C;&#x63E1;&#x4E00;&#x4E2A;&#x65B0;&#x6280;&#x80FD;&#xFF0C;&#x5BF9;&#x4F60;&#x7684;&#x4EE3;&#x7801;&#x65B9;&#x9762;&#x7684;&#x63D0;&#x5347;&#x5C06;&#x662F;&#x5F88;&#x597D;&#x7684;&#x52A9;&#x529B;&#x3002;</p>
+<h2 id="What-Coroutine"><a href="#What-Coroutine" class="headerlink" title="What Coroutine"></a>What Coroutine</h2><p>&#x7B80;&#x5355;&#x7684;&#x6765;&#x8BF4;&#xFF0C;Coroutine&#x662F;&#x4E00;&#x4E2A;&#x5E76;&#x53D1;&#x7684;&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;&#xFF0C;&#x4F60;&#x80FD;&#x901A;&#x8FC7;&#x5B83;&#x4F7F;&#x7528;&#x66F4;&#x7B80;&#x6D01;&#x7684;&#x4EE3;&#x7801;&#x6765;&#x89E3;&#x51B3;&#x5F02;&#x6B65;&#x95EE;&#x9898;&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#xFF0C;&#x5728;Android&#x65B9;&#x9762;&#x5B83;&#x4E3B;&#x8981;&#x80FD;&#x591F;&#x5E2E;&#x52A9;&#x4F60;&#x89E3;&#x51B3;&#x4EE5;&#x4E0B;&#x4E24;&#x4E2A;&#x95EE;&#x9898;&#xFF1A;</p>
+<ol>
+<li>&#x5728;&#x4E3B;&#x7EBF;&#x7A0B;&#x4E2D;&#x6267;&#x884C;&#x8017;&#x65F6;&#x4EFB;&#x52A1;&#x5BFC;&#x81F4;&#x7684;&#x4E3B;&#x7EBF;&#x7A0B;&#x963B;&#x585E;&#xFF0C;&#x4ECE;&#x800C;&#x4F7F;App&#x53D1;&#x751F;ANR&#x3002;</li>
+<li>&#x63D0;&#x4F9B;&#x4E3B;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#xFF0C;&#x540C;&#x65F6;&#x5BF9;&#x6765;&#x81EA;&#x4E8E;&#x4E3B;&#x7EBF;&#x7A0B;&#x7684;&#x7F51;&#x7EDC;&#x56DE;&#x8C03;&#x3001;&#x78C1;&#x76D8;&#x64CD;&#x63D0;&#x4F9B;&#x4FDD;&#x969C;&#x3002;</li>
+</ol>
+<p>&#x8FD9;&#x4E9B;&#x95EE;&#x9898;&#xFF0C;&#x5728;&#x63A5;&#x4E0B;&#x6765;&#x7684;&#x6587;&#x7AE0;&#x4E2D;&#x6211;&#x90FD;&#x4F1A;&#x7ED9;&#x51FA;&#x89E3;&#x51B3;&#x7684;&#x793A;&#x4F8B;&#x3002;</p>
+<h2 id="Callback"><a href="#Callback" class="headerlink" title="Callback"></a>Callback</h2><p>&#x8BF4;&#x5230;&#x5F02;&#x6B65;&#x95EE;&#x9898;&#xFF0C;&#x6211;&#x4EEC;&#x5148;&#x6765;&#x770B;&#x4E0B;&#x6211;&#x4EEC;&#x5E38;&#x89C4;&#x7684;&#x5F02;&#x6B65;&#x5904;&#x7406;&#x65B9;&#x5F0F;&#x3002;&#x9996;&#x5148;&#x7B2C;&#x4E00;&#x79CD;&#x662F;&#x6700;&#x57FA;&#x672C;&#x7684;callback&#x65B9;&#x5F0F;&#x3002;</p>
+<p>callback&#x7684;&#x597D;&#x5904;&#x662F;&#x4F7F;&#x7528;&#x8D77;&#x6765;&#x7B80;&#x5355;&#xFF0C;&#x4F46;&#x4F60;&#x5728;&#x4F7F;&#x7528;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x53EF;&#x80FD;&#x4F1A;&#x9047;&#x5230;&#x5982;&#x4E0B;&#x60C5;&#x5F62;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GatheringVoiceSettingRepository.getInstance().getGeneralSettings(RequestLanguage::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line">        .observe(<span class="keyword">this</span>, { language -&gt;</span><br><span class="line">            convertResult(language, { enable -&gt; </span><br><span class="line">                <span class="comment">// todo something</span></span><br><span class="line">            })</span><br><span class="line">        })</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x79CD;&#x5728;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;callback&#x4E2D;&#x56DE;&#x8C03;&#x53E6;&#x4E00;&#x4E2A;callback&#x56DE;&#x8C03;&#xFF0C;&#x751A;&#x81F3;&#x66F4;&#x591A;&#x7684;callback&#x90FD;&#x662F;&#x53EF;&#x80FD;&#x5B58;&#x5728;&#x3002;&#x8FD9;&#x4E9B;&#x60C5;&#x51B5;&#x5BFC;&#x81F4;&#x7684;&#x95EE;&#x9898;&#x662F;&#x4EE3;&#x7801;&#x95F4;&#x7684;&#x5D4C;&#x5957;&#x5C42;&#x7EA7;&#x592A;&#x6DF1;&#xFF0C;&#x5BFC;&#x81F4;&#x903B;&#x8F91;&#x5D4C;&#x5957;&#x590D;&#x6742;&#xFF0C;&#x540E;&#x7EED;&#x7684;&#x7EF4;&#x62A4;&#x6210;&#x672C;&#x4E5F;&#x8981;&#x63D0;&#x9AD8;&#xFF0C;&#x8FD9;&#x4E0D;&#x662F;&#x6211;&#x4EEC;&#x6240;&#x8981;&#x770B;&#x5230;&#x7684;&#x3002;</p>
+<p>&#x90A3;&#x4E48;&#x6709;&#x4EC0;&#x4E48;&#x65B9;&#x6CD5;&#x80FD;&#x591F;&#x89E3;&#x51B3;&#x5462;&#xFF1F;&#x5F53;&#x7136;&#x6709;&#xFF0C;&#x5176;&#x4E2D;&#x7684;&#x4E00;&#x79CD;&#x89E3;&#x51B3;&#x65B9;&#x6CD5;&#x5C31;&#x662F;&#x6211;&#x63A5;&#x4E0B;&#x6765;&#x8981;&#x8BF4;&#x7684;&#x7B2C;&#x4E8C;&#x79CD;&#x65B9;&#x5F0F;&#x3002;</p>
+<h2 id="Rx&#x7CFB;&#x5217;"><a href="#Rx&#x7CFB;&#x5217;" class="headerlink" title="Rx&#x7CFB;&#x5217;"></a>Rx&#x7CFB;&#x5217;</h2><p>&#x5BF9;&#x591A;&#x5D4C;&#x5957;&#x56DE;&#x8C03;&#xFF0C;Rx&#x7CFB;&#x5217;&#x5728;&#x8FD9;&#x65B9;&#x9762;&#x5904;&#x7406;&#x7684;&#x5DF2;&#x7ECF;&#x975E;&#x5E38;&#x597D;&#x4E86;&#xFF0C;&#x4F8B;&#x5982;RxJava&#x3002;&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4E00;&#x4E0B;RxJava&#x7684;&#x89E3;&#x51B3;&#x6848;&#x4F8B;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">disposable = createCall().map {</span><br><span class="line">    <span class="comment">// return RequestType</span></span><br><span class="line">}.subscribeWith(<span class="keyword">object</span> : SMDefaultDisposableObserver&lt;RequestType&gt;{</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onNext</span><span class="params">(t: <span class="type">RequestType</span>)</span></span> {</span><br><span class="line">        <span class="comment">// todo something</span></span><br><span class="line">    }</span><br><span class="line">})</span><br></pre></td></tr></table></figure>
+<p>RxJava&#x4E30;&#x5BCC;&#x7684;&#x64CD;&#x4F5C;&#x7B26;&#xFF0C;&#x518D;&#x7ED3;&#x5408;Observable&#x4E0E;Subscribe&#x80FD;&#x591F;&#x5F88;&#x597D;&#x7684;&#x89E3;&#x51B3;&#x5F02;&#x6B65;&#x5D4C;&#x5957;&#x56DE;&#x8C03;&#x95EE;&#x9898;&#x3002;&#x4F46;&#x662F;&#x5B83;&#x7684;&#x4F7F;&#x7528;&#x6210;&#x672C;&#x5C31;&#x76F8;&#x5BF9;&#x63D0;&#x9AD8;&#x4E86;&#xFF0C;&#x4F60;&#x8981;&#x5BF9;&#x5B83;&#x7684;&#x64CD;&#x4F5C;&#x7B26;&#x8981;&#x975E;&#x5E38;&#x4E86;&#x89E3;&#xFF0C;&#x907F;&#x514D;&#x5728;&#x4F7F;&#x7528;&#x8FC7;&#x7A0B;&#x4E2D;&#x6EE5;&#x7528;&#x6216;&#x8005;&#x8FC7;&#x5EA6;&#x4F7F;&#x7528;&#xFF0C;&#x8FD9;&#x6837;&#x81EA;&#x7136;&#x590D;&#x6742;&#x5EA6;&#x5C31;&#x63D0;&#x5347;&#x4E86;&#x3002;</p>
+<p>&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x6E34;&#x671B;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x662F;&#x80FD;&#x591F;&#x66F4;&#x52A0;&#x7B80;&#x5355;&#x3001;&#x5168;&#x9762;&#x4E0E;&#x5065;&#x58EE;&#xFF0C;&#x800C;&#x6211;&#x4EEC;&#x4ECA;&#x5929;&#x7684;&#x4E3B;&#x9898;Coroutine&#x5C31;&#x80FD;&#x591F;&#x8FBE;&#x5230;&#x8FD9;&#x79CD;&#x6548;&#x679C;&#x3002;</p>
+<h2 id="Coroutine&#x5728;Kotlin&#x4E2D;&#x7684;&#x57FA;&#x672C;&#x8981;&#x70B9;"><a href="#Coroutine&#x5728;Kotlin&#x4E2D;&#x7684;&#x57FA;&#x672C;&#x8981;&#x70B9;" class="headerlink" title="Coroutine&#x5728;Kotlin&#x4E2D;&#x7684;&#x57FA;&#x672C;&#x8981;&#x70B9;"></a>Coroutine&#x5728;Kotlin&#x4E2D;&#x7684;&#x57FA;&#x672C;&#x8981;&#x70B9;</h2><p>&#x5728;Android&#x91CC;&#xFF0C;&#x6211;&#x4EEC;&#x90FD;&#x77E5;&#x9053;&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#x5E94;&#x8BE5;&#x653E;&#x5230;&#x5B50;&#x7EBF;&#x7A0B;&#x4E2D;&#xFF0C;&#x76F8;&#x5E94;&#x7684;&#x56DE;&#x8C03;&#x5904;&#x7406;&#x4E00;&#x822C;&#x90FD;&#x662F;&#x5728;&#x4E3B;&#x7EBF;&#x7A0B;&#xFF0C;&#x5373;ui&#x7EBF;&#x7A0B;&#x3002;&#x6B63;&#x5E38;&#x7684;&#x5199;&#x6CD5;&#x5C31;&#x4E0D;&#x591A;&#x8BF4;&#x4E86;&#xFF0C;&#x90A3;&#x4E48;&#x4F7F;&#x7528;Coroutine&#x53C8;&#x8BE5;&#x662F;&#x600E;&#x4E48;&#x6837;&#x7684;&#x5462;&#xFF1F;&#x8BF7;&#x770B;&#x4E0B;&#x9762;&#x4EE3;&#x7801;&#x793A;&#x4F8B;&#xFF1A;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">get</span><span class="params">(url: <span class="type">String</span>)</span></span> = withContext(Dispatchers.IO) {</span><br><span class="line">    <span class="comment">// to do network request</span></span><br><span class="line">    url</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">fetch</span><span class="params">()</span></span> { <span class="comment">// &#x5728;Main&#x4E2D;&#x8C03;&#x7528;</span></span><br><span class="line">    <span class="keyword">val</span> result = <span class="keyword">get</span>(<span class="string">&quot;https://rousetime.com&quot;</span>) <span class="comment">// &#x5728;IO&#x4E2D;&#x8C03;&#x7528;</span></span><br><span class="line">    showToast(result) <span class="comment">// &#x5728;Main&#x4E2D;&#x8C03;&#x7528;</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5982;&#x679C;fetch&#x65B9;&#x6CD5;&#x5728;&#x4E3B;&#x7EBF;&#x7A0B;&#x8C03;&#x7528;&#xFF0C;&#x90A3;&#x4E48;&#x4F60;&#x4F1A;&#x53D1;&#x73B0;&#x4F7F;&#x7528;Coroutine&#x6765;&#x5904;&#x7406;&#x5F02;&#x6B65;&#x56DE;&#x8C03;&#x5C31;&#x50CF;&#x662F;&#x5728;&#x5904;&#x7406;&#x540C;&#x6B65;&#x56DE;&#x8C03;&#x4E00;&#x6837;&#xFF0C;&#x7B80;&#x6D01;&#x660E;&#x4E86;&#x3001;&#x884C;&#x4E91;&#x6D41;&#x6C34;&#xFF0C;&#x540C;&#x65F6;&#x518D;&#x4E5F;&#x6CA1;&#x6709;&#x5D4C;&#x5957;&#x7684;&#x903B;&#x8F91;&#x4E86;&#x3002;</p>
+<p>&#x6CE8;&#x610F;&#x770B;&#x65B9;&#x6CD5;&#xFF0C;Coroutine&#x4E3A;&#x4E86;&#x80FD;&#x591F;&#x5B9E;&#x73B0;&#x8FD9;&#x79CD;&#x7B80;&#x5355;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x589E;&#x52A0;&#x4E86;&#x4E24;&#x4E2A;&#x64CD;&#x4F5C;&#x6765;&#x89E3;&#x51B3;&#x8017;&#x65F6;&#x4EFB;&#x52A1;&#xFF0C;&#x5206;&#x522B;&#x4E3A;suspend&#x4E0E;resume</p>
+<ul>
+<li>suspend: &#x6302;&#x8D77;&#x5F53;&#x524D;&#x6267;&#x884C;&#x7684;&#x534F;&#x540C;&#x7A0B;&#x5E8F;&#xFF0C;&#x5E76;&#x4E14;&#x4FDD;&#x5B58;&#x6B64;&#x523B;&#x7684;&#x6240;&#x6709;&#x672C;&#x5730;&#x53D8;&#x91CF;</li>
+<li>resume: &#x4ECE;&#x5B83;&#x88AB;&#x6302;&#x8D77;&#x7684;&#x4F4D;&#x7F6E;&#x7EE7;&#x7EED;&#x6267;&#x884C;&#xFF0C;&#x5E76;&#x4E14;&#x6302;&#x8D77;&#x65F6;&#x4FDD;&#x5B58;&#x7684;&#x6570;&#x636E;&#x4E5F;&#x88AB;&#x8FD8;&#x539F;</li>
+</ul>
+<p>&#x89E3;&#x91CA;&#x7684;&#x6709;&#x70B9;&#x751F;&#x786C;&#xFF0C;&#x7B80;&#x5355;&#x7684;&#x6765;&#x8BF4;&#x5C31;&#x662F;suspend&#x53EF;&#x4EE5;&#x5C06;&#x8BE5;&#x4EFB;&#x52A1;&#x6302;&#x8D77;&#xFF0C;&#x4F7F;&#x5B83;&#x6682;&#x65F6;&#x4E0D;&#x5728;&#x8C03;&#x7528;&#x7684;&#x7EBF;&#x7A0B;&#x4E2D;&#xFF0C;&#x4EE5;&#x81F3;&#x4E8E;&#x5F53;&#x524D;&#x7EBF;&#x7A0B;&#x53EF;&#x4EE5;&#x7EE7;&#x7EED;&#x6267;&#x884C;&#x522B;&#x7684;&#x4EFB;&#x52A1;&#xFF0C;&#x4E00;&#x65E6;&#x88AB;&#x6302;&#x8D77;&#x7684;&#x4EFB;&#x52A1;&#x5DF2;&#x7ECF;&#x6267;&#x884C;&#x5B8C;&#x6BD5;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x4F1A;&#x901A;&#x8FC7;resume&#x5C06;&#x5176;&#x91CD;&#x65B0;&#x63D2;&#x5165;&#x5230;&#x5F53;&#x524D;&#x7EBF;&#x7A0B;&#x4E2D;&#x3002;</p>
+<p>&#x6240;&#x4EE5;&#x4E0A;&#x9762;&#x7684;&#x793A;&#x4F8B;&#x5C55;&#x793A;&#x7684;&#x662F;&#xFF0C;&#x5F53;get&#x8FD8;&#x5728;&#x8BF7;&#x6C42;&#x7684;&#x65F6;&#x5019;&#xFF0C;fetch&#x65B9;&#x6CD5;&#x5C06;&#x4F1A;&#x88AB;&#x6302;&#x8D77;&#xFF0C;&#x76F4;&#x5230;get&#x7ED3;&#x675F;&#xFF0C;&#x6B64;&#x65F6;&#x624D;&#x4F1A;&#x63D2;&#x5165;&#x5230;&#x4E3B;&#x7EBF;&#x7A0B;&#x4E2D;&#x5E76;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x3002;</p>
+<p>&#x4E00;&#x56FE;&#x80DC;&#x5343;&#x8A00;&#xFF0C;&#x6211;&#x505A;&#x4E86;&#x4E00;&#x5F20;&#x56FE;&#xFF0C;&#x5E0C;&#x671B;&#x80FD;&#x6709;&#x6240;&#x5E2E;&#x52A9;&#x3002;</p>
+<p><img src="/2019/06/17/What-&#x4F60;&#x8FD8;&#x4E0D;&#x77E5;&#x9053;Kotlin-Coroutine/coroutine.png" alt></p>
+<p>&#x53E6;&#x5916;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;suspend&#x65B9;&#x6CD5;&#x53EA;&#x80FD;&#x591F;&#x88AB;&#x5176;&#x5B83;&#x7684;suspend&#x65B9;&#x6CD5;&#x8C03;&#x7528;&#x6216;&#x8005;&#x88AB;&#x4E00;&#x4E2A;coroutine&#x8C03;&#x7528;&#xFF0C;&#x4F8B;&#x5982;launch&#x3002;</p>
+<h3 id="Dispatchers"><a href="#Dispatchers" class="headerlink" title="Dispatchers"></a>Dispatchers</h3><p>&#x53E6;&#x4E00;&#x65B9;&#x9762;Coroutine&#x4F7F;&#x7528;Dispatchers&#x6765;&#x8D1F;&#x8D23;&#x8C03;&#x5EA6;&#x534F;&#x8C03;&#x7A0B;&#x5E8F;&#x6267;&#x884C;&#x7684;&#x7EBF;&#x7A0B;&#xFF0C;&#x8FD9;&#x4E00;&#x70B9;&#x4E0E;RxJava&#x7684;schedules&#x6709;&#x70B9;&#x7C7B;&#x4F3C;&#xFF0C;&#x4F46;&#x4E0D;&#x540C;&#x7684;&#x662F;Coroutine&#x4E00;&#x5B9A;&#x8981;&#x6267;&#x884C;&#x5728;Dispatchers&#x8C03;&#x5EA6;&#x4E2D;&#xFF0C;&#x56E0;&#x4E3A;Dispatchers&#x5C06;&#x8D1F;&#x8D23;resume&#x88AB;suspend&#x7684;&#x4EFB;&#x52A1;&#x3002;</p>
+<p>Dispatchers&#x63D0;&#x4F9B;&#x4E09;&#x79CD;&#x6A21;&#x5F0F;&#x5207;&#x6362;&#xFF0C;&#x5206;&#x522B;&#x4E3A;</p>
+<ol>
+<li>Dispatchers.Main: &#x4F7F;Coroutine&#x8FD0;&#x884C;&#x4E2D;&#x4E3B;&#x7EBF;&#x7A0B;&#xFF0C;&#x4EE5;&#x4FBF;UI&#x64CD;&#x4F5C;</li>
+<li>Dispatchers.IO: &#x4F7F;Coroutine&#x8FD0;&#x884C;&#x5728;IO&#x7EBF;&#x7A0B;&#xFF0C;&#x4EE5;&#x4FBF;&#x6267;&#x884C;&#x7F51;&#x7EDC;&#x6216;&#x8005;I/O&#x64CD;&#x4F5C;</li>
+<li>Dispatchers.Default: &#x5728;&#x4E3B;&#x7EBF;&#x7A0B;&#x4E4B;&#x5916;&#x63D0;&#x9AD8;&#x5BF9;CPU&#x7684;&#x5229;&#x7528;&#x7387;&#xFF0C;&#x4F8B;&#x5982;&#x5BF9;list&#x7684;&#x6392;&#x5E8F;&#x6216;&#x8005;JSON&#x7684;&#x89E3;&#x6790;&#x3002;</li>
+</ol>
+<p>&#x518D;&#x6765;&#x770B;&#x4E0A;&#x9762;&#x7684;&#x793A;&#x4F8B;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">get</span><span class="params">(url: <span class="type">String</span>)</span></span> = withContext(Dispatchers.IO) {</span><br><span class="line">    <span class="comment">// to do network request</span></span><br><span class="line">    url</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">fetch</span><span class="params">()</span></span> { <span class="comment">// &#x5728;Main&#x4E2D;&#x8C03;&#x7528;</span></span><br><span class="line">    <span class="keyword">val</span> result = <span class="keyword">get</span>(<span class="string">&quot;https://rousetime.com&quot;</span>) <span class="comment">// &#x5728;IO&#x4E2D;&#x8C03;&#x7528;</span></span><br><span class="line">    showToast(result) <span class="comment">// &#x5728;Main&#x4E2D;&#x8C03;&#x7528;</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E3A;&#x4E86;&#x8BA9;get&#x64CD;&#x4F5C;&#x8FD0;&#x884C;&#x5728;IO&#x7EBF;&#x7A0B;&#xFF0C;&#x6211;&#x4EEC;&#x4F7F;&#x7528;withContext&#x65B9;&#x6CD5;&#xFF0C;&#x5BF9;&#x8BE5;&#x65B9;&#x6CD5;&#x4F20;&#x5165;Dispatchers.IO&#xFF0C;&#x4F7F;&#x5F97;&#x5B83;&#x95ED;&#x5305;&#x4E0B;&#x7684;&#x4EFB;&#x52A1;&#x90FD;&#x5904;&#x4E8E;IO&#x7EBF;&#x7A0B;&#x4E2D;&#xFF0C;&#x540C;&#x65F6;witchContext&#x4E5F;&#x662F;&#x4E00;&#x4E2A;suspend&#x51FD;&#x6570;&#x3002;</p>
+<h3 id="&#x521B;&#x5EFA;Coroutine"><a href="#&#x521B;&#x5EFA;Coroutine" class="headerlink" title="&#x521B;&#x5EFA;Coroutine"></a>&#x521B;&#x5EFA;Coroutine</h3><p>&#x4E0A;&#x9762;&#x63D0;&#x5230;suspend&#x51FD;&#x6570;&#x53EA;&#x80FD;&#x5728;&#x76F8;&#x5E94;&#x7684;suspend&#x4E2D;&#x6216;&#x8005;Coroutine&#x4E2D;&#x8C03;&#x7528;&#x3002;&#x90A3;&#x4E48;Coroutine&#x53C8;&#x8BE5;&#x5982;&#x4F55;&#x521B;&#x5EFA;&#x5462;&#xFF1F;</p>
+<p>&#x6709;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#xFF0C;&#x5206;&#x522B;&#x4E3A;launch&#x4E0E;async</p>
+<ol>
+<li>launch: &#x5F00;&#x542F;&#x4E00;&#x4E2A;&#x65B0;&#x7684;Coroutine&#xFF0C;&#x4F46;&#x4E0D;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;</li>
+<li>async: &#x5F00;&#x542F;&#x4E00;&#x4E2A;&#x65B0;&#x7684;Coroutine&#xFF0C;&#x4F46;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;</li>
+</ol>
+<p>&#x8FD8;&#x662F;&#x4E0A;&#x9762;&#x7684;&#x4F8B;&#x5B50;&#xFF0C;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x6267;&#x884C;fetch&#x65B9;&#x6CD5;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;launch&#x521B;&#x5EFA;&#x4E00;&#x4E2A;Coroutine</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">excute</span><span class="params">()</span></span> {</span><br><span class="line">    CoroutineScope(Dispatchers.Main).launch {</span><br><span class="line">        fetch()</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x53E6;&#x4E00;&#x79CD;async&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#xFF0C;&#x5982;&#x679C;&#x8981;&#x7B49;&#x6240;&#x6709;async&#x6267;&#x884C;&#x5B8C;&#x6BD5;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;await&#x6216;&#x8005;awaitAll</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> <span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">fetchAll</span><span class="params">()</span></span> {</span><br><span class="line">        coroutineScope {</span><br><span class="line">            <span class="keyword">val</span> deferredFirst = async { <span class="keyword">get</span>(<span class="string">&quot;first&quot;</span>) }</span><br><span class="line">            <span class="keyword">val</span> deferredSecond = async { <span class="keyword">get</span>(<span class="string">&quot;second&quot;</span>) }</span><br><span class="line">            deferredFirst.await()</span><br><span class="line">            deferredSecond.await()</span><br><span class="line"></span><br><span class="line"><span class="comment">//            val deferred = listOf(</span></span><br><span class="line"><span class="comment">//                    async { get(&quot;first&quot;) },</span></span><br><span class="line"><span class="comment">//                    async { get(&quot;second&quot;) }</span></span><br><span class="line"><span class="comment">//            )</span></span><br><span class="line"><span class="comment">//            deferred.awaitAll()</span></span><br><span class="line">        }</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<p>&#x6240;&#x4EE5;&#x901A;&#x8FC7;await&#x6216;&#x8005;awaitAll&#x53EF;&#x4EE5;&#x4FDD;&#x8BC1;&#x6240;&#x6709;async&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#x518D;&#x8FDB;&#x884C;resume&#x8C03;&#x7528;&#x3002;</p>
+<h2 id="Architecture-Components"><a href="#Architecture-Components" class="headerlink" title="Architecture Components"></a>Architecture Components</h2><p>&#x5982;&#x679C;&#x4F60;&#x4F7F;&#x7528;&#x4E86;Architecture Component&#xFF0C;&#x90A3;&#x4E48;&#x4F60;&#x4E5F;&#x53EF;&#x4EE5;&#x5728;&#x5176;&#x57FA;&#x7840;&#x4E0A;&#x4F7F;&#x7528;Coroutine&#xFF0C;&#x56E0;&#x4E3A;Kotlin Coroutine&#x5DF2;&#x7ECF;&#x63D0;&#x4F9B;&#x4E86;&#x76F8;&#x5E94;&#x7684;api&#x5E76;&#x4E14;&#x5B9A;&#x5236;&#x4E86;CoroutineScope&#x3002;</p>
+<blockquote>
+<p>&#x5982;&#x679C;&#x4F60;&#x8FD8;&#x4E0D;&#x4E86;&#x89E3;Architecture Component&#xFF0C;&#x5F3A;&#x70C8;&#x63A8;&#x8350;&#x4F60;&#x9605;&#x8BFB;&#x6211;&#x7684;<a href="https://www.rousetime.com/2018/06/22/Android-Architecture-Components-Part4-ViewModel/">Android Architecture Components &#x7CFB;&#x5217;</a></p>
+</blockquote>
+<p>&#x5728;&#x4F7F;&#x7528;&#x4E4B;&#x524D;&#xFF0C;&#x9700;&#x8981;&#x66F4;&#x65B0;architecture component&#x7684;&#x4F9D;&#x8D56;&#x7248;&#x672C;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">object</span> Versions {</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">val</span> arch_version = <span class="string">&quot;2.2.0-alpha01&quot;</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">val</span> arch_room_version = <span class="string">&quot;2.1.0-rc01&quot;</span></span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line"><span class="keyword">object</span> Dependencies {</span><br><span class="line">    <span class="keyword">val</span> arch_lifecycle = <span class="string">&quot;androidx.lifecycle:lifecycle-extensions:<span class="subst">${Versions.arch_version}</span>&quot;</span></span><br><span class="line">    <span class="keyword">val</span> arch_viewmodel = <span class="string">&quot;androidx.lifecycle:lifecycle-viewmodel-ktx:<span class="subst">${Versions.arch_version}</span>&quot;</span></span><br><span class="line">    <span class="keyword">val</span> arch_livedata = <span class="string">&quot;androidx.lifecycle:lifecycle-livedata-ktx:<span class="subst">${Versions.arch_version}</span>&quot;</span></span><br><span class="line">    <span class="keyword">val</span> arch_runtime = <span class="string">&quot;androidx.lifecycle:lifecycle-runtime-ktx:<span class="subst">${Versions.arch_version}</span>&quot;</span></span><br><span class="line">    <span class="keyword">val</span> arch_room_runtime = <span class="string">&quot;androidx.room:room-runtime:<span class="subst">${Versions.arch_room_version}</span>&quot;</span></span><br><span class="line">    <span class="keyword">val</span> arch_room_compiler = <span class="string">&quot;androidx.room:room-compiler:<span class="subst">${Versions.arch_room_version}</span>&quot;</span></span><br><span class="line">    <span class="keyword">val</span> arch_room = <span class="string">&quot;androidx.room:room-ktx:<span class="subst">${Versions.arch_room_version}</span>&quot;</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h3 id="ViewModelScope"><a href="#ViewModelScope" class="headerlink" title="ViewModelScope"></a>ViewModelScope</h3><p>&#x5728;ViewModel&#x4E2D;&#xFF0C;&#x4E3A;&#x4E86;&#x80FD;&#x591F;&#x4F7F;&#x7528;Coroutine&#x63D0;&#x4F9B;&#x4E86;viewModelScope.launch&#xFF0C;&#x540C;&#x65F6;&#x4E00;&#x65E6;ViewModel&#x88AB;&#x6E05;&#x9664;&#xFF0C;&#x5BF9;&#x5E94;&#x7684;Coroutine&#x4E5F;&#x4F1A;&#x81EA;&#x52A8;&#x53D6;&#x6D88;&#x3002;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">getAll</span><span class="params">()</span></span> {</span><br><span class="line">    viewModelScope.launch {</span><br><span class="line">        <span class="keyword">val</span> articleList = withContext(Dispatchers.IO) {</span><br><span class="line">            articleDao.getAll()</span><br><span class="line">        }</span><br><span class="line">        adapter.clear()</span><br><span class="line">        adapter.addAllData(articleList)</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;IO&#x7EBF;&#x7A0B;&#x901A;&#x8FC7;articleDao&#x4ECE;&#x6570;&#x636E;&#x5E93;&#x53D6;&#x6570;&#x636E;&#xFF0C;&#x4E00;&#x65E6;&#x6570;&#x636E;&#x8FD4;&#x56DE;&#xFF0C;&#x5728;&#x4E3B;&#x7EBF;&#x7A0B;&#x8FDB;&#x884C;&#x5904;&#x7406;&#x3002;&#x5982;&#x679C;&#x5728;&#x53D6;&#x6570;&#x636E;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;ViewModel&#x5DF2;&#x7ECF;&#x6E05;&#x9664;&#x4E86;&#xFF0C;&#x90A3;&#x4E48;&#x6570;&#x636E;&#x83B7;&#x53D6;&#x4E5F;&#x4F1A;&#x505C;&#x6B62;&#xFF0C;&#x9632;&#x6B62;&#x8D44;&#x6E90;&#x7684;&#x6D6A;&#x8D39;&#x3002;</p>
+<h3 id="LifecycleScope"><a href="#LifecycleScope" class="headerlink" title="LifecycleScope"></a>LifecycleScope</h3><p>&#x5BF9;&#x4E8E;Lifecycle&#xFF0C;&#x63D0;&#x4F9B;&#x4E86;LifecycleScope&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x901A;&#x8FC7;launch&#x6765;&#x521B;&#x5EFA;Coroutine</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">coroutine</span><span class="params">()</span></span> {</span><br><span class="line">    lifecycleScope.launch {</span><br><span class="line">        delay(<span class="number">2000</span>)</span><br><span class="line">        showToast(<span class="string">&quot;coroutine first&quot;</span>)</span><br><span class="line">        delay(<span class="number">2000</span>)</span><br><span class="line">        showToast(<span class="string">&quot;coroutine second&quot;</span>)</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x56E0;&#x4E3A;Lifecycle&#x662F;&#x53EF;&#x4EE5;&#x611F;&#x77E5;&#x7EC4;&#x4EF6;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x4E00;&#x65E6;&#x7EC4;&#x4EF6;onDestroy&#x4E86;&#xFF0C;&#x76F8;&#x5E94;&#x7684;LifecycleScope.launch&#x95ED;&#x5305;&#x4E2D;&#x7684;&#x8C03;&#x7528;&#x4E5F;&#x5C06;&#x53D6;&#x6D88;&#x505C;&#x6B62;&#x3002;</p>
+<p>lifecycleScope&#x672C;&#x8D28;&#x662F;Lifecycle.coroutineScope</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> LifecycleOwner.lifecycleScope: LifecycleCoroutineScope</span><br><span class="line">    <span class="keyword">get</span>() = lifecycle.coroutineScope</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onStateChanged</span><span class="params">(source: <span class="type">LifecycleOwner</span>, event: <span class="type">Lifecycle</span>.<span class="type">Event</span>)</span></span> {</span><br><span class="line">        <span class="keyword">if</span> (lifecycle.currentState &lt;= Lifecycle.State.DESTROYED) {</span><br><span class="line">            lifecycle.removeObserver(<span class="keyword">this</span>)</span><br><span class="line">            coroutineContext.cancel()</span><br><span class="line">        }</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<p>&#x5B83;&#x4F1A;&#x5728;onStateChanged&#x4E2D;&#x76D1;&#x542C;DESTROYED&#x72B6;&#x6001;&#xFF0C;&#x540C;&#x65F6;&#x8C03;&#x7528;cancel&#x53D6;&#x6D88;Coroutine&#x3002;</p>
+<p>&#x53E6;&#x4E00;&#x65B9;&#x9762;&#xFF0C;lifecycleScope&#x8FD8;&#x53EF;&#x4EE5;&#x6839;&#x636E;Lifecycle&#x4E0D;&#x540C;&#x7684;&#x751F;&#x547D;&#x72B6;&#x6001;&#x8FDB;&#x884C;suspend&#x5904;&#x7406;&#x3002;&#x4F8B;&#x5982;&#x5BF9;&#x5B83;&#x7684;STARTED&#x8FDB;&#x884C;&#x7279;&#x6B8A;&#x5904;&#x7406;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">coroutine</span><span class="params">()</span></span> {</span><br><span class="line">    lifecycleScope.launchWhenStarted {</span><br><span class="line"></span><br><span class="line">    }</span><br><span class="line">    lifecycleScope.launch {</span><br><span class="line">        whenStarted {  }</span><br><span class="line">        delay(<span class="number">2000</span>)</span><br><span class="line">        showToast(<span class="string">&quot;coroutine first&quot;</span>)</span><br><span class="line">        delay(<span class="number">2000</span>)</span><br><span class="line">        showToast(<span class="string">&quot;coroutine second&quot;</span>)</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E0D;&#x7BA1;&#x662F;&#x76F4;&#x63A5;&#x8C03;&#x7528;launchWhenStarted&#x8FD8;&#x662F;&#x5728;launch&#x4E2D;&#x8C03;&#x7528;whenStarted&#x90FD;&#x80FD;&#x8FBE;&#x5230;&#x540C;&#x6837;&#x7684;&#x6548;&#x679C;&#x3002;</p>
+<h3 id="LiveData"><a href="#LiveData" class="headerlink" title="LiveData"></a>LiveData</h3><p>LiveData&#x4E2D;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4F7F;&#x7528;liveData&#xFF0C;&#x5728;&#x5B83;&#x7684;&#x53C2;&#x6570;&#x4E2D;&#x4F1A;&#x8C03;&#x7528;&#x4E00;&#x4E2A;suspend&#x51FD;&#x6570;&#xFF0C;&#x540C;&#x65F6;&#x4F1A;&#x8FD4;&#x56DE;LiveData&#x5BF9;&#x8C61;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="type">&lt;T&gt;</span> <span class="title">liveData</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    context: <span class="type">CoroutineContext</span> = EmptyCoroutineContext,</span></span></span><br><span class="line"><span class="function"><span class="params">    timeoutInMs: <span class="type">Long</span> = DEFAULT_TIMEOUT,</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="meta">@BuilderInference</span> block: <span class="type">suspend</span> <span class="type">LiveDataScope</span>&lt;<span class="type">T</span>&gt;.() -&gt; <span class="type">Unit</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>: LiveData&lt;T&gt; = CoroutineLiveData(context, timeoutInMs, block)</span><br></pre></td></tr></table></figure>
+<p>&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4F7F;&#x7528;liveData&#x6765;&#x662F;&#x5B9E;&#x73B0;Coroutine&#x6548;&#x679C;&#xFF0C;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4E0B;&#x9762;&#x4E00;&#x6BB5;&#x4EE3;&#x7801;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Room</span></span><br><span class="line">   <span class="meta">@Query(<span class="meta-string">&quot;SELECT * FROM article_model WHERE title = :title LIMIT 1&quot;</span>)</span></span><br><span class="line">   <span class="function"><span class="keyword">fun</span> <span class="title">findByTitle</span><span class="params">(title: <span class="type">String</span>)</span></span>: ArticleModel?</span><br><span class="line">   <span class="comment">// ViewModel</span></span><br><span class="line">   <span class="function"><span class="keyword">fun</span> <span class="title">findByTitle</span><span class="params">(title: <span class="type">String</span>)</span></span> = liveData(Dispatchers.IO) {</span><br><span class="line">       MyApp.db.articleDao().findByTitle(title)?.let {</span><br><span class="line">           emit(it)</span><br><span class="line">       }</span><br><span class="line">   }</span><br><span class="line">   <span class="comment">// Activity</span></span><br><span class="line">   <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">checkArticle</span><span class="params">()</span></span> {</span><br><span class="line">       vm.findByTitle(<span class="string">&quot;Android Architecture Components Part1:Room&quot;</span>).observe(<span class="keyword">this</span>, Observer {</span><br><span class="line">       })</span><br><span class="line">   }</span><br></pre></td></tr></table></figure>
+<p>&#x901A;&#x8FC7;title&#x4ECE;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x53D6;&#x6570;&#x636E;&#xFF0C;&#x6570;&#x636E;&#x7684;&#x83B7;&#x53D6;&#x53D1;&#x751F;&#x5728;IO&#x7EBF;&#x7A0B;&#xFF0C;&#x4E00;&#x65E6;&#x6570;&#x636E;&#x8FD4;&#x56DE;&#xFF0C;&#x518D;&#x901A;&#x8FC7;emit&#x65B9;&#x6CD5;&#x5C06;&#x8FD4;&#x56DE;&#x7684;&#x6570;&#x636E;&#x53D1;&#x9001;&#x51FA;&#x53BB;&#x3002;&#x6240;&#x4EE5;&#x5728;View&#x5C42;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4F7F;&#x7528;checkArticle&#x4E2D;&#x7684;&#x65B9;&#x6CD5;&#x6765;&#x76D1;&#x542C;&#x6570;&#x636E;&#x7684;&#x72B6;&#x6001;&#x3002;</p>
+<p>&#x53E6;&#x4E00;&#x65B9;&#x9762;LiveData&#x6709;&#x5B83;&#x7684;active&#x4E0E;inactive&#x72B6;&#x6001;&#xFF0C;&#x5BF9;&#x4E8E;Coroutine&#x4E5F;&#x4F1A;&#x8FDB;&#x884C;&#x76F8;&#x5E94;&#x7684;&#x6FC0;&#x6D3B;&#x4E0E;&#x53D6;&#x6D88;&#x3002;&#x5BF9;&#x4E8E;&#x6FC0;&#x6D3B;&#xFF0C;&#x5982;&#x679C;&#x5B83;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#x4E86;&#x6216;&#x8005;&#x975E;&#x6B63;&#x5E38;&#x7684;&#x53D6;&#x6D88;&#xFF0C;&#x4F8B;&#x5982;&#x629B;&#x51FA;CancelationException&#x5F02;&#x5E38;&#xFF0C;&#x6B64;&#x65F6;&#x5C06;&#x4E0D;&#x4F1A;&#x81EA;&#x52A8;&#x6FC0;&#x6D3B;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x53D1;&#x9001;&#x6570;&#x636E;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;emitSource&#xFF0C;&#x5B83;&#x4E0E;emit&#x5171;&#x540C;&#x70B9;&#x662F;&#x5728;&#x53D1;&#x9001;&#x65B0;&#x7684;&#x6570;&#x636E;&#x4E4B;&#x524D;&#x90FD;&#x4F1A;&#x5C06;&#x539F;&#x6570;&#x636E;&#x6E05;&#x9664;&#xFF0C;&#x800C;&#x4E0D;&#x540C;&#x70B9;&#x662F;&#xFF0C;emitSource&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;DisposableHandle&#x5BF9;&#x8C61;&#xFF0C;&#x4EE5;&#x4FBF;&#x53EF;&#x4EE5;&#x8C03;&#x7528;&#x5B83;&#x7684;dispose&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x53D6;&#x6D88;&#x53D1;&#x9001;&#x3002;</p>
+<p>&#x6700;&#x540E;&#x6211;&#x4F7F;&#x7528;Architecture Component&#x4E0E;Coroutine&#x5199;&#x4E86;&#x4E2A;&#x7B80;&#x5355;&#x7684;Demo&#xFF0C;&#x5927;&#x5BB6;&#x53EF;&#x4EE5;&#x5728;Github&#x4E2D;&#x8FDB;&#x884C;&#x67E5;&#x770B;</p>
+<p>&#x6E90;&#x7801;&#x5730;&#x5740;: <a href="https://github.com/idisfkj/android-api-analysis" target="_blank" rel="noopener">https://github.com/idisfkj/android-api-analysis</a></p>
+<h2 id="&#x63A8;&#x8350;&#x9605;&#x8BFB;"><a href="#&#x63A8;&#x8350;&#x9605;&#x8BFB;" class="headerlink" title="&#x63A8;&#x8350;&#x9605;&#x8BFB;"></a>&#x63A8;&#x8350;&#x9605;&#x8BFB;</h2><p><a href="https://www.rousetime.com/2018/06/07/Android-Architecture-Components-Part1-Room/">Android Architecture Components Part1:Room</a></p>
+<p><a href="https://www.rousetime.com/2018/06/10/Android-Architecture-Components-Part2-LiveData/">Android Architecture Components Part2:LiveData</a></p>
+<p><a href="https://www.rousetime.com/2018/06/14/Android-Architecture-Components-Part3-Lifecycle/">Android Architecture Components Part3:Lifecycle</a></p>
+<p><a href="https://www.rousetime.com/2018/06/22/Android-Architecture-Components-Part4-ViewModel/">Android Architecture Components Part4:ViewModel</a></p>
+<p><img src="/2019/06/17/What-&#x4F60;&#x8FD8;&#x4E0D;&#x77E5;&#x9053;Kotlin-Coroutine/Android&#x8865;&#x7ED9;&#x7AD9;.jpg" alt></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/06/03/Android-Gradle系列-进阶篇/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/07/09/只需三步实现Databinding插件化/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Mon Jun 17 2019 08:13:52 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

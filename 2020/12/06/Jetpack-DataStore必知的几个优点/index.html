@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Jetpack:DataStore必知的几个优点 | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="jetpack,">
+  
+
+  <meta name="description" content="&amp;#x6700;&amp;#x8FD1;Jetpack&amp;#x53C8;&amp;#x589E;&amp;#x52A0;&amp;#x4E86;&amp;#x65B0;&amp;#x6210;&amp;#x5458;&amp;#xFF0C;&amp;#x63D0;&amp;#x51FA;&amp;#x4E86;&amp;#x4E00;&amp;#x4E2A;&amp;#x5173;&amp;#x4E8E;&amp;#x5C0F;&amp;#x578B;&amp;#x6570;&amp;#x636E;&amp;#x5B58;&amp;#x50A8;&amp;#x76F8;&amp;">
+<meta name="keywords" content="jetpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jetpack:DataStore必知的几个优点">
+<meta property="og:url" content="https://www.rousetime.com/2020/12/06/Jetpack-DataStore必知的几个优点/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="&amp;#x6700;&amp;#x8FD1;Jetpack&amp;#x53C8;&amp;#x589E;&amp;#x52A0;&amp;#x4E86;&amp;#x65B0;&amp;#x6210;&amp;#x5458;&amp;#xFF0C;&amp;#x63D0;&amp;#x51FA;&amp;#x4E86;&amp;#x4E00;&amp;#x4E2A;&amp;#x5173;&amp;#x4E8E;&amp;#x5C0F;&amp;#x578B;&amp;#x6570;&amp;#x636E;&amp;#x5B58;&amp;#x50A8;&amp;#x76F8;&amp;">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://3.bp.blogspot.com/-Vk_q5hWw6DQ/X00ZfiRrB9I/AAAAAAAAPlo/u-kvBvmMfzgRnNViYLwaAim-E7wq5yxKACLcBGAsYHQ/s1600/Screen%2BShot%2B2020-08-31%2Bat%2B11.25.43%2BAM.png">
+<meta property="og:updated_time" content="2022-11-30T13:48:47.912Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jetpack:DataStore必知的几个优点">
+<meta name="twitter:description" content="&amp;#x6700;&amp;#x8FD1;Jetpack&amp;#x53C8;&amp;#x589E;&amp;#x52A0;&amp;#x4E86;&amp;#x65B0;&amp;#x6210;&amp;#x5458;&amp;#xFF0C;&amp;#x63D0;&amp;#x51FA;&amp;#x4E86;&amp;#x4E00;&amp;#x4E2A;&amp;#x5173;&amp;#x4E8E;&amp;#x5C0F;&amp;#x578B;&amp;#x6570;&amp;#x636E;&amp;#x5B58;&amp;#x50A8;&amp;#x76F8;&amp;">
+<meta name="twitter:image" content="https://3.bp.blogspot.com/-Vk_q5hWw6DQ/X00ZfiRrB9I/AAAAAAAAPlo/u-kvBvmMfzgRnNViYLwaAim-E7wq5yxKACLcBGAsYHQ/s1600/Screen%2BShot%2B2020-08-31%2Bat%2B11.25.43%2BAM.png">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SharedPreferences的糟心事"><span class="toc-text">SharedPreferences的糟心事</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一次性读取阻塞主线程"><span class="toc-text">一次性读取阻塞主线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类型不安全"><span class="toc-text">类型不安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#apply异步没有回调"><span class="toc-text">apply异步没有回调</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#导致ANR"><span class="toc-text">导致ANR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#不能跨进程通信"><span class="toc-text">不能跨进程通信</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DataStore"><span class="toc-text">DataStore</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#引入DataStore"><span class="toc-text">引入DataStore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建DataStore"><span class="toc-text">创建DataStore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#读"><span class="toc-text">读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#写"><span class="toc-text">写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#迁移SharedPreferences"><span class="toc-text">迁移SharedPreferences</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目"><span class="toc-text">项目</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Jetpack-DataStore必知的几个优点" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Jetpack:DataStore必知的几个优点</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2020.12.06</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>&#x6700;&#x8FD1;Jetpack&#x53C8;&#x589E;&#x52A0;&#x4E86;&#x65B0;&#x6210;&#x5458;&#xFF0C;&#x63D0;&#x51FA;&#x4E86;&#x4E00;&#x4E2A;&#x5173;&#x4E8E;&#x5C0F;&#x578B;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x76F8;&#x5173;&#x7684;DataStore&#x7EC4;&#x4EF6;&#x3002;</p>
+<p>&#x6839;&#x636E;&#x5B98;&#x7F51;&#x7684;&#x63CF;&#x8FF0;&#xFF0C;DataStore&#x5B8C;&#x5168;&#x662F;&#x5BF9;&#x6807;&#x73B0;&#x6709;&#x7684;SharedPreferences&#x3002;</p>
+<p>SharedPreferences&#x76F8;&#x4FE1;&#x5927;&#x5BB6;&#x90FD;&#x6709;&#x7528;&#x8FC7;&#xFF0C;&#x65E2;&#x7136;&#x5728;&#x73B0;&#x6709;&#x7684;&#x57FA;&#x7840;&#x4E0A;&#x63D0;&#x51FA;DataStore&#x90A3;&#x81EA;&#x7136;&#x662F;&#x4E3A;&#x4E86;&#x89E3;&#x51B3;SharedPreferences&#x7684;&#x7F3A;&#x70B9;&#x7684;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x4F60;&#x8FD8;&#x4E0D;&#x77E5;&#x9053;SharedPreferences&#x6709;&#x4EC0;&#x4E48;&#x7F3A;&#x70B9;&#xFF1F;&#x6CA1;&#x5173;&#x7CFB;&#xFF0C;&#x6211;&#x4EEC;&#x6B63;&#x597D;&#x6765;&#x590D;&#x4E60;&#x4E00;&#x904D;&#x3002;&#x4F60;&#x53EF;&#x4EE5;&#x5BF9;&#x6807;&#x4E00;&#x4E0B;&#x5728;&#x4F7F;&#x7528;SharedPreferences&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x662F;&#x5426;&#x4E5F;&#x9047;&#x5230;&#x8FC7;&#x8FD9;&#x4E9B;&#x95EE;&#x9898;&#x3002;</p>
+<h2 id="SharedPreferences&#x7684;&#x7CDF;&#x5FC3;&#x4E8B;"><a href="#SharedPreferences&#x7684;&#x7CDF;&#x5FC3;&#x4E8B;" class="headerlink" title="SharedPreferences&#x7684;&#x7CDF;&#x5FC3;&#x4E8B;"></a>SharedPreferences&#x7684;&#x7CDF;&#x5FC3;&#x4E8B;</h2><p>&#x4E3A;&#x4E86;&#x7CBE;&#x7B80;&#x8BED;&#x8A00;&#xFF0C;&#x4E0B;&#x9762;&#x90FD;&#x5C06;SharedPreferences&#x7B80;&#x79F0;sp</p>
+<h3 id="&#x4E00;&#x6B21;&#x6027;&#x8BFB;&#x53D6;&#x963B;&#x585E;&#x4E3B;&#x7EBF;&#x7A0B;"><a href="#&#x4E00;&#x6B21;&#x6027;&#x8BFB;&#x53D6;&#x963B;&#x585E;&#x4E3B;&#x7EBF;&#x7A0B;" class="headerlink" title="&#x4E00;&#x6B21;&#x6027;&#x8BFB;&#x53D6;&#x963B;&#x585E;&#x4E3B;&#x7EBF;&#x7A0B;"></a>&#x4E00;&#x6B21;&#x6027;&#x8BFB;&#x53D6;&#x963B;&#x585E;&#x4E3B;&#x7EBF;&#x7A0B;</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sp = getSharedPreferences(&quot;settings_preference&quot;, Context.MODE_PRIVATE)</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x4F7F;&#x7528;sp&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x4F1A;&#x901A;&#x8FC7;getSharedPreferences&#x6765;&#x521D;&#x59CB;&#x5316;sp&#x3002;</p>
+<p>&#x4E0A;&#x9762;&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#x6700;&#x7EC8;&#x4F1A;&#x8FDB;&#x5165;SharedPreferencesImpl&#x7684;loadFromDisk&#x65B9;&#x6CD5;&#x3002;</p>
+<blockquote>
+<p>&#x5177;&#x4F53;&#x8C03;&#x7528;&#x5C31;&#x4E0D;&#x5E26;&#x5927;&#x5BB6;&#x8D70;&#x4E00;&#x904D;&#x4E86;&#xFF0C;&#x5982;&#x679C;&#x90FD;&#x8D34;&#x51FA;&#x6765;&#x6587;&#x7AE0;&#x5C31;&#x53D8;&#x6210;&#x4EE3;&#x7801;&#x7C98;&#x8D34;&#x677F;&#x4E86;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x5173;&#x6CE8;&#x6838;&#x5FC3;&#x903B;&#x8F91;&#xFF0C;&#x5176;&#x5B83;&#x611F;&#x5174;&#x8DA3;&#x7684;&#x53EF;&#x4EE5;&#x81EA;&#x884C;&#x67E5;&#x770B;&#x6E90;&#x7801;</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">private void loadFromDisk() {</span><br><span class="line">    synchronized (mLock) {</span><br><span class="line">        if (mLoaded) {</span><br><span class="line">            return;</span><br><span class="line">        }</span><br><span class="line">        if (mBackupFile.exists()) {</span><br><span class="line">            mFile.delete();</span><br><span class="line">            mBackupFile.renameTo(mFile);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    // Debugging</span><br><span class="line">    if (mFile.exists() &amp;&amp; !mFile.canRead()) {</span><br><span class="line">        Log.w(TAG, &quot;Attempt to read preferences file &quot; + mFile + &quot; without permission&quot;);</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    Map&lt;String, Object&gt; map = null;</span><br><span class="line">    StructStat stat = null;</span><br><span class="line">    Throwable thrown = null;</span><br><span class="line">    try {</span><br><span class="line">        stat = Os.stat(mFile.getPath());</span><br><span class="line">        if (mFile.canRead()) {</span><br><span class="line">            BufferedInputStream str = null;</span><br><span class="line">            try {</span><br><span class="line">                str = new BufferedInputStream(</span><br><span class="line">                        new FileInputStream(mFile), 16 * 1024);</span><br><span class="line">                map = (Map&lt;String, Object&gt;) XmlUtils.readMapXml(str);</span><br><span class="line">            } catch (Exception e) {</span><br><span class="line">                Log.w(TAG, &quot;Cannot read &quot; + mFile.getAbsolutePath(), e);</span><br><span class="line">            } finally {</span><br><span class="line">                IoUtils.closeQuietly(str);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    } catch (ErrnoException e) {</span><br><span class="line">        // An errno exception means the stat failed. Treat as empty/non-existing by</span><br><span class="line">        // ignoring.</span><br><span class="line">    } catch (Throwable t) {</span><br><span class="line">        thrown = t;</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    synchronized (mLock) {</span><br><span class="line">        mLoaded = true;</span><br><span class="line">        mThrowable = thrown;</span><br><span class="line"> </span><br><span class="line">        // It&apos;s important that we always signal waiters, even if we&apos;ll make</span><br><span class="line">        // them fail with an exception. The try-finally is pretty wide, but</span><br><span class="line">        // better safe than sorry.</span><br><span class="line">        try {</span><br><span class="line">            if (thrown == null) {</span><br><span class="line">                if (map != null) {</span><br><span class="line">                    mMap = map;</span><br><span class="line">                    mStatTimestamp = stat.st_mtim;</span><br><span class="line">                    mStatSize = stat.st_size;</span><br><span class="line">                } else {</span><br><span class="line">                    mMap = new HashMap&lt;&gt;();</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">            // In case of a thrown exception, we retain the old map. That allows</span><br><span class="line">            // any open editors to commit and store updates.</span><br><span class="line">        } catch (Throwable t) {</span><br><span class="line">            mThrowable = t;</span><br><span class="line">        } finally {</span><br><span class="line">            mLock.notifyAll();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x8FD9;&#x91CC;&#x901A;&#x8FC7;&#x5BF9;&#x8C61;&#x9501;mLock&#x673A;&#x5236;&#x6765;&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x52A0;&#x9501;&#x64CD;&#x4F5C;&#x3002;&#x53EA;&#x6709;&#x5F53;sp&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x5168;&#x90E8;&#x8BFB;&#x53D6;&#x5B8C;&#x6BD5;&#x4E4B;&#x540E;&#x624D;&#x4F1A;&#x8C03;&#x7528;mLock.notifyAll()&#x6765;&#x91CA;&#x653E;&#x9501;&#x3002;</p>
+<p>&#x800C;&#x53E6;&#x4E00;&#x8FB9;&#x5BF9;&#x5E94;&#x7684;&#x83B7;&#x53D6;&#x6570;&#x636E;&#x7684;get&#x65B9;&#x6CD5;&#xFF0C;&#x4F8B;&#x5982;getString&#x65B9;&#x6CD5;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public String getString(String key, @Nullable String defValue) {</span><br><span class="line">    synchronized (mLock) {</span><br><span class="line">        awaitLoadedLocked();</span><br><span class="line">        String v = (String)mMap.get(key);</span><br><span class="line">        return v != null ? v : defValue;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line">private void awaitLoadedLocked() {</span><br><span class="line">    if (!mLoaded) {</span><br><span class="line">        // Raise an explicit StrictMode onReadFromDisk for this</span><br><span class="line">        // thread, since the real read will be in a different</span><br><span class="line">        // thread and otherwise ignored by StrictMode.</span><br><span class="line">        BlockGuard.getThreadPolicy().onReadFromDisk();</span><br><span class="line">    }</span><br><span class="line">    while (!mLoaded) {</span><br><span class="line">        try {</span><br><span class="line">            mLock.wait(); // &#x7B49;&#x5F85;sp&#x6587;&#x4EF6;&#x8BFB;&#x53D6;&#x5B8C;&#x6BD5;</span><br><span class="line">        } catch (InterruptedException unused) {</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    if (mThrowable != null) {</span><br><span class="line">        throw new IllegalStateException(mThrowable);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x4F1A;&#x5728;awaitLoadedLocked&#x65B9;&#x6CD5;&#x4E2D;&#x8C03;&#x7528;mLock.wait()&#x6765;&#x7B49;&#x5F85;sp&#x7684;&#x521D;&#x59CB;&#x5316;&#x5B8C;&#x6210;&#x3002;</p>
+<p>&#x6240;&#x4EE5;&#x5982;&#x679C;sp&#x6587;&#x4EF6;&#x8FC7;&#x5927;&#xFF0C;&#x521D;&#x59CB;&#x5316;&#x6240;&#x82B1;&#x7684;&#x65F6;&#x95F4;&#x8FC7;&#x591A;&#xFF0C;&#x4F1A;&#x5BFC;&#x81F4;&#x540E;&#x9762;sp&#x6570;&#x636E;&#x83B7;&#x53D6;&#x65F6;&#x7684;&#x963B;&#x585E;&#x3002;</p>
+<h3 id="&#x7C7B;&#x578B;&#x4E0D;&#x5B89;&#x5168;"><a href="#&#x7C7B;&#x578B;&#x4E0D;&#x5B89;&#x5168;" class="headerlink" title="&#x7C7B;&#x578B;&#x4E0D;&#x5B89;&#x5168;"></a>&#x7C7B;&#x578B;&#x4E0D;&#x5B89;&#x5168;</h3><p>&#x5728;&#x6211;&#x4EEC;&#x4F7F;&#x7528;sp&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x7528;&#x7684;&#x6700;&#x591A;&#x7684;&#x5E94;&#x8BE5;&#x662F;&#x5B83;&#x7684;put&#x4E0E;get&#x65B9;&#x6CD5;&#x3002;&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x7528;&#x8FD9;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#x6765;&#x5199;&#x4E00;&#x6BB5;&#x4EE3;&#x7801;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sp = getSharedPreferences(&quot;settings_preference&quot;, Context.MODE_PRIVATE)</span><br><span class="line"> </span><br><span class="line">// &#x67D0;&#x4E00;&#x4E2A;&#x5730;&#x65B9;&#x7684;&#x903B;&#x8F91;</span><br><span class="line">sp.edit().putString(&quot;key_name_from_sp&quot;, &quot;from sp&quot;).apply()</span><br><span class="line"> </span><br><span class="line">// &#x53E6;&#x4E00;&#x4E2A;&#x5730;&#x65B9;&#x7684;&#x903B;&#x8F91;</span><br><span class="line">sp.edit().putInt(&quot;key_name_from_sp&quot;, &quot;from sp&quot;).apply()</span><br><span class="line"> </span><br><span class="line">// &#x83B7;&#x53D6;key_name_from_sp&#x503C;</span><br><span class="line">sp.getString(&quot;key_name_from_sp&quot;, &quot;&quot;)</span><br></pre></td></tr></table></figure>
+<p>&#x5982;&#x679C;&#x4F60;&#x8FD0;&#x884C;&#x4E0A;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x4F60;&#x53EF;&#x4EE5;&#x53D1;&#x73B0;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x5F02;&#x5E38;&#xFF0C;&#x672C;&#x8D28;&#x95EE;&#x9898;&#x662F;&#x5BF9;&#x540C;&#x4E00;&#x4E2A;key&#x8D4B;&#x503C;&#x4E86;&#x4E0D;&#x540C;&#x7C7B;&#x578B;&#x7684;&#x503C;&#x3002;&#x5C06;&#x539F;&#x6765;String&#x7C7B;&#x578B;&#x7684;&#x503C;&#x8F6C;&#x53D8;&#x6210;Int&#x7C7B;&#x578B;&#x3002;&#x7531;&#x4E8E;sp&#x5185;&#x90E8;&#x662F;&#x901A;&#x8FC7;Map&#x6765;&#x4FDD;&#x5B58;&#x5BF9;&#x4E8E;&#x7684;key-value&#xFF0C;&#x6240;&#x4EE5;&#x5B83;&#x5E76;&#x4E0D;&#x80FD;&#x4FDD;&#x8BC1;key-value&#x7684;&#x7C7B;&#x578B;&#x56FA;&#x5B9A;&#xFF0C;&#x4E5F;&#x8FDB;&#x4E00;&#x6B65;&#x5BFC;&#x81F4;&#x901A;&#x8FC7;get&#x65B9;&#x6CD5;&#x6765;&#x83B7;&#x53D6;&#x5BF9;&#x5E94;key&#x7684;&#x503C;&#x7684;&#x7C7B;&#x578B;&#x4E5F;&#x662F;&#x4E0D;&#x5B89;&#x5168;&#x7684;&#x3002;&#x8FD9;&#x5C31;&#x9020;&#x6210;&#x4E86;&#x6240;&#x8C13;&#x7684;&#x7C7B;&#x578B;&#x4E0D;&#x5B89;&#x5168;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public String getString(String key, @Nullable String defValue) {</span><br><span class="line">    synchronized (mLock) {</span><br><span class="line">        awaitLoadedLocked();</span><br><span class="line">        String v = (String)mMap.get(key);</span><br><span class="line">        return v != null ? v : defValue;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;getString&#x7684;&#x6E90;&#x7801;&#x4E2D;&#xFF0C;&#x4F1A;&#x8FDB;&#x884C;&#x7C7B;&#x578B;&#x5F3A;&#x5236;&#x8F6C;&#x6362;&#xFF0C;&#x5982;&#x679C;&#x7C7B;&#x578B;&#x4E0D;&#x5BF9;&#x5C31;&#x4F1A;&#x5BFC;&#x81F4;&#x7A0B;&#x5E8F;&#x5D29;&#x6E83;&#x3002;&#x7531;&#x4E8E;sp&#x4E0D;&#x4F1A;&#x5728;&#x4EE3;&#x7801;&#x7F16;&#x8BD1;&#x65F6;&#x8FDB;&#x884C;&#x63D0;&#x9192;&#xFF0C;&#x53EA;&#x80FD;&#x5728;&#x4EE3;&#x7801;&#x8FD0;&#x884C;&#x4E4B;&#x540E;&#x624D;&#x80FD;&#x53D1;&#x73B0;&#xFF0C;&#x6240;&#x4EE5;&#x5C31;&#x907F;&#x514D;&#x4E0D;&#x6389;&#x53EF;&#x80FD;&#x53D1;&#x751F;&#x7684;&#x5F02;&#x5E38;&#xFF0C;&#x4ECE;&#x800C;&#x5BFC;&#x81F4;sp&#x7C7B;&#x578B;&#x4E0D;&#x5B89;&#x5168;&#x3002;</p>
+<h3 id="apply&#x5F02;&#x6B65;&#x6CA1;&#x6709;&#x56DE;&#x8C03;"><a href="#apply&#x5F02;&#x6B65;&#x6CA1;&#x6709;&#x56DE;&#x8C03;" class="headerlink" title="apply&#x5F02;&#x6B65;&#x6CA1;&#x6709;&#x56DE;&#x8C03;"></a>apply&#x5F02;&#x6B65;&#x6CA1;&#x6709;&#x56DE;&#x8C03;</h3><p>&#x4E3A;&#x4E86;&#x9632;&#x6B62;sp&#x5199;&#x5165;&#x65F6;&#x963B;&#x585E;&#x7EBF;&#x7A0B;&#xFF0C;&#x4E00;&#x822C;&#x90FD;&#x4F1A;&#x4F7F;&#x7528;apply&#x65B9;&#x6CD5;&#x6765;&#x5C06;&#x6570;&#x636E;&#x5F02;&#x6B65;&#x63D0;&#x4EA4;&#x5230;&#x78C1;&#x76D8;&#xFF0C;&#x5373;&#x5199;&#x5165;&#x5230;&#x6587;&#x4EF6;&#x4E2D;&#x3002;</p>
+<p>&#x867D;&#x7136;apply&#x662F;&#x5F02;&#x6B65;&#xFF0C;&#x4F46;&#x5B83;&#x5E76;&#x6CA1;&#x6709;&#x8FD4;&#x56DE;&#x503C;&#xFF0C;&#x540C;&#x6837;&#x4E5F;&#x6CA1;&#x6709;&#x5BF9;&#x5E94;&#x7684;&#x7ED3;&#x679C;&#x56DE;&#x8C03;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public void apply() {</span><br><span class="line">	...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h3 id="&#x5BFC;&#x81F4;ANR"><a href="#&#x5BFC;&#x81F4;ANR" class="headerlink" title="&#x5BFC;&#x81F4;ANR"></a>&#x5BFC;&#x81F4;ANR</h3><p>apply&#x5F02;&#x6B65;&#x63D0;&#x4EA4;&#x89E3;&#x51B3;&#x4E86;&#x7EBF;&#x7A0B;&#x7684;&#x963B;&#x585E;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x5982;&#x679C;apply&#x4EFB;&#x52A1;&#x8FC7;&#x591A;&#x6570;&#x636E;&#x91CF;&#x8FC7;&#x5927;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x5BFC;&#x81F4;ANR&#x7684;&#x4EA7;&#x751F;&#x3002;</p>
+<p>ANR&#x7684;&#x4EA7;&#x751F;&#x662F;&#x4E3B;&#x7EBF;&#x7A0B;&#x957F;&#x65F6;&#x95F4;&#x672A;&#x54CD;&#x5E94;&#x5BFC;&#x81F4;&#x7684;&#x3002;apply&#x4E0D;&#x662F;&#x5F02;&#x6B65;&#x7684;&#x5417;&#xFF1F;&#x5B83;&#x600E;&#x4E48;&#x53C8;&#x4F1A;&#x4EA7;&#x751F;ANR&#x5462;&#xFF1F;</p>
+<p>&#x6765;&#x770B;&#x4E0B;apply&#x7684;&#x6E90;&#x7801;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">public void apply() {</span><br><span class="line">    final long startTime = System.currentTimeMillis();</span><br><span class="line"> </span><br><span class="line">    final MemoryCommitResult mcr = commitToMemory();</span><br><span class="line">    final Runnable awaitCommit = new Runnable() {</span><br><span class="line">            @Override</span><br><span class="line">            public void run() {</span><br><span class="line">                try {</span><br><span class="line">                    mcr.writtenToDiskLatch.await();</span><br><span class="line">                } catch (InterruptedException ignored) {</span><br><span class="line">                }</span><br><span class="line">                if (DEBUG &amp;&amp; mcr.wasWritten) {</span><br><span class="line">                    Log.d(TAG, mFile.getName() + &quot;:&quot; + mcr.memoryStateGeneration</span><br><span class="line">                            + &quot; applied after &quot; + (System.currentTimeMillis() - startTime)</span><br><span class="line">                            + &quot; ms&quot;);</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        };</span><br><span class="line"> </span><br><span class="line">    // &#x6CE8;&#x610F;&#xFF1A;&#x5C06;awaitCommit&#x6DFB;&#x52A0;&#x5230;&#x961F;&#x5217;&#x4E2D;</span><br><span class="line">    QueuedWork.addFinisher(awaitCommit);</span><br><span class="line"> </span><br><span class="line">    Runnable postWriteRunnable = new Runnable() {</span><br><span class="line">            @Override</span><br><span class="line">            public void run() {</span><br><span class="line">                awaitCommit.run();</span><br><span class="line">                // &#x6210;&#x529F;&#x5199;&#x5165;&#x78C1;&#x76D8;&#x4E4B;&#x540E;&#x624D;&#x5C06;awaitCommit&#x79FB;&#x9664;</span><br><span class="line">                QueuedWork.removeFinisher(awaitCommit);</span><br><span class="line">            }</span><br><span class="line">        };</span><br><span class="line"> </span><br><span class="line">    SharedPreferencesImpl.this.enqueueDiskWrite(mcr, postWriteRunnable);</span><br><span class="line"> </span><br><span class="line">    // Okay to notify the listeners before it&apos;s hit disk</span><br><span class="line">    // because the listeners should always get the same</span><br><span class="line">    // SharedPreferences instance back, which has the</span><br><span class="line">    // changes reflected in memory.</span><br><span class="line">    notifyListeners(mcr);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x5173;&#x952E;&#x70B9;&#x662F;&#x4F1A;&#x5C06;awaitCommit&#x52A0;&#x5165;&#x5230;QueuedWork&#x961F;&#x5217;&#x4E2D;&#xFF0C;&#x53EA;&#x6709;&#x5F53;awaitCommit&#x6267;&#x884C;&#x5B8C;&#x4E4B;&#x540E;&#x624D;&#x4F1A;&#x8FDB;&#x884C;&#x79FB;&#x9664;&#x3002;</p>
+<p>&#x8FD9;&#x662F;&#x4E00;&#x65B9;&#x9762;&#xFF0C;&#x6211;&#x4EEC;&#x518D;&#x6765;&#x770B;&#x53E6;&#x4E00;&#x65B9;&#x9762;&#x3002;</p>
+<p>&#x5728;Activity&#x7684;onPause&#x4E0E;onStop&#x3001;Service&#x7684;onDestory&#x4E2D;&#x4F1A;&#x7B49;&#x5F85;QueuedWork&#x4E2D;&#x7684;&#x4EFB;&#x52A1;&#x5168;&#x90E8;&#x5B8C;&#x6210;&#xFF0C;&#x4E00;&#x65E6;QueuedWork&#x4E2D;&#x7684;&#x4EFB;&#x52A1;&#x975E;&#x5E38;&#x8017;&#x65F6;&#xFF0C;&#x4F8B;&#x5982;sp&#x7684;&#x5199;&#x5165;&#x78C1;&#x76D8;&#x6570;&#x636E;&#x91CF;&#x8FC7;&#x591A;&#xFF0C;&#x5C31;&#x4F1A;&#x5BFC;&#x81F4;&#x4E3B;&#x7EBF;&#x7A0B;&#x957F;&#x65F6;&#x95F4;&#x672A;&#x54CD;&#x5E94;&#xFF0C;&#x4ECE;&#x800C;&#x4EA7;&#x751F;ANR&#x3002;</p>
+<p>&#x5177;&#x4F53;&#x8C03;&#x7528;&#x5206;&#x522B;&#x5728;ActivityThread&#x4E2D;&#x7684;handlePauseActivity&#x3001;handlePauseActivity&#x4E0E;handleStopService&#x65B9;&#x6CD5;&#x4E2D;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public void handlePauseActivity(IBinder token, boolean finished, boolean userLeaving,</span><br><span class="line">        int configChanges, PendingTransactionActions pendingActions, String reason) {</span><br><span class="line">    ActivityClientRecord r = mActivities.get(token);</span><br><span class="line">    if (r != null) {</span><br><span class="line">        if (userLeaving) {</span><br><span class="line">            performUserLeavingActivity(r);</span><br><span class="line">        }</span><br><span class="line"> </span><br><span class="line">        r.activity.mConfigChangeFlags |= configChanges;</span><br><span class="line">        performPauseActivity(r, finished, reason, pendingActions);</span><br><span class="line">        // Make sure any pending writes are now committed.</span><br><span class="line">        if (r.isPreHoneycomb()) {</span><br><span class="line">            //&#x7B49;&#x5F85;&#x4EFB;&#x52A1;&#x5B8C;&#x6210;</span><br><span class="line">            QueuedWork.waitToFinish();</span><br><span class="line">        }</span><br><span class="line">        mSomeActivitiesChanged = true;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x90A3;&#x5982;&#x4F55;&#x89E3;&#x51B3;&#x5462;&#xFF1F;&#x9996;&#x5148;&#x4F7F;&#x7528;sp&#x4E0D;&#x8981;&#x5B58;&#x50A8;&#x8FC7;&#x5927;&#x7684;key-value&#x6570;&#x636E;&#xFF0C;&#x672C;&#x8EAB;sp&#x5C31;&#x662F;&#x8F7B;&#x91CF;&#x7684;&#x5B58;&#x50A8;&#xFF0C;&#x5BF9;&#x4E8E;&#x5927;&#x6570;&#x636E;&#x8FD8;&#x662F;&#x4F7F;&#x7528;room&#x6765;&#x5B58;&#x50A8;&#x3002;</p>
+<p>&#x6B64;&#x7C7B;ANR&#x90FD;&#x662F;&#x7ECF;&#x7531;QueuedWork.waitToFinish()&#x89E6;&#x53D1;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x5728;&#x8C03;&#x7528;&#x6B64;&#x51FD;&#x6570;&#x4E4B;&#x524D;&#xFF0C;&#x5C06;&#x5176;&#x4E2D;&#x4FDD;&#x5B58;&#x7684;&#x961F;&#x5217;&#x624B;&#x52A8;&#x6E05;&#x7A7A;&#xFF0C;&#x90A3;&#x4E48;&#x662F;&#x4E0D;&#x662F;&#x80FD;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#x5462;&#xFF0C;&#x7B54;&#x6848;&#x662F;&#x80AF;&#x5B9A;&#x7684;&#x3002;</p>
+<p>&#x53E6;&#x5916;&#x5728;&#x4ECA;&#x65E5;&#x5934;&#x6761;&#x7684;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;&#x4E2D;&#x5DF2;&#x7ECF;&#x63D0;&#x51FA;&#x89E3;&#x51B3;ANR&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5177;&#x4F53;&#x89E3;&#x51B3;&#x53EF;&#x4EE5;&#x81EA;&#x884C;&#x67E5;&#x770B;</p>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzI1MzYzMjE0MQ==&amp;mid=2247484387&amp;idx=1&amp;sn=e3c8d6ef52520c51b5e07306d9750e70&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">&#x5256;&#x6790; SharedPreference apply &#x5F15;&#x8D77;&#x7684; ANR &#x95EE;&#x9898;</a></p>
+<h3 id="&#x4E0D;&#x80FD;&#x8DE8;&#x8FDB;&#x7A0B;&#x901A;&#x4FE1;"><a href="#&#x4E0D;&#x80FD;&#x8DE8;&#x8FDB;&#x7A0B;&#x901A;&#x4FE1;" class="headerlink" title="&#x4E0D;&#x80FD;&#x8DE8;&#x8FDB;&#x7A0B;&#x901A;&#x4FE1;"></a>&#x4E0D;&#x80FD;&#x8DE8;&#x8FDB;&#x7A0B;&#x901A;&#x4FE1;</h3><p>sp&#x662F;&#x4E0D;&#x80FD;&#x8DE8;&#x8FDB;&#x7A0B;&#x901A;&#x4FE1;&#x7684;&#xFF0C;&#x867D;&#x7136;&#x5728;&#x83B7;&#x53D6;sp&#x7684;&#x65F6;&#x5019;&#x63D0;&#x4F9B;&#x4E86;MODE_MULTI_PROCESS&#xFF0C;&#x4F46;&#x5185;&#x90E8;&#x5E76;&#x4E0D;&#x662F;&#x7528;&#x6765;&#x8DE8;&#x8FDB;&#x7A0B;&#x7684;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public SharedPreferences getSharedPreferences(File file, int mode) {</span><br><span class="line">    if ((mode &amp; Context.MODE_MULTI_PROCESS) != 0 ||</span><br><span class="line">        getApplicationInfo().targetSdkVersion &lt; android.os.Build.VERSION_CODES.HONEYCOMB) {</span><br><span class="line">        // &#x91CD;&#x65B0;&#x8BFB;&#x53D6;SP&#x6587;&#x4EF6;&#x5185;&#x5BB9;</span><br><span class="line">        sp.startReloadIfChangedUnexpectedly();</span><br><span class="line">    }</span><br><span class="line">    return sp;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x8FD9;&#x91CC;&#x4F7F;&#x7528;MODE_MULTI_PROCESS&#x53EA;&#x662F;&#x91CD;&#x65B0;&#x8BFB;&#x53D6;&#x4E00;&#x904D;&#x6587;&#x4EF6;&#x800C;&#x5DF2;&#xFF0C;&#x5E76;&#x4E0D;&#x80FD;&#x4FDD;&#x8BC1;&#x8DE8;&#x8FDB;&#x7A0B;&#x901A;&#x4FE1;&#x3002;</p>
+<p>&#x4E0A;&#x9762;&#x7684;sp&#x95EE;&#x9898;&#x4E0D;&#x77E5;&#x9053;&#x4F60;&#x5728;&#x4F7F;&#x7528;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x662F;&#x5426;&#x6709;&#x9047;&#x5230;&#x8FC7;&#xFF0C;&#x6216;&#x8005;&#x8BF4;&#x6709;&#x5E78;&#x4E2D;&#x6807;&#x51E0;&#x6761;&#xFF0C;&#x5927;&#x5BB6;&#x53EF;&#x4EE5;&#x7559;&#x8A00;&#x6765;&#x5BF9;&#x6BD4;&#x4E00;&#x4E0B;&#xFF0C;&#x8BF4;&#x51FA;&#x4F60;&#x7684;&#x6545;&#x4E8B;(&#x6B64;&#x5904;&#x5E94;&#x8BE5;&#x6709;&#x9152;)&#x3002;</p>
+<h2 id="DataStore"><a href="#DataStore" class="headerlink" title="DataStore"></a>DataStore</h2><p>&#x9488;&#x5BF9;sp&#x90A3;&#x51E0;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;DataStore&#x90FD;&#x591F;&#x80FD;&#x89C4;&#x907F;&#x3002;&#x4E3A;&#x4E86;&#x7CBE;&#x7B80;&#x8BED;&#x8A00;&#xFF0C;&#x4E0B;&#x9762;&#x90FD;&#x5C06;DataStore&#x7B80;&#x79F0;ds</p>
+<ol>
+<li>ds&#x5185;&#x90E8;&#x4F7F;&#x7528;kotlin&#x534F;&#x7A0B;&#x901A;&#x8FC7;&#x6302;&#x8D77;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x907F;&#x514D;&#x963B;&#x585E;&#x7EBF;&#x7A0B;&#xFF0C;&#x540C;&#x65F6;&#x4E5F;&#x907F;&#x514D;&#x4EA7;&#x751F;ANR&#x3002;</li>
+<li>ds&#x4E0D;&#x4EC5;&#x652F;&#x6301;sp&#x540C;&#x65F6;&#x8FD8;&#x652F;&#x6301;protocol buffers&#x7C7B;&#x578B;&#x7684;&#x5B58;&#x50A8;&#xFF0C;&#x800C;protocol buffers&#x53EF;&#x4EE5;&#x4FDD;&#x8BC1;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x5B89;&#x5168;&#x3002;</li>
+<li>ds&#x80FD;&#x591F;&#x5728;&#x7F16;&#x8BD1;&#x9636;&#x6BB5;&#x63D0;&#x9192;sp&#x7C7B;&#x578B;&#x9519;&#x8BEF;&#xFF0C;&#x4FDD;&#x8BC1;sp&#x7C7B;&#x578B;&#x7684;&#x7C7B;&#x578B;&#x4E0D;&#x5B89;&#x5168;&#x95EE;&#x9898;&#x3002;</li>
+<li>ds&#x4F7F;&#x7528;Flow&#x6765;&#x83B7;&#x53D6;&#x6570;&#x636E;&#xFF0C;&#x6BCF;&#x6B21;&#x4FDD;&#x5B58;&#x6570;&#x636E;&#x4E4B;&#x540E;&#x90FD;&#x4F1A;&#x901A;&#x77E5;&#x6700;&#x8FD1;&#x7684;Flow&#x3002;</li>
+<li>ds&#x5B8C;&#x7F8E;&#x652F;&#x6301;sp&#x6570;&#x636E;&#x7684;&#x8FC1;&#x79FB;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x65E0;&#x6210;&#x672C;&#x8FC7;&#x6E21;&#x5230;ds&#x3002;</li>
+</ol>
+<p>&#x6240;&#x4EE5;ds&#x5C06;&#x4F1A;&#x662F;Android&#x540E;&#x7EED;&#x8F7B;&#x91CF;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x7684;&#x9996;&#x9009;&#x7EC4;&#x4EF6;&#x3002;&#x6211;&#x4EEC;&#x4E5F;&#x662F;&#x65F6;&#x5019;&#x6765;&#x4E86;&#x89E3;ds&#x7684;&#x4F7F;&#x7528;&#x3002;</p>
+<h3 id="&#x5F15;&#x5165;DataStore"><a href="#&#x5F15;&#x5165;DataStore" class="headerlink" title="&#x5F15;&#x5165;DataStore"></a>&#x5F15;&#x5165;DataStore</h3><p>&#x9996;&#x5148;&#x6211;&#x4EEC;&#x8981;&#x5F15;&#x5165;ds&#xFF0C;&#x65B9;&#x5F0F;&#x5F88;&#x7B80;&#x5355;&#x76F4;&#x63A5;&#x5728;build&#x4E2D;&#x6DFB;&#x52A0;&#x4F9D;&#x8D56;&#x5373;&#x53EF;&#x3002;&#x552F;&#x4E00;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;ds&#x652F;&#x6301;sp&#x4E0E;protocol buffers&#x4E24;&#x79CD;&#x7C7B;&#x578B;&#xFF0C;&#x6240;&#x4EE5;&#x5BF9;&#x5E94;&#x7684;&#x4E5F;&#x6709;&#x4E24;&#x79CD;&#x4F9D;&#x8D56;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// Preferences DataStore</span><br><span class="line">implementation &quot;androidx.datastore:datastore-preferences:1.0.0-alpha01&quot;</span><br><span class="line"> </span><br><span class="line">// Proto DataStore</span><br><span class="line">implementation  &quot;androidx.datastore:datastore-core:1.0.0-alpha01&quot;</span><br></pre></td></tr></table></figure>
+<p>&#x4E0B;&#x9762;&#x9488;&#x5BF9;&#x8FD9;&#x4E24;&#x79CD;&#x7C7B;&#x578B;&#x5206;&#x522B;&#x505A;&#x4ECB;&#x7ECD;&#x3002;</p>
+<h3 id="&#x521B;&#x5EFA;DataStore"><a href="#&#x521B;&#x5EFA;DataStore" class="headerlink" title="&#x521B;&#x5EFA;DataStore"></a>&#x521B;&#x5EFA;DataStore</h3><p>&#x9488;&#x5BF9;sp&#x7C7B;&#x578B;&#x7684;&#x6570;&#x636E;&#xFF0C;ds&#x53EA;&#x9700;&#x901A;&#x8FC7;createDataStore&#x65B9;&#x6CD5;&#x6765;&#x83B7;&#x53D6;&#x5BF9;&#x5E94;&#x7684;ds&#x5BF9;&#x8C61;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private val dataStore = createDataStore(&quot;settings&quot;)</span><br></pre></td></tr></table></figure>
+<p>&#x5176;&#x4E2D;settings&#x4E3A;&#x5BF9;&#x5E94;&#x7684;&#x6587;&#x4EF6;&#x540D;&#xFF0C;&#x5B58;&#x50A8;&#x65B9;&#x5F0F;&#x4E3A;datastore/ + name + .preferences_pb</p>
+<p>protocol buffers&#x7C7B;&#x578B;&#x9700;&#x8981;&#x989D;&#x5916;&#x5B9E;&#x73B0;Serializer&#x63A5;&#x53E3;&#xFF0C;&#x63D0;&#x4F9B;&#x8BFB;&#x5199;&#x7684;&#x5165;&#x53E3;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">object SettingsSerializer : Serializer&lt;Settings&gt; {</span><br><span class="line"> </span><br><span class="line">    override fun readFrom(input: InputStream): Settings {</span><br><span class="line">        return Settings.parseFrom(input)</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    override fun writeTo(t: Settings, output: OutputStream) {</span><br><span class="line">        t.writeTo(output)</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line">private val dataStoreProto = createDataStore(&quot;settings.pb&quot;, SettingsSerializer)</span><br></pre></td></tr></table></figure>
+<p>&#x5176;&#x4E2D;&#x7684;Settings&#x7C7B;&#x662F;&#x901A;&#x8FC7;protocol buffers&#x811A;&#x672C;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x7684;&#x3002;&#x8981;&#x751F;&#x6210;Settings&#x7C7B;&#xFF0C;&#x4F60;&#x9700;&#x8981;&#x505A;&#x4E24;&#x4EF6;&#x4E8B;</p>
+<ol>
+<li>&#x914D;&#x7F6E;protocol buffers&#x73AF;&#x5883;</li>
+<li>&#x7F16;&#x5199;.proto&#x6587;&#x4EF6;</li>
+</ol>
+<p>&#x6240;&#x4EE5;&#x4F60;&#x53EF;&#x80FD;&#x9700;&#x8981;&#x61C2;&#x4E00;&#x70B9;protocol buffers&#x76F8;&#x5173;&#x7684;&#x8BED;&#x6CD5;&#x3002;</p>
+<blockquote>
+<p>&#x5982;&#x679C;&#x540E;&#x7EED;&#x6709;&#x7A7A;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x5355;&#x72EC;&#x5F00;&#x6587;&#x7AE0;&#x4ECB;&#x7ECD;&#x4E00;&#x4E0B;protocol buffers&#x76F8;&#x5173;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x5927;&#x5382;&#x7528;&#x7684;&#x57FA;&#x672C;&#x4E0A;&#x90FD;&#x662F;protocol buffers&#x3002;</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">syntax = &quot;proto3&quot;;</span><br><span class="line">option java_multiple_files = true;</span><br><span class="line">message Settings {</span><br><span class="line">    string key_name = 1;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4F7F;&#x7528;protocol buffers&#x8FD0;&#x884C;&#x4E0A;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x5C31;&#x80FD;&#x81EA;&#x52A8;&#x5E2E;&#x6211;&#x4EEC;&#x751F;&#x6210;&#x5BF9;&#x5E94;&#x7684;Settings&#x7C7B;&#x3002;&#x5176;&#x4E2D;&#x5B83;&#x91CC;&#x9762;&#x7684;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#x5C31;&#x662F;keyName_&#xFF0C;&#x5B83;&#x662F;String&#x7C7B;&#x578B;&#x3002;&#x901A;&#x8FC7;&#x521B;&#x5EFA;&#x7C7B;&#x4E0E;&#x5BF9;&#x5E94;&#x53D8;&#x91CF;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x7EA6;&#x5B9A;&#x7C7B;&#x578B;&#x7684;&#x5B89;&#x5168;&#x3002;</p>
+<h3 id="&#x8BFB;"><a href="#&#x8BFB;" class="headerlink" title="&#x8BFB;"></a>&#x8BFB;</h3><p>sp&#x4E0E;protocol buffers&#x7C7B;&#x578B;&#x7684;&#x8BFB;&#x64CD;&#x4F5C;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#x90FD;&#x4E00;&#x6837;&#xFF0C;&#x9996;&#x5148;&#x90FD;&#x8981;&#x521B;&#x5EFA;Preferences.Key&#x7C7B;&#x578B;&#x7684;key&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val DATA_KEY = preferencesKey&lt;String&gt;(&quot;key_name&quot;)</span><br></pre></td></tr></table></figure>
+<p>&#x5BF9;&#x5E94;&#x7684;preferencesKey&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">inline fun &lt;reified T : Any&gt; preferencesKey(name: String): Preferences.Key&lt;T&gt; {</span><br><span class="line">    return when (T::class) {</span><br><span class="line">        Int::class -&gt; {</span><br><span class="line">            Preferences.Key&lt;T&gt;(name)</span><br><span class="line">        }</span><br><span class="line">        String::class -&gt; {</span><br><span class="line">            Preferences.Key&lt;T&gt;(name)</span><br><span class="line">        }</span><br><span class="line">        Boolean::class -&gt; {</span><br><span class="line">            Preferences.Key&lt;T&gt;(name)</span><br><span class="line">        }</span><br><span class="line">        Float::class -&gt; {</span><br><span class="line">            Preferences.Key&lt;T&gt;(name)</span><br><span class="line">        }</span><br><span class="line">        Long::class -&gt; {</span><br><span class="line">            Preferences.Key&lt;T&gt;(name)</span><br><span class="line">        }</span><br><span class="line">        Set::class -&gt; {</span><br><span class="line">            throw IllegalArgumentException(&quot;Use `preferencesSetKey` to create keys for Sets.&quot;)</span><br><span class="line">        }</span><br><span class="line">        else -&gt; {</span><br><span class="line">            throw IllegalArgumentException(&quot;Type not supported: ${T::class.java}&quot;)</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5B83;&#x652F;&#x6301;Int&#x3001;String&#x3001;Boolean&#x3001;Float&#x4E0E;Long&#x7C7B;&#x578B;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x53E6;&#x5916;&#x8FD8;&#x6709;&#x4E00;&#x4E2A;preferencesSetKey&#xFF0C;&#x7528;&#x6765;&#x652F;&#x6301;set&#x7C7B;&#x578B;&#x7684;&#x6570;&#x636E;&#x3002;</p>
+<p>&#x8C03;&#x7528;preferencesKey&#x6BCF;&#x6B21;&#x90FD;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;Preferences.Key&#x5BF9;&#x8C61;&#xFF0C;&#x90A3;&#x5B83;&#x8FD9;&#x6837;&#x5982;&#x4F55;&#x4FDD;&#x8BC1;&#x662F;&#x540C;&#x4E00;&#x4E2A;key&#x5462;?</p>
+<p>&#x5982;&#x679C;&#x4F60;&#x53BB;&#x770B;&#x6E90;&#x7801;&#x5C31;&#x4F1A;&#x4E00;&#x76EE;&#x4E86;&#x7136;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">internal constructor(val name: String) {</span><br><span class="line">    override fun equals(other: Any?) =</span><br><span class="line">        if (other is Key&lt;*&gt;) {</span><br><span class="line">            name == other.name</span><br><span class="line">        } else {</span><br><span class="line">            false</span><br><span class="line">        }</span><br><span class="line"> </span><br><span class="line">    override fun hashCode(): Int {</span><br><span class="line">        return name.hashCode()</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x539F;&#x6765;&#x662F;&#x5B83;&#x91CD;&#x5199;&#x4E86;equals&#x65B9;&#x6CD5;&#xFF0C;&#x5185;&#x90E8;&#x5B9E;&#x73B0;&#x5BF9;name&#x7684;&#x6BD4;&#x8F83;&#x3002;&#x90A3;&#x4E48;&#x53EA;&#x8981;&#x521B;&#x5EFA;preferencesKey&#x65F6;&#x4F20;&#x5165;&#x7684;name&#x76F8;&#x540C;&#xFF0C;&#x5C31;&#x80FD;&#x4FDD;&#x8BC1;&#x83B7;&#x53D6;&#x5230;&#x7684;&#x662F;&#x540C;&#x4E00;&#x4E2A;key&#x7684;&#x6570;&#x636E;&#x3002;</p>
+<p>&#x6709;&#x4E86;key&#xFF0C;&#x518D;&#x6765;&#x901A;&#x8FC7;dataStore.data.map&#x6765;&#x83B7;&#x53D6;Flow&#xFF0C;&#x540C;&#x65F6;&#x66B4;&#x9732;&#x51FA;&#x5BF9;&#x5E94;&#x7684;Preferences</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">private suspend fun read() {</span><br><span class="line">    dataStore.data.map {</span><br><span class="line">        // unSafe type</span><br><span class="line">        if (it[DATA_KEY] is String) {</span><br><span class="line">            it[DATA_KEY] ?: &quot;&quot;</span><br><span class="line">        } else {</span><br><span class="line">            &quot;type is String: ${it[DATA_KEY] is String}&quot;</span><br><span class="line">        }</span><br><span class="line">    }.collect {</span><br><span class="line">        Toast.makeText(this@DataStoreActivity, &quot;read result: $it&quot;, Toast.LENGTH_LONG).show()</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x540C;&#x65F6;&#x5728;read&#x4E2D;&#x5199;&#x4E86;&#x4E00;&#x4E2A;&#x9A8C;&#x8BC1;SharedPreference&#x7C7B;&#x578B;&#x4E0D;&#x5B89;&#x5168;&#x7684;&#x793A;&#x4F8B;&#x3002;&#x5982;&#x679C;&#x5728;&#x522B;&#x7684;&#x5730;&#x65B9;&#x8D4B;&#x503C;&#x4E86;DATA_KEY&#x975E;String&#x7C7B;&#x578B;&#x7684;&#x6570;&#x636E;&#x65F6;&#xFF0C;&#x5C06;&#x4F1A;&#x5F39;&#x51FA;else&#x4E2D;&#x7684;&#x8BED;&#x53E5;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x662F;protocol buffers&#x7684;&#x8BFB;&#x53D6;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">private suspend fun protoRead() {</span><br><span class="line">    dataStoreProto.data.map {</span><br><span class="line">        // safe type</span><br><span class="line">        it.keyName</span><br><span class="line">    }.collect {</span><br><span class="line">        Toast.makeText(this, &quot;read result success form proto: $it&quot;, Toast.LENGTH_LONG).show()</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#x8FD9;&#x91CC;&#x83B7;&#x53D6;&#x7684;&#x6570;&#x636E;&#x5C31;&#x662F;&#x7C7B;&#x578B;&#x5B89;&#x5168;&#x7684;&#x3002;&#x8FD9;&#x91CC;&#x7684;it&#x5BF9;&#x5E94;&#x7684;&#x5C31;&#x662F;&#x5728;ds&#x521B;&#x5EFA;&#x65F6;&#x4EA7;&#x751F;&#x7684;Settings&#x3002;</p>
+<h3 id="&#x5199;"><a href="#&#x5199;" class="headerlink" title="&#x5199;"></a>&#x5199;</h3><p>&#x5199;sp&#x4E0E;protocol buffers&#x6709;&#x6240;&#x4E0D;&#x540C;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;sp&#x76F4;&#x63A5;&#x4F7F;&#x7528;dataStore.edit&#x6765;&#x5199;&#x5165;&#x6570;&#x636E;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">private suspend fun write(value: String) {</span><br><span class="line">    dataStore.edit {</span><br><span class="line">        it[DATA_KEY] = value</span><br><span class="line">        LogUtils.d(&quot;dataStore write: $value&quot;)</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x800C;protocol buffers&#x4F7F;&#x7528;&#x7684;&#x662F;updateData&#x65B9;&#x6CD5;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">private suspend fun protoWrite(value: String) {</span><br><span class="line">    dataStoreProto.updateData {</span><br><span class="line">        it.toBuilder().setKeyName(value).build()</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h3 id="&#x8FC1;&#x79FB;SharedPreferences"><a href="#&#x8FC1;&#x79FB;SharedPreferences" class="headerlink" title="&#x8FC1;&#x79FB;SharedPreferences"></a>&#x8FC1;&#x79FB;SharedPreferences</h3><p>&#x8FC1;&#x79FB;&#x4E5F;&#x5206;&#x4E3A;&#x4E24;&#x79CD;&#xFF0C;&#x4E00;&#x79CD;&#x662F;&#x8FC1;&#x79FB;&#x5230;ds&#x7684;sp&#x4E2D;&#xFF1B;&#x53E6;&#x4E00;&#x79CD;&#x662F;&#x8FC1;&#x79FB;&#x5230;protocol buffers&#x4E2D;&#x3002;</p>
+<p>&#x5177;&#x4F53;&#x6765;&#x770B;&#xFF0C;&#x5982;&#x679C;&#x8FC1;&#x79FB;&#x5230;ds&#x7684;sp&#x4E2D;&#xFF0C;&#x53EA;&#x9700;&#x5728;&#x4E4B;&#x524D;&#x521B;&#x5EFA;ds&#x57FA;&#x7840;&#x4E0A;&#x989D;&#x5916;&#x518D;&#x52A0;&#x4E00;&#x4E2A;migrations&#x53C2;&#x6570;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private val dataStore = createDataStore(&quot;settings&quot;, migrations = listOf(SharedPreferencesMigration(this, &quot;settings_preference&quot;)))</span><br></pre></td></tr></table></figure>
+<p>&#x901A;&#x8FC7;&#x521B;&#x5EFA;SharedPreferencesMigration&#x6765;&#x8FC1;&#x79FB;&#x5BF9;&#x5E94;&#x7684;sp&#x6570;&#x636E;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x662F;&#x8FC1;&#x79FB;&#x5230;protocol buffers&#x4E2D;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">val settingsDataStore: DataStore&lt;Settings&gt; = context.createDataStore(</span><br><span class="line">    produceFile = { File(context.filesDir, &quot;settings.preferences_pb&quot;) },</span><br><span class="line">    serializer = SettingsSerializer,</span><br><span class="line">    migrations = listOf(</span><br><span class="line">        SharedPreferencesMigration(</span><br><span class="line">            context,</span><br><span class="line">            &quot;settings_preferences&quot;            </span><br><span class="line">        ) { sharedPrefs: SharedPreferencesView, currentData: UserPreferences -&gt;</span><br><span class="line">            // Map your sharedPrefs to your type here</span><br><span class="line">          }</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>&#x8FC1;&#x79FB;&#x5B8C;&#x4E4B;&#x540E;&#x9700;&#x8981;&#x6267;&#x884C;&#x4E00;&#x6B21;&#x4EE3;&#x7801;&#xFF0C;&#x540C;&#x65F6;&#x5E94;&#x8BE5;&#x505C;&#x6B62;&#x518D;&#x6B21;&#x4F7F;&#x7528;sp&#x3002;&#x5982;&#x679C;&#x8FC1;&#x79FB;&#x6210;&#x529F;&#x5C06;&#x4F1A;&#x5220;&#x9664;&#x4E4B;&#x524D;sp&#x7684;.xml&#x7C7B;&#x578B;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x751F;&#x6210;&#x5BF9;&#x5E94;ds&#x6587;&#x4EF6;&#x3002;</p>
+<p>&#x6700;&#x540E;&#x9644;&#x4E0A;&#x4E00;&#x5F20;Google&#x5206;&#x6790;&#x7684;SharedPreferences&#x548C;DataStore&#x7684;&#x533A;&#x522B;&#x56FE;</p>
+<p><img src="https://3.bp.blogspot.com/-Vk_q5hWw6DQ/X00ZfiRrB9I/AAAAAAAAPlo/u-kvBvmMfzgRnNViYLwaAim-E7wq5yxKACLcBGAsYHQ/s1600/Screen%2BShot%2B2020-08-31%2Bat%2B11.25.43%2BAM.png" alt></p>
+<p>&#x76EE;&#x524D;&#x53EF;&#x4EE5;&#x770B;&#x5230;DataStore&#x8FD8;&#x5904;&#x5728;alpha&#x7248;&#x672C;&#xFF0C;&#x975E;&#x5E38;&#x671F;&#x5F85;&#x5B83;&#x4E4B;&#x540E;&#x7684;&#x6B63;&#x5F0F;&#x7248;&#x672C;&#x3002;</p>
+<p>&#x53E6;&#x5916;&#xFF0C;&#x9488;&#x5BF9;DataStore&#x7684;&#x4F7F;&#x7528;&#xFF0C;&#x6211;&#x5199;&#x4E86;&#x4E00;&#x4E2A;demo&#xFF0C;&#x5927;&#x5BB6;&#x53EF;&#x4EE5;&#x5728;<a href="https://github.com/idisfkj/android-api-analysis" target="_blank" rel="noopener">android-api-analysis</a>&#x4E2D;&#x83B7;&#x53D6;&#x3002;</p>
+<h2 id="&#x9879;&#x76EE;"><a href="#&#x9879;&#x76EE;" class="headerlink" title="&#x9879;&#x76EE;"></a>&#x9879;&#x76EE;</h2><p><a href="https://github.com/idisfkj/android-startup" target="_blank" rel="noopener">android_startup</a>: &#x63D0;&#x4F9B;&#x4E00;&#x79CD;&#x5728;&#x5E94;&#x7528;&#x542F;&#x52A8;&#x65F6;&#x80FD;&#x591F;&#x66F4;&#x52A0;&#x7B80;&#x5355;&#x3001;&#x9AD8;&#x6548;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x521D;&#x59CB;&#x5316;&#x7EC4;&#x4EF6;&#xFF0C;&#x4F18;&#x5316;&#x542F;&#x52A8;&#x901F;&#x5EA6;&#x3002;&#x4E0D;&#x4EC5;&#x652F;&#x6301;Jetpack App Startup&#x7684;&#x5168;&#x90E8;&#x529F;&#x80FD;&#xFF0C;&#x8FD8;&#x63D0;&#x4F9B;&#x989D;&#x5916;&#x7684;&#x540C;&#x6B65;&#x4E0E;&#x5F02;&#x6B65;&#x7B49;&#x5F85;&#x3001;&#x7EBF;&#x7A0B;&#x63A7;&#x5236;&#x4E0E;&#x591A;&#x8FDB;&#x7A0B;&#x652F;&#x6301;&#x7B49;&#x529F;&#x80FD;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/AwesomeGithub" target="_blank" rel="noopener">AwesomeGithub</a>: &#x57FA;&#x4E8E;Github&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x7EAF;&#x7EC3;&#x4E60;&#x9879;&#x76EE;&#xFF0C;&#x652F;&#x6301;&#x7EC4;&#x4EF6;&#x5316;&#x5F00;&#x53D1;&#xFF0C;&#x652F;&#x6301;&#x8D26;&#x6237;&#x5BC6;&#x7801;&#x4E0E;&#x8BA4;&#x8BC1;&#x767B;&#x9646;&#x3002;&#x4F7F;&#x7528;Kotlin&#x8BED;&#x8A00;&#x8FDB;&#x884C;&#x5F00;&#x53D1;&#xFF0C;&#x9879;&#x76EE;&#x67B6;&#x6784;&#x662F;&#x57FA;&#x4E8E;JetPack&amp;DataBinding&#x7684;MVVM&#xFF1B;&#x9879;&#x76EE;&#x4E2D;&#x4F7F;&#x7528;&#x4E86;Arouter&#x3001;Retrofit&#x3001;Coroutine&#x3001;Glide&#x3001;Dagger&#x4E0E;Hilt&#x7B49;&#x6D41;&#x884C;&#x5F00;&#x6E90;&#x6280;&#x672F;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/flutter_github" target="_blank" rel="noopener">flutter_github</a>: &#x57FA;&#x4E8E;Flutter&#x7684;&#x8DE8;&#x5E73;&#x53F0;&#x7248;&#x672C;Github&#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x4E0E;AwesomeGithub&#x76F8;&#x5BF9;&#x5E94;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/android-api-analysis" target="_blank" rel="noopener">android-api-analysis</a>: &#x7ED3;&#x5408;&#x8BE6;&#x7EC6;&#x7684;Demo&#x6765;&#x5168;&#x9762;&#x89E3;&#x6790;Android&#x76F8;&#x5173;&#x7684;&#x77E5;&#x8BC6;&#x70B9;, &#x5E2E;&#x52A9;&#x8BFB;&#x8005;&#x80FD;&#x591F;&#x66F4;&#x5FEB;&#x7684;&#x638C;&#x63E1;&#x4E0E;&#x7406;&#x89E3;&#x6240;&#x9610;&#x8FF0;&#x7684;&#x8981;&#x70B9;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/daily_algorithm" target="_blank" rel="noopener">daily_algorithm</a>: &#x6BCF;&#x65E5;&#x4E00;&#x7B97;&#x6CD5;&#xFF0C;&#x7531;&#x6D45;&#x5165;&#x6DF1;&#xFF0C;&#x6B22;&#x8FCE;&#x52A0;&#x5165;&#x4E00;&#x8D77;&#x5171;&#x52C9;&#x3002;</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2020/12/03/算法之旅-复杂度分析/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2020/12/08/Android-init-启动/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Sun Dec 06 2020 21:38:03 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

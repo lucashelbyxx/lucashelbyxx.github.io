@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Android Gradle系列-原理篇 | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="gradle,">
+  
+
+  <meta name="description" content="&amp;#x4E0A;&amp;#x5468;&amp;#x6211;&amp;#x4EEC;&amp;#x5728;Android Gradle&amp;#x7CFB;&amp;#x5217;-&amp;#x5165;&amp;#x95E8;&amp;#x7BC7;&amp;#x6587;&amp;#x7AE0;&amp;#x4E2D;&amp;#x5DF2;&amp;#x7ECF;&amp;#x5C06;gradle&amp;#x5728;&amp;#x9879;&amp;#x76EE;&amp;#x4E2D;&amp;#x7684;&amp;#x7ED3;&amp;#x">
+<meta name="keywords" content="gradle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Gradle系列-原理篇">
+<meta property="og:url" content="https://www.rousetime.com/2019/05/13/Android-Gradle系列-原理篇/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="&amp;#x4E0A;&amp;#x5468;&amp;#x6211;&amp;#x4EEC;&amp;#x5728;Android Gradle&amp;#x7CFB;&amp;#x5217;-&amp;#x5165;&amp;#x95E8;&amp;#x7BC7;&amp;#x6587;&amp;#x7AE0;&amp;#x4E2D;&amp;#x5DF2;&amp;#x7ECF;&amp;#x5C06;gradle&amp;#x5728;&amp;#x9879;&amp;#x76EE;&amp;#x4E2D;&amp;#x7684;&amp;#x7ED3;&amp;#x">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.rousetime.com/2019/05/13/Android-Gradle系列-原理篇/Android补给站.jpg">
+<meta property="og:updated_time" content="2019-05-17T00:18:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Gradle系列-原理篇">
+<meta name="twitter:description" content="&amp;#x4E0A;&amp;#x5468;&amp;#x6211;&amp;#x4EEC;&amp;#x5728;Android Gradle&amp;#x7CFB;&amp;#x5217;-&amp;#x5165;&amp;#x95E8;&amp;#x7BC7;&amp;#x6587;&amp;#x7AE0;&amp;#x4E2D;&amp;#x5DF2;&amp;#x7ECF;&amp;#x5C06;gradle&amp;#x5728;&amp;#x9879;&amp;#x76EE;&amp;#x4E2D;&amp;#x7684;&amp;#x7ED3;&amp;#x">
+<meta name="twitter:image" content="https://www.rousetime.com/2019/05/13/Android-Gradle系列-原理篇/Android补给站.jpg">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Groovy"><span class="toc-text">Groovy</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#syntax"><span class="toc-text">syntax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Closure"><span class="toc-text">Closure</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gradle"><span class="toc-text">Gradle</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#搭建项目层级"><span class="toc-text">搭建项目层级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#搭建Android子项目"><span class="toc-text">搭建Android子项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Extensions"><span class="toc-text">Extensions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dependencies"><span class="toc-text">Dependencies</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Android-Gradle系列-原理篇" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Android Gradle系列-原理篇</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.05.13</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>&#x4E0A;&#x5468;&#x6211;&#x4EEC;&#x5728;<a href="https://www.rousetime.com/2019/05/05/Android-Gradle%E7%B3%BB%E5%88%97-%E5%85%A5%E9%97%A8%E7%AF%87/">Android Gradle&#x7CFB;&#x5217;-&#x5165;&#x95E8;&#x7BC7;</a>&#x6587;&#x7AE0;&#x4E2D;&#x5DF2;&#x7ECF;&#x5C06;gradle&#x5728;&#x9879;&#x76EE;&#x4E2D;&#x7684;&#x7ED3;&#x6784;&#x8FC7;&#x4E86;&#x4E00;&#x904D;&#x3002;&#x5BF9;&#x4E8E;gradle&#xFF0C;&#x6211;&#x4EEC;&#x8BB8;&#x591A;&#x65F6;&#x5019;&#x90FD;&#x4E0D;&#x9700;&#x8981;&#x4FEE;&#x6539;&#x7C7B;&#x4F3C;&#x4E0E;*.gradle&#x6587;&#x4EF6;&#xFF0C;&#x505A;&#x7684;&#x6700;&#x591A;&#x7684;&#x5E94;&#x8BE5;&#x662F;&#x5728;dependencies&#x4E2D;&#x6DFB;&#x52A0;&#x7B2C;&#x4E09;&#x65B9;&#x4F9D;&#x8D56;&#xFF0C;&#x6216;&#x8005;&#x8BF4;&#x4FEE;&#x6539;sdk&#x7248;&#x672C;&#x53F7;&#xFF0C;&#x4EA6;&#x6216;&#x8005;&#x6BCF;&#x6B21;&#x53D1;&#x7248;&#x672C;&#x6539;&#x4E0B;versionCode&#x4E0E;versionName&#x3002;&#x5373;&#x4F7F;&#x78B0;&#x5230;&#x95EE;&#x9898;&#x4E5F;&#x662F;&#x76F4;&#x63A5;&#x4E0A;google&#x5BFB;&#x627E;&#x7B54;&#x6848;&#xFF0C;&#x800C;&#x5E76;&#x6CA1;&#x6709;&#x771F;&#x6B63;&#x7406;&#x89E3;&#x5B83;&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x8FD9;&#x4E48;&#x505A;&#xFF0C;&#x6216;&#x8005;&#x5B83;&#x662F;&#x5982;&#x4F55;&#x8FD0;&#x884C;&#x7684;&#xFF1F;</p>
+<p>&#x4ECA;&#x5929;&#xFF0C;&#x6211;&#x4F1A;&#x901A;&#x8FC7;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x4E00;&#x6B65;&#x4E00;&#x6B65;&#x7684;&#x7F16;&#x5199;gradle&#x6587;&#x4EF6;&#xFF0C;&#x4ECE;&#x9879;&#x76EE;&#x7684;&#x521B;&#x5EFA;&#xFF0C;&#x5230;gradle&#x7684;&#x914D;&#x7F6E;&#x3002;&#x76F8;&#x4FE1;&#x6709;&#x4E86;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#xFF0C;&#x4F60;&#x5C06;&#x5BF9;gradle&#x7684;&#x5185;&#x90E8;&#x8FD0;&#x884C;&#x5C06;&#x6709;&#x4E00;&#x4E2A;&#x5168;&#x65B0;&#x7684;&#x8BA4;&#x8BC6;&#x3002;</p>
+<h2 id="Groovy"><a href="#Groovy" class="headerlink" title="Groovy"></a>Groovy</h2><p>&#x5728;&#x8BB2;gradle&#x4E4B;&#x524D;&#xFF0C;&#x6211;&#x4EEC;&#x8FD8;&#x9700;&#x660E;&#x767D;&#x4E00;&#x70B9;&#xFF0C;gradle&#x8BED;&#x6CD5;&#x662F;&#x57FA;&#x4E8E;groovy&#x7684;&#x3002;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x5148;&#x6765;&#x4E86;&#x89E3;&#x4E00;&#x4E9B;groovy&#x7684;&#x77E5;&#x8BC6;&#xFF0C;&#x8FD9;&#x6709;&#x52A9;&#x4E8E;&#x6211;&#x4EEC;&#x4E4B;&#x540E;&#x7684;&#x7406;&#x89E3;&#x3002;&#x5F53;&#x7136;&#x5982;&#x679C;&#x4F60;&#x5DF2;&#x7ECF;&#x6709;groovy&#x7684;&#x57FA;&#x7840;&#x4F60;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x8DF3;&#x8FC7;&#xFF0C;&#x6CA1;&#x6709;&#x7684;&#x4E5F;&#x4E0D;&#x7528;&#x614C;&#xFF0C;&#x56E0;&#x4E3A;&#x53EA;&#x8981;&#x4F60;&#x61C2;java&#x5C31;&#x4E0D;&#x662F;&#x4EC0;&#x4E48;&#x96BE;&#x9898;&#x3002;</p>
+<h3 id="syntax"><a href="#syntax" class="headerlink" title="syntax"></a>syntax</h3><p>&#x4E0B;&#x9762;&#x6211;&#x5C06;&#x901A;&#x8FC7;code&#x7684;&#x5F62;&#x5F0F;&#xFF0C;&#x5217;&#x51FA;&#x51E0;&#x70B9;</p>
+<ul>
+<li>&#x5F53;&#x8C03;&#x7528;&#x7684;&#x65B9;&#x6CD5;&#x6709;&#x53C2;&#x6570;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x4E0D;&#x7528;()&#xFF0C;&#x770B;&#x4E0B;&#x9762;&#x7684;&#x4F8B;&#x5B50;</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">def printAge(String name, int age) {</span><br><span class="line">	print(&quot;$name is $age years old&quot;)</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line">def printEmptyLine() {</span><br><span class="line">	println()</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line">def callClosure(Closure closure) {</span><br><span class="line">	closure()</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line">printAge &quot;John&quot;, 24 //&#x8F93;&#x51FA;John is 24 years old</span><br><span class="line">printEmptyLine() //&#x8F93;&#x51FA;&#x7A7A;&#x884C;</span><br><span class="line">callClosure { println(&quot;From closure&quot;) } //&#x8F93;&#x51FA;From closure</span><br></pre></td></tr></table></figure>
+<ul>
+<li>&#x5982;&#x679C;&#x6700;&#x540E;&#x7684;&#x53C2;&#x6570;&#x662F;&#x95ED;&#x5305;&#xFF0C;&#x53EF;&#x4EE5;&#x5C06;&#x5B83;&#x5199;&#x5728;&#x62EC;&#x53F7;&#x7684;&#x5916;&#x9762;</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def callWithParam(String param, Closure&lt;String&gt; closure) {</span><br><span class="line">	closure(param)</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line">callWithParam(&quot;param&quot;, { println it }) //&#x8F93;&#x51FA;param</span><br><span class="line">callWithParam(&quot;param&quot;) { println it } //&#x8F93;&#x51FA;param</span><br><span class="line">callWithParam &quot;param&quot;, { println it } //&#x8F93;&#x51FA;param</span><br></pre></td></tr></table></figure>
+<ul>
+<li>&#x8C03;&#x7528;&#x65B9;&#x6CD5;&#x65F6;&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x53C2;&#x6570;&#x540D;&#x8FDB;&#x884C;&#x4F20;&#x53C2;&#xFF0C;&#x6709;&#x6307;&#x5B9A;&#x7684;&#x4F1A;&#x8F6C;&#x5316;&#x5230;Map&#x5BF9;&#x8C61;&#x4E2D;&#xFF0C;&#x6CA1;&#x6709;&#x7684;&#x5C06;&#x6309;&#x6B63;&#x5E38;&#x4F20;&#x53C2;</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def printPersonInfo(Map&lt;String, Object&gt; person) {</span><br><span class="line">	println(&quot;${person.name} is ${person.age} years old&quot;)</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line">def printJobInfo(Map&lt;String, Object&gt; job, String employeeName) {</span><br><span class="line">	println(&quot;${employeeName} works as ${job.name} at ${job.company}&quot;)</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line">printPersonInfo name: &quot;Jake&quot;, age: 29</span><br><span class="line">printJobInfo &quot;Payne&quot;, name: &quot;Android Engineer&quot;, company: &quot;Google&quot;</span><br></pre></td></tr></table></figure>
+<p>&#x4F60;&#x4F1A;&#x53D1;&#x73B0;&#x4ED6;&#x4EEC;&#x7684;&#x8C03;&#x7528;&#x90FD;&#x4E0D;&#x9700;&#x8981;&#x62EC;&#x53F7;&#xFF0C;&#x540C;&#x65F6;printJobInfo&#x7684;&#x8C03;&#x7528;&#x53C2;&#x6570;&#x7684;&#x987A;&#x5E8F;&#x4E0D;&#x53D7;&#x5F71;&#x54CD;&#x3002;</p>
+<h3 id="Closure"><a href="#Closure" class="headerlink" title="Closure"></a>Closure</h3><p>&#x5728;gradle&#x4E2D;&#x4F60;&#x4F1A;&#x53D1;&#x73B0;&#x8BB8;&#x591A;&#x95ED;&#x5305;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5BF9;<a href="http://groovy-lang.org/closures.html" target="_blank" rel="noopener">&#x95ED;&#x5305;</a>&#x6709;&#x4E00;&#x5B9A;&#x7684;&#x4E86;&#x89E3;&#x3002;&#x5982;&#x679C;&#x4F60;&#x719F;&#x6089;kotlin&#xFF0C;&#x5B83;&#x4E0E;<a href="https://kotlinlang.org/docs/reference/lambdas.html#function-literals-with-receiver" target="_blank" rel="noopener">Function literals with receiver</a>&#x7C7B;&#x4F3C;&#x3002;</p>
+<p>&#x5728;groovy&#x4E2D;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5C06;Closures&#x5F53;&#x505A;&#x6210;lambdas&#xFF0C;&#x6240;&#x4EE5;&#x5B83;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x5F53;&#x505A;&#x4EE3;&#x7801;&#x5757;&#x6267;&#x884C;&#xFF0C;&#x53EF;&#x4EE5;&#x6709;&#x53C2;&#x6570;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x6709;&#x8FD4;&#x56DE;&#x503C;&#x3002;&#x4F46;&#x662F;&#x4E0D;&#x540C;&#x7684;&#x662F;&#x5B83;&#x53EF;&#x4EE5;&#x6539;&#x53D8;&#x5176;&#x81EA;&#x8EAB;&#x7684;&#x4EE3;&#x7406;&#x3002;&#x4F8B;&#x5982;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class DelegateOne {</span><br><span class="line">	def callContent(String content) {</span><br><span class="line">		println &quot;From delegateOne: $content&quot;</span><br><span class="line">	}</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line">class DelegateTow {</span><br><span class="line">	def callContent(String content) {</span><br><span class="line">		println &quot;From delegateTwo: $content&quot;</span><br><span class="line">	}</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line">def callClosure = {</span><br><span class="line">	callContent &quot;I am bird&quot;</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line">callClosure.delegate = new DelegateOne()</span><br><span class="line">callClosure() //&#x8F93;&#x51FA;From delegateOne: I am bird</span><br><span class="line">callClosure.delegate = new DelegateTow()</span><br><span class="line">callClosure() //&#x8F93;&#x51FA;From delegateTow: I am bird</span><br></pre></td></tr></table></figure>
+<p>&#x901A;&#x8FC7;&#x6539;&#x53D8;callClosure&#x7684;delegate&#xFF0C;&#x8BA9;&#x5176;&#x8C03;&#x7528;&#x4E0D;&#x540C;&#x7684;callContent&#x3002;<br>&#x5982;&#x679C;&#x4F60;&#x60F3;&#x4E86;&#x89E3;&#x66F4;&#x591A;&#xFF0C;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x9605;&#x8BFB;groovy<a href="http://groovy-lang.org/closures.html#_delegation_strategy" target="_blank" rel="noopener">&#x6587;&#x6863;</a></p>
+<h2 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h2><p>&#x5728;&#x4E0A;&#x7BC7;&#x6587;&#x7AE0;&#x4E2D;&#x5DF2;&#x7ECF;&#x63D0;&#x5230;&#x6709;&#x5173;gradle&#x7684;&#x811A;&#x6B65;&#x76F8;&#x5173;&#x7684;&#x77E5;&#x8BC6;&#xFF0C;&#x8FD9;&#x91CC;&#x5C31;&#x4E0D;&#x518D;&#x7D2F;&#x8D58;&#x3002;<br>&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x6765;&#x4E00;&#x6B65;&#x4E00;&#x6B65;&#x6784;&#x5EFA;gradle&#x3002;</p>
+<h3 id="&#x642D;&#x5EFA;&#x9879;&#x76EE;&#x5C42;&#x7EA7;"><a href="#&#x642D;&#x5EFA;&#x9879;&#x76EE;&#x5C42;&#x7EA7;" class="headerlink" title="&#x642D;&#x5EFA;&#x9879;&#x76EE;&#x5C42;&#x7EA7;"></a>&#x642D;&#x5EFA;&#x9879;&#x76EE;&#x5C42;&#x7EA7;</h3><p>&#x9996;&#x5148;&#x6211;&#x4EEC;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x5939;example&#xFF0C;cd&#x8FDB;&#x5165;&#x8BE5;&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x5728;&#x8BE5;&#x76EE;&#x5F55;&#x4E0B;&#x6267;&#x884C;gradle projects&#xFF0C;&#x4F60;&#x4F1A;&#x53D1;&#x73B0;&#x5B83;&#x5DF2;&#x7ECF;&#x662F;&#x4E00;&#x4E2A;gradle&#x9879;&#x76EE;&#x4E86;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ gradle projects</span><br><span class="line">&gt; Task :projects</span><br><span class="line"> </span><br><span class="line">------------------------------------------------------------</span><br><span class="line">Root project</span><br><span class="line">------------------------------------------------------------</span><br><span class="line"> </span><br><span class="line">Root project &apos;example&apos;</span><br><span class="line">No sub-projects</span><br><span class="line"> </span><br><span class="line">To see a list of the tasks of a project, run gradle &lt;project-path&gt;:tasks</span><br><span class="line">For example, try running gradle :tasks</span><br><span class="line"> </span><br><span class="line">BUILD SUCCESSFUL in 5s</span><br></pre></td></tr></table></figure>
+<p>&#x56E0;&#x4E3A;&#x8FD9;&#x91CC;&#x4E0D;&#x662F;&#x5728;Android Studio&#x4E2D;&#x521B;&#x5EFA;&#x7684;&#x9879;&#x76EE;&#xFF0C;&#x6240;&#x4EE5;&#x5982;&#x679C;&#x4F60;&#x672C;&#x5730;&#x6CA1;&#x6709;&#x5B89;&#x88C5;&#x4E0E;&#x914D;&#x7F6E;gradle&#x73AF;&#x5883;&#xFF0C;&#x5C06;&#x4E0D;&#x4F1A;&#x6709;gradle&#x547D;&#x4EE4;&#x3002;&#x6240;&#x4EE5;&#x8FD9;&#x4E00;&#x70B9;&#x8981;&#x6CE8;&#x610F;&#x4E00;&#x4E0B;&#x3002;</p>
+<p>&#x6BCF;&#x4E00;&#x4E2A;android&#x9879;&#x76EE;&#x5728;&#x5B83;&#x7684;root project&#x4E0B;&#x90FD;&#x9700;&#x8981;&#x914D;&#x7F6E;&#x4E00;&#x4E2A;settings.gradle&#xFF0C;&#x5B83;&#x4EE3;&#x8868;&#x7740;&#x9879;&#x76EE;&#x7684;&#x5168;&#x5C40;&#x914D;&#x7F6E;&#x3002;&#x540C;&#x65F6;&#x4F7F;&#x7528;void include(String[] projectPaths)&#x65B9;&#x6CD5;&#x6765;&#x6DFB;&#x52A0;&#x5B50;&#x9879;&#x76EE;&#xFF0C;&#x4F8B;&#x5982;&#x6211;&#x4EEC;&#x4E3A;example&#x6DFB;&#x52A0;app&#x5B50;&#x9879;&#x76EE;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ echo &quot;include &apos;:app&apos;&quot; &gt; settings.gradle</span><br><span class="line">$ gradle projects</span><br><span class="line">&gt; Task :projects</span><br><span class="line"> </span><br><span class="line">------------------------------------------------------------</span><br><span class="line">Root project</span><br><span class="line">------------------------------------------------------------</span><br><span class="line"> </span><br><span class="line">Root project &apos;example&apos;</span><br><span class="line">\--- Project &apos;:app&apos;</span><br><span class="line"> </span><br><span class="line">To see a list of the tasks of a project, run gradle &lt;project-path&gt;:tasks</span><br><span class="line">For example, try running gradle :app:tasks</span><br><span class="line"> </span><br><span class="line">BUILD SUCCESSFUL in 1s</span><br><span class="line">1 actionable task: 1 executed</span><br></pre></td></tr></table></figure>
+<p>:app&#x4E2D;&#x7684;:&#x4EE3;&#x8868;&#x7684;&#x662F;&#x8DEF;&#x5F84;&#x7684;&#x5206;&#x9694;&#x7B26;&#xFF0C;&#x540C;&#x65F6;&#x5728;settings.gradle&#x4E2D;&#x9ED8;&#x8BA4;root project&#x662F;&#x8BE5;&#x6587;&#x4EF6;&#x7684;&#x6587;&#x4EF6;&#x5939;&#x540D;&#x79F0;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;rootProject.name = name&#x6765;&#x8FDB;&#x884C;&#x4FEE;&#x6539;&#x3002;</p>
+<h3 id="&#x642D;&#x5EFA;Android&#x5B50;&#x9879;&#x76EE;"><a href="#&#x642D;&#x5EFA;Android&#x5B50;&#x9879;&#x76EE;" class="headerlink" title="&#x642D;&#x5EFA;Android&#x5B50;&#x9879;&#x76EE;"></a>&#x642D;&#x5EFA;Android&#x5B50;&#x9879;&#x76EE;</h3><p>&#x73B0;&#x5728;&#x9700;&#x8981;&#x505A;&#x7684;&#x662F;&#x5C06;&#x5B50;&#x9879;&#x76EE;app&#x6784;&#x5EFA;&#x6210;Android&#x9879;&#x76EE;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x914D;&#x7F6E;app&#x7684;build.gradle&#x3002;&#x56E0;&#x4E3A;gradle&#x53EA;&#x662F;&#x6784;&#x5EFA;&#x5DE5;&#x5177;&#xFF0C;&#x5B83;&#x662F;&#x6839;&#x636E;&#x4E0D;&#x540C;&#x7684;&#x63D2;&#x4EF6;&#x6765;&#x6784;&#x5EFA;&#x4E0D;&#x540C;&#x7684;&#x9879;&#x76EE;&#xFF0C;&#x6240;&#x4EE5;&#x4E3A;&#x4E86;&#x7B26;&#x5408;Android&#x7684;&#x6784;&#x5EFA;&#xFF0C;&#x9700;&#x8981;&#x7533;&#x660E;&#x5E94;&#x7528;&#x7684;&#x63D2;&#x4EF6;&#x3002;&#x8FD9;&#x91CC;&#x901A;&#x8FC7;apply&#x65B9;&#x6CD5;&#xFF0C;&#x5B83;&#x6709;&#x4EE5;&#x4E0B;&#x4E09;&#x79CD;&#x7C7B;&#x578B;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">void apply(Closure closure)</span><br><span class="line">void apply(Map&lt;String, ?&gt; options)</span><br><span class="line">void apply(Action&lt;? super ObjectConfigurationAction&gt; action)</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x7B2C;&#x4E8C;&#x79CD;&#xFF0C;&#x5B83;&#x7684;map&#x53C2;&#x6570;&#x9700;&#x8981;&#x4E0E;ObjectConfigurationAction&#x4E2D;&#x7684;&#x65B9;&#x6CD5;&#x540D;&#x76F8;&#x5339;&#x914D;&#xFF0C;&#x800C;&#x5B83;&#x7684;&#x65B9;&#x6CD5;&#x540D;&#x6709;&#x4EE5;&#x4E0B;&#x4E09;&#x79CD;</p>
+<ul>
+<li>from: &#x5E94;&#x7528;&#x4E00;&#x4E2A;&#x811A;&#x672C;&#x6587;&#x4EF6;</li>
+<li>plugin: &#x5E94;&#x7528;&#x4E00;&#x4E2A;&#x63D2;&#x4EF6;&#xFF0C;&#x901A;&#x8FC7;id&#x6216;&#x8005;class&#x540D;</li>
+<li>to: &#x5E94;&#x7528;&#x4E00;&#x4E2A;&#x76EE;&#x6807;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;</li>
+</ul>
+<p>&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x8981;&#x4F7F;&#x7528;android&#x63D2;&#x4EF6;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x4F7F;&#x7528;apply(plugin: &#x2018;com.android.application&#x2019;)&#xFF0C;&#x53C8;&#x7531;&#x4E8E;groovy&#x7684;&#x8BED;&#x6CD5;&#x7279;&#x6027;&#xFF0C;&#x53EF;&#x4EE5;&#x5C06;&#x62EC;&#x53F7;&#x7701;&#x7565;&#xFF0C;&#x6240;&#x4EE5;&#x6700;&#x7EC8;&#x5728;build.gradle&#x4E2D;&#x7684;&#x8868;&#x73B0;&#x53EF;&#x4EE5;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ echo &quot;apply plugin: &apos;com.android.application&apos;&quot; &gt; app/build.gradle</span><br></pre></td></tr></table></figure>
+<p>&#x6DFB;&#x52A0;&#x5B8C;&#x4EE5;&#x540E;&#xFF0C;&#x518D;&#x6765;&#x6267;&#x884C;&#x4E00;&#x4E0B;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ gradle app:tasks</span><br><span class="line"></span><br><span class="line">FAILURE: Build failed with an exception.</span><br><span class="line"> </span><br><span class="line">* Where:</span><br><span class="line">Build file &apos;/Users/idisfkj/example/app/build.gradle&apos; line: 1</span><br><span class="line"> </span><br><span class="line">* What went wrong:</span><br><span class="line">A problem occurred evaluating project &apos;:app&apos;.</span><br><span class="line">&gt; Plugin with id &apos;com.android.application&apos; not found.</span><br><span class="line"> </span><br><span class="line">* Try:</span><br><span class="line">Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. Run with --scan to get full insights.</span><br><span class="line"> </span><br><span class="line">* Get more help at https://help.gradle.org</span><br><span class="line"> </span><br><span class="line">BUILD FAILED in 6s</span><br></pre></td></tr></table></figure>
+<p>&#x53D1;&#x73B0;&#x62A5;&#x9519;&#x4E86;&#xFF0C;&#x663E;&#x793A;com.android.application&#x7684;&#x63D2;&#x4EF6;id&#x627E;&#x4E0D;&#x5230;&#x3002;&#x8FD9;&#x6B63;&#x5E38;&#xFF0C;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x8FD8;&#x6CA1;&#x6709;&#x58F0;&#x660E;&#x5B83;&#x3002;&#x6240;&#x4EE5;&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x8981;&#x5728;project&#x4E0B;&#x7684;build.gradle&#x4E2D;&#x58F0;&#x660E;&#x5B83;&#x3002;&#x4E3A;&#x4EC0;&#x4E48;&#x4E0D;&#x76F4;&#x63A5;&#x5230;app&#x4E0B;&#x7684;build.gradle&#x58F0;&#x660E;&#x5462;&#xFF1F;&#x662F;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x662F;android&#x9879;&#x76EE;&#xFF0C;project&#x53EF;&#x4EE5;&#x6709;&#x591A;&#x4E2A;sub-project&#xFF0C;&#x6240;&#x4EE5;&#x4E3A;&#x4E86;&#x9632;&#x6B62;&#x5728;&#x5B50;&#x9879;&#x76EE;&#x4E2D;&#x91CD;&#x590D;&#x58F0;&#x660E;&#xFF0C;&#x7EDF;&#x4E00;&#x5230;&#x4E3B;&#x9879;&#x76EE;&#x4E2D;&#x58F0;&#x660E;&#x3002;</p>
+<p>project&#x7684;build.gradle&#x58F0;&#x660E;&#x63D2;&#x4EF6;&#x9700;&#x8981;&#x5728;buildscript&#x4E2D;&#xFF0C;&#x800C;buildscript&#x4F1A;&#x901A;&#x8FC7;ScriptHandler&#x6765;&#x6267;&#x884C;&#xFF0C;&#x4EE5;&#x81F3;&#x4E8E;sub-project&#x4E5F;&#x80FD;&#x591F;&#x4F7F;&#x7528;&#x3002;&#x6240;&#x4EE5;&#x6700;&#x7EC8;&#x7684;&#x7533;&#x660E;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">buildscript {</span><br><span class="line">    repositories {</span><br><span class="line">        google()</span><br><span class="line">        jcenter()</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    dependencies {</span><br><span class="line">        classpath &apos;com.android.tools.build:gradle:3.3.2&apos;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x9762;&#x7684;buildscript&#x3001;repositories&#x4E0E;dependencies&#x65B9;&#x6CD5;&#x90FD;&#x662F;&#x4EE5;Closure&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x901A;&#x8FC7;delegate&#x8FDB;&#x884C;&#x8C03;&#x7528;</p>
+<ul>
+<li>buildscript(Closure)&#x5728;Project&#x4E2D;&#x8C03;&#x7528;&#xFF0C;&#x901A;&#x8FC7;ScriptHandler&#x6765;&#x6267;&#x884C;Closure</li>
+<li>repositories(Closure)&#x5728;ScriptHandler&#x4E2D;&#x8C03;&#x7528;&#xFF0C;&#x901A;&#x8FC7;RepositoryHandler&#x6765;&#x6267;&#x884C;Closure</li>
+<li>dependencies(Closure)&#x5728;ScriptHandler&#x4E2D;&#x8C03;&#x7528;&#xFF0C;&#x901A;&#x8FC7;DependencyHandler&#x6765;&#x6267;&#x884C;Closure</li>
+</ul>
+<p>&#x76F8;&#x5E94;&#x7684;google()&#x4E0E;jcenter()&#x4F1A;&#x5728;RepositoryHandler&#x6267;&#x884C;&#xFF0C;classpaht(String)&#x4F1A;&#x5728;DependencyHandler(*)&#x6267;&#x884C;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x4F60;&#x60F3;&#x66F4;&#x8BE6;&#x7EC6;&#x7684;&#x4E86;&#x89E3;&#x53EF;&#x4EE5;&#x67E5;&#x770B;<a href="https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:buildscript%28groovy.lang.Closure%29" target="_blank" rel="noopener">&#x6587;&#x6863;</a></p>
+<p>&#x8BA9;&#x6211;&#x4EEC;&#x518D;&#x4E00;&#x6B21;&#x6267;&#x884C;gradle projects</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ gradle projects</span><br><span class="line"></span><br><span class="line">FAILURE: Build failed with an exception.</span><br><span class="line"> </span><br><span class="line">* What went wrong:</span><br><span class="line">A problem occurred configuring project &apos;:app&apos;.</span><br><span class="line">&gt; compileSdkVersion is not specified.</span><br><span class="line"> </span><br><span class="line">* Try:</span><br><span class="line">Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. Run with --scan to get full insights.</span><br><span class="line"> </span><br><span class="line">* Get more help at https://help.gradle.org</span><br><span class="line"> </span><br><span class="line">BUILD FAILED in 1s</span><br></pre></td></tr></table></figure>
+<p>&#x53D1;&#x73B0;&#x62A5;&#x6CA1;&#x6709;&#x6307;&#x5B9A;compileSdkVersion&#xFF0C;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x8FD8;&#x6CA1;&#x6709;&#x5BF9;app&#x8FDB;&#x884C;&#x76F8;&#x5173;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x53EA;&#x662F;&#x5F15;&#x7528;&#x4E86;android&#x63D2;&#x4EF6;&#x3002;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x73B0;&#x5728;&#x6765;&#x8FDB;&#x884C;&#x57FA;&#x672C;&#x914D;&#x7F6E;&#xFF0C;&#x5728;app/build.gradle&#x4E2D;&#x6DFB;&#x52A0;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">android {</span><br><span class="line">   buildToolsVersion &quot;28.0.1&quot;</span><br><span class="line">   compileSdkVersion 28</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6211;&#x4EEC;&#x5728;android&#x4E2D;&#x8FDB;&#x884C;&#x58F0;&#x660E;&#xFF0C;android&#x65B9;&#x6CD5;&#x4F1A;&#x52A0;&#x5165;&#x5230;project&#x5B9E;&#x4F8B;&#x4E2D;&#x3002;buildToolsVersion&#x4E0E;compileSdkVersion&#x5C06;&#x901A;&#x8FC7;Closure&#x5BF9;&#x8C61;&#x8FDB;&#x884C;delegate&#x3002;</p>
+<h3 id="Extensions"><a href="#Extensions" class="headerlink" title="Extensions"></a>Extensions</h3><p>android&#x65B9;&#x6CD5;&#x4F1A;&#x662F;&#x5982;&#x4F55;&#x4E0E;project&#x8FDB;&#x884C;&#x5173;&#x8054;&#x7684;&#xFF1F;&#x5728;&#x6211;&#x4EEC;&#x58F0;&#x660E;&#x7684;Android&#x63D2;&#x4EF6;&#x4E2D;&#xFF0C;&#x4F1A;&#x6CE8;&#x518C;&#x4E00;&#x4E2A;AppExtension&#x7C7B;&#xFF0C;&#x8FD9;&#x4E2A;extension&#x5C06;&#x4F1A;&#x4E0E;android&#x547D;&#x540D;&#x3002;&#x6240;&#x4EE5;gradle&#x80FD;&#x591F;&#x8C03;&#x7528;android&#x65B9;&#x6CD5;&#xFF0C;&#x800C;&#x5728;<a href="https://google.github.io/android-gradle-dsl/current/com.android.build.gradle.AppExtension.html" target="_blank" rel="noopener">AppExtension</a>&#x4E2D;&#x5DF2;&#x7ECF;&#x58F0;&#x660E;&#x4E86;&#x5404;&#x79CD;&#x65B9;&#x6CD5;&#x5C5E;&#x6027;&#xFF0C;&#x4F8B;&#x5982;buildTypes&#x3001;defaultConfig&#x4E0E;signingConfigs&#x7B49;&#x3002;&#x8FD9;&#x4E5F;&#x5C31;&#x662F;&#x4E3A;&#x4EC0;&#x4E48;&#x6211;&#x4EEC;&#x80FD;&#x591F;&#x5728;android&#x65B9;&#x6CD5;&#x4E2D;&#x8C03;&#x7528;&#x5B83;&#x4EEC;&#x7684;&#x539F;&#x56E0;&#x3002;&#x4E0B;&#x9762;&#x662F;extension&#x7684;&#x521B;&#x5EFA;&#x90E8;&#x5206;&#x6E90;&#x7801;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"> @Override</span><br><span class="line"> void apply(Project project) {</span><br><span class="line">     super.apply(project)</span><br><span class="line">     // This is for testing.</span><br><span class="line">     if (pluginHolder != null) {</span><br><span class="line">         pluginHolder.plugin = this;</span><br><span class="line">     }</span><br><span class="line">     def buildTypeContainer = project.container(DefaultBuildType,</span><br><span class="line">             new BuildTypeFactory(instantiator,  project.fileResolver))</span><br><span class="line">     def productFlavorContainer = project.container(GroupableProductFlavorDsl,</span><br><span class="line">             new GroupableProductFlavorFactory(instantiator, project.fileResolver))</span><br><span class="line">     def signingConfigContainer = project.container(SigningConfig,</span><br><span class="line">             new SigningConfigFactory(instantiator))</span><br><span class="line">     extension = project.extensions.create(&apos;android&apos;, AppExtension,</span><br><span class="line">             this, (ProjectInternal) project, instantiator,</span><br><span class="line">             buildTypeContainer, productFlavorContainer, signingConfigContainer)</span><br><span class="line">     setBaseExtension(extension)</span><br><span class="line">     ...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h3 id="Dependencies"><a href="#Dependencies" class="headerlink" title="Dependencies"></a>Dependencies</h3><p>android&#x65B9;&#x6CD5;&#x4E0B;&#x9762;&#x5C31;&#x662F;dependencies&#xFF0C;&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x518D;&#x6765;&#x770B;dependencies</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dependencies {</span><br><span class="line">    implementation &apos;io.reactivex.rxjava2:rxjava:2.0.4&apos;</span><br><span class="line">    testImplementation &apos;junit:junit:4.12&apos;</span><br><span class="line">    annotationProcessor &apos;org.parceler:parceler:1.1.6&apos;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6709;&#x4E86;&#x4E0A;&#x9762;&#x7684;&#x57FA;&#x7840;&#xFF0C;&#x5E94;&#x8BE5;&#x4F1A;&#x5BB9;&#x6613;&#x7406;&#x89E3;&#x3002;dependencies&#x662F;&#x4F1A;&#x88AB;delegate&#x7ED9;DependencyHandler&#xFF0C;&#x4E0D;&#x8FC7;&#x5982;&#x679C;&#x4F60;&#x5230;<a href="https://docs.gradle.org/current/dsl/org.gradle.api.artifacts.dsl.DependencyHandler.html#N162FA" target="_blank" rel="noopener">DependencyHandler</a>&#x4E2D;&#x53BB;&#x67E5;&#x627E;&#xFF0C;&#x4F1A;&#x53D1;&#x73B0;&#x627E;&#x4E0D;&#x5230;&#x4E0A;&#x9762;&#x7684;implementation&#x3001;testImplementation&#x7B49;&#x65B9;&#x6CD5;&#x3002;&#x90A3;&#x5B83;&#x4EEC;&#x6709;&#x5230;&#x5E95;&#x662F;&#x600E;&#x4E48;&#x6765;&#x7684;&#x5462;&#xFF1F;&#x4EA6;&#x6216;&#x8005;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x6DFB;&#x52A0;&#x4E86;dev flavor&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x53C8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;devImplementation&#x3002;&#x8FD9;&#x91CC;&#x5C31;&#x6D89;&#x53CA;&#x5230;&#x4E86;groovy&#x7684;<a href="http://www.groovy-lang.org/metaprogramming.html#_methodmissing" target="_blank" rel="noopener">methodMissing</a>&#x65B9;&#x6CD5;&#x3002;&#x5B83;&#x80FD;&#x591F;&#x5728;runtime(*)&#x4E2D;&#x6355;&#x83B7;&#x5230;&#x6CA1;&#x6709;&#x5B9A;&#x4E49;&#x7684;&#x65B9;&#x6CD5;&#x3002;</p>
+<p>&#x81F3;&#x4E8E;(*)&#x662F;gradle&#x7684;methodMissing&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x62BD;&#x8C61;&#x611F;&#x5FF5;&#xFF0C;&#x5B83;&#x7533;&#x660E;&#x5728;MethodMixIn&#x4E2D;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;DependencyHandler&#x7684;&#x5B9E;&#x73B0;&#x89C4;&#x5219;&#x662F;&#xFF1A;<br>&#x5728;DependencyHandler&#x4E2D;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x56DE;&#x8C03;&#x4E86;&#x4E00;&#x4E2A;&#x6CA1;&#x6709;&#x5B9A;&#x4E49;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x4E14;&#x5B83;&#x6709;&#x76F8;&#x5E94;&#x7684;&#x53C2;&#x6570;&#xFF1B;&#x540C;&#x65F6;&#x5B83;&#x7684;&#x65B9;&#x6CD5;&#x540D;&#x5728;configuration(*)&#x4E2D;&#xFF1B;&#x90A3;&#x4E48;&#x5C06;&#x4F1A;&#x6839;&#x636E;&#x65B9;&#x6CD5;&#x540D;&#x4E0E;&#x53C2;&#x6570;&#x7C7B;&#x578B;&#x6765;&#x8C03;&#x7528;doAdd&#x7684;&#x76F8;&#x5E94;&#x65B9;&#x6CD5;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;configuration(*)&#xFF0C;&#x6BCF;&#x4E00;&#x4E2A;plugin&#x90FD;&#x6709;&#x4ED6;&#x4EEC;&#x81EA;&#x5DF1;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x4F8B;&#x5982;java&#x63D2;&#x4EF6;&#x5B9A;&#x4E49;&#x4E86;compile&#x3001;compileClassPath&#x3001;testCompile&#x7B49;&#x3002;&#x800C;&#x5BF9;&#x4E8E;Android&#x63D2;&#x4EF6;&#x5728;&#x8FD9;&#x57FA;&#x7840;&#x4E0A;&#x8FD8;&#x4F1A;&#x5B9A;&#x4E49;annotationProcessor&#xFF0C;(variant)Implementation&#x3001;(variant)TestImplementation&#x7B49;&#x3002;&#x5BF9;&#x4E8E;variant&#x5219;&#x662F;&#x57FA;&#x4E8E;&#x4F60;&#x8BBE;&#x7F6E;&#x7684;buildTypes&#x4E0E;flavors&#x3002;</p>
+<p>&#x53E6;&#x4E00;&#x65B9;&#x9762;&#xFF0C;&#x7531;&#x4E8E;doAdd()&#x662F;&#x79C1;&#x7528;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x4F46;add()&#x662F;&#x516C;&#x7528;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x6240;&#x4EE5;&#x5728;dependencies&#x4E2D;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4F7F;&#x7528;add</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dependencies {</span><br><span class="line">    add(&apos;implementation&apos;, &apos;io.reactivex.rxjava2:rxjava:2.0.4&apos;)</span><br><span class="line">    add(&apos;testImplementation&apos;, &apos;junit:junit:4.12&apos;)</span><br><span class="line">    add(&apos;annotationProcessor&apos;, &apos;org.parceler:parceler:1.1.6&apos;)</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6CE8;&#x610F;&#xFF0C;&#x8FD9;&#x79CD;&#x5199;&#x6CD5;&#x5E76;&#x4E0D;&#x63A8;&#x8350;&#xFF0C;&#x8FD9;&#x91CC;&#x53EA;&#x662F;&#x4E3A;&#x4E86;&#x66F4;&#x597D;&#x7684;&#x7406;&#x89E3;&#x5B83;&#x7684;&#x539F;&#x7406;&#x3002;</p>
+<p>gradle&#x7684;&#x77E5;&#x8BC6;&#x70B9;&#x8FD8;&#x6709;&#x5F88;&#x591A;&#xFF0C;&#x8FD9;&#x53EA;&#x662F;&#x5BF9;&#x6709;&#x5173;Android&#x7684;&#x4E00;&#x90E8;&#x5206;&#x8FDB;&#x884C;&#x5206;&#x6790;&#x3002;&#x5F53;&#x6211;&#x4EEC;&#x8FDB;&#x884C;gradle&#x914D;&#x7F6E;&#x7684;&#x65F6;&#xFF0C;&#x4E0D;&#x81F3;&#x4E8E;&#x5BF9;gradle&#x7684;&#x8BED;&#x6CD5;&#x611F;&#x5230;&#x9B54;&#x5E7B;&#xFF0C;&#x6216;&#x8005;&#x5BF9;&#x5B83;&#x7684;&#x4E00;&#x4E9B;&#x64CD;&#x4F5C;&#x611F;&#x5230;&#x4E0D;&#x89E3;&#x3002;</p>
+<p>&#x6211;&#x5728;github&#x4E0A;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;&#x4ED3;&#x5E93;<a href="https://github.com/idisfkj/android-api-analysis" target="_blank" rel="noopener">Android&#x7CBE;&#x534E;&#x5F55;</a>&#xFF0C;&#x6536;&#x96C6;Android&#x76F8;&#x5173;&#x7684;&#x6587;&#x7AE0;&#xFF0C;&#x5982;&#x679C;&#x6709;&#x9700;&#x8981;&#x7684;&#x53EF;&#x4EE5;&#x53BB;&#x770B;&#x4E00;&#x4E0B;&#xFF0C;&#x6709;&#x597D;&#x7684;&#x6587;&#x7AE0;&#x53EF;&#x4EE5;&#x52A0;&#x6211;&#x5FAE;&#x4FE1;fan331100&#x63A8;&#x8350;&#x7ED9;&#x6211;&#x3002;</p>
+<p><img src="/2019/05/13/Android-Gradle&#x7CFB;&#x5217;-&#x539F;&#x7406;&#x7BC7;/Android&#x8865;&#x7ED9;&#x7AD9;.jpg" alt="Android&#x8865;&#x7ED9;&#x7AD9;"></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/05/08/Gson与List-T-对象间的相亲之旅/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/05/23/Gradle系列-运用篇/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Mon May 13 2019 20:23:04 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

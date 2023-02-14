@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>一文彻底搞懂Kotlin inline | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="kotlin,">
+  
+
+  <meta name="description" content="Kotlin&amp;#x8BED;&amp;#x8A00;&amp;#x76F8;&amp;#x4FE1;&amp;#x5927;&amp;#x5BB6;&amp;#x5DF2;&amp;#x7ECF;&amp;#x73A9;&amp;#x7684;&amp;#x5F88;&amp;#x6E9C;&amp;#x4E86;&amp;#xFF0C;&amp;#x4F46;&amp;#x5927;&amp;#x5BB6;&amp;#x6709;&amp;#x6CA1;&amp;#x6709;&amp;#x6CE8;&amp;#x610F;&amp;#x5230;&amp;#x5B83;&amp;#">
+<meta name="keywords" content="kotlin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一文彻底搞懂Kotlin inline">
+<meta property="og:url" content="https://www.rousetime.com/2021/01/07/一文彻底搞懂Kotlin-inline/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="Kotlin&amp;#x8BED;&amp;#x8A00;&amp;#x76F8;&amp;#x4FE1;&amp;#x5927;&amp;#x5BB6;&amp;#x5DF2;&amp;#x7ECF;&amp;#x73A9;&amp;#x7684;&amp;#x5F88;&amp;#x6E9C;&amp;#x4E86;&amp;#xFF0C;&amp;#x4F46;&amp;#x5927;&amp;#x5BB6;&amp;#x6709;&amp;#x6CA1;&amp;#x6709;&amp;#x6CE8;&amp;#x610F;&amp;#x5230;&amp;#x5B83;&amp;#">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2022-12-01T13:05:40.934Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一文彻底搞懂Kotlin inline">
+<meta name="twitter:description" content="Kotlin&amp;#x8BED;&amp;#x8A00;&amp;#x76F8;&amp;#x4FE1;&amp;#x5927;&amp;#x5BB6;&amp;#x5DF2;&amp;#x7ECF;&amp;#x73A9;&amp;#x7684;&amp;#x5F88;&amp;#x6E9C;&amp;#x4E86;&amp;#xFF0C;&amp;#x4F46;&amp;#x5927;&amp;#x5BB6;&amp;#x6709;&amp;#x6CA1;&amp;#x6709;&amp;#x6CE8;&amp;#x610F;&amp;#x5230;&amp;#x5B83;&amp;#">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#inline"><span class="toc-text">inline</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#非局部返回"><span class="toc-text">非局部返回</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#reified"><span class="toc-text">reified</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#noinline"><span class="toc-text">noinline</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#crossinline"><span class="toc-text">crossinline</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目"><span class="toc-text">项目</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-一文彻底搞懂Kotlin-inline" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">一文彻底搞懂Kotlin inline</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2021.01.07</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>Kotlin&#x8BED;&#x8A00;&#x76F8;&#x4FE1;&#x5927;&#x5BB6;&#x5DF2;&#x7ECF;&#x73A9;&#x7684;&#x5F88;&#x6E9C;&#x4E86;&#xFF0C;&#x4F46;&#x5927;&#x5BB6;&#x6709;&#x6CA1;&#x6709;&#x6CE8;&#x610F;&#x5230;&#x5B83;&#x5185;&#x90E8;&#x6E90;&#x7801;&#x5927;&#x91CF;&#x4F7F;&#x7528;&#x4E86;inline&#xFF0C;&#x90A3;&#x4E48;Kotlin&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x4F7F;&#x7528;inline&#xFF1F;&#x5B83;&#x7684;&#x4F5C;&#x7528;&#x53C8;&#x662F;&#x4EC0;&#x4E48;&#x5462;&#xFF1F;</p>
+<p>&#x5982;&#x679C;&#x4F60;&#x53EA;&#x662F;&#x6CE8;&#x610F;&#x5230;&#x4E86;&#xFF0C;&#x4F46;&#x4ECE;&#x6765;&#x6CA1;&#x6709;&#x8FDB;&#x884C;&#x6DF1;&#x5165;&#x63A2;&#x7A76;&#xFF0C;&#x76F8;&#x4FE1;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x80FD;&#x591F;&#x5E2E;&#x4F60;&#x627E;&#x5230;&#x7B54;&#x6848;&#x3002;</p>
+<h2 id="inline"><a href="#inline" class="headerlink" title="inline"></a>inline</h2><p>inline&#x662F;&#x4F5C;&#x7528;&#x5728;&#x51FD;&#x6570;&#x65B9;&#x6CD5;&#x4E0A;&#x9762;&#x7684;&#xFF0C;&#x4F8B;&#x5982;Kotlin&#x7684;let&#x65B9;&#x6CD5;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public inline fun &lt;T, R&gt; T.let(block: (T) -&gt; R): R {</span><br><span class="line">    contract {</span><br><span class="line">        callsInPlace(block, InvocationKind.EXACTLY_ONCE)</span><br><span class="line">    }</span><br><span class="line">    return block(this)</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x90A3;&#x5B83;&#x7684;&#x4F5C;&#x7528;&#x662F;&#x4EC0;&#x4E48;&#x5462;&#xFF1F;</p>
+<p>inline&#x4E3B;&#x8981;&#x662F;&#x5BF9;&#x95ED;&#x5305;block&#x505A;&#x4F18;&#x5316;&#xFF0C;&#x4E3A;&#x4E86;&#x5BF9;&#x6BD4;&#x5B83;&#x505A;&#x7684;&#x4F18;&#x5316;&#xFF0C;&#x6211;&#x5BF9;&#x5E94;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x6CA1;&#x6709;inline&#x7684;&#x65B9;&#x6CD5;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public fun &lt;T, R&gt; T.ret(block: (T) -&gt; R): R {</span><br><span class="line">    return block(this)</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x7136;&#x540E;&#x6211;&#x540C;&#x65F6;&#x8C03;&#x7528;&#x8FD9;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">class MainActivity : AppCompatActivity() {</span><br><span class="line">    override fun onCreate(savedInstanceState: Bundle?) {</span><br><span class="line">        super.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_main)</span><br><span class="line"> </span><br><span class="line">        let {</span><br><span class="line">            it.a()</span><br><span class="line">        }</span><br><span class="line"> </span><br><span class="line">        ret {</span><br><span class="line">            it.b()</span><br><span class="line">        }</span><br><span class="line"> </span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    fun a() {</span><br><span class="line"> </span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    fun b() {</span><br><span class="line"> </span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    fun &lt;T, R&gt; T.ret(block: (T) -&gt; R): R {</span><br><span class="line">        return block(this)</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x518D;&#x901A;&#x8FC7;AS&#x7684;Show Kotlin Bytecode&#xFF0C;&#x6765;&#x770B;&#x5B83;&#x4EEC;&#x53CD;&#x7F16;&#x8BD1;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x4EE3;&#x7801;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public final class MainActivity extends AppCompatActivity {</span><br><span class="line">   private HashMap _$_findViewCache;</span><br><span class="line"> </span><br><span class="line">   protected void onCreate(@Nullable Bundle savedInstanceState) {</span><br><span class="line">      super.onCreate(savedInstanceState);</span><br><span class="line">      this.setContentView(1300009);</span><br><span class="line">      boolean var3 = false;</span><br><span class="line">      boolean var4 = false;</span><br><span class="line">      // inline&#x4FEE;&#x9970;&#x7684;let</span><br><span class="line">      MainActivity it = (MainActivity)this;</span><br><span class="line">      int var6 = false;</span><br><span class="line">      it.a();</span><br><span class="line">      // &#x6CA1;&#x6709;inline&#x4FEE;&#x9970;&#x7684;ret</span><br><span class="line">      this.ret(this, (Function1)null.INSTANCE);</span><br><span class="line">   }</span><br><span class="line"> </span><br><span class="line">   public final void a() {</span><br><span class="line">   }</span><br><span class="line"> </span><br><span class="line">   public final void b() {</span><br><span class="line">   }</span><br><span class="line"> </span><br><span class="line">   public final Object ret(Object $this$ret, @NotNull Function1 block) {</span><br><span class="line">      Intrinsics.checkParameterIsNotNull(block, &quot;block&quot;);</span><br><span class="line">      return block.invoke($this$ret);</span><br><span class="line">   }</span><br><span class="line"> </span><br><span class="line">   ...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E0D;&#x61C2;&#x7684;&#x8FD8;&#x662F;&#x8981;&#x770B;&#x6E90;&#x7801;&#xFF0C;&#x7A0B;&#x5E8F;&#x5458;&#x7684;&#x7EC8;&#x7ED3;&#x6B66;&#x5668;</p>
+<p>&#x5728;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x53D1;&#x73B0;&#x901A;&#x8FC7;inline&#x4FEE;&#x9970;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x4F1A;&#x901A;&#x8FC7;&#x5E73;&#x5766;&#x5F0F;&#x7684;&#x65B9;&#x5F0F;&#x76F4;&#x63A5;&#x5728;&#x540E;&#x9762;&#x6309;&#x6267;&#x884C;&#x987A;&#x4F9D;&#x6B21;&#x8C03;&#x7528;&#x3002;</p>
+<p>&#x800C;&#x6CA1;&#x6709;&#x4F7F;&#x7528;inline&#x4FEE;&#x9970;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5219;&#x4F1A;&#x4E3A;block&#x65B9;&#x6CD5;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;Function1&#x5B9E;&#x4F8B;&#x3002;</p>
+<p>&#x7B80;&#x5355;&#x7684;&#x7406;&#x89E3;&#x5C31;&#x662F;&#x672A;&#x4F7F;&#x7528;inline&#x4FEE;&#x9970;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x4F1A;&#x5BF9;&#x5E26;&#x6709;&#x51FD;&#x6570;&#x5F0F;&#x53C2;&#x6570;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x521B;&#x5EFA;&#x5BF9;&#x4E8E;&#x51FD;&#x6570;&#x7684;&#x5B9E;&#x4F8B;&#xFF0C;&#x518D;&#x5C06;&#x8FD9;&#x4E2A;&#x5B9E;&#x4F8B;&#x4F20;&#x9012;&#x5230;&#x65B9;&#x6CD5;&#x53C2;&#x6570;&#x4E2D;&#x3002;&#x8BE5;&#x53C2;&#x6570;&#x65B9;&#x6CD5;&#x6700;&#x7EC8;&#x5728;&#x539F;&#x65B9;&#x6CD5;&#x7684;&#x5185;&#x90E8;&#x88AB;&#x663E;&#x793A;&#x8C03;&#x7528;&#x3002;</p>
+<p>&#x6240;&#x4EE5;inline&#x505A;&#x7684;&#x4F18;&#x5316;&#x5C31;&#x662F;&#x5C06;&#x5E26;&#x6709;&#x51FD;&#x6570;&#x53C2;&#x6570;&#x7684;&#x65B9;&#x6CD5;&#x7B80;&#x5316;&#x6210;&#x6CA1;&#x51FD;&#x6570;&#x5F0F;&#x53C2;&#x6570;&#x7684;&#x76F4;&#x63A5;&#x8C03;&#x7528;&#x3002;&#x597D;&#x5904;&#x662F;&#x63D0;&#x9AD8;&#x7A0B;&#x5E8F;&#x7684;&#x6027;&#x80FD;&#x3002;</p>
+<p>&#x5F53;&#x7136;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x907F;&#x514D;&#x4F7F;&#x7528;inline&#x5185;&#x8054;&#x5927;&#x578B;&#x51FD;&#x6570;&#xFF0C;&#x51CF;&#x5C11;&#x65B9;&#x6CD5;&#x4E2D;&#x4EE3;&#x7801;&#x7684;&#x589E;&#x957F;&#x3002;</p>
+<h3 id="&#x975E;&#x5C40;&#x90E8;&#x8FD4;&#x56DE;"><a href="#&#x975E;&#x5C40;&#x90E8;&#x8FD4;&#x56DE;" class="headerlink" title="&#x975E;&#x5C40;&#x90E8;&#x8FD4;&#x56DE;"></a>&#x975E;&#x5C40;&#x90E8;&#x8FD4;&#x56DE;</h3><p>inline&#x8FD8;&#x6709;&#x4E00;&#x4E2A;&#x597D;&#x5904;&#x662F;&#xFF0C;&#x5BF9;&#x4E8E;while&#x3001;for&#x7B49;&#x8BED;&#x53E5;&#xFF0C;&#x88AB;inline&#x4FEE;&#x9970;&#x7684;&#x51FD;&#x6570;&#x652F;&#x6301;&#x5C40;&#x90E8;&#x8FD4;&#x56DE;</p>
+<p>&#x8FD8;&#x662F;&#x4E0A;&#x9762;&#x7684;&#x4F8B;&#x5B50;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">while (--i &gt; 0) {</span><br><span class="line">    let {</span><br><span class="line">        return // success</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line">while (--i &gt; 0) {</span><br><span class="line">    ret {</span><br><span class="line">        return // error: return is not allow here</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x7B80;&#x5355;&#x7684;&#x7406;&#x89E3;&#x5C31;&#x662F;&#xFF0C;&#x4F7F;&#x7528;inline&#x4FEE;&#x9970;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x5728;&#x5FAA;&#x73AF;&#x8BED;&#x53E5;&#x4E2D;&#x901A;&#x8FC7;return&#x8DF3;&#x51FA;&#x5FAA;&#x73AF;&#x4F53;&#x3002;&#x800C;&#x975E;inline&#x51FD;&#x6570;&#x662F;&#x4E0D;&#x652F;&#x6301;&#x7684;&#xFF0C;&#x5B83;&#x652F;&#x6301;&#x8DF3;&#x51FA;&#x65B9;&#x6CD5;&#x4F53;&#x3002;</p>
+<p>&#x539F;&#x56E0;&#x4E5F;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x56DE;&#x5934;&#x518D;&#x770B;&#x4E4B;&#x524D;&#x7684;&#x53CD;&#x7F16;&#x8BD1;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x4EE3;&#x7801;&#xFF0C;&#x56E0;&#x4E3A;&#x4F7F;&#x7528;inline&#x4FEE;&#x9970;&#x7684;&#x65B9;&#x6CD5;&#x662F;&#x5E73;&#x94FA;&#x5F0F;&#x76F4;&#x63A5;&#x6309;&#x987A;&#x5E8F;&#x8C03;&#x7528;&#xFF0C;&#x5E76;&#x6CA1;&#x6709;&#x5305;&#x542B;&#x5728;&#x65B9;&#x6CD5;&#x4F53;&#x4E2D;&#xFF0C;&#x6240;&#x4EE5;&#x5982;&#x679C;return&#x7684;&#x8BDD;&#x5C31;&#x76F8;&#x5F53;&#x4E8E;&#x76F4;&#x63A5;&#x5728;&#x5FAA;&#x73AF;&#x4F53;&#x4E2D;return</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">while(--i &gt; 0) {</span><br><span class="line">	return</span><br><span class="line">	...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x800C;&#x672A;&#x4F7F;&#x7528;inline&#x4FEE;&#x9970;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x662F;&#x5728;&#x53E6;&#x5916;&#x7684;&#x65B9;&#x6CD5;&#x4F53;&#x4E2D;&#x8FDB;&#x884C;&#x8C03;&#x7528;&#xFF0C;&#x6240;&#x4EE5;&#x5B83;&#x7684;return&#x53EA;&#x80FD;&#x662F;&#x8FD4;&#x56DE;&#x5230;&#x65B9;&#x6CD5;&#x4F53;&#x3002;</p>
+<h3 id="reified"><a href="#reified" class="headerlink" title="reified"></a>reified</h3><p>&#x4F7F;&#x7528;inline&#x4FEE;&#x9970;&#x7684;&#x51FD;&#x6570;&#x8FD8;&#x6709;&#x4E00;&#x4E2A;&#x597D;&#x5904;&#x662F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;reified&#x6765;&#x4FEE;&#x9970;&#x51FD;&#x6570;&#x7684;&#x6CDB;&#x578B;&#xFF0C;&#x8BA9;&#x51FD;&#x6570;&#x7684;&#x6CDB;&#x578B;&#x5177;&#x4F53;&#x5316;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">inline fun &lt;reified T, R&gt; T.det(block: (T) -&gt; R): R {</span><br><span class="line">    val a = 0</span><br><span class="line">    if (a is T) { // success</span><br><span class="line"> </span><br><span class="line">    }</span><br><span class="line">    return block(this)</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line">fun &lt;T, R&gt; T.ret(block: (T) -&gt; R): R {</span><br><span class="line">    val a = 0</span><br><span class="line">    if (a is T) { // error: Cannot check for instance of erased type: T</span><br><span class="line"> </span><br><span class="line">    }</span><br><span class="line">    return block(this)</span><br><span class="line">}</span><br><span class="line">  </span><br><span class="line">// &#x6216;&#x8005;</span><br><span class="line">inline fun &lt;reified T&gt; membersOf() = T::class.members</span><br></pre></td></tr></table></figure>
+<p>&#x4F20;&#x7EDF;&#x7684;&#x6CDB;&#x578B;&#x662F;&#x4F1A;&#x5728;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x8FDB;&#x884C;&#x64E6;&#x9664;&#x64CD;&#x4F5C;&#xFF0C;&#x800C;&#x4F7F;&#x7528;reified&#x4FEE;&#x9970;&#x7684;&#x6CDB;&#x578B;&#xFF0C;&#x901A;&#x8FC7;&#x53CD;&#x7F16;&#x8BD1;&#x4E8C;&#x8FDB;&#x5236;&#x8868;&#x73B0;&#x5C31;&#x662F;&#x5C06;&#x6CDB;&#x578B;&#x66FF;&#x6362;&#x6210;&#x5177;&#x4F53;&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x4E0D;&#x8FDB;&#x884C;&#x7C7B;&#x578B;&#x64E6;&#x9664;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$i$f$det = false;</span><br><span class="line">int a$iv = 0;</span><br><span class="line">if (Integer.valueOf(a$iv) instanceof MainActivity) {</span><br><span class="line">   this.a();</span><br><span class="line">}</span><br><span class="line">  </span><br><span class="line">MainActivity it = (MainActivity)this;</span><br><span class="line">int var7 = false;</span><br><span class="line">it.b();</span><br></pre></td></tr></table></figure>
+<h2 id="noinline"><a href="#noinline" class="headerlink" title="noinline"></a>noinline</h2><p>&#x6709;&#x4E86;inline&#x81EA;&#x7136;&#x4E5F;&#x6709;&#x5BF9;&#x7ACB;&#x7684;noinline&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x591A;&#x4E2A;&#x51FD;&#x6570;&#x65B9;&#x6CD5;&#x53C2;&#x6570;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;noinline&#x6765;&#x6307;&#x5B9A;&#x67D0;&#x4E2A;&#x51FD;&#x6570;&#x65B9;&#x6CD5;&#x53C2;&#x6570;&#x4E0D;&#x4F7F;&#x7528;inline&#x7684;&#x7279;&#x6027;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">inline fun &lt;T, R&gt; T.net(block: (T) -&gt; R, noinline noBlock: () -&gt; Unit): R {</span><br><span class="line">    noBlock()</span><br><span class="line">    return block(this)</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x6837;&#x5C31;&#x53EA;&#x6709;block&#x4F1A;&#x6267;&#x884C;inline&#x7684;&#x4F18;&#x5316;&#x3002;</p>
+<h2 id="crossinline"><a href="#crossinline" class="headerlink" title="crossinline"></a>crossinline</h2><p>&#x8FD8;&#x6709;&#x4E00;&#x79CD;&#x60C5;&#x51B5;&#xFF0C;&#x5982;&#x679C;&#x4F7F;&#x7528;&#x4E86;inline&#x4FEE;&#x9970;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x88AB;&#x4F7F;&#x7528;&#x5230;&#x4E86;&#x5D4C;&#x5957;&#x7684;&#x5185;&#x8054;&#x51FD;&#x6570;&#x4E2D;&#xFF0C;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x662F;&#x4F1A;&#x62A5;&#x9519;&#x7684;&#xFF0C;&#x9700;&#x8981;&#x4E3A;&#x51FD;&#x6570;&#x53C2;&#x6570;&#x6DFB;&#x52A0;crossinline&#x4FEE;&#x9970;&#x7B26;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">inline fun &lt;T, R&gt; T.cet(block: (T) -&gt; R, crossinline noBlock: () -&gt; Unit): R {</span><br><span class="line">    Runnable {</span><br><span class="line">        noBlock()</span><br><span class="line">    }</span><br><span class="line">    return block(this)</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4ECA;&#x5929;&#x6709;&#x5173;kotlin&#x7684;inline&#x90E8;&#x5206;&#x5C31;&#x5206;&#x6790;&#x5230;&#x8FD9;&#xFF0C;&#x5E0C;&#x671B;&#x4F60;&#x6709;&#x6240;&#x6536;&#x83B7;&#x3002;</p>
+<h2 id="&#x9879;&#x76EE;"><a href="#&#x9879;&#x76EE;" class="headerlink" title="&#x9879;&#x76EE;"></a>&#x9879;&#x76EE;</h2><p><a href="https://github.com/idisfkj/android-startup" target="_blank" rel="noopener">android_startup</a>: &#x63D0;&#x4F9B;&#x4E00;&#x79CD;&#x5728;&#x5E94;&#x7528;&#x542F;&#x52A8;&#x65F6;&#x80FD;&#x591F;&#x66F4;&#x52A0;&#x7B80;&#x5355;&#x3001;&#x9AD8;&#x6548;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x521D;&#x59CB;&#x5316;&#x7EC4;&#x4EF6;&#xFF0C;&#x4F18;&#x5316;&#x542F;&#x52A8;&#x901F;&#x5EA6;&#x3002;&#x4E0D;&#x4EC5;&#x652F;&#x6301;Jetpack App Startup&#x7684;&#x5168;&#x90E8;&#x529F;&#x80FD;&#xFF0C;&#x8FD8;&#x63D0;&#x4F9B;&#x989D;&#x5916;&#x7684;&#x540C;&#x6B65;&#x4E0E;&#x5F02;&#x6B65;&#x7B49;&#x5F85;&#x3001;&#x7EBF;&#x7A0B;&#x63A7;&#x5236;&#x4E0E;&#x591A;&#x8FDB;&#x7A0B;&#x652F;&#x6301;&#x7B49;&#x529F;&#x80FD;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/AwesomeGithub" target="_blank" rel="noopener">AwesomeGithub</a>: &#x57FA;&#x4E8E;Github&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x7EAF;&#x7EC3;&#x4E60;&#x9879;&#x76EE;&#xFF0C;&#x652F;&#x6301;&#x7EC4;&#x4EF6;&#x5316;&#x5F00;&#x53D1;&#xFF0C;&#x652F;&#x6301;&#x8D26;&#x6237;&#x5BC6;&#x7801;&#x4E0E;&#x8BA4;&#x8BC1;&#x767B;&#x9646;&#x3002;&#x4F7F;&#x7528;Kotlin&#x8BED;&#x8A00;&#x8FDB;&#x884C;&#x5F00;&#x53D1;&#xFF0C;&#x9879;&#x76EE;&#x67B6;&#x6784;&#x662F;&#x57FA;&#x4E8E;JetPack&amp;DataBinding&#x7684;MVVM&#xFF1B;&#x9879;&#x76EE;&#x4E2D;&#x4F7F;&#x7528;&#x4E86;Arouter&#x3001;Retrofit&#x3001;Coroutine&#x3001;Glide&#x3001;Dagger&#x4E0E;Hilt&#x7B49;&#x6D41;&#x884C;&#x5F00;&#x6E90;&#x6280;&#x672F;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/flutter_github" target="_blank" rel="noopener">flutter_github</a>: &#x57FA;&#x4E8E;Flutter&#x7684;&#x8DE8;&#x5E73;&#x53F0;&#x7248;&#x672C;Github&#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x4E0E;AwesomeGithub&#x76F8;&#x5BF9;&#x5E94;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/android-api-analysis" target="_blank" rel="noopener">android-api-analysis</a>: &#x7ED3;&#x5408;&#x8BE6;&#x7EC6;&#x7684;Demo&#x6765;&#x5168;&#x9762;&#x89E3;&#x6790;Android&#x76F8;&#x5173;&#x7684;&#x77E5;&#x8BC6;&#x70B9;, &#x5E2E;&#x52A9;&#x8BFB;&#x8005;&#x80FD;&#x591F;&#x66F4;&#x5FEB;&#x7684;&#x638C;&#x63E1;&#x4E0E;&#x7406;&#x89E3;&#x6240;&#x9610;&#x8FF0;&#x7684;&#x8981;&#x70B9;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/daily_algorithm" target="_blank" rel="noopener">daily_algorithm</a>: &#x6BCF;&#x65E5;&#x4E00;&#x7B97;&#x6CD5;&#xFF0C;&#x7531;&#x6D45;&#x5165;&#x6DF1;&#xFF0C;&#x6B22;&#x8FCE;&#x52A0;&#x5165;&#x4E00;&#x8D77;&#x5171;&#x52C9;&#x3002;</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2021/01/04/Android-SystemServer启动-二/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2021/01/08/ActivityManagerService-启动初探/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Thu Jan 07 2021 21:01:43 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

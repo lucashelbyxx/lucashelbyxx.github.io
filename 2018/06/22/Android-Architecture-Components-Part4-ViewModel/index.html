@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Android Architecture Components Part4:ViewModel | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Android Architecture Components,">
+  
+
+  <meta name="description" content="&amp;#x5728;Android Architecture Components(AAC)&amp;#x4E2D;ViewMode&amp;#x662F;&amp;#x4E3A;&amp;#x754C;&amp;#x9762;&amp;#x7EC4;&amp;#x4EF6;&amp;#x63D0;&amp;#x4F9B;&amp;#x6570;&amp;#x636E;&amp;#x5E76;&amp;#x53EF;&amp;#x5728;&amp;#x754C;&amp;#x9762;&amp;#x914D;&amp;#x7F6E;&amp;#x">
+<meta name="keywords" content="Android Architecture Components">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Architecture Components Part4:ViewModel">
+<meta property="og:url" content="https://www.rousetime.com/2018/06/22/Android-Architecture-Components-Part4-ViewModel/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="&amp;#x5728;Android Architecture Components(AAC)&amp;#x4E2D;ViewMode&amp;#x662F;&amp;#x4E3A;&amp;#x754C;&amp;#x9762;&amp;#x7EC4;&amp;#x4EF6;&amp;#x63D0;&amp;#x4F9B;&amp;#x6570;&amp;#x636E;&amp;#x5E76;&amp;#x53EF;&amp;#x5728;&amp;#x754C;&amp;#x9762;&amp;#x914D;&amp;#x7F6E;&amp;#x">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.rousetime.com/2018/06/22/Android-Architecture-Components-Part4-ViewModel/cover.png">
+<meta property="og:image" content="https://www.rousetime.com/2018/06/22/Android-Architecture-Components-Part4-ViewModel/viewmodel.png">
+<meta property="og:image" content="https://www.rousetime.com/2018/06/22/Android-Architecture-Components-Part4-ViewModel/architectureComponents.png">
+<meta property="og:image" content="https://www.rousetime.com/2018/06/22/Android-Architecture-Components-Part4-ViewModel/wx.jpg">
+<meta property="og:updated_time" content="2018-06-23T15:51:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Architecture Components Part4:ViewModel">
+<meta name="twitter:description" content="&amp;#x5728;Android Architecture Components(AAC)&amp;#x4E2D;ViewMode&amp;#x662F;&amp;#x4E3A;&amp;#x754C;&amp;#x9762;&amp;#x7EC4;&amp;#x4EF6;&amp;#x63D0;&amp;#x4F9B;&amp;#x6570;&amp;#x636E;&amp;#x5E76;&amp;#x53EF;&amp;#x5728;&amp;#x754C;&amp;#x9762;&amp;#x914D;&amp;#x7F6E;&amp;#x">
+<meta name="twitter:image" content="https://www.rousetime.com/2018/06/22/Android-Architecture-Components-Part4-ViewModel/cover.png">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#依赖"><span class="toc-text">依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ViewModelProvider"><span class="toc-text">ViewModelProvider</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关文章"><span class="toc-text">相关文章</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关注"><span class="toc-text">关注</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Android-Architecture-Components-Part4-ViewModel" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Android Architecture Components Part4:ViewModel</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.06.22</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><img src="/2018/06/22/Android-Architecture-Components-Part4-ViewModel/cover.png" alt></p>
+<p>&#x5728;Android Architecture Components(AAC)&#x4E2D;ViewMode&#x662F;&#x4E3A;&#x754C;&#x9762;&#x7EC4;&#x4EF6;&#x63D0;&#x4F9B;&#x6570;&#x636E;&#x5E76;&#x53EF;&#x5728;&#x754C;&#x9762;&#x914D;&#x7F6E;&#x66F4;&#x6539;&#x540E;&#x7EE7;&#x7EED;&#x5B58;&#x5728;&#x7684;&#x5BF9;&#x8C61;&#x3002;&#x4F8B;&#x5982;&#x754C;&#x9762;&#x7684;&#x65CB;&#x8F6C;&#x5BFC;&#x81F4;&#x754C;&#x9762;&#x914D;&#x7F6E;&#x4FE1;&#x606F;&#x6539;&#x53D8;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x4E3A;&#x754C;&#x9762;&#x63D0;&#x4F9B;&#x6570;&#x636E;&#xFF0C;&#x6211;&#x4EEC;&#x6240;&#x77E5;&#x9053;&#x7684;&#x4E5F;&#x6709;&#x5176;&#x4ED6;&#x7684;&#x4E00;&#x4E9B;&#x6A21;&#x5F0F;&#xFF0C;&#x4F8B;&#x5982;MVP&#x7684;Presenter&#x4E0E;MVVM&#x4E2D;&#x7684;ViewModel&#x3002;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x8FDB;&#x884C;&#x4E00;&#x4E2A;&#x5047;&#x8BBE;&#xFF0C;&#x5982;&#x679C;Activity&#x53D1;&#x751F;&#x754C;&#x9762;&#x65CB;&#x8F6C;&#xFF0C;&#x6B64;&#x65F6;&#x4E0A;&#x8FF0;&#x7684;&#x63D0;&#x4F9B;&#x6570;&#x636E;&#x7684;&#x6A21;&#x5F0F;&#x4F1A;&#x53D1;&#x751F;&#x4EC0;&#x4E48;&#x5462;&#xFF1F;</p>
+<ol>
+<li>&#x5BF9;&#x4E8E;Activity&#x7684;&#x91CD;&#x5EFA;&#xFF0C;&#x4E3A;&#x4E86;&#x63D0;&#x4F9B;ui&#x6240;&#x9700;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x6211;&#x4EEC;&#x5FC5;&#x987B;&#x91CD;&#x65B0;&#x83B7;&#x53D6;&#x6570;&#x636E;(&#x7F51;&#x7EDC;&#x6216;&#x8005;&#x672C;&#x5730;&#x6570;&#x636E;&#x5E93;)&#xFF0C;&#x5982;&#x679C;&#x9700;&#x8981;&#x4FDD;&#x5B58;&#x6570;&#x636E;&#xFF0C;&#x4E5F;&#x8981;&#x91CD;&#x65B0;&#x8FDB;&#x884C;&#x4FDD;&#x5B58;&#x64CD;&#x4F5C;&#x3002;</li>
+<li>&#x5728;&#x5BF9;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#x65F6;&#xFF0C;&#x4F60;&#x5FC5;&#x987B;&#x8981;&#x5904;&#x7406;&#x4E00;&#x4E9B;&#x53EF;&#x80FD;&#x9020;&#x6210;&#x7684;&#x5185;&#x5B58;&#x6CC4;&#x9732;&#x95EE;&#x9898;&#x3002;</li>
+</ol>
+<p>&#x5BF9;&#x4E8E;&#x4EE5;&#x4E0A;&#x95EE;&#x9898;&#xFF0C;ViewModel&#x90FD;&#x80FD;&#x591F;&#x5E2E;&#x6211;&#x4EEC;&#x89E3;&#x51B3;&#x3002;&#x53EA;&#x8981;Activity&#x6CA1;&#x6709;&#x5F7B;&#x5E95;&#x88AB;&#x9500;&#x6BC1;&#xFF0C;&#x4F7F;&#x7528;&#x7684;&#x90FD;&#x662F;&#x540C;&#x4E00;&#x4E2A;ViewModel&#xFF0C;&#x540C;&#x65F6;&#x5BF9;&#x4E8E;&#x5B83;&#x7684;&#x521B;&#x5EFA;&#x4E0E;&#x9500;&#x6BC1;&#x6211;&#x4EEC;&#x65E0;&#x9700;&#x8FDB;&#x884C;&#x7EF4;&#x62A4;&#x7BA1;&#x7406;&#xFF0C;&#x80FD;&#x5F88;&#x597D;&#x7684;&#x4FDD;&#x8BC1;&#x8D44;&#x6E90;&#x7684;&#x91CA;&#x653E;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x7684;&#x8FD9;&#x5F20;&#x56FE;&#x80FD;&#x591F;&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x66F4;&#x597D;&#x7684;&#x89C2;&#x5BDF;&#x5B83;&#x5728;Activity&#x4E2D;&#x7684;&#x751F;&#x547D;&#x72B6;&#x6001;</p>
+<p><img src="/2018/06/22/Android-Architecture-Components-Part4-ViewModel/viewmodel.png" alt></p>
+<p>ViewModel&#x8D2F;&#x7A7F;Activity&#x7684;&#x6574;&#x4E2A;&#x751F;&#x547D;&#x5468;&#x671F;&#xFF0C;&#x53EA;&#x6709;&#x5F53;Activity&#x5F7B;&#x5E95;&#x91CA;&#x653E;&#x65F6;&#x624D;&#x4F1A;&#x5C06;&#x5176;&#x9500;&#x6BC1;&#x3002;&#x6240;&#x4EE5;&#x5B83;&#x80FD;&#x591F;&#x66F4;&#x597D;&#x7684;&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x5B9E;&#x73B0;&#x6301;&#x4E45;&#x5316;&#x6570;&#x636E;&#xFF0C;&#x9632;&#x6B62;&#x4E0D;&#x5FC5;&#x8981;&#x7684;&#x6570;&#x636E;&#x8BF7;&#x6C42;&#xFF0C;&#x63D0;&#x9AD8;App&#x7684;&#x6027;&#x80FD;&#x3002;</p>
+<blockquote>
+<p>&#x662F;&#x4E0D;&#x662F;&#x6709;&#x70B9;&#x597D;&#x5947;&#x4E86;&#x5462;&#xFF0C;&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x6765;&#x7B80;&#x5355;&#x4ECB;&#x7ECD;&#x5B83;&#x7684;&#x4F7F;&#x7528;&#xFF0C;&#x4E3A;&#x4EC0;&#x4E48;&#x8BF4;&#x7B80;&#x5355;&#x5462;&#xFF1F;&#x56E0;&#x4E3A;&#x771F;&#x7684;&#x5F88;&#x7B80;&#x5355;&#x2026;</p>
+</blockquote>
+<h2 id="&#x4F9D;&#x8D56;"><a href="#&#x4F9D;&#x8D56;" class="headerlink" title="&#x4F9D;&#x8D56;"></a>&#x4F9D;&#x8D56;</h2><p>&#x5982;&#x679C;&#x4F60;&#x5DF2;&#x7ECF;&#x6709;&#x4E86;&#x89E3;&#x8FC7;&#x4E0A;&#x7BC7;&#x5173;&#x4E8E;Lifecycle&#x7684;&#x6587;&#x7AE0;<a href="https://idisfkj.github.io/2018/06/14/Android-Architecture-Components-Part3-Lifecycle/" target="_blank" rel="noopener">(Android Architecture Components Part3:Lifecycle)</a>&#xFF0C;&#x90A3;&#x4E48;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x8DF3;&#x8FC7;&#x4F9D;&#x8D56;&#x90E8;&#x5206;&#xFF0C;&#x6CA1;&#x6709;&#x7684;&#x6211;&#x4EEC;&#x7EE7;&#x7EED;&#x3002;</p>
+<p>&#x5728;&#x4F7F;&#x7528;ViewModel&#x4E4B;&#x524D;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5728;App&#x6216;&#x8005;Module&#x7684;build.gradle&#x4E2D;&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x4EE3;&#x7801;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dependencies {</span><br><span class="line">    def lifecycle_version = &quot;1.1.1&quot;</span><br><span class="line"> </span><br><span class="line">    // ViewModel and LiveData</span><br><span class="line">    implementation &quot;android.arch.lifecycle:extensions:$lifecycle_version&quot;   </span><br><span class="line">    annotationProcessor &quot;android.arch.lifecycle:compiler:$lifecycle_version&quot;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h2 id="&#x4F7F;&#x7528;"><a href="#&#x4F7F;&#x7528;" class="headerlink" title="&#x4F7F;&#x7528;"></a>&#x4F7F;&#x7528;</h2><p>&#x4F9D;&#x8D56;&#x5DF2;&#x7ECF;&#x51C6;&#x5907;&#x5B8C;&#x6BD5;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x901A;&#x8FC7;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#x4F7F;&#x7528;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class ContactsViewModel(application: Application, private val defTitle: String = &quot;Contacts&quot;) : AndroidViewModel(application) {</span><br><span class="line">    val message: MutableLiveData&lt;String&gt; by lazy { MutableLiveData&lt;String&gt;() }</span><br><span class="line">    val contactsList: MutableLiveData&lt;List&lt;ContactsModel&gt;&gt; = MutableLiveData()</span><br><span class="line">    ....</span><br><span class="line">    ....</span><br><span class="line">    </span><br><span class="line">    fun getContacts(refresh: Boolean): LiveData&lt;List&lt;ContactsModel&gt;&gt; {</span><br><span class="line">        message.value = &quot;&quot;</span><br><span class="line">        if (refresh) {</span><br><span class="line">            getDataFromRemote()</span><br><span class="line">        } else if (contactsList.value == null || contactsList.value?.size ?: 0 &lt;= 0) {</span><br><span class="line">            message.value = &quot;&#x6570;&#x636E;&#x8BF7;&#x6C42;&#x4E2D;&#xFF0C;&#x8BF7;&#x7A0D;&#x540E;&#xFF01;&quot;</span><br><span class="line">            if (mLocalData.isEmpty()) {</span><br><span class="line">                getDataFromLocal()</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        return contactsList</span><br><span class="line">    }</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6211;&#x4EEC;&#x521B;&#x5EFA;ContactsViewModel&#xFF0C;&#x8BA9;&#x5B83;&#x7EE7;&#x627F;&#x4E8E;AndroidViewModel&#xFF0C;&#x5B83;&#x662F;&#x5BF9;&#x62BD;&#x8C61;ViewModel&#x7684;&#x6269;&#x5C55;&#xFF0C;&#x4F7F;&#x7528;&#x5B83;&#x65F6;&#x9700;&#x8981;&#x4F20;&#x5165;Application&#x5BF9;&#x8C61;&#xFF0C;&#x65B9;&#x4FBF;&#x4E00;&#x4E9B;&#x8D44;&#x6E90;&#x7684;&#x83B7;&#x53D6;&#x3002;&#x7531;&#x4E8E;ViewModel&#x7684;&#x7279;&#x6027;&#x662F;&#x5BF9;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x6301;&#x4E45;&#x5316;&#xFF0C;&#x6240;&#x4EE5;&#x5B83;&#x4E0D;&#x80FD;&#x6301;&#x6709;&#x4E0E;Activity&#x76F8;&#x5173;&#x7684;&#x5F15;&#x7528;(Context)&#xFF0C;&#x9632;&#x6B62;&#x5185;&#x5B58;&#x6CC4;&#x9732;&#xFF0C;&#x56E0;&#x6B64;&#x8FD9;&#x91CC;&#x4F7F;&#x7528;&#x4E0E;&#x5E94;&#x7528;&#x751F;&#x547D;&#x5468;&#x671F;&#x7ED1;&#x5B9A;&#x7684;Application&#x3002;</p>
+<p>&#x5728;ContactsViewModel&#x4E2D;&#x6211;&#x4EEC;&#x7ED3;&#x5408;MutableLiveData&#x6765;&#x66F4;&#x597D;&#x7684;&#x7BA1;&#x7406;&#x6570;&#x636E;&#x7684;&#x53D8;&#x5316;&#x66F4;&#x65B0;&#x3002;</p>
+<p>ViewModel&#x521B;&#x5EFA;&#x597D;&#x4E86;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x53EA;&#x5269;&#x4E0B;&#x5728;Activity&#x4E2D;&#x8FDB;&#x884C;&#x4F7F;&#x7528;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class ContactsActivity : AppCompatActivity() {</span><br><span class="line"> </span><br><span class="line">    private lateinit var mViewModel: ContactsViewModel</span><br><span class="line"> </span><br><span class="line">    override fun onCreate(savedInstanceState: Bundle?) {</span><br><span class="line">        super.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_contacts_layout)</span><br><span class="line">        setupViewModel()</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    private fun setupViewModel() {</span><br><span class="line">        mViewModel = ViewModelProviders.of(this)[ContactsViewModel::class.java]</span><br><span class="line">        //active STARTED&#x3001;RESUMED</span><br><span class="line">        mViewModel.getContacts(true).observe(this,</span><br><span class="line">                Observer {</span><br><span class="line">                    //todo ...</span><br><span class="line">                })</span><br><span class="line">        mViewModel.message.observe(this,</span><br><span class="line">                Observer {</span><br><span class="line">                    //todo ...</span><br><span class="line">                })</span><br><span class="line">    }   </span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5B9E;&#x9645;&#x4E0A;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x4E00;&#x884C;&#x4EE3;&#x7801;&#x5C31;&#x53EF;&#x4EE5;&#x83B7;&#x53D6;&#x5230;ViewModel&#x7684;&#x5B9E;&#x4F8B;&#xFF0C;&#x901A;&#x8FC7;<strong>ViewModelProviders.of()</strong>&#x65B9;&#x6CD5;&#x4F20;&#x5165;Activity&#x5BF9;&#x8C61;&#xFF0C;&#x5B83;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;ViewModelProvider&#x5BF9;&#x8C61;&#xFF0C;&#x7136;&#x540E;&#x6211;&#x4EEC;&#x518D;&#x4F7F;&#x7528;&#x5B83;&#x7684;<strong>get()</strong>&#x6765;&#x6839;&#x636E;&#x4E0D;&#x540C;&#x7684;ViewModel&#x7684;Class&#x5BF9;&#x8C61;&#x6765;&#x83B7;&#x53D6;&#x5230;&#x76F8;&#x5E94;&#x7684;ViewModel&#x5B9E;&#x4F8B;&#x3002;</p>
+<p>&#x53EA;&#x8981;Activity&#x5BF9;&#x8C61;&#x6CA1;&#x6709;&#x6539;&#x53D8;&#xFF0C;&#x540C;&#x65F6;&#x90FD;&#x662F;&#x540C;&#x4E00;&#x4E2A;ViewModel&#x7684;Class&#x5BF9;&#x8C61;&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x65E0;&#x8BBA;&#x4F55;&#x65F6;&#x83B7;&#x53D6;&#x7684;&#x90FD;&#x662F;&#x540C;&#x4E00;&#x4E2A;ViewModel&#x5B9E;&#x4F8B;&#x3002;&#x8FD9;&#x5C31;&#x5B9E;&#x73B0;&#x4E86;&#x5728;Activity&#x4E2D;&#x7684;ViewModel&#x6301;&#x4E45;&#x5316;&#x7279;&#x6027;&#x3002;&#x7531;&#x4E8E;ViewModel&#x662F;&#x540C;&#x4E00;&#x4E2A;&#xFF0C;&#x81EA;&#x7136;&#x5B83;&#x91CC;&#x9762;&#x7684;&#x6570;&#x636E;&#x4E5F;&#x662F;&#x540C;&#x4E00;&#x4EFD;&#x3002;</p>
+<p>&#x5F97;&#x5230;ViewModel&#x540E;&#xFF0C;&#x5269;&#x4E0B;&#x7684;&#x5C31;&#x662F;&#x5BF9;&#x6570;&#x636E;&#x7684;&#x64CD;&#x4F5C;&#x4E0E;&#x54CD;&#x5E94;&#x3002;&#x8FD9;&#x91CC;&#x7ED3;&#x5408;&#x4E86;LiveData&#x6240;&#x4EE5;&#x65B9;&#x4FBF;&#x4E86;&#x8BB8;&#x591A;&#x3002;</p>
+<blockquote>
+<p>LiveData&#x4E4B;&#x524D;&#x5DF2;&#x7ECF;&#x6709;&#x8BE6;&#x7EC6;&#x4ECB;&#x7ECD;&#xFF0C;&#x5982;&#x9700;&#x4E86;&#x89E3;&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x6587;&#x7AE0;&#x672B;&#x7684;&#x94FE;&#x63A5;&#x3002;</p>
+</blockquote>
+<h2 id="ViewModelProvider"><a href="#ViewModelProvider" class="headerlink" title="ViewModelProvider"></a>ViewModelProvider</h2><p>&#x5230;&#x8FD9;&#x91CC;&#x6211;&#x60F3;&#x4F60;&#x5FC3;&#x4E2D;&#x53EF;&#x80FD;&#x4F1A;&#x6709;&#x5982;&#x4E0B;&#x51E0;&#x4E2A;&#x7591;&#x95EE;</p>
+<ol>
+<li>ViewModel&#x5B83;&#x662F;&#x5982;&#x4F55;&#x521D;&#x59CB;&#x5316;&#x7684;&#xFF0C;&#x5BF9;&#x8C61;&#x662F;&#x5982;&#x4F55;&#x5B9E;&#x4F8B;&#x5316;&#x7684;</li>
+<li>&#x5982;&#x4F55;&#x5411;ViewModel&#x4E2D;&#x4F20;&#x9012;&#x521D;&#x59CB;&#x5316;&#x7684;&#x53C2;&#x6570;</li>
+</ol>
+<p>&#x8FD9;&#x4E24;&#x4E2A;&#x7591;&#x95EE;&#x90FD;&#x5C06;&#x7531;ViewModelProvider&#x6765;&#x89E3;&#x51B3;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x56DE;&#x5230;&#x83B7;&#x53D6;ViewModelProvider&#x7684;<strong>ViewModelProviders.of()</strong>&#x65B9;&#x6CD5;&#xFF0C;&#x8FDB;&#x5165;&#x6E90;&#x7801;&#x67E5;&#x770B;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@NonNull</span><br><span class="line">@MainThread</span><br><span class="line">public static ViewModelProvider of(@NonNull FragmentActivity activity,</span><br><span class="line">        @Nullable Factory factory) {</span><br><span class="line">    Application application = checkApplication(activity);</span><br><span class="line">    if (factory == null) {</span><br><span class="line">        factory = ViewModelProvider.AndroidViewModelFactory.getInstance(application);</span><br><span class="line">    }</span><br><span class="line">    return new ViewModelProvider(ViewModelStores.of(activity), factory);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6211;&#x4EEC;&#x4E5F;&#x6CA1;&#x6709;&#x53D1;&#x73B0;&#x6211;&#x4EEC;&#x60F3;&#x8981;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x4F46;&#x6211;&#x4EEC;&#x53D1;&#x73B0;factory&#x3002;&#x6211;&#x4EEC;&#x5728;&#x83B7;&#x53D6;ViewModel&#x65F6;&#x5E76;&#x6CA1;&#x6709;&#x4F20;&#x5165;factory&#xFF0C;&#x6240;&#x4EE5;&#x5B83;&#x4F1A;&#x8D70;&#x7A7A;&#x5224;&#x65AD;&#x91CC;&#x9762;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x9ED8;&#x8BA4;&#x7684;factory&#x3002;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x518D;&#x8FDB;&#x5165;ViewModelProvider&#x4E2D;&#x67E5;&#x770B;&#x9759;&#x6001;&#x5185;&#x90E8;&#x7C7B;AndroidViewModelFactory</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public static class AndroidViewModelFactory extends ViewModelProvider.NewInstanceFactory {</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line">    @NonNull</span><br><span class="line">    @Override</span><br><span class="line">    public &lt;T extends ViewModel&gt; T create(@NonNull Class&lt;T&gt; modelClass) {</span><br><span class="line">        if (AndroidViewModel.class.isAssignableFrom(modelClass)) {</span><br><span class="line">            //noinspection TryWithIdenticalCatches</span><br><span class="line">            try {</span><br><span class="line">                return modelClass.getConstructor(Application.class).newInstance(mApplication);</span><br><span class="line">            } catch (NoSuchMethodException e) {</span><br><span class="line">                throw new RuntimeException(&quot;Cannot create an instance of &quot; + modelClass, e);</span><br><span class="line">            } catch (IllegalAccessException e) {</span><br><span class="line">                throw new RuntimeException(&quot;Cannot create an instance of &quot; + modelClass, e);</span><br><span class="line">            } catch (InstantiationException e) {</span><br><span class="line">                throw new RuntimeException(&quot;Cannot create an instance of &quot; + modelClass, e);</span><br><span class="line">            } catch (InvocationTargetException e) {</span><br><span class="line">                throw new RuntimeException(&quot;Cannot create an instance of &quot; + modelClass, e);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        return super.create(modelClass);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6211;&#x4EEC;&#x53EA;&#x770B;&#x5173;&#x952E;&#x4EE3;&#x7801;&#xFF0C;&#x5B83;&#x7EE7;&#x627F;&#x4E8E;NewInstanceFactory&#xFF0C;&#x5176;&#x4E2D;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;<strong>create()</strong>&#x3002;AndroidViewModelFactory&#x91CD;&#x65B0;&#x5B9E;&#x73B0;&#x4E86;<strong>create()</strong>&#xFF0C;&#x5728;&#x91CD;&#x5199;&#x7684;&#x65B9;&#x6CD5;&#x4E2D;&#x6211;&#x4EEC;&#x627E;&#x5230;&#x4E86;&#x6211;&#x4EEC;&#x60F3;&#x8981;&#x7684;&#x65B9;&#x6CD5;&#x8C03;&#x7528;&#x3002;&#x5728;&#x8FD9;&#x91CC;&#x5B83;&#x901A;&#x8FC7;Class&#x7684;<strong>getConstructor()</strong>&#x65B9;&#x6CD5;&#x83B7;&#x53D6;&#x5339;&#x914D;&#x7684;Constructor&#x5BF9;&#x8C61;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x901A;&#x8FC7;<strong>newInstance()</strong>&#x65B9;&#x6CD5;&#x6765;&#x83B7;&#x53D6;&#x5339;&#x914D;&#x7684;&#x5BF9;&#x8C61;&#x5B9E;&#x4F8B;&#x3002;&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x6240;&#x9700;&#x8981;&#x7684;ViewModel&#x5B9E;&#x4F8B;&#x5C31;&#x521B;&#x5EFA;&#x4E86;&#xFF0C;&#x7B2C;&#x4E00;&#x4E2A;&#x7591;&#x95EE;&#x5C31;&#x6B64;&#x89E3;&#x51B3;&#x3002;</p>
+<p>&#x81F3;&#x4E8E;&#x7B2C;&#x4E8C;&#x4E2A;&#x7591;&#x95EE;&#xFF0C;&#x7EC6;&#x5FC3;&#x7684;&#x8BDD;&#x4E0D;&#x96BE;&#x53D1;&#x73B0;&#xFF0C;&#x4E0A;&#x9762;&#x5728;&#x8C03;&#x7528;<strong>newInstance()</strong>&#x65B9;&#x6CD5;&#x65F6;&#x5DF2;&#x7ECF;&#x4F20;&#x4E86;&#x4E00;&#x4E2A;&#x521D;&#x59CB;&#x5316;&#x7684;&#x53C2;&#x6570;mApplication&#x3002;&#x6240;&#x4EE5;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x8981;&#x518D;&#x4F20;&#x5165;&#x5176;&#x5B83;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x521D;&#x59CB;&#x5316;&#x53C2;&#x6570;&#xFF0C;&#x53EA;&#x9700;&#x5B9E;&#x73B0;&#x6211;&#x4EEC;&#x81EA;&#x5DF1;&#x7684;<strong>create()</strong>&#x65B9;&#x6CD5;&#x3002;&#x8981;&#x81EA;&#x5B9A;&#x4E49;<strong>create()</strong>&#x65B9;&#x6CD5;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x8981;&#x81EA;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;factory&#xFF0C;&#x7EE7;&#x627F;NewInstanceFactory&#x7C7B;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x662F;&#x5B9E;&#x73B0;ContactsViewModel&#x5728;&#x521D;&#x59CB;&#x5316;&#x65F6;&#x4F20;&#x5165;&#x7279;&#x5B9A;&#x7684;title&#x503C;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class ContactsFactory(private val application: Application) : ViewModelProvider.NewInstanceFactory() {</span><br><span class="line"> </span><br><span class="line">    companion object {</span><br><span class="line">        @SuppressLint(&quot;StaticFieldLeak&quot;)</span><br><span class="line">        private var instance: ContactsFactory? = null</span><br><span class="line"> </span><br><span class="line">        fun getInstance(application: Application): ContactsFactory {</span><br><span class="line">            if (instance == null) {</span><br><span class="line">                instance = ContactsFactory(application)</span><br><span class="line">            }</span><br><span class="line">            return instance as ContactsFactory</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    override fun &lt;T : ViewModel?&gt; create(modelClass: Class&lt;T&gt;): T {</span><br><span class="line">        if (modelClass.isAssignableFrom(ContactsViewModel::class.java)) {</span><br><span class="line">            return ContactsViewModel(application, &quot;Factory Contacts&quot;) as T</span><br><span class="line">        }</span><br><span class="line">        return super.create(modelClass)</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x91CD;&#x70B9;&#x81EA;&#x7136;&#x662F;<strong>create()</strong>&#x65B9;&#x6CD5;&#xFF0C;&#x901A;&#x8FC7;<strong>isAssignableFrom()</strong>&#x65B9;&#x6CD5;&#x5224;&#x65AD;&#x9700;&#x8981;&#x5B9E;&#x4F8B;&#x5316;&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x7531;&#x4E8E;&#x6211;&#x4EEC;&#x80FD;&#x591F;&#x660E;&#x786E;&#x5230;&#x5177;&#x4F53;&#x7684;&#x7C7B;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x6B63;&#x5E38;&#x7684;&#x7C7B;&#x5B9E;&#x4F8B;&#x5316;&#x64CD;&#x4F5C;&#x3002;&#x5DF2;&#x7ECF;&#x6709;&#x4E86;factory&#xFF0C;&#x6700;&#x540E;&#x5728;&#x83B7;&#x53D6;ViewModel&#x65F6;&#x4F20;&#x5165;&#x5373;&#x53EF;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mViewModel = ViewModelProviders.of(this, ContactsFactory.getInstance(application))[ContactsViewModel::class.java]</span><br></pre></td></tr></table></figure>
+<p>ViewModel&#x5C31;&#x662F;&#x8FD9;&#x4E48;&#x7B80;&#x5355;&#xFF0C;&#x4F46;&#x5B83;&#x5BF9;&#x6570;&#x636E;&#x7684;&#x6301;&#x4E45;&#x5316;&#x5374;&#x5F02;&#x5E38;&#x7A81;&#x51FA;&#x3002;&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x8FEB;&#x4E0D;&#x53CA;&#x5F85;&#x4E86;&#x5462;&#xFF1F;&#x8D76;&#x7D27;&#x6765;&#x8BD5;&#x8BD5;&#x5B83;&#x7684;&#x7279;&#x6027;&#x5427;&#x3002;</p>
+<h2 id="&#x603B;&#x7ED3;"><a href="#&#x603B;&#x7ED3;" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</h2><p>&#x6700;&#x540E;Android Architecture Components(AAC)&#x7CFB;&#x5217;&#x5230;&#x6B64;&#x5C31;&#x544A;&#x4E00;&#x6BB5;&#x843D;&#x4E86;&#xFF0C;&#x8BA9;&#x6211;&#x4EEC;&#x6765;&#x56DE;&#x987E;&#x4E00;&#x4E0B;AAC&#x3002;&#x6211;&#x4EEC;&#x901A;&#x8FC7;Room&#x53EF;&#x4EE5;&#x5FEB;&#x901F;&#x65B9;&#x4FBF;&#x7684;&#x5B9E;&#x73B0;&#x672C;&#x5730;&#x6570;&#x636E;&#x5B58;&#x50A8;&#xFF1B;&#x7ED3;&#x5408;LiveData&#x6765;&#x89C2;&#x6D4B;&#x6570;&#x636E;&#x7684;&#x66F4;&#x65B0;&#x53D8;&#x5316;&#x4E0E;&#x53CA;&#x65F6;&#x53CD;&#x6620;&#x5230;UI&#x5C42;&#xFF1B;&#x540C;&#x65F6;&#x4F7F;&#x7528;Lifecycle&#x6765;&#x8BA9;&#x6211;&#x4EEC;&#x7684;&#x7EC4;&#x4EF6;&#x6216;&#x6570;&#x636E;&#x5BB9;&#x5668;&#x7684;&#x5177;&#x5907;&#x751F;&#x547D;&#x611F;&#x77E5;&#x80FD;&#x529B;&#xFF0C;&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x7684;&#x51CF;&#x5C11;&#x751F;&#x547D;&#x72B6;&#x6001;&#x7684;&#x5904;&#x7406;&#x4E0E;&#x5F02;&#x5E38;&#x9519;&#x8BEF;&#x7684;&#x53D1;&#x751F;&#xFF1B;&#x6700;&#x540E;&#x5C06;&#x754C;&#x9762;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x5230;ViewModel&#x4E2D;&#xFF0C;&#x4F7F;&#x5F97;&#x6570;&#x636E;&#x8FBE;&#x5230;&#x6301;&#x4E45;&#x5316;&#xFF0C;&#x51CF;&#x5C11;&#x4E0D;&#x5FC5;&#x8981;&#x7684;&#x6570;&#x636E;&#x8BF7;&#x6C42;&#x4E0E;&#x8D44;&#x6E90;&#x6D88;&#x8017;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x7684;&#x80FD;&#x591F;&#x521D;&#x6B65;&#x4F53;&#x73B0;&#x4F7F;&#x7528;AAC&#x540E;&#x7684;App&#x9879;&#x76EE;&#x67B6;&#x6784;&#x5F62;&#x6001;</p>
+<p><img src="/2018/06/22/Android-Architecture-Components-Part4-ViewModel/architectureComponents.png" alt></p>
+<p>&#x6700;&#x540E;&#x611F;&#x8C22;&#x5927;&#x5BB6;&#x5BF9;AAC&#x67B6;&#x6784;&#x7CFB;&#x5217;&#x7684;&#x652F;&#x6301;&#xFF01;&#x540C;&#x65F6;&#x6587;&#x7AE0;&#x4E2D;&#x7684;&#x4EE3;&#x7801;&#x90FD;&#x53EF;&#x4EE5;&#x5728;<a href="https://github.com/idisfkj/android-api-analysis" target="_blank" rel="noopener">Github</a>&#x4E2D;&#x83B7;&#x53D6;&#x5230;&#x3002;&#x4F7F;&#x7528;&#x65F6;&#x8BF7;&#x5C06;&#x5206;&#x652F;&#x5207;&#x6362;&#x5230;feat_architecture_components</p>
+<h2 id="&#x76F8;&#x5173;&#x6587;&#x7AE0;"><a href="#&#x76F8;&#x5173;&#x6587;&#x7AE0;" class="headerlink" title="&#x76F8;&#x5173;&#x6587;&#x7AE0;"></a>&#x76F8;&#x5173;&#x6587;&#x7AE0;</h2><p><a href="https://idisfkj.github.io/2018/06/07/Android-Architecture-Components-Part1-Room/" target="_blank" rel="noopener">Android Architecture Components Part1:Room</a><br><a href="https://idisfkj.github.io/2018/06/10/Android-Architecture-Components-Part2-LiveData/" target="_blank" rel="noopener">Android Architecture Components Part2:LiveData</a><br><a href="https://idisfkj.github.io/2018/06/14/Android-Architecture-Components-Part3-Lifecycle/" target="_blank" rel="noopener">Android Architecture Components Part3:Lifecycle</a></p>
+<h2 id="&#x5173;&#x6CE8;"><a href="#&#x5173;&#x6CE8;" class="headerlink" title="&#x5173;&#x6CE8;"></a>&#x5173;&#x6CE8;</h2><p><img src="/2018/06/22/Android-Architecture-Components-Part4-ViewModel/wx.jpg" alt></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/06/14/Android-Architecture-Components-Part3-Lifecycle/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/07/01/自定义Android注解Part1-注解变量/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Fri Jun 22 2018 08:20:04 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

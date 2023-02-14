@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Android Architecture Components Part1:Room | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Android Architecture Components,">
+  
+
+  <meta name="description" content="&amp;#x524D;&amp;#x8A00;Android Architecture Components&amp;#xFF08;AAC&amp;#xFF09;&amp;#x9996;&amp;#x6B21;&amp;#x53D1;&amp;#x5E03;&amp;#x4E0E;2017 GoogleI/O&amp;#x5927;&amp;#x4F1A;&amp;#xFF0C;&amp;#x7ECF;&amp;#x8FC7;&amp;#x8FD1;&amp;#x4E00;&amp;#x5E74;&amp;#x7684;&amp;#x7EF4">
+<meta name="keywords" content="Android Architecture Components">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Architecture Components Part1:Room">
+<meta property="og:url" content="https://www.rousetime.com/2018/06/07/Android-Architecture-Components-Part1-Room/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="&amp;#x524D;&amp;#x8A00;Android Architecture Components&amp;#xFF08;AAC&amp;#xFF09;&amp;#x9996;&amp;#x6B21;&amp;#x53D1;&amp;#x5E03;&amp;#x4E0E;2017 GoogleI/O&amp;#x5927;&amp;#x4F1A;&amp;#xFF0C;&amp;#x7ECF;&amp;#x8FC7;&amp;#x8FD1;&amp;#x4E00;&amp;#x5E74;&amp;#x7684;&amp;#x7EF4">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.rousetime.com/2018/06/07/Android-Architecture-Components-Part1-Room/cover.png">
+<meta property="og:image" content="https://www.rousetime.com/2018/06/07/Android-Architecture-Components-Part1-Room/room.png">
+<meta property="og:image" content="https://www.rousetime.com/2018/06/07/Android-Architecture-Components-Part1-Room/wx.jpg">
+<meta property="og:updated_time" content="2018-06-23T14:31:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Architecture Components Part1:Room">
+<meta name="twitter:description" content="&amp;#x524D;&amp;#x8A00;Android Architecture Components&amp;#xFF08;AAC&amp;#xFF09;&amp;#x9996;&amp;#x6B21;&amp;#x53D1;&amp;#x5E03;&amp;#x4E0E;2017 GoogleI/O&amp;#x5927;&amp;#x4F1A;&amp;#xFF0C;&amp;#x7ECF;&amp;#x8FC7;&amp;#x8FD1;&amp;#x4E00;&amp;#x5E74;&amp;#x7684;&amp;#x7EF4">
+<meta name="twitter:image" content="https://www.rousetime.com/2018/06/07/Android-Architecture-Components-Part1-Room/cover.png">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加依赖"><span class="toc-text">添加依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Room"><span class="toc-text">Room</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Entity"><span class="toc-text">Entity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DAO"><span class="toc-text">DAO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Database"><span class="toc-text">Database</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用"><span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关文章"><span class="toc-text">相关文章</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关注"><span class="toc-text">关注</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Android-Architecture-Components-Part1-Room" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Android Architecture Components Part1:Room</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.06.07</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><img src="/2018/06/07/Android-Architecture-Components-Part1-Room/cover.png" alt="cover"></p>
+<h2 id="&#x524D;&#x8A00;"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</h2><p>Android Architecture Components&#xFF08;AAC&#xFF09;&#x9996;&#x6B21;&#x53D1;&#x5E03;&#x4E0E;2017 GoogleI/O&#x5927;&#x4F1A;&#xFF0C;&#x7ECF;&#x8FC7;&#x8FD1;&#x4E00;&#x5E74;&#x7684;&#x7EF4;&#x62A4;&#xFF0C;&#x73B0;&#x5728;Google&#x56E2;&#x961F;&#x5DF2;&#x7ECF;&#x53D1;&#x5E03;&#x4E86;&#x7A33;&#x5B9A;&#x7248;&#xFF08;v1.1.1&#xFF09;&#x3002;&#x80FD;&#x591F;&#x66F4;&#x597D;&#x7684;&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x6765;&#x6784;&#x5EFA;&#x81EA;&#x5DF1;&#x7684;App&#x5E94;&#x7528;&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x8FD8;&#x6CA1;&#x6709;&#x4E86;&#x89E3;ACC&#x73B0;&#x5728;&#x65F6;&#x95F4;&#x521A;&#x521A;&#x597D;&#xFF0C;&#x6765;&#x4E0D;&#x53CA;&#x89E3;&#x91CA;&#xFF0C;&#x8D76;&#x7D27;&#x4E0A;&#x8F66;&#x5427;&#x3002;</p>
+<p>ACC&#x662F;&#x4E00;&#x4E2A;&#x67B6;&#x6784;&#x7EC4;&#x4EF6;&#xFF0C;&#x5B83;&#x80FD;&#x5E2E;&#x5FD9;&#x6211;&#x4EEC;&#x66F4;&#x597D;&#x7684;&#x6765;&#x7BA1;&#x7406;&#x6211;&#x4EEC;&#x7684;App&#xFF0C;&#x65B9;&#x4FBF;&#x6211;&#x4EEC;&#x7684;&#x5F00;&#x53D1;&#x3002;&#x5B83;&#x80FD;&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x7684;App&#x66F4;&#x597D;&#x7684;&#x5B58;&#x50A8;&#x6570;&#x636E;&#x3001;&#x7BA1;&#x7406;&#x751F;&#x547D;&#x5468;&#x671F;&#x3001;&#x8FDB;&#x884C;&#x6A21;&#x5757;&#x5316;&#x3001;&#x907F;&#x514D;&#x5E38;&#x89C1;&#x7684;&#x9519;&#x8BEF;&#x3001;&#x51CF;&#x5C11;&#x6837;&#x677F;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x5199;&#x3002;</p>
+<p>ACC&#x4E3B;&#x8981;&#x7531;4&#x4E2A;&#x5355;&#x4E00;&#x7EC4;&#x4EF6;&#x7EC4;&#x6210;&#xFF0C;&#x5206;&#x522B;&#x4E3A;&#xFF1A;Room&#x3001;LiveData&#x3001;Lifecycle&#x4E0E;ViewModel&#x3002;&#x5B83;&#x4EEC;&#x6BCF;&#x4E00;&#x4E2A;&#x90FD;&#x662F;&#x72EC;&#x7ACB;&#x5B58;&#x5728;&#x7684;&#x7EC4;&#x4EF6;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5355;&#x72EC;&#x4F7F;&#x7528;&#x5176;&#x4E2D;&#x51E0;&#x4E2A;&#xFF0C;&#x53C8;&#x6216;&#x8005;&#x53EF;&#x4EE5;&#x5C06;&#x5B83;&#x4EEC;&#x5168;&#x90E8;&#x6574;&#x5408;&#x5230;&#x4E00;&#x8D77;&#x3002;&#x6240;&#x4EE5;&#x5BF9;&#x4E8E;ACC&#x5B83;&#x63D0;&#x4F9B;&#x4E86;&#x66F4;&#x597D;&#x7684;&#x4F7F;&#x7528;&#x7075;&#x6D3B;&#x6027;&#xFF0C;&#x65B9;&#x4FBF;&#x6211;&#x4EEC;&#x96C6;&#x6210;&#x5230;&#x6211;&#x4EEC;&#x7684;App&#x4E2D;&#x3002;</p>
+<p>&#x4ECA;&#x5929;&#x4E3B;&#x8981;&#x662F;&#x5BF9;ACC&#x5176;&#x4E2D;&#x7684;Room&#x7EC4;&#x4EF6;&#x8FDB;&#x884C;&#x5206;&#x6790;&#x3002;Room&#x662F;&#x4E00;&#x4E2A;&#x7A33;&#x5065;&#x7684;SQL&#x5BF9;&#x8C61;&#x6620;&#x5C04;&#x5E93;&#xFF0C;&#x7528;&#x6765;&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x5FEB;&#x901F;&#x7684;&#x5B9E;&#x73B0;&#x6570;&#x636E;&#x672C;&#x5730;&#x5B58;&#x50A8;&#x3002;&#x81F3;&#x4E8E;&#x4E3A;&#x4F55;&#x8981;&#x4F7F;&#x7528;&#x672C;&#x5730;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x81EA;&#x7136;&#x662F;&#x5F53;&#x7528;&#x6237;&#x65E0;&#x7F51;&#x7EDC;&#x6216;&#x8005;&#x7F51;&#x7EDC;&#x5DEE;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x80FD;&#x591F;&#x66F4;&#x597D;&#x7684;&#x63D0;&#x9AD8;&#x7528;&#x6237;&#x5BF9;&#x6211;&#x4EEC;App&#x7684;&#x4F53;&#x9A8C;&#x3002;</p>
+<h2 id="&#x6DFB;&#x52A0;&#x4F9D;&#x8D56;"><a href="#&#x6DFB;&#x52A0;&#x4F9D;&#x8D56;" class="headerlink" title="&#x6DFB;&#x52A0;&#x4F9D;&#x8D56;"></a>&#x6DFB;&#x52A0;&#x4F9D;&#x8D56;</h2><p>&#x5728;&#x4F7F;&#x7528;Room&#x4E4B;&#x524D;&#xFF0C;&#x6211;&#x4EEC;&#x8FD8;&#x662F;&#x8981;&#x5728;&#x9879;&#x76EE;&#x4E2D;&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x4F9D;&#x8D56;&#x6DFB;&#x52A0;&#x3002;<br>&#x9996;&#x5148;&#x5728;&#x4F60;&#x7684;&#x9879;&#x76EE;&#x7684;&#x6839;&#x76EE;&#x5F55;&#x4E0B;&#x7684;build.gradle&#x4E2D;&#x6DFB;&#x52A0;google()&#x5E93;&#xFF0C;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">allprojects {</span><br><span class="line">    repositories {</span><br><span class="line">        jcenter()</span><br><span class="line">        google()</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E4B;&#x540E;&#x6253;&#x5F00;&#x4F60;&#x7684;App&#x6216;&#x8005;module&#x4E2D;&#x7684;build.gradle&#x6587;&#x4EF6;&#xFF0C;&#x5728;dependencies&#x4E2D;&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">dependencies {</span><br><span class="line">    def room_version = &quot;1.1.0&quot; // or, for latest rc, use &quot;1.1.1-rc1&quot;</span><br><span class="line"> </span><br><span class="line">    implementation &quot;android.arch.persistence.room:runtime:$room_version&quot;</span><br><span class="line">    annotationProcessor &quot;android.arch.persistence.room:compiler:$room_version&quot;</span><br><span class="line"> </span><br><span class="line">    // optional - RxJava support for Room</span><br><span class="line">    implementation &quot;android.arch.persistence.room:rxjava2:$room_version&quot;</span><br><span class="line"> </span><br><span class="line">    // optional - Guava support for Room, including Optional and ListenableFuture</span><br><span class="line">    implementation &quot;android.arch.persistence.room:guava:$room_version&quot;</span><br><span class="line"> </span><br><span class="line">    // Test helpers</span><br><span class="line">    testImplementation &quot;android.arch.persistence.room:testing:$room_version&quot;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h2 id="Room"><a href="#Room" class="headerlink" title="Room"></a>Room</h2><p>&#x4E0A;&#x9762;&#x7684;&#x4F9D;&#x8D56;&#x6DFB;&#x52A0;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x6B63;&#x5F0F;&#x4F7F;&#x7528;Room&#x3002;&#x5728;Android App&#x4E2D;&#x8FDB;&#x884C;&#x672C;&#x5730;&#x6570;&#x636E;&#x7684;&#x5B58;&#x50A8;&#x90FD;&#x662F;&#x4F7F;&#x7528;SQLite&#xFF0C;&#x5F53;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x539F;&#x751F;&#x7684;SQLite&#x8FDB;&#x884C;&#x672C;&#x5730;&#x6570;&#x636E;&#x5E93;&#x7684;&#x7F16;&#x5199;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x4E0D;&#x4EC5;&#x8981;&#x5B9A;&#x4E49;&#x6570;&#x636E;&#x5E93;&#x7ED3;&#x6784;&#xFF0C;&#x8FD8;&#x8981;&#x521B;&#x5EFA;SQLiteHelper&#xFF0C;&#x7F16;&#x5199;&#x4E00;&#x8FDE;&#x4E32;&#x7684;SQL&#x8BED;&#x53E5;&#x3002;&#x8FD9;&#x6837;&#x4EE3;&#x7801;&#x91CF;&#x4E0E;&#x590D;&#x6742;&#x5EA6;&#x4E0D;&#x65AD;&#x4E0A;&#x5347;&#xFF0C;&#x8FD9;&#x4E0D;&#x662F;&#x6211;&#x4EEC;&#x60F3;&#x8981;&#x7684;&#x3002;&#x800C;Room&#x6B63;&#x597D;&#x53EF;&#x4EE5;&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x51CF;&#x5C11;&#x4EE3;&#x7801;&#x3001;&#x7B80;&#x5316;&#x590D;&#x6742;&#x5EA6;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;Room&#x7684;&#x4F7F;&#x7528;&#x4E3B;&#x8981;&#x7531;&#x4E09;&#x90E8;&#x5206;&#x6784;&#x6210;&#xFF1A;</p>
+<ol>
+<li>Entity&#xFF1A;&#x6807;&#x8BC6;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x7684;&#x8868;&#x7ED3;&#x6784;</li>
+<li>DAO&#xFF1A; &#x6807;&#x8BC6;&#x63D0;&#x4F9B;&#x83B7;&#x53D6;&#x6570;&#x636E;&#x5E93;&#x8868;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x65B9;&#x6CD5;</li>
+<li>Database&#xFF1A;&#x6807;&#x8BC6;&#x6240;&#x9700;&#x8981;&#x521B;&#x5EFA;&#x7684;&#x6570;&#x636E;&#x5E93;</li>
+</ol>
+<p>&#x4EE5;&#x4E0A;&#x4E09;&#x90E8;&#x5206;&#x5728;&#x4EE3;&#x7801;&#x4E2D;&#x90FD;&#x662F;&#x901A;&#x8FC7;&#x6CE8;&#x91CA;&#x6765;&#x5B9E;&#x73B0;&#xFF0C;&#x4ECE;&#x800C;&#x8FBE;&#x5230;&#x4EE3;&#x7801;&#x7684;&#x7CBE;&#x7B80;&#x3002;</p>
+<h3 id="Entity"><a href="#Entity" class="headerlink" title="Entity"></a>Entity</h3><p>Entity&#x4F5C;&#x7528;&#x5728;model&#x4E0A;&#xFF0C;&#x5373;&#x6211;&#x4EEC;&#x4E0E;&#x6570;&#x636E;&#x8868;&#x4E2D;&#x7684;&#x5B57;&#x6BB5;&#x6240;&#x5339;&#x914D;&#x7684;model&#x7C7B;&#x3002;&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x6765;&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;&#x8054;&#x7CFB;&#x4EBA;&#x76F8;&#x5173;&#x7684;model&#xFF0C;&#x5BF9;&#x4E8E;&#x6B63;&#x5E38;&#x7684;model&#x5EFA;&#x7ACB;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data class ContactsModel(val id: Int, val name: String, val phone: String)</span><br></pre></td></tr></table></figure>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x8981;&#x628A;ContactsModel&#x6620;&#x5C04;&#x5230;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x7684;&#x4E00;&#x79CD;&#x8868;&#xFF0C;&#x53EA;&#x9700;&#x8FDB;&#x884C;&#x5982;&#x4E0B;&#x64CD;&#x4F5C;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Entity(tableName = &quot;contacts&quot;)</span><br><span class="line">data class ContactsModel(</span><br><span class="line">        @PrimaryKey</span><br><span class="line">        @ColumnInfo(name = &quot;contacts_id&quot;)</span><br><span class="line">        val id: Int,</span><br><span class="line">        @ColumnInfo(name = &quot;name&quot;)</span><br><span class="line">        val name: String,</span><br><span class="line">        @ColumnInfo(name = &quot;phone&quot;)</span><br><span class="line">        val phone: String</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>&#x9996;&#x5148;&#x6211;&#x4EEC;&#x5728;ContactsModel&#x4E2D;&#x6DFB;&#x52A0;@Entity&#x6CE8;&#x91CA;&#xFF0C;&#x8868;&#x660E;&#x5B83;&#x5C06;&#x6620;&#x5C04;&#x6210;&#x4E00;&#x79CD;&#x8868;&#x3002;&#x5728;Entity&#x4E2D;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4F7F;&#x7528;tableName&#x6765;&#x4E3A;&#x8BE5;&#x8868;&#x547D;&#x540D;&#xFF0C;&#x8FD9;&#x91CC;&#x5C06;&#x5176;&#x547D;&#x540D;&#x672A;contacts&#x3002;</p>
+<p>&#x9664;&#x6B64;&#x4E4B;&#x5916;&#xFF0C;&#x4F7F;&#x7528;@ColumnInfo&#x6765;&#x6807;&#x660E;&#x8868;&#x4E2D;&#x7684;&#x5B57;&#x6BB5;&#xFF0C;@PrimaryKey&#x6765;&#x6807;&#x660E;&#x8868;&#x7684;&#x4E3B;&#x952E;&#x3002;&#x5176;&#x4E2D;@ColumnInfo&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;(name = &#x201C;name&#x201D;)&#x6765;&#x547D;&#x540D;&#x5B57;&#x6BB5;&#x540D;&#x3002;&#x5F53;&#x7136;&#x8FD8;&#x6709;&#x522B;&#x7684;&#x6CE8;&#x91CA;&#x4F8B;&#x5982;&#x5916;&#x952E;&#x7684;&#x6807;&#x660E;&#xFF1A;@ForeignKey</p>
+<h3 id="DAO"><a href="#DAO" class="headerlink" title="DAO"></a>DAO</h3><p>&#x6570;&#x636E;&#x5E93;&#x8868;&#x5EFA;&#x597D;&#x4E86;&#xFF0C;&#x73B0;&#x5728;&#x662F;&#x63D0;&#x4F9B;&#x64CD;&#x4F5C;&#x6570;&#x636E;&#x8868;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x7684;&#x65B9;&#x6CD5;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">@Dao</span><br><span class="line">interface ContactsDao {</span><br><span class="line"> </span><br><span class="line">    @Query(&quot;SELECT * FROM contacts&quot;)</span><br><span class="line">    fun getAllContacts(): List&lt;ContactsModel&gt;</span><br><span class="line"> </span><br><span class="line">    @Query(&quot;SELECT * FROM contacts WHERE contacts_id = :id&quot;)</span><br><span class="line">    fun getContactsById(id: Int): LiveData&lt;ContactsModel&gt;</span><br><span class="line"> </span><br><span class="line">    @Insert(onConflict = OnConflictStrategy.REPLACE)</span><br><span class="line">    fun insertContacts(contactsModel: ContactsModel)</span><br><span class="line"> </span><br><span class="line">    @Query(&quot;UPDATE contacts SET name = :name AND phone = :phone WHERE contacts_id = :id&quot;)</span><br><span class="line">    fun updateContacts(id: Int, name: String, phone: String)</span><br><span class="line"> </span><br><span class="line">    @Query(&quot;DELETE FROM contacts WHERE contacts_id = :id&quot;)</span><br><span class="line">    fun deleteContacts(id: Int)</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x63A5;&#x53E3;&#xFF0C;&#x901A;&#x8FC7;@Dao&#x6765;&#x6807;&#x660E;&#x5B83;&#x662F;&#x63D0;&#x4F9B;&#x64CD;&#x4F5C;&#x6570;&#x636E;&#x8868;&#x7684;&#x65B9;&#x6CD5;&#x96C6;&#x3002;&#x8981;&#x6CE8;&#x610F;&#x5B83;&#x5FC5;&#x987B;&#x4E3A;interface&#xFF0C;&#x5728;&#x63A5;&#x53E3;&#x4E2D;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x5B9A;&#x4E49;&#x63A5;&#x53E3;&#x65B9;&#x6CD5;&#x5373;&#x53EF;&#x3002;&#x4E0E;&#x5E73;&#x5E38;&#x7684;&#x63A5;&#x53E3;&#x65B9;&#x6CD5;&#x5B9A;&#x4E49;&#x4E0D;&#x540C;&#x7684;&#x662F;&#xFF0C;&#x6211;&#x4EEC;&#x5FC5;&#x987B;&#x5728;&#x6BCF;&#x4E00;&#x4E2A;&#x63A5;&#x53E3;&#x65B9;&#x6CD5;&#x4E0A;&#x901A;&#x8FC7;&#x6CE8;&#x91CA;&#x6765;&#x6807;&#x660E;&#x8BE5;&#x65B9;&#x6CD5;&#x7684;&#x4F5C;&#x7528;&#x3002;</p>
+<p>&#x4F8B;&#x5982;getAllContacts()&#x65B9;&#x6CD5;&#xFF0C;&#x6211;&#x4EEC;&#x4E3A;&#x4E86;&#x8BA9;&#x5B83;&#x5B9E;&#x73B0;&#x83B7;&#x53D6;contacts&#x8868;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x6570;&#x636E;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5728;&#x5176;&#x65B9;&#x6CD5;&#x4E2D;&#x6DFB;&#x52A0;@Query&#x6CE8;&#x91CA;&#xFF0C;&#x7531;&#x4E8E;&#x662F;&#x67E5;&#x8BE2;&#x65B9;&#x6CD5;&#xFF0C;&#x81EA;&#x7136;&#x662F;&#x4F7F;&#x7528;Query&#xFF0C;&#x5982;&#x679C;&#x662F;&#x63D2;&#x5165;&#x65B9;&#x6CD5;&#x5C31;&#x662F;Insert(&#x7B2C;&#x4E09;&#x4E2A;&#x65B9;&#x6CD5;)&#x3002;&#x5176;&#x6B21;()&#x4E2D;&#x7684;&#x5185;&#x5BB9;&#x5C31;&#x662F;&#x6B63;&#x5E38;&#x7684;&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#x3002;&#x8FD9;&#x91CC;&#x662F;&#x83B7;&#x53D6;&#x6240;&#x6709;&#x7684;Contacts&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x4F7F;&#x7528;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Query(&quot;SELECT * FROM contacts&quot;)</span><br></pre></td></tr></table></figure>
+<p>&#x5BF9;&#x4E8E;&#x6709;&#x53C2;&#x6570;&#x7684;sql&#x8BED;&#x53E5;&#x7F16;&#x5199;&#xFF0C;&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x7B2C;&#x4E8C;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;&#x53C2;&#x6570;&#x503C;&#x53EA;&#x9700;&#x5728;&#x5BF9;&#x5E94;&#x7684;&#x65B9;&#x6CD5;&#x53C2;&#x6570;&#x540D;&#x524D;&#x52A0;&#x5165;:&#x524D;&#x7F00;&#xFF0C;&#x8FD9;&#x5C31;&#x662F;&#x4F20;&#x53C2;&#x7684;&#x683C;&#x5F0F;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Query(&quot;SELECT * FROM contacts WHERE contacts_id = :id&quot;)</span><br><span class="line">fun getContactsById(id: Int): LiveData&lt;ContactsModel&gt;</span><br></pre></td></tr></table></figure>
+<p>Room&#x5C31;&#x662F;&#x8FD9;&#x4E48;&#x7B80;&#x5355;&#xFF0C;&#x901A;&#x8FC7;&#x5B9A;&#x4E49;&#x63A5;&#x53E3;&#x4E0E;&#x63A5;&#x53E3;&#x65B9;&#x6CD5;&#x7684;&#x5F62;&#x5F0F;&#xFF0C;&#x518D;&#x7ED3;&#x5408;&#x6CE8;&#x91CA;&#x6765;&#x7B80;&#x5316;&#x4EE3;&#x7801;&#x91CF;&#x4E0E;&#x590D;&#x6742;&#x5EA6;&#x3002;&#x5F53;&#x7136;&#x6700;&#x7EC8;Room&#x4F1A;&#x6839;&#x636E;&#x6CE8;&#x91CA;&#xFF0C;&#x7F16;&#x8BD1;&#x5668;&#x4F1A;&#x5E2E;&#x6211;&#x4EEC;&#x5B9E;&#x73B0;&#x8FD9;&#x4E9B;&#x63A5;&#x53E3;&#x65B9;&#x6CD5;&#x3002;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;build&#x9879;&#x76EE;&#xFF0C;&#x7136;&#x540E;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x641C;&#x7D22;&#x5230;ContactsDao_Impl&#x7C7B;&#xFF0C;&#x8FD9;&#x4E2A;&#x8BFB;&#x8005;&#x53EF;&#x4EE5;&#x81EA;&#x884C;&#x5C1D;&#x8BD5;&#x3002;&#x672C;&#x8D28;&#x662F;ContactsDao_Impl&#x5B9E;&#x73B0;&#x4E86;ContactsDao&#x63A5;&#x53E3;&#x3002;</p>
+<blockquote>
+<p>Room&#x7684;&#x5F3A;&#x5927;&#x4E4B;&#x4E00;&#x662F;&#xFF1A;&#x5B83;&#x53EF;&#x4EE5;&#x5728;&#x7F16;&#x8BD1;&#x65F6;&#x68C0;&#x6D4B;&#x4F60;&#x7684;SQL&#x8BED;&#x53E5;&#x662F;&#x5426;&#x7F16;&#x5199;&#x6B63;&#x786E;&#xFF0C;&#x5982;&#x679C;&#x7F16;&#x5199;&#x9519;&#x8BEF;&#x5C06;&#x5BFC;&#x81F4;&#x7F16;&#x8BD1;&#x5931;&#x8D25;&#x3002;&#x8FD9;&#x6837;&#x5C31;&#x53EF;&#x4EE5;&#x907F;&#x514D;App&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x5BFC;&#x81F4;&#x5D29;&#x6E83;&#x3002;&#x8FD9;&#x4E2A;&#x8BFB;&#x8005;&#x53EF;&#x4EE5;&#x81EA;&#x884C;&#x6D4B;&#x8BD5;&#x4E00;&#x4E0B;&#x3002;</p>
+</blockquote>
+<h3 id="Database"><a href="#Database" class="headerlink" title="Database"></a>Database</h3><p>&#x73B0;&#x5728;&#x6570;&#x636E;&#x8868;&#x6709;&#x4E86;&#xFF0C;&#x5BF9;&#x8868;&#x7684;&#x64CD;&#x4F5C;&#x65B9;&#x6CD5;&#x4E5F;&#x6709;&#x4E86;&#xFF0C;&#x6700;&#x540E;&#x5C31;&#x5DEE;&#x6570;&#x636E;&#x5E93;&#x6765;&#x4FDD;&#x5B58;&#x5404;&#x4E2A;&#x6570;&#x636E;&#x8868;&#x4E86;&#x3002;Talk is cheap. Show me the code&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">@Database(entities = arrayOf(ContactsModel::class), version = 1)</span><br><span class="line">abstract class ContactsDataBase : RoomDatabase() {</span><br><span class="line"> </span><br><span class="line">    abstract fun contactsDao(): ContactsDao</span><br><span class="line"> </span><br><span class="line">    companion object {</span><br><span class="line">        private var instance: ContactsDataBase? = null</span><br><span class="line">        fun getInstance(context: Context): ContactsDataBase {</span><br><span class="line">            if (instance == null) {</span><br><span class="line">                instance = Room.databaseBuilder(context.applicationContext,</span><br><span class="line">                        ContactsDataBase::class.java,</span><br><span class="line">                        &quot;contacts.db&quot;).build()</span><br><span class="line">            }</span><br><span class="line">            return instance as ContactsDataBase</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6CA1;&#x9519;&#xFF0C;&#x8FD8;&#x662F;&#x4F7F;&#x7528;&#x6CE8;&#x91CA;&#xFF0C;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x5B9A;&#x4E49;ContactsDataBase&#x62BD;&#x8C61;&#x7C7B;&#xFF0C;&#x8BA9;&#x5B83;&#x7EE7;&#x627F;RoomDatabase&#x62BD;&#x8C61;&#x7C7B;&#x3002;&#x5F53;&#x7136;&#x4E5F;&#x662F;&#x540C;@Database&#x6765;&#x6807;&#x660E;&#x5B83;&#x662F;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x5E93;&#x3002;&#x5B83;&#x63A5;&#x6536;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x5206;&#x522B;&#x4E3A;entities&#x4E0E;version&#xFF0C;&#x524D;&#x8005;&#x63A5;&#x6536;&#x7684;&#x7C7B;&#x578B;&#x662F;Class[]&#x6570;&#x7EC4;&#xFF0C;&#x5185;&#x5BB9;&#x4E3A;&#x5BF9;&#x4E8E;&#x8868;&#x7684;Class&#xFF1B;&#x540E;&#x8005;&#x662F;int&#x7684;&#x6570;&#x636E;&#x5E93;&#x7248;&#x672C;&#x53F7;&#x3002;</p>
+<p>&#x5728;ContactsDataBase&#x4E2D;&#x8FD8;&#x9700;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x62BD;&#x8C61;&#x65B9;&#x6CD5;&#xFF0C;&#x8BA9;&#x5B83;&#x8FD4;&#x56DE;&#x7531;@Dao&#x6CE8;&#x91CA;&#x7684;ContactsDao&#xFF0C;&#x5373;&#x63D0;&#x4F9B;&#x83B7;&#x53D6;&#x6570;&#x636E;&#x8868;&#x7684;&#x65B9;&#x6CD5;&#x3002;&#x672C;&#x8D28;&#x7684;&#x4E3A;&#x6570;&#x636E;&#x5E93;&#x66B4;&#x9732;&#x64CD;&#x4F5C;&#x6570;&#x636E;&#x8868;&#x7684;&#x5165;&#x53E3;&#x3002;&#x81F3;&#x4E8E;&#x5B83;&#x7684;&#x5177;&#x4F53;&#x65B9;&#x6CD5;&#x5B9E;&#x73B0;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;build&#x6765;&#x67E5;&#x770B;&#x5BF9;&#x5E94;&#x7684;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x6587;&#x4EF6;ContactsDataBase_Impl&#x7C7B;&#x3002;</p>
+<p>&#x56E0;&#x4E3A;contactsDao&#x662F;&#x6570;&#x636E;&#x5E93;&#x7684;&#x552F;&#x4E00;&#x5165;&#x53E3;&#xFF0C;&#x907F;&#x514D;&#x6BCF;&#x6B21;&#x5BF9;&#x6570;&#x636E;&#x5E93;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#x65F6;&#x90FD;&#x521B;&#x5EFA;ContactsDataBase&#x5B9E;&#x4F8B;&#xFF0C;&#x5982;&#x4E0A;&#x4EE3;&#x7801;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5355;&#x4F8B;&#x6A21;&#x5F0F;&#x6765;&#x51CF;&#x5C11;&#x5B9E;&#x4F8B;&#x9891;&#x7E41;&#x521B;&#x5EFA;&#x7684;&#x5F00;&#x9500;&#x3002;</p>
+<h3 id="&#x4F7F;&#x7528;"><a href="#&#x4F7F;&#x7528;" class="headerlink" title="&#x4F7F;&#x7528;"></a>&#x4F7F;&#x7528;</h3><p>&#x7ECF;&#x8FC7;&#x4E0A;&#x9762;&#x7684;Entity&#x3001;DAO&#x4E0E;Database&#x7684;&#x521B;&#x5EFA;&#xFF0C;&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x6709;&#x4E86;&#x5B8C;&#x6574;&#x7684;&#x672C;&#x5730;&#x6570;&#x636E;&#x5E93;&#x7ED3;&#x6784;&#x3002;&#x63A5;&#x4E0B;&#x6765;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x53F2;&#x4E0A;&#x6700;&#x7B80;&#x6570;&#x636E;&#x5E93;&#x4F7F;&#x7528;&#x7684;&#x8C03;&#x7528;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private val mContactsDao by lazy { ContactsDataBase.getInstance(application).contactsDao() }</span><br><span class="line"> </span><br><span class="line">fun getContactsById(id: Int): LiveData&lt;ContactsModel&gt; = mContactsDao.getContactsById(id)</span><br></pre></td></tr></table></figure>
+<p>&#x4F60;&#x6CA1;&#x770B;&#x9519;&#x53EA;&#x9700;&#x4E24;&#x884C;&#x4EE3;&#x7801;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x80FD;&#x83B7;&#x53D6;&#x6570;&#x636E;&#x5E93;&#x4E2D;Contacts&#x8868;&#x4E2D;&#x7684;&#x6240;&#x7528;&#x6570;&#x636E;&#x3002;</p>
+<p>&#x7B2C;&#x4E00;&#x884C;&#x4EE3;&#x7801;&#x6211;&#x4EEC;&#x83B7;&#x53D6;&#x4E86;ContactsDao&#x5B9E;&#x4F8B;&#xFF0C;&#x8BE5;&#x5B9E;&#x4F8B;&#x5305;&#x542B;&#x64CD;&#x4F5C;&#x6570;&#x636E;&#x8868;&#x7684;&#x6240;&#x4EE5;&#x65B9;&#x6CD5;&#x3002;&#x800C;&#x7B2C;&#x4E8C;&#x884C;&#x4EE3;&#x7801;&#x5C31;&#x662F;&#x8C03;&#x7528;ContactsDao&#x4E2D;&#x7684;&#x64CD;&#x4F5C;&#x65B9;&#x6CD5;&#x3002;&#x8FD4;&#x56DE;&#x6211;&#x4EEC;&#x6240;&#x9700;&#x7684;&#x6570;&#x636E;&#x3002;</p>
+<p>&#x5728;&#x7B2C;&#x4E8C;&#x884C;&#x4EE3;&#x7801;&#xFF0C;&#x7EC6;&#x5FC3;&#x7684;&#x4F60;&#x4EEC;&#x53EF;&#x80FD;&#x4F1A;&#x53D1;&#x73B0;&#x5B83;&#x8FD4;&#x56DE;&#x4E86;LiveData<contactsmodel>&#x7C7B;&#x578B;&#x6570;&#x636E;&#x3002;&#x5B83;&#x662F;ACC&#x7684;&#x53E6;&#x4E00;&#x5F3A;&#x5927;&#x7EC4;&#x4EF6;&#xFF0C;&#x8FD9;&#x4E5F;&#x662F;Room&#x7684;&#x53E6;&#x4E00;&#x5F3A;&#x5927;&#x4E4B;&#x5904;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;LiveData&#x6570;&#x636E;&#x7C7B;&#x578B;&#xFF0C;&#x5B8C;&#x7F8E;&#x4E0E;LiveData&#x7ED3;&#x5408;&#x3002;&#x81F3;&#x4E8E;LiveData&#x7684;&#x4F5C;&#x7528;&#xFF0C;&#x656C;&#x8BF7;&#x5173;&#x6CE8;&#x4E0B;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;Android Architecture Components Part2:LiveData&#x3002;</contactsmodel></p>
+<h2 id="&#x603B;&#x7ED3;"><a href="#&#x603B;&#x7ED3;" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</h2><p>&#x5982;&#x679C;&#x4F60;&#x7684;App&#x4F7F;&#x7528;&#x4E86;Room&#xFF0C;&#x90A3;&#x4E48;&#x4F60;&#x7684;App&#x672C;&#x5730;&#x6570;&#x636E;&#x83B7;&#x53D6;&#x67B6;&#x6784;&#x5C06;&#x4F1A;&#x662F;&#x8FD9;&#x6837;&#x7684;</p>
+<p><img src="/2018/06/07/Android-Architecture-Components-Part1-Room/room.png" alt="Room"></p>
+<p>&#x6700;&#x540E;&#x6587;&#x7AE0;&#x4E2D;&#x7684;&#x4EE3;&#x7801;&#x90FD;&#x53EF;&#x4EE5;&#x5728;<a href="https://github.com/idisfkj/android-api-analysis" target="_blank" rel="noopener">Github</a>&#x4E2D;&#x83B7;&#x53D6;&#x5230;&#x3002;&#x4F7F;&#x7528;&#x65F6;&#x8BF7;&#x5C06;&#x5206;&#x652F;&#x5207;&#x6362;&#x5230;<strong>feat_architecture_components</strong></p>
+<h2 id="&#x76F8;&#x5173;&#x6587;&#x7AE0;"><a href="#&#x76F8;&#x5173;&#x6587;&#x7AE0;" class="headerlink" title="&#x76F8;&#x5173;&#x6587;&#x7AE0;"></a>&#x76F8;&#x5173;&#x6587;&#x7AE0;</h2><p><a href="https://idisfkj.github.io/2018/06/10/Android-Architecture-Components-Part2-LiveData/" target="_blank" rel="noopener">Android Architecture Components Part2:LiveData</a><br><a href="https://idisfkj.github.io/2018/06/14/Android-Architecture-Components-Part3-Lifecycle/" target="_blank" rel="noopener">Android Architecture Components Part3:Lifecycle</a><br><a href="https://idisfkj.github.io/2018/06/22/Android-Architecture-Components-Part4-ViewModel/" target="_blank" rel="noopener">Android Architecture Components Part4:ViewModel</a></p>
+<h2 id="&#x5173;&#x6CE8;"><a href="#&#x5173;&#x6CE8;" class="headerlink" title="&#x5173;&#x6CE8;"></a>&#x5173;&#x6CE8;</h2><p><img src="/2018/06/07/Android-Architecture-Components-Part1-Room/wx.jpg" alt="&#x602A;&#x8C08;&#x65F6;&#x95F4;&#x5230;&#x4E86;"></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/05/03/ConstraintLayout使用汇总/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/06/10/Android-Architecture-Components-Part2-LiveData/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Thu Jun 07 2018 21:48:05 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

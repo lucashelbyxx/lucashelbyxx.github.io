@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Binder: ServiceManager的获取 | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="binder,">
+  
+
+  <meta name="description" content="&amp;#x5728;Binder&amp;#x7EAF;&amp;#x7406;&amp;#x8BBA;&amp;#x5206;&amp;#x6790;&amp;#x4E2D;&amp;#x4ECB;&amp;#x7ECD;&amp;#x4E86;Binder&amp;#x7684;&amp;#x6574;&amp;#x4E2A;&amp;#x901A;&amp;#x4FE1;&amp;#x6D41;&amp;#x7A0B;&amp;#x3002; &amp;#x4E0B;&amp;#x9762;&amp;#x6211;&amp;#x4EEC;&amp;#x76F4;&amp;#x">
+<meta name="keywords" content="binder">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Binder: ServiceManager的获取">
+<meta property="og:url" content="https://www.rousetime.com/2021/01/26/Binder-ServiceManager的获取/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="&amp;#x5728;Binder&amp;#x7EAF;&amp;#x7406;&amp;#x8BBA;&amp;#x5206;&amp;#x6790;&amp;#x4E2D;&amp;#x4ECB;&amp;#x7ECD;&amp;#x4E86;Binder&amp;#x7684;&amp;#x6574;&amp;#x4E2A;&amp;#x901A;&amp;#x4FE1;&amp;#x6D41;&amp;#x7A0B;&amp;#x3002; &amp;#x4E0B;&amp;#x9762;&amp;#x6211;&amp;#x4EEC;&amp;#x76F4;&amp;#x">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2022-12-01T13:48:29.842Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Binder: ServiceManager的获取">
+<meta name="twitter:description" content="&amp;#x5728;Binder&amp;#x7EAF;&amp;#x7406;&amp;#x8BBA;&amp;#x5206;&amp;#x6790;&amp;#x4E2D;&amp;#x4ECB;&amp;#x7ECD;&amp;#x4E86;Binder&amp;#x7684;&amp;#x6574;&amp;#x4E2A;&amp;#x901A;&amp;#x4FE1;&amp;#x6D41;&amp;#x7A0B;&amp;#x3002; &amp;#x4E0B;&amp;#x9762;&amp;#x6211;&amp;#x4EEC;&amp;#x76F4;&amp;#x">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ProcessState"><span class="toc-text">ProcessState</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BpServiceManager"><span class="toc-text">BpServiceManager</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推荐"><span class="toc-text">推荐</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Binder-ServiceManager的获取" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Binder: ServiceManager的获取</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2021.01.26</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>&#x5728;<a href="https://mp.weixin.qq.com/s?__biz=MzIzNTc5NDY4Nw==&amp;mid=2247485503&amp;idx=1&amp;sn=170681578f1e2aa1991463103084b32b&amp;chksm=e8e0f1afdf9778b9fadd0dfc1265211e0b0305077f007fd085ebd2e54d6ea28a7fc5d49b07df&amp;token=2134605925&amp;lang=zh_CN#rd" target="_blank" rel="noopener">Binder&#x7EAF;&#x7406;&#x8BBA;&#x5206;&#x6790;</a>&#x4E2D;&#x4ECB;&#x7ECD;&#x4E86;Binder&#x7684;&#x6574;&#x4E2A;&#x901A;&#x4FE1;&#x6D41;&#x7A0B;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x76F4;&#x63A5;&#x901A;&#x8FC7;Service&#x7684;&#x6CE8;&#x518C;&#x6765;&#x4E86;&#x89E3;&#x4E00;&#x4E0B;Binder&#x7684;&#x5177;&#x4F53;&#x5DE5;&#x4F5C;&#x539F;&#x7406;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x4EE5;MediaService&#x4E3A;&#x4F8B;&#xFF0C;&#x6765;&#x770B;&#x4E0B;service&#x7684;&#x6CE8;&#x518C;&#x8FC7;&#x7A0B;&#x3002;MediaService&#x5BF9;&#x5E94;&#x7684;&#x542F;&#x52A8;&#x6587;&#x4EF6;&#x5728;main_mediaserver.cpp&#x4E2D;&#x7684;main&#x65B9;&#x6CD5;&#x3002;</p>
+<blockquote>
+<p>frameworks/av/media/mediaserver/main_mediaserver.cpp</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc __unused, char **argv __unused)</span><br><span class="line">{</span><br><span class="line">    signal(SIGPIPE, SIG_IGN);</span><br><span class="line"> </span><br><span class="line">    sp&lt;ProcessState&gt; proc(ProcessState::self());</span><br><span class="line">    sp&lt;IServiceManager&gt; sm(defaultServiceManager());</span><br><span class="line">    ALOGI(&quot;ServiceManager: %p&quot;, sm.get());</span><br><span class="line">    MediaPlayerService::instantiate();</span><br><span class="line">    ResourceManagerService::instantiate();</span><br><span class="line">    registerExtensions();</span><br><span class="line">    ::android::hardware::configureRpcThreadpool(16, false);</span><br><span class="line">    ProcessState::self()-&gt;startThreadPool();</span><br><span class="line">    IPCThreadState::self()-&gt;joinThreadPool();</span><br><span class="line">    ::android::hardware::joinRpcThreadpool();</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h2 id="ProcessState"><a href="#ProcessState" class="headerlink" title="ProcessState"></a>ProcessState</h2><p>&#x9996;&#x5148;&#x521B;&#x5EFA;&#x4E86;ProcessState&#xFF0C;&#x5B83;&#x4F7F;&#x7528;&#x4E86;sp&#x7684;&#x5F3A;&#x5F15;&#x7528;&#x7C7B;&#x578B;&#x3002;</p>
+<p>ProcessState::self&#x5185;&#x90E8;&#x662F;&#x4E00;&#x4E2A;&#x5355;&#x4F8B;&#xFF0C;&#x5982;&#x679C;&#x4E3A;&#x7A7A;&#x5B83;&#x4F1A;&#x521B;&#x5EFA;ProcessState&#x5BF9;&#x8C61;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">ProcessState::ProcessState(const char *driver)</span><br><span class="line">    : mDriverName(String8(driver))</span><br><span class="line">    , mDriverFD(open_driver(driver)) // &#x542F;&#x52A8;binder&#x9A71;&#x52A8;</span><br><span class="line">    , mVMStart(MAP_FAILED)</span><br><span class="line">    , mThreadCountLock(PTHREAD_MUTEX_INITIALIZER)</span><br><span class="line">    , mThreadCountDecrement(PTHREAD_COND_INITIALIZER)</span><br><span class="line">    , mExecutingThreadsCount(0)</span><br><span class="line">    , mWaitingForThreads(0)</span><br><span class="line">    , mMaxThreads(DEFAULT_MAX_BINDER_THREADS) // &#x8BBE;&#x7F6E;&#x6700;&#x5927;&#x7EBF;&#x7A0B;&#x6570;</span><br><span class="line">    , mStarvationStartTimeMs(0)</span><br><span class="line">    , mThreadPoolStarted(false)</span><br><span class="line">    , mThreadPoolSeq(1)</span><br><span class="line">    , mCallRestriction(CallRestriction::NONE)</span><br><span class="line">{</span><br><span class="line">    if (mDriverFD &gt;= 0) {</span><br><span class="line">        // &#x6620;&#x5C04;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x5730;&#x5740;</span><br><span class="line">        mVMStart = mmap(nullptr, BINDER_VM_SIZE, PROT_READ, MAP_PRIVATE | MAP_NORESERVE, mDriverFD, 0);</span><br><span class="line">        if (mVMStart == MAP_FAILED) {</span><br><span class="line">            // *sigh*</span><br><span class="line">            ALOGE(&quot;Using %s failed: unable to mmap transaction memory.\n&quot;, mDriverName.c_str());</span><br><span class="line">            close(mDriverFD);</span><br><span class="line">            mDriverFD = -1;</span><br><span class="line">            mDriverName.clear();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    LOG_ALWAYS_FATAL_IF(mDriverFD &lt; 0, &quot;Binder driver &apos;%s&apos; could not be opened.  Terminating.&quot;, driver);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x9762;&#x662F;ProcessState&#x7684;&#x5B9E;&#x4F8B;&#x5316;&#x8FC7;&#x7A0B;&#xFF0C;&#x4E3B;&#x8981;&#x6709;&#x4EE5;&#x4E0B;&#x4E09;&#x4E2A;&#x91CD;&#x8981;&#x7684;&#x8BBE;&#x7F6E;&#x3002;</p>
+<ol>
+<li>open_driver(driver): &#x542F;&#x52A8;binder&#x9A71;&#x52A8;</li>
+<li>mMaxThreads(DEFAULT_MAX_BINDER_THREADS): &#x8BBE;&#x7F6E;&#x6700;&#x5927;&#x7EBF;&#x7A0B;&#x6570;16</li>
+<li>mmap: &#x6620;&#x5C04;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x5730;&#x5740;</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">static int open_driver(const char *driver)</span><br><span class="line">{</span><br><span class="line">	// &#x6253;&#x5F00;binder&#x9A71;&#x52A8;</span><br><span class="line">    int fd = open(driver, O_RDWR | O_CLOEXEC);</span><br><span class="line">    if (fd &gt;= 0) {</span><br><span class="line">        int vers = 0;</span><br><span class="line">        // &#x901A;&#x8FC7;ioctl&#x4E0E;binder&#x9A71;&#x52A8;&#x4EA4;&#x4E92;&#xFF0C;&#x83B7;&#x53D6;binder&#x7248;&#x672C;&#x4FE1;&#x606F;</span><br><span class="line">        status_t result = ioctl(fd, BINDER_VERSION, &amp;vers);</span><br><span class="line">        if (result == -1) {</span><br><span class="line">            ALOGE(&quot;Binder ioctl to obtain version failed: %s&quot;, strerror(errno));</span><br><span class="line">            close(fd);</span><br><span class="line">            fd = -1;</span><br><span class="line">        }</span><br><span class="line">        if (result != 0 || vers != BINDER_CURRENT_PROTOCOL_VERSION) {</span><br><span class="line">          ALOGE(&quot;Binder driver protocol(%d) does not match user space protocol(%d)! ioctl() return value: %d&quot;,</span><br><span class="line">                vers, BINDER_CURRENT_PROTOCOL_VERSION, result);</span><br><span class="line">            close(fd);</span><br><span class="line">            fd = -1;</span><br><span class="line">        }</span><br><span class="line">        // &#x8BBE;&#x7F6E;&#x6700;&#x5927;&#x7EBF;&#x7A0B;&#x6570;</span><br><span class="line">        size_t maxThreads = DEFAULT_MAX_BINDER_THREADS;</span><br><span class="line">        result = ioctl(fd, BINDER_SET_MAX_THREADS, &amp;maxThreads);</span><br><span class="line">        if (result == -1) {</span><br><span class="line">            ALOGE(&quot;Binder ioctl to set max threads failed: %s&quot;, strerror(errno));</span><br><span class="line">        }</span><br><span class="line">    } else {</span><br><span class="line">        ALOGW(&quot;Opening &apos;%s&apos; failed: %s\n&quot;, driver, strerror(errno));</span><br><span class="line">    }</span><br><span class="line">    return fd;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;open_driver&#x4E2D;&#x901A;&#x8FC7;open&#x6253;&#x5F00;binder&#x9A71;&#x52A8;&#xFF0C;&#x5728;binder&#x9A71;&#x52A8;&#x4E2D;&#x5BF9;&#x5E94;&#x7684;&#x65B9;&#x6CD5;&#x662F;binder_open&#xFF0C;&#x5B83;&#x4F1A;&#x521B;&#x5EFA;binder_proc&#x5BF9;&#x8C61;&#xFF0C;&#x5E76;&#x5C06;&#x8FDB;&#x7A0B;&#x7B49;&#x76F8;&#x5173;&#x4FE1;&#x606F;&#x4FDD;&#x5B58;&#x5230;binder_proc&#x5BF9;&#x8C61;&#x4E2D;&#xFF0C;&#x5E76;&#x8FD4;&#x56DE;fd&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x3002;</p>
+<p>&#x5728;Linux&#x4E2D;&#x901A;&#x8FC7;ioctl&#x65B9;&#x6CD5;&#x4E0E;&#x8BBE;&#x5907;&#x8FDB;&#x884C;&#x4EA4;&#x4E92;&#xFF0C;&#x83B7;&#x53D6;binder&#x7684;&#x7248;&#x672C;&#x4FE1;&#x606F;&#xFF0C;&#x540C;&#x65F6;&#x8BBE;&#x7F6E;binder&#x7684;&#x6700;&#x5927;&#x7EBF;&#x7A0B;&#x6570;16&#x3002;&#x5728;binder&#x9A71;&#x52A8;&#x4E2D;&#x5BF9;&#x5E94;&#x7684;&#x662F;binder_ioctl&#x65B9;&#x6CD5;&#xFF0C;&#x8BE5;&#x65B9;&#x6CD5;&#x4E3B;&#x8981;&#x901A;&#x8FC7;fd&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x3001;ioctl&#x547D;&#x4EE4;&#x4E0E;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x6765;&#x4F20;&#x9012;&#x6570;&#x636E;&#x3002;</p>
+<p>&#x5728;ProcessState&#x521B;&#x5EFA;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x4F1A;&#x901A;&#x8FC7;mmap&#x65B9;&#x6CD5;&#xFF0C;&#x5728;binder&#x9A71;&#x52A8;&#x4E2D;&#x5BF9;&#x5E94;&#x7684;&#x662F;binder_mmap&#x65B9;&#x6CD5;&#xFF0C;&#x5C06;&#x5185;&#x6838;&#x4E2D;&#x540C;&#x4E00;&#x5757;&#x7269;&#x7406;&#x5185;&#x5B58;&#x5206;&#x522B;&#x6620;&#x5C04;&#x5230;&#x5185;&#x6838;&#x7684;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x5730;&#x5740;&#x7A7A;&#x95F4;&#x4E0E;&#x7528;&#x6237;&#x7684;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x5730;&#x5740;&#x7A7A;&#x95F4;&#xFF0C;&#x4FDD;&#x8BC1;&#x5185;&#x6838;&#x7A7A;&#x95F4;buffer&#x4E0E;&#x7528;&#x6237;&#x7A7A;&#x95F4;buffer&#x7684;&#x540C;&#x6B65;&#x64CD;&#x4F5C;&#x3002;</p>
+<p>&#x4EE5;&#x4E0A;&#x5C31;&#x662F;ProcessState&#x7684;&#x4E3B;&#x8981;&#x6D41;&#x7A0B;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x7EE7;&#x7EED;main&#x65B9;&#x6CD5;&#x4E2D;&#x7684;&#x4E0B;&#x4E00;&#x6B65;&#x64CD;&#x4F5C;&#x3002;</p>
+<h2 id="BpServiceManager"><a href="#BpServiceManager" class="headerlink" title="BpServiceManager"></a>BpServiceManager</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sp&lt;IServiceManager&gt; sm(defaultServiceManager());</span><br></pre></td></tr></table></figure>
+<p>&#x83B7;&#x53D6;IServiceManager&#x5BF9;&#x8C61;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x8FDB;&#x5165;defaultServiceManager&#x65B9;&#x6CD5;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">sp&lt;IServiceManager&gt; defaultServiceManager()</span><br><span class="line"> {</span><br><span class="line">     std::call_once(gSmOnce, []() {</span><br><span class="line">         sp&lt;AidlServiceManager&gt; sm = nullptr;</span><br><span class="line">         while (sm == nullptr) {</span><br><span class="line">             // &#x91CD;&#x8981;&#x65B9;&#x6CD5;&#xFF0C;&#x83B7;&#x53D6;ServiceManager</span><br><span class="line">             sm = interface_cast&lt;AidlServiceManager&gt;(ProcessState::self()-&gt;getContextObject(nullptr));</span><br><span class="line">             if (sm == nullptr) {</span><br><span class="line">                 ALOGE(&quot;Waiting 1s on context object on %s.&quot;, ProcessState::self()-&gt;getDriverName().c_str());</span><br><span class="line">                 sleep(1);</span><br><span class="line">             }</span><br><span class="line">         }</span><br><span class="line">         gDefaultServiceManager = new ServiceManagerShim(sm);</span><br><span class="line">     });</span><br><span class="line">     return gDefaultServiceManager;</span><br><span class="line"> }</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x8BE5;&#x65B9;&#x6CD5;&#x4E2D;&#x6211;&#x4EEC;&#x53D1;&#x73B0;&#x5B83;&#x4F1A;&#x901A;&#x8FC7;interface_cast&#x6765;&#x83B7;&#x53D6;sm&#xFF0C;&#x8FD9;&#x91CC;&#x7684;AidlServiceManager&#x672C;&#x8D28;&#x5C31;&#x662F;IServiceManager&#x3002;&#x6211;&#x4EEC;&#x5148;&#x628A;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x653E;&#x4E00;&#x653E;&#xFF0C;&#x5148;&#x770B;&#x4E0B;&#x5B83;&#x7684;&#x53C2;&#x6570;&#x83B7;&#x53D6;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ProcessState::self()-&gt;getContextObject(nullptr)</span><br></pre></td></tr></table></figure>
+<p>&#x55EF;&#xFF0C;&#x53C8;&#x770B;&#x5230;&#x4E86;ProcessState::self()&#xFF0C;&#x524D;&#x9762;&#x5DF2;&#x7ECF;&#x5206;&#x6790;&#x4E86;&#xFF0C;&#x5B83;&#x5C31;&#x662F;&#x4E00;&#x4E2A;ProcessState&#x5355;&#x4F8B;&#xFF0C;&#x6240;&#x4EE5;&#x76F4;&#x63A5;&#x770B;getContextObject&#x65B9;&#x6CD5;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sp&lt;IBinder&gt; ProcessState::getContextObject(const sp&lt;IBinder&gt;&amp; /*caller*/)</span><br><span class="line">{</span><br><span class="line">    sp&lt;IBinder&gt; context = getStrongProxyForHandle(0);</span><br><span class="line">    if (context == nullptr) {</span><br><span class="line">       ALOGW(&quot;Not able to get context object on %s.&quot;, mDriverName.c_str());</span><br><span class="line">    }</span><br><span class="line">    internal::Stability::tryMarkCompilationUnit(context.get());</span><br><span class="line">    return context;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD4;&#x56DE;&#x4E86;IBinder&#xFF0C;&#x8FD9;&#x662F;&#x6211;&#x4EEC;&#x7B2C;&#x4E00;&#x6B21;&#x770B;&#x5230;IBinder&#xFF0C;&#x611F;&#x89C9;&#x6709;&#x70B9;&#x7709;&#x76EE;&#x4E86;&#xFF0C;&#x7EE7;&#x7EED;&#x770B;getStrongProxyForHandle(0)&#xFF0C;&#x6CE8;&#x610F;&#x5B83;&#x8FD9;&#x91CC;&#x4F20;&#x4E86;&#x4E00;&#x4E2A;&#x53C2;&#x6570;0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">sp&lt;IBinder&gt; ProcessState::getStrongProxyForHandle(int32_t handle)</span><br><span class="line"> {</span><br><span class="line">     sp&lt;IBinder&gt; result;</span><br><span class="line">     AutoMutex _l(mLock);</span><br><span class="line">     handle_entry* e = lookupHandleLocked(handle);</span><br><span class="line">     if (e != nullptr) {</span><br><span class="line">         IBinder* b = e-&gt;binder;</span><br><span class="line">         if (b == nullptr || !e-&gt;refs-&gt;attemptIncWeak(this)) {</span><br><span class="line">             if (handle == 0) {</span><br><span class="line">                 Parcel data;</span><br><span class="line">                 // &#x6570;&#x636E;&#x4F20;&#x8F93;</span><br><span class="line">                 status_t status = IPCThreadState::self()-&gt;transact(</span><br><span class="line">                         0, IBinder::PING_TRANSACTION, data, nullptr, 0);</span><br><span class="line">                 if (status == DEAD_OBJECT)</span><br><span class="line">                    return nullptr;</span><br><span class="line">             }</span><br><span class="line">             // &#x521B;&#x5EFA;BpBinder</span><br><span class="line">             b = BpBinder::create(handle);</span><br><span class="line">             e-&gt;binder = b;</span><br><span class="line">             if (b) e-&gt;refs = b-&gt;getWeakRefs();</span><br><span class="line">             result = b;</span><br><span class="line">         } else {</span><br><span class="line">             result.force_set(b);</span><br><span class="line">             e-&gt;refs-&gt;decWeak(this);</span><br><span class="line">         }</span><br><span class="line">     }</span><br><span class="line">     return result;</span><br><span class="line"> }</span><br></pre></td></tr></table></figure>
+<p>IPCThreadState::self()&#x4E5F;&#x662F;&#x4E00;&#x4E2A;&#x5355;&#x4F8B;&#xFF0C;&#x901A;&#x8FC7;&#x5B83;&#x7684;transact&#x65B9;&#x6CD5;&#x5411;&#x8FDC;&#x7AEF;&#x53D1;&#x9001;&#x6570;&#x636E;&#xFF0C;&#x5173;&#x4E8E;&#x6570;&#x636E;&#x7684;&#x53D1;&#x9001;&#x672C;&#x671F;&#x4E0D;&#x5206;&#x6790;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x6682;&#x4E14;&#x8DF3;&#x8FC7;&#x3002;</p>
+<p>&#x7EE7;&#x7EED;&#xFF0C;&#x521B;&#x5EFA;&#x4E86;BpBinder&#xFF0C;&#x5E76;&#x5C06;handler = 0&#x4F20;&#x7ED9;&#x5B83;&#xFF0C;&#x6700;&#x7EC8;&#x901A;&#x8FC7;result&#x8FD4;&#x56DE;&#x7684;&#x5C31;&#x662F;BpBinder(0)&#xFF0C;&#x6B64;&#x65F6;&#x5DF2;&#x7ECF;&#x83B7;&#x53D6;&#x5230;&#x4E86;IBinder&#xFF0C;&#x4F5C;&#x4E3A;&#x8DE8;&#x8FDB;&#x7A0B;&#x901A;&#x4FE1;&#x7684;&#x8F7D;&#x4F53;&#x3002;</p>
+<p>&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x5411;&#x4E0A;&#x56DE;&#x9000;&#xFF0C;&#x56DE;&#x5230;&#x6700;&#x521D;&#x7684;&#x5730;&#x65B9;interface_cast&#xFF0C;&#x73B0;&#x5728;&#x5DF2;&#x7ECF;&#x77E5;&#x9053;&#x5B83;&#x7684;&#x53C2;&#x6570;&#x5176;&#x5B9E;&#x5C31;&#x662F;BpBinder(0)&#xFF0C;&#x5373;interface_cast(BpBinder(0))&#x3002;</p>
+<p>&#x73B0;&#x5728;&#x5C31;&#x53EA;&#x5269;&#x4E0B;interface_cast&#x4E86;&#xFF0C;&#x53EA;&#x8981;&#x6211;&#x4EEC;&#x89E3;&#x5F00;&#x5B83;&#x5C31;&#x80FD;&#x77E5;&#x9053;ServiceManager&#x662F;&#x5982;&#x4F55;&#x521B;&#x5EFA;&#x5E76;&#x83B7;&#x53D6;&#x7684;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">template&lt;typename INTERFACE&gt;</span><br><span class="line">inline sp&lt;INTERFACE&gt; interface_cast(const sp&lt;IBinder&gt;&amp; obj)</span><br><span class="line">{</span><br><span class="line">    return INTERFACE::asInterface(obj);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x53D1;&#x73B0;&#x5B83;&#x8C03;&#x7528;&#x4E86;INTERFACE&#x7684;asInterface&#x65B9;&#x6CD5;&#xFF0C;&#x90A3;&#x4E48;INTERFACE&#x53C8;&#x662F;&#x4EC0;&#x4E48;&#x5462;&#xFF1F;</p>
+<p>&#x627E;&#x4E86;&#x4E00;&#x5708;&#x53D1;&#x73B0;&#x5B83;&#x5C45;&#x7136;&#x662F;&#x4E00;&#x4E2A;&#x6A21;&#x677F;&#xFF0C;&#x58F0;&#x660E;&#x5982;&#x4E0B;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#define DECLARE_META_INTERFACE(INTERFACE)                               </span><br><span class="line"> public:                                                                 </span><br><span class="line">     static const ::android::String16 descriptor;                        </span><br><span class="line">     static ::android::sp&lt;I##INTERFACE&gt; asInterface(                    </span><br><span class="line">             const ::android::sp&lt;::android::IBinder&gt;&amp; obj);              </span><br><span class="line">     virtual const ::android::String16&amp; getInterfaceDescriptor() const;  </span><br><span class="line">     I##INTERFACE();                                                     </span><br><span class="line">     virtual ~I##INTERFACE();                                           </span><br><span class="line">     static bool setDefaultImpl(std::unique_ptr&lt;I##INTERFACE&gt; impl);    </span><br><span class="line">     static const std::unique_ptr&lt;I##INTERFACE&gt;&amp; getDefaultImpl();      </span><br><span class="line"> private:                                                                </span><br><span class="line">     static std::unique_ptr&lt;I##INTERFACE&gt; default_impl</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x7684;INTERFACE&#x5C31;&#x662F;ServiceManager&#xFF0C;&#x5728;&#x6A21;&#x677F;&#x58F0;&#x660E;&#x4E2D;&#x770B;&#x5230;&#x4E86;&#x6211;&#x4EEC;&#x6240;&#x8981;&#x7684;asInterface&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x518D;&#x770B;&#x6A21;&#x677F;&#x51FD;&#x6570;&#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">IMPLEMENT_META_INTERFACE(ServiceManager, &quot;android.os.IServiceManager&quot;);</span><br><span class="line"> #define IMPLEMENT_META_INTERFACE(INTERFACE, NAME)</span><br><span class="line">      const ::android::StaticString16                                     </span><br><span class="line">          I##INTERFACE##_descriptor_static_str16(__IINTF_CONCAT(u, NAME));</span><br><span class="line">      const ::android::String16 I##INTERFACE::descriptor(                 </span><br><span class="line">          I##INTERFACE##_descriptor_static_str16);                        </span><br><span class="line">      const ::android::String16&amp;                                          </span><br><span class="line">              I##INTERFACE::getInterfaceDescriptor() const {              </span><br><span class="line">          return I##INTERFACE::descriptor;                                </span><br><span class="line">      }                                                                   </span><br><span class="line">      ::android::sp&lt;I##INTERFACE&gt; I##INTERFACE::asInterface(              </span><br><span class="line">              const ::android::sp&lt;::android::IBinder&gt;&amp; obj)               </span><br><span class="line">      {                                                                   </span><br><span class="line">          ::android::sp&lt;I##INTERFACE&gt; intr;                               </span><br><span class="line">          if (obj != nullptr) {                                           </span><br><span class="line">              intr = static_cast&lt;I##INTERFACE*&gt;(                          </span><br><span class="line">                  obj-&gt;queryLocalInterface(                               </span><br><span class="line">                         I##INTERFACE::descriptor).get());               </span><br><span class="line">             if (intr == nullptr) {                                      </span><br><span class="line">                  intr = new Bp##INTERFACE(obj);                         </span><br><span class="line">             }                                                           </span><br><span class="line">          }                                                               </span><br><span class="line">          return intr;                                                    </span><br><span class="line">      }                      </span><br><span class="line">		...</span><br></pre></td></tr></table></figure>
+<p>&#x5C06;INTERFACE&#x66FF;&#x6362;&#x6210;ServiceManager&#x6765;&#x770B;&#xFF0C;&#x6700;&#x7EC8;&#x901A;&#x8FC7;asInterface&#x8FD4;&#x56DE;&#x7684;&#x662F;BpServiceManager&#x5BF9;&#x8C61;&#xFF0C;&#x540C;&#x65F6;&#x5B83;&#x7684;&#x53C2;&#x6570;obj&#x5BF9;&#x5E94;&#x7684;&#x5C31;&#x662F;&#x4E4B;&#x524D;&#x7684;BpBinder(0)&#x3002;</p>
+<p>&#x641E;&#x660E;&#x767D;&#x8FD9;&#x4E2A;&#x4E4B;&#x540E;&#xFF0C;&#x518D;&#x56DE;&#x5230;&#x6700;&#x521D;&#x7684;&#x5730;&#x65B9;&#xFF08;&#x5E0C;&#x671B;&#x6CA1;&#x6709;&#x6655;&#xFF09;&#xFF0C;&#x5BF9;&#x5E94;&#x7684;&#x5C31;&#x662F;defaultServiceManager&#x65B9;&#x6CD5;&#x3002;</p>
+<p>&#x6240;&#x4EE5;&#x6BCF;&#x6B21;&#x8C03;&#x7528;defaultServiceManager&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x8FD4;&#x56DE;BpServiceManager(BpBinder(0))&#x5BF9;&#x8C61;&#x3002;</p>
+<p>&#x6700;&#x540E;&#x6211;&#x4EEC;&#x518D;&#x6765;&#x770B;&#x4E0B;BpServiceManager&#xFF0C;&#x5B83;&#x5728;IServiceManager.cpp&#x5C31;&#x7533;&#x660E;&#x7684;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class BpServiceManager : public BpInterface&lt;IServiceManager&gt;</span><br><span class="line"> {</span><br><span class="line"> public:</span><br><span class="line">     explicit BpServiceManager(const sp&lt;IBinder&gt;&amp; impl)</span><br><span class="line">         : BpInterface&lt;IServiceManager&gt;(impl)</span><br><span class="line">     {</span><br><span class="line">     } </span><br><span class="line">  </span><br><span class="line">     virtual sp&lt;IBinder&gt; getService(const String16&amp; name) const</span><br><span class="line">     { ... }</span><br><span class="line"> </span><br><span class="line">     virtual sp&lt;IBinder&gt; checkService( const String16&amp; name) const</span><br><span class="line">     { ... }</span><br><span class="line"> </span><br><span class="line">     virtual status_t addService(const String16&amp; name, const sp&lt;IBinder&gt;&amp; service,</span><br><span class="line">                                 bool allowIsolated, int dumpsysPriority) { ... }</span><br><span class="line">	 ...</span><br><span class="line"> };</span><br></pre></td></tr></table></figure>
+<p>&#x5B83;&#x63D0;&#x4F9B;&#x4E86;addService&#x4E0E;getService&#x65B9;&#x6CD5;&#xFF0C;&#x6682;&#x65F6;&#x4E0D;&#x5206;&#x6790;&#xFF0C;&#x4F46;&#x53EF;&#x4EE5;&#x5927;&#x80C6;&#x731C;&#x4E00;&#x4E0B;&#xFF0C;&#x5E94;&#x8BE5;&#x662F;&#x901A;&#x8FC7;BpServiceManager&#x7684;&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x6765;&#x6CE8;&#x518C;&#x4E0E;&#x83B7;&#x53D6;&#x5BF9;&#x5E94;&#x7684;Service&#x3002;&#x81F3;&#x4E8E;&#x5B83;&#x5185;&#x90E8;&#x53C8;&#x662F;&#x5982;&#x4F55;&#x4F20;&#x9012;&#x5230;ServiceManager&#x6211;&#x4EEC;&#x540E;&#x7EED;&#x518D;&#x5206;&#x6790;&#x3002;</p>
+<p>&#x56DE;&#x5230;&#x6700;&#x521D;&#x7684;main&#x65B9;&#x6CD5;&#xFF0C;&#x6211;&#x4EEC;&#x63A5;&#x4E0B;&#x6765;&#x5E94;&#x8BE5;&#x5C31;&#x662F;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MediaPlayerService::instantiate();</span><br><span class="line">void MediaPlayerService::instantiate() {</span><br><span class="line">	defaultServiceManager()-&gt;addService(</span><br><span class="line">		String16(&quot;media.player&quot;), new MediaPlayerService());</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x518D;&#x6765;&#x770B;instantiate&#x5C31;&#x7B80;&#x5355;&#x8BB8;&#x591A;&#x4E86;&#xFF0C;&#x5B83;&#x901A;&#x8FC7;defaultServiceManager&#x5411;&#x5176;&#x4E2D;&#x6CE8;&#x518C;&#x4E86;&#x540D;&#x79F0;&#x4E3A;media.player&#x7684;MediaPlayerService&#x670D;&#x52A1;&#x3002;</p>
+<p>&#x800C;defaultServiceManager&#x5BF9;&#x5E94;&#x7684;&#x662F;BpServiceManager(BpBinder(0))&#xFF0C;&#x6240;&#x4EE5;&#x4E0A;&#x9762;&#x6211;&#x4EEC;&#x7684;&#x731C;&#x60F3;&#x662F;&#x6210;&#x7ACB;&#x7684;&#x3002;&#x5173;&#x4E8E;&#x670D;&#x52A1;&#x7684;&#x6CE8;&#x518C;&#x3001;&#x9A8C;&#x8BC1;&#x4E0E;&#x83B7;&#x53D6;&#x90FD;&#x662F;&#x901A;&#x8FC7;BpServiceManager&#x4EE3;&#x7406;&#x5B8C;&#x6210;&#x7684;&#xFF0C;&#x5176;&#x5B9E;&#x5185;&#x90E8;&#x6700;&#x7EC8;&#x90FD;&#x662F;&#x901A;&#x8FC7;BpBinder(0)&#x6765;&#x4F20;&#x8F93;&#x7684;&#x3002;</p>
+<p>&#x597D;&#x4E86;&#xFF0C;&#x4E3A;&#x4E86;&#x5C3D;&#x91CF;&#x7F29;&#x77ED;&#x7BC7;&#x5E45;&#xFF0C;&#x964D;&#x4F4E;&#x9605;&#x8BFB;&#x75B2;&#x52B3;&#xFF0C;&#x63D0;&#x5347;&#x8BFB;&#x8005;&#x4F53;&#x9A8C;&#xFF0C;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x5C31;&#x5206;&#x6790;&#x5230;&#x8FD9;&#x91CC;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x6765;&#x603B;&#x7ED3;&#x4E00;&#x4E0B;MediaService&#x6240;&#x505A;&#x7684;&#x4E00;&#x90E8;&#x5206;&#x6838;&#x5FC3;&#x5185;&#x5BB9;</p>
+<ol>
+<li>&#x521B;&#x5EFA;ProcessState&#x5BF9;&#x8C61;</li>
+<li>&#x5728;ProcessState&#x7684;&#x521B;&#x5EFA;&#x8FC7;&#x7A0B;&#x4E2D;&#x542F;&#x52A8;binder&#x9A71;&#x52A8;&#xFF0C;&#x4F7F;&#x7528;ioctl&#x4E0E;binder&#x9A71;&#x52A8;&#x4EA4;&#x4E92;&#xFF0C;&#x5E76;&#x8BBE;&#x7F6E;binder&#x6700;&#x5927;&#x5E76;&#x53D1;&#x7EBF;&#x7A0B;&#x6570;16&#xFF0C;&#x4F7F;&#x7528;mmap&#x6620;&#x5C04;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x5730;&#x5740;</li>
+<li>&#x521B;&#x5EFA;IPCThreadState&#x5BF9;&#x8C61;&#xFF0C;&#x4F7F;&#x7528;transact&#x5411;server&#x7AEF;&#x53D1;&#x9001;&#x6570;&#x636E;</li>
+<li>&#x521B;&#x5EFA;BpBinder&#x5BF9;&#x8C61;&#xFF0C;&#x83B7;&#x53D6;IBinder,&#x4F5C;&#x4E3A;&#x8DE8;&#x8FDB;&#x7A0B;&#x901A;&#x4FE1;&#x7684;&#x8F7D;&#x4F53;</li>
+<li>&#x521B;&#x5EFA;BpServiceManager&#x5BF9;&#x8C61;&#xFF0C;&#x4F5C;&#x4E3A;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x3001;&#x68C0;&#x9A8C;&#x4E0E;&#x83B7;&#x53D6;&#x7684;&#x4EE3;&#x7406;</li>
+</ol>
+<h2 id="&#x63A8;&#x8350;"><a href="#&#x63A8;&#x8350;" class="headerlink" title="&#x63A8;&#x8350;"></a>&#x63A8;&#x8350;</h2><p><a href="https://github.com/idisfkj/android-startup" target="_blank" rel="noopener">android_startup</a>: &#x63D0;&#x4F9B;&#x4E00;&#x79CD;&#x5728;&#x5E94;&#x7528;&#x542F;&#x52A8;&#x65F6;&#x80FD;&#x591F;&#x66F4;&#x52A0;&#x7B80;&#x5355;&#x3001;&#x9AD8;&#x6548;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x521D;&#x59CB;&#x5316;&#x7EC4;&#x4EF6;&#xFF0C;&#x4F18;&#x5316;&#x542F;&#x52A8;&#x901F;&#x5EA6;&#x3002;&#x4E0D;&#x4EC5;&#x652F;&#x6301;Jetpack App Startup&#x7684;&#x5168;&#x90E8;&#x529F;&#x80FD;&#xFF0C;&#x8FD8;&#x63D0;&#x4F9B;&#x989D;&#x5916;&#x7684;&#x540C;&#x6B65;&#x4E0E;&#x5F02;&#x6B65;&#x7B49;&#x5F85;&#x3001;&#x7EBF;&#x7A0B;&#x63A7;&#x5236;&#x4E0E;&#x591A;&#x8FDB;&#x7A0B;&#x652F;&#x6301;&#x7B49;&#x529F;&#x80FD;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/AwesomeGithub" target="_blank" rel="noopener">AwesomeGithub</a>: &#x57FA;&#x4E8E;Github&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x7EAF;&#x7EC3;&#x4E60;&#x9879;&#x76EE;&#xFF0C;&#x652F;&#x6301;&#x7EC4;&#x4EF6;&#x5316;&#x5F00;&#x53D1;&#xFF0C;&#x652F;&#x6301;&#x8D26;&#x6237;&#x5BC6;&#x7801;&#x4E0E;&#x8BA4;&#x8BC1;&#x767B;&#x9646;&#x3002;&#x4F7F;&#x7528;Kotlin&#x8BED;&#x8A00;&#x8FDB;&#x884C;&#x5F00;&#x53D1;&#xFF0C;&#x9879;&#x76EE;&#x67B6;&#x6784;&#x662F;&#x57FA;&#x4E8E;JetPack&amp;DataBinding&#x7684;MVVM&#xFF1B;&#x9879;&#x76EE;&#x4E2D;&#x4F7F;&#x7528;&#x4E86;Arouter&#x3001;Retrofit&#x3001;Coroutine&#x3001;Glide&#x3001;Dagger&#x4E0E;Hilt&#x7B49;&#x6D41;&#x884C;&#x5F00;&#x6E90;&#x6280;&#x672F;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/flutter_github" target="_blank" rel="noopener">flutter_github</a>: &#x57FA;&#x4E8E;Flutter&#x7684;&#x8DE8;&#x5E73;&#x53F0;&#x7248;&#x672C;Github&#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x4E0E;AwesomeGithub&#x76F8;&#x5BF9;&#x5E94;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/android-api-analysis" target="_blank" rel="noopener">android-api-analysis</a>: &#x7ED3;&#x5408;&#x8BE6;&#x7EC6;&#x7684;Demo&#x6765;&#x5168;&#x9762;&#x89E3;&#x6790;Android&#x76F8;&#x5173;&#x7684;&#x77E5;&#x8BC6;&#x70B9;, &#x5E2E;&#x52A9;&#x8BFB;&#x8005;&#x80FD;&#x591F;&#x66F4;&#x5FEB;&#x7684;&#x638C;&#x63E1;&#x4E0E;&#x7406;&#x89E3;&#x6240;&#x9610;&#x8FF0;&#x7684;&#x8981;&#x70B9;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/daily_algorithm" target="_blank" rel="noopener">daily_algorithm</a>: &#x6BCF;&#x65E5;&#x4E00;&#x7B97;&#x6CD5;&#xFF0C;&#x7531;&#x6D45;&#x5165;&#x6DF1;&#xFF0C;&#x6B22;&#x8FCE;&#x52A0;&#x5165;&#x4E00;&#x8D77;&#x5171;&#x52C9;&#x3002;</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2021/01/21/Binder纯理论分析/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2021/01/26/Binder-addService初探/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Tue Jan 26 2021 21:44:00 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

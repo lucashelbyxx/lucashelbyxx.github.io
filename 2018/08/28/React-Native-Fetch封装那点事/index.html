@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>React Native Fetch封装那点事... | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="fetch,">
+  
+
+  <meta name="description" content="&amp;#x6BCF;&amp;#x4E00;&amp;#x95E8;&amp;#x8BED;&amp;#x8A00;&amp;#x90FD;&amp;#x79BB;&amp;#x4E0D;&amp;#x5F00;&amp;#x7F51;&amp;#x7EDC;&amp;#x8BF7;&amp;#x6C42;&amp;#xFF0C;&amp;#x6709;&amp;#x81EA;&amp;#x5DF1;&amp;#x7684;&amp;#x4E00;&amp;#x5957;Networking Api&amp;#x3002;React Native&amp;#x4F7">
+<meta name="keywords" content="fetch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native Fetch封装那点事...">
+<meta property="og:url" content="https://www.rousetime.com/2018/08/28/React-Native-Fetch封装那点事/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="&amp;#x6BCF;&amp;#x4E00;&amp;#x95E8;&amp;#x8BED;&amp;#x8A00;&amp;#x90FD;&amp;#x79BB;&amp;#x4E0D;&amp;#x5F00;&amp;#x7F51;&amp;#x7EDC;&amp;#x8BF7;&amp;#x6C42;&amp;#xFF0C;&amp;#x6709;&amp;#x81EA;&amp;#x5DF1;&amp;#x7684;&amp;#x4E00;&amp;#x5957;Networking Api&amp;#x3002;React Native&amp;#x4F7">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.rousetime.com/2018/08/28/React-Native-Fetch封装那点事/fetch_headers.jpg">
+<meta property="og:image" content="https://www.rousetime.com/2018/08/28/React-Native-Fetch封装那点事/wx_qr_code.png">
+<meta property="og:updated_time" content="2018-08-29T00:09:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React Native Fetch封装那点事...">
+<meta name="twitter:description" content="&amp;#x6BCF;&amp;#x4E00;&amp;#x95E8;&amp;#x8BED;&amp;#x8A00;&amp;#x90FD;&amp;#x79BB;&amp;#x4E0D;&amp;#x5F00;&amp;#x7F51;&amp;#x7EDC;&amp;#x8BF7;&amp;#x6C42;&amp;#xFF0C;&amp;#x6709;&amp;#x81EA;&amp;#x5DF1;&amp;#x7684;&amp;#x4E00;&amp;#x5957;Networking Api&amp;#x3002;React Native&amp;#x4F7">
+<meta name="twitter:image" content="https://www.rousetime.com/2018/08/28/React-Native-Fetch封装那点事/fetch_headers.jpg">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#purpose"><span class="toc-text">purpose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fetch"><span class="toc-text">fetch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Api-amp-Note"><span class="toc-text">Api &amp; Note</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#封装"><span class="toc-text">封装</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-React-Native-Fetch封装那点事" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">React Native Fetch封装那点事...</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.08.28</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/react-native/">react native</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>&#x6BCF;&#x4E00;&#x95E8;&#x8BED;&#x8A00;&#x90FD;&#x79BB;&#x4E0D;&#x5F00;&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#xFF0C;&#x6709;&#x81EA;&#x5DF1;&#x7684;&#x4E00;&#x5957;Networking Api&#x3002;React Native&#x4F7F;&#x7528;&#x7684;&#x662F;Fetch&#x3002;    &#x4ECA;&#x5929;&#x6211;&#x4EEC;&#x6765;&#x8C08;&#x8C08;&#x4E0E;Fetch&#x76F8;&#x5173;&#x7684;&#x4E00;&#x4E9B;&#x4E8B;&#x60C5;&#x3002;</p>
+<h2 id="purpose"><a href="#purpose" class="headerlink" title="purpose"></a>purpose</h2><p>&#x901A;&#x8FC7;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#xFF0C;&#x4F60;&#x5C06;&#x4E86;&#x89E3;&#x5230;&#x4EE5;&#x4E0B;&#x51E0;&#x70B9;&#x5173;&#x4E8E;Fetch&#x7684;&#x72EC;&#x5BB6;&#x62A5;&#x9053;</p>
+<ul>
+<li>Fetch&#x7684;&#x7B80;&#x5355;&#x8FD0;&#x7528;</li>
+<li>Fetch&#x7684;&#x4E3B;&#x8981;Api</li>
+<li>Fetch&#x4F7F;&#x7528;&#x6CE8;&#x610F;&#x4E8B;&#x9879;</li>
+<li>Fetch&#x7684;Promise&#x5C01;&#x88C5;</li>
+</ul>
+<h2 id="fetch"><a href="#fetch" class="headerlink" title="fetch"></a>fetch</h2><p>fetch&#x7684;&#x4F7F;&#x7528;&#x975E;&#x5E38;&#x7B80;&#x5355;&#xFF0C;&#x53EA;&#x9700;&#x4F20;&#x5165;&#x8BF7;&#x6C42;&#x7684;url</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fetch(&apos;https://facebook.github.io/react-native/movies.json&apos;);</span><br></pre></td></tr></table></figure>
+<p>&#x5F53;&#x7136;&#x662F;&#x5426;&#x8BF7;&#x6C42;&#x6210;&#x529F;&#x4E0E;&#x6570;&#x636E;&#x7684;&#x5904;&#x7406;&#xFF0C;&#x6211;&#x4EEC;&#x8FD8;&#x9700;&#x5904;&#x7406;&#x6210;&#x529F;&#x4E0E;&#x5931;&#x8D25;&#x7684;&#x56DE;&#x8C03;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function getMoviesFromApiAsync() {</span><br><span class="line">  return fetch(&apos;https://facebook.github.io/react-native/movies.json&apos;)</span><br><span class="line">    .then((response) =&gt; response.json())</span><br><span class="line">    .then((responseJson) =&gt; {</span><br><span class="line">      return responseJson.movies;</span><br><span class="line">    })</span><br><span class="line">    .catch((error) =&gt; {</span><br><span class="line">      console.error(error);</span><br><span class="line">    });</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x901A;&#x8FC7;response.json()&#x5C06;&#x8BF7;&#x6C42;&#x7684;&#x8FD4;&#x56DE;&#x6570;&#x636E;&#x8F6C;&#x5316;&#x6210;json&#x6570;&#x636E;&#x4EE5;&#x4FBF;&#x4F7F;&#x7528;&#x3002;&#x901A;&#x8FC7;<code>.then</code>&#x6765;&#x5BF9;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x8F6C;&#x5316;&#x5904;&#x7406;&#x6216;&#x6700;&#x7EC8;&#x66B4;&#x9732;&#x7ED9;&#x8C03;&#x7528;&#x8005;&#xFF1B;<code>.catch</code>&#x5BF9;&#x5F02;&#x5E38;&#x7684;&#x5904;&#x7406;&#x3002;</p>
+<p>&#x4EE5;&#x4E0A;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#xFF0C;&#x8BE5;&#x8BF7;&#x6C42;&#x9ED8;&#x8BA4;&#x662F;get&#x65B9;&#x5F0F;&#x3002;&#x90A3;&#x4E48;post&#x53C8;&#x8BE5;&#x5982;&#x4F55;&#x8BF7;&#x6C42;&#x5462;&#xFF1F;</p>
+<h2 id="Api-amp-Note"><a href="#Api-amp-Note" class="headerlink" title="Api &amp; Note"></a>Api &amp; Note</h2><p>&#x5728;fetch&#x4E2D;&#x6211;&#x4EEC;&#x76F4;&#x63A5;&#x4F20;&#x5165;url&#x8FDB;&#x884C;&#x8BF7;&#x6C42;&#xFF0C;&#x5176;&#x5B9E;&#x5185;&#x90E8;&#x672C;&#x8D28;&#x662F;&#x4F7F;&#x7528;&#x4E86;Request&#x5BF9;&#x8C61;&#xFF0C;&#x53EA;&#x662F;&#x5C06;url&#x51FA;&#x5165;&#x5230;&#x4E86;Request&#x5BF9;&#x8C61;&#x4E2D;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const myRequest = new Request(&apos;https://facebook.github.io/react-native/movies.json&apos;);</span><br><span class="line"> </span><br><span class="line">const myURL = myRequest.url; // https://facebook.github.io/react-native/movies.jsonflowers.jpg</span><br><span class="line">const myMethod = myRequest.method; // GET</span><br><span class="line"> </span><br><span class="line">fetch(myRequest)</span><br><span class="line">  .then(response =&gt; response.json())</span><br><span class="line">  .then(responseJson =&gt; {</span><br><span class="line">    //todo</span><br><span class="line">  });</span><br></pre></td></tr></table></figure>
+<p>&#x5982;&#x679C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x8BF7;&#x6C42;post&#xFF0C;&#x9700;&#x8981;&#x6539;&#x53D8;Request&#x7684;method&#x5C5E;&#x6027;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fetch(&apos;https://mywebsite.com/endpoint/&apos;, {</span><br><span class="line">  method: &apos;POST&apos;,</span><br><span class="line">  headers: {</span><br><span class="line">    Accept: &apos;application/json&apos;,</span><br><span class="line">    &apos;Content-Type&apos;: &apos;application/json&apos;,</span><br><span class="line">  },</span><br><span class="line">  body: JSON.stringify({</span><br><span class="line">    firstParam: &apos;yourValue&apos;,</span><br><span class="line">    secondParam: &apos;yourOtherValue&apos;,</span><br><span class="line">  }),</span><br><span class="line">});</span><br></pre></td></tr></table></figure>
+<p>&#x975E;&#x5E38;&#x7B80;&#x5355;&#xFF0C;&#x5728;url&#x540E;&#x76F4;&#x63A5;&#x4F20;&#x5165;{}&#x5BF9;&#x8C61;&#xFF0C;&#x5176;&#x4E2D;&#x6307;&#x5B9A;method&#x4F7F;&#x7528;post&#x3002;</p>
+<p>&#x76F8;&#x4FE1;&#x5927;&#x5BB6;&#x5E94;&#x8BE5;&#x90FD;&#x77E5;&#x9053;get&#x4E0E;post&#x7684;&#x4E00;&#x4E2A;&#x4E3B;&#x8981;&#x533A;&#x522B;&#x662F;get&#x53EF;&#x4EE5;&#x5728;url&#x4E0A;&#x76F4;&#x63A5;&#x6DFB;&#x52A0;&#x53C2;&#x6570;&#xFF0C;&#x800C;post&#x4E3A;&#x4E86;&#x5B89;&#x5168;&#x90FD;&#x4E0D;&#x91C7;&#x7528;&#x76F4;&#x63A5;&#x5C06;&#x53C2;&#x6570;&#x8FFD;&#x52A0;&#x5230;url&#x4E0A;&#xFF0C;&#x800C;&#x662F;&#x4F7F;&#x7528;body&#x6765;&#x4F20;&#x7ED9;service&#x7AEF;&#x3002;</p>
+<p>&#x5728;&#x4F7F;&#x7528;body&#x524D;&#xFF0C;&#x8FD9;&#x91CC;&#x8FD8;&#x9700;&#x77E5;&#x9053;headers&#x3002;&#x4E0B;&#x9762;&#x67D0;&#x4E2A;post&#x8BF7;&#x6C42;&#x7684;headers&#x4FE1;&#x606F;</p>
+<p><img src="/2018/08/28/React-Native-Fetch&#x5C01;&#x88C5;&#x90A3;&#x70B9;&#x4E8B;/fetch_headers.jpg" alt></p>
+<blockquote>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;Content-Type&#x5B57;&#x6BB5;&#xFF0C;&#x5B83;&#x4EE3;&#x8868;&#x7684;&#x662F;service&#x7AEF;&#x63A5;&#x6536;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&#xFF0C;&#x56FE;&#x7247;&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#x662F;application/x-www-form-urlencoded&#x3002;&#x8FD9;&#x5BF9;&#x4E8E;&#x6211;&#x4EEC;&#x7684;body&#x6765;&#x8BF4;&#x662F;&#x975E;&#x5E38;&#x91CD;&#x8981;&#x7684;&#x3002;&#x53EA;&#x6709;&#x5339;&#x914D;Content-Type&#x7684;&#x7C7B;&#x578B;&#x624D;&#x80FD;&#x6B63;&#x786E;&#x7684;&#x4F20;&#x9012;&#x53C2;&#x6570;&#x4FE1;&#x606F;&#x3002;</p>
+</blockquote>
+<p>&#x793A;&#x4F8B;&#x7684;&#x4EE3;&#x7801;&#x4F7F;&#x7528;&#x7684;&#x662F;application/json&#xFF0C;&#x6240;&#x4EE5;body&#x4F7F;&#x7528;Json.stringify()&#x8FDB;&#x884C;&#x53C2;&#x6570;&#x8F6C;&#x6362;&#xFF0C;&#x800C;&#x5BF9;&#x4E8E;Content-Type&#x4E3A;application/x-www-form-urlencoded&#xFF0C;&#x9700;&#x8981;&#x4F7F;&#x7528;queryString.stringify()&#x3002;</p>
+<p>Request&#x4E2D;&#x9664;&#x4E86;method&#x3001;headers&#x4E0E;body&#xFF0C;&#x8FD8;&#x6709;&#x4EE5;&#x4E0B;&#x5C5E;&#x6027;</p>
+<ul>
+<li>Request.cache: &#x8BF7;&#x6C42;&#x7684;&#x7F13;&#x5B58;&#x6A21;&#x5F0F;(default/reload/no-cache)</li>
+<li>Request.context: &#x8BF7;&#x6C42;&#x7684;&#x4E0A;&#x4E0B;&#x6587;(audio/image/iframe)</li>
+<li>Request.credentials: &#x8BF7;&#x6C42;&#x7684;&#x8BC1;&#x4E66;(omit/same-origin/include)</li>
+<li>Request.destination: &#x8BF7;&#x6C42;&#x7684;&#x5185;&#x5BB9;&#x63CF;&#x8FF0;&#x7C7B;&#x578B;</li>
+<li>Request.integrity: &#x8BF7;&#x6C42;&#x7684; subresource integrity </li>
+<li>Request.mode: &#x8BF7;&#x6C42;&#x7684;&#x6A21;&#x5F0F;(cors/no-cors/same-origin/navigate)</li>
+<li>Request.redirect: &#x8BF7;&#x6C42;&#x7684;&#x91CD;&#x5B9A;&#x5411;&#x65B9;&#x5F0F;(follow/error/manual)</li>
+<li>Request.referrer: &#x8BF7;&#x6C42;&#x7684;&#x6765;&#x6E90;(client)</li>
+<li>Request.referrerPolicy: &#x8BF7;&#x6C42;&#x7684;&#x6765;&#x6E90;&#x653F;&#x7B56;(no-referrer)</li>
+<li>Request.bodyUsed: &#x58F0;&#x660E;body&#x662F;&#x5426;&#x4F7F;&#x7528;&#x5728;response&#x4E2D;</li>
+</ul>
+<p>&#x8BF7;&#x6C42;&#x6210;&#x529F;&#x4E4B;&#x540E;&#xFF0C;&#x4F7F;&#x7528;.then&#x6765;&#x8F6C;&#x6362;&#x6570;&#x636E;&#xFF0C;&#x4F7F;&#x7528;&#x6700;&#x591A;&#x7684;&#x662F;Body.json()&#xFF0C;&#x5F53;&#x7136;&#x4F60;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4EE5;&#x4E0B;&#x7684;&#x51E0;&#x79CD;&#x6570;&#x636E;&#x8F6C;&#x6362;&#x7C7B;&#x578B;</p>
+<ul>
+<li>Body.arrayBuffer</li>
+<li>Body.blob</li>
+<li>Body.formData</li>
+<li>Body.text</li>
+</ul>
+<p>&#x4EE5;&#x4E0A;&#x662F;fetch&#x8BF7;&#x6C42;&#x76F8;&#x5173;&#x7684;&#x5C5E;&#x6027;&#x4E0E;&#x65B9;&#x6CD5;&#x3002;&#x5982;&#x679C;&#x4F60;&#x5DF2;&#x7ECF;&#x6709;&#x6240;&#x4E86;&#x89E3;&#xFF0C;&#x90A3;&#x4E48;&#x606D;&#x559C;&#x4F60;&#x5BF9;fetch&#x7684;&#x57FA;&#x672C;&#x4F7F;&#x7528;&#x5DF2;&#x7ECF;&#x8FC7;&#x5173;&#x4E86;&#xFF0C;&#x4E0B;&#x9762;&#x5BF9;fetch&#x7684;&#x4F7F;&#x7528;&#x8FDB;&#x884C;&#x5C01;&#x88C5;&#x3002;</p>
+<h2 id="&#x5C01;&#x88C5;"><a href="#&#x5C01;&#x88C5;" class="headerlink" title="&#x5C01;&#x88C5;"></a>&#x5C01;&#x88C5;</h2><p>&#x5728;&#x5B9E;&#x9645;&#x5F00;&#x53D1;&#x4E2D;&#xFF0C;url&#x7684;host&#x90FD;&#x662F;&#x76F8;&#x540C;&#x7684;&#xFF0C;&#x4E0D;&#x540C;&#x7684;&#x662F;&#x8BF7;&#x6C42;&#x7684;&#x65B9;&#x6CD5;&#x540D;&#x4E0E;&#x53C2;&#x6570;&#x3002;&#x800C;&#x5BF9;&#x4E8E;&#x4E0D;&#x540C;&#x7684;&#x73AF;&#x5883;(debug|release)&#x8BF7;&#x6C42;&#x7684;&#x65B9;&#x5F0F;&#x4E5F;&#x53EF;&#x80FD;&#x4E0D;&#x540C;&#x3002;&#x4F8B;&#x5982;&#xFF1A;&#x5728;debug&#x73AF;&#x5883;&#x4E2D;&#x4E3A;&#x4E86;&#x65B9;&#x4FBF;&#x8C03;&#x8BD5;&#x67E5;&#x770B;&#x8BF7;&#x6C42;&#x7684;&#x53C2;&#x6570;&#x662F;&#x5426;&#x6B63;&#x786E;&#xFF0C;&#x6211;&#x4EEC;&#x4F1A;&#x4F7F;&#x7528;get&#x6765;&#x8FDB;&#x884C;&#x8BF7;&#x6C42;&#x3002;&#x6240;&#x4EE5;&#x5728;&#x5C01;&#x88C5;&#x4E4B;&#x524D;&#x8981;&#x660E;&#x786E;&#x4EC0;&#x4E48;&#x662F;&#x4E0D;&#x53D8;&#x7684;&#xFF0C;&#x4EC0;&#x4E48;&#x662F;&#x53D8;&#x5316;&#x7684;&#xFF0C;&#x6210;&#x529F;&#x4E0E;&#x5931;&#x8D25;&#x7684;&#x54CD;&#x5E94;&#x5904;&#x7406;&#x3002;</p>
+<p>&#x7ECF;&#x8FC7;&#x4E0A;&#x9762;&#x7684;&#x5206;&#x6790;&#xFF0C;&#x7F57;&#x5217;&#x4E00;&#x4E0B;&#x5C01;&#x88C5;&#x9700;&#x8981;&#x505A;&#x7684;&#x4E8B;&#x60C5;&#x3002;</p>
+<ul>
+<li>&#x4E0D;&#x53D8;&#x7684;: host,headers,body.json()</li>
+<li>&#x53D8;&#x5316;&#x7684;: url,method,body</li>
+<li>&#x54CD;&#x5E94;&#x65B9;&#x5F0F;: Promise(resolve/reject)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function convertUrl(url, params) {</span><br><span class="line">    let realUrl = ApiModule.isDebug?</span><br><span class="line">        url + &quot;?&quot; + queryString.stringify(Object.assign({}, params, commonParams)) : url;</span><br><span class="line"></span><br><span class="line">    if (ApiModule.isDebug) {</span><br><span class="line">        console.log(&quot;request: &quot; + realUrl);</span><br><span class="line">    }</span><br><span class="line">    return realUrl;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x9996;&#x5148;&#x5BF9;url&#x4E0E;&#x53C2;&#x6570;params&#x8FDB;&#x884C;&#x62FC;&#x63A5;&#xFF0C;&#x5982;&#x679C;&#x4E3A;debug&#x6A21;&#x5F0F;&#x5C06;params&#x62FC;&#x63A5;&#x5230;url&#x540E;&#x3002;&#x8FD9;&#x91CC;&#x4F7F;&#x7528;&#x5230;&#x4E86;Object.assign()&#x5C06;params&#x4E0E;commonParams&#x7EC4;&#x5408;&#x6210;&#x4E00;&#x4E2A;{}&#x5BF9;&#x8C61;&#x3002;&#x6700;&#x7EC8;&#x901A;&#x8FC7;queryString.stringify&#x8F6C;&#x5316;&#x6210;string&#x3002;</p>
+<blockquote>
+<p>ApiModule.isDebug&#x662F;&#x539F;&#x751F;&#x4F20;&#x9012;&#x8FC7;&#x6765;&#x7684;&#x503C;&#xFF0C;&#x5BF9;&#x4E8E;Android/IOS&#x53EA;&#x9700;&#x4F20;&#x9012;&#x81EA;&#x5DF1;&#x7684;ApiModule&#x5373;&#x53EF;&#x3002;</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function getMethod() {</span><br><span class="line">    return ApiModule.isDebug? &quot;get&quot;: &quot;post&quot;;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x8FF0;&#x63D0;&#x5230;&#x7684;get&#x4E0E;post&#x7684;&#x8BF7;&#x6C42;&#x65F6;&#x673A;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const headers = {</span><br><span class="line">    Accept: &apos;application/json&apos;,</span><br><span class="line">    &quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded;charset=UTF-8&quot;</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<p>&#x5728;headers&#x4E2D;Content-Type&#x7C7B;&#x578B;&#x4E3A;application/x-www-form-urlencode</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function convertBody(params) {</span><br><span class="line">    return ApiModule.isDebug? undefined : queryString.stringify(Object.assign({}, params, commonParams));</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x7531;&#x4E8E;debug&#x6A21;&#x5F0F;&#x4F7F;&#x7528;&#x7684;&#x662F;get&#x65B9;&#x5F0F;&#xFF0C;&#x4F46;get&#x89C4;&#x5B9A;&#x662F;&#x4E0D;&#x80FD;&#x6709;body&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x4F7F;&#x7528;&#x4E86;undefined&#x6765;&#x6807;&#x8BC6;&#x3002;&#x540C;&#x65F6;&#x4E3A;&#x4E86;&#x5339;&#x914D;headers&#x4E2D;&#x7684;Content-Type&#xFF0C;params&#x7684;&#x8F6C;&#x5316;&#x5FC5;&#x987B;&#x4F7F;&#x7528;queryString.stringify&#xFF1B;&#x5982;&#x679C;&#x63A5;&#x53D7;&#x7684;&#x662F;json,&#x53EF;&#x4EE5;&#x4F7F;&#x7528;JSON.stringify&#x3002;</p>
+<p>&#x5B9A;&#x4E49;&#x5B8C;&#x4E4B;&#x540E;fetch&#x5BF9;&#x5916;&#x53EA;&#x9700;&#x63A5;&#x53D7;params&#x53C2;&#x6570;&#x5373;&#x53EF;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">async function fetchRequest(params){</span><br><span class="line">    let body = convertBody(params);</span><br><span class="line">    fetch(convertUrl(baseUrl, params),{</span><br><span class="line">        method: method,</span><br><span class="line">        headers: headers,</span><br><span class="line">        body: body</span><br><span class="line">    })</span><br><span class="line">    .then((response) =&gt; response.json())</span><br><span class="line">    .then((responseJson) =&gt; {</span><br><span class="line">        //todo success</span><br><span class="line">    })</span><br><span class="line">    .catch((error) =&gt; {</span><br><span class="line">        if (ApiModule.isDebug) {</span><br><span class="line">            console.error(&quot;request error: &quot; + error);</span><br><span class="line">        };</span><br><span class="line">        //todo error</span><br><span class="line">    });</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>fetch&#x7684;&#x8BF7;&#x6C42;&#x5C01;&#x88C5;&#x5B8C;&#x6210;&#xFF0C;&#x4F46;&#x6211;&#x4EEC;&#x7684;&#x6210;&#x529F;&#x4E0E;&#x5931;&#x8D25;&#x7684;&#x72B6;&#x6001;&#x5E76;&#x6CA1;&#x6709;&#x901A;&#x77E5;&#x7ED9;&#x8C03;&#x7528;&#x8005;&#xFF0C;&#x6240;&#x4EE5;&#x8FD8;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x56DE;&#x8C03;&#x673A;&#x5236;&#x3002;Promise&#x662F;&#x4E00;&#x4E2A;&#x5F02;&#x6B65;&#x64CD;&#x4F5C;&#x6700;&#x7EC8;&#x5B8C;&#x6210;&#x6216;&#x8005;&#x5931;&#x8D25;&#x7684;&#x5BF9;&#x8C61;&#x3002;&#x5B83;&#x53EF;&#x4EE5;&#x63A5;&#x53D7;&#x4E24;&#x4E2A;&#x51FD;&#x6570;resolve&#x3001;reject</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const p = new Promise((resolve, reject){</span><br><span class="line">	...</span><br><span class="line">	//success</span><br><span class="line">	resolve(&apos;success&apos;)</span><br><span class="line">	//error</span><br><span class="line">	reject(&apos;error&apos;)</span><br><span class="line">});</span><br><span class="line">//use</span><br><span class="line">p.then(success =&gt; {</span><br><span class="line">		console.log(success);</span><br><span class="line">	}, error =&gt; {</span><br><span class="line">  		console.log(error)	</span><br><span class="line">});</span><br></pre></td></tr></table></figure>
+<p>&#x5C06;fetch&#x8BF7;&#x6C42;&#x653E;&#x5165;&#x5230;Promise&#x7684;&#x5F02;&#x6B65;&#x64CD;&#x4F5C;&#x4E2D;&#xFF0C;&#x8FD9;&#x6837;&#x4E00;&#x65E6;&#x6570;&#x636E;&#x6210;&#x529F;&#x8FD4;&#x56DE;&#x5C31;&#x8C03;&#x7528;resolve&#x51FD;&#x6570;&#x56DE;&#x8C03;&#x7ED9;&#x8C03;&#x7528;&#x8005;&#xFF1B;&#x5931;&#x8D25;&#x8C03;&#x7528;reject&#x51FD;&#x6570;&#xFF0C;&#x8FD4;&#x56DE;&#x5931;&#x8D25;&#x4FE1;&#x606F;&#x3002;&#x800C;&#x8C03;&#x7528;&#x8005;&#x53EA;&#x9700;&#x4F7F;&#x7528;Promise&#x7684;.then&#x65B9;&#x6CD5;&#x7B49;&#x5019;&#x6570;&#x636E;&#x7684;&#x56DE;&#x8C03;&#x901A;&#x77E5;&#x3002;&#x4E0B;&#x9762;&#x6765;&#x770B;&#x4E0B;&#x5B8C;&#x6574;&#x7684;fetch&#x5C01;&#x88C5;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">async function fetchRequest(params){</span><br><span class="line">    let body = convertBody(params);</span><br><span class="line">    return new Promise(function(resolve, reject){</span><br><span class="line">        fetch(convertUrl(baseUrl, params),{</span><br><span class="line">            method: method,</span><br><span class="line">            headers: headers,</span><br><span class="line">            body: body</span><br><span class="line">        })</span><br><span class="line">        .then((response) =&gt; response.json())</span><br><span class="line">        .then((responseJson) =&gt; {</span><br><span class="line">            resolve(responseJson);</span><br><span class="line">        })</span><br><span class="line">        .catch((error) =&gt; {</span><br><span class="line">            if (ApiModule.isDebug) {</span><br><span class="line">                console.error(&quot;request error: &quot; + error);</span><br><span class="line">            };</span><br><span class="line">            reject(error);</span><br><span class="line">        });</span><br><span class="line">    });</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E4B;&#x540E;&#x5BF9;fetch&#x7684;&#x4F7F;&#x7528;&#x5C31;&#x975E;&#x5E38;&#x7B80;&#x5355;&#x4E86;&#xFF0C;&#x53EA;&#x9700;&#x4F20;&#x5165;&#x9700;&#x8981;&#x7684;&#x53C2;&#x6570;&#x5373;&#x53EF;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fetchRequest({method: &quot;goods.getInfo&quot;, goodsId: 27021599158370074})</span><br><span class="line">.then(res =&gt;{</span><br><span class="line">    this.setState({</span><br><span class="line">        shareInfo: res.data.shareInfo</span><br><span class="line">    });</span><br><span class="line">});</span><br></pre></td></tr></table></figure>
+<p>&#x4EE5;&#x4E0A;&#x662F;&#x6709;&#x5173;fetch&#x7684;&#x5168;&#x90E8;&#x5185;&#x5BB9;&#xFF0C;&#x5F53;&#x7136;&#x5728;React Native&#x4E2D;&#x8FD8;&#x6709;&#x5176;&#x5B83;&#x7684;&#x7B2C;&#x4E09;&#x65B9;&#x8BF7;&#x6C42;&#x5E93;&#xFF1A;XMLHttpRequest&#xFF0C;&#x540C;&#x65F6;&#x4E5F;&#x652F;&#x6301;WebSockets&#x3002;&#x611F;&#x5174;&#x8DA3;&#x7684;&#x4E5F;&#x53EF;&#x4EE5;&#x53BB;&#x4E86;&#x89E3;&#x4E00;&#x4E0B;&#xFF0C;&#x76F8;&#x4FE1;&#x4F1A;&#x6709;&#x4E0D;&#x9519;&#x7684;&#x6536;&#x83B7;&#x3002;</p>
+<p>&#x62C9;&#x7C89;&#x73AF;&#x8282;&#xFF1A;&#x611F;&#x89C9;&#x4E0D;&#x9519;&#x7684;&#x53EF;&#x4EE5;&#x6765;&#x4E00;&#x6CE2;&#x5173;&#x6CE8;&#xFF0C;&#x626B;&#x63CF;&#x4E0B;&#x65B9;&#x4E8C;&#x7EF4;&#x7801;&#xFF0C;&#x5173;&#x6CE8;&#x516C;&#x4F17;&#x53F7;&#xFF0C;&#x53CA;&#x65F6;&#x83B7;&#x53D6;&#x6700;&#x65B0;&#x77E5;&#x8BC6;&#x6280;&#x5DE7;&#x3002;</p>
+<p><img src="/2018/08/28/React-Native-Fetch&#x5C01;&#x88C5;&#x90A3;&#x70B9;&#x4E8B;/wx_qr_code.png" alt></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/08/23/5分钟吃透React-Native-Flexbox/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/01/03/你不该忽略的LaunchMode/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Tue Aug 28 2018 21:42:18 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

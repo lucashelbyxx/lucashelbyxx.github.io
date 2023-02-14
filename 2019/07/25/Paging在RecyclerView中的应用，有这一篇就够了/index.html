@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Paging在RecyclerView中的应用，有这一篇就够了 | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Android Architecture Components,">
+  
+
+  <meta name="description" content="&amp;#x524D;&amp;#x8A00;AAC&amp;#x662F;&amp;#x975E;&amp;#x5E38;&amp;#x4E0D;&amp;#x9519;&amp;#x7684;&amp;#x4E00;&amp;#x5957;&amp;#x6846;&amp;#x67B6;&amp;#x7EC4;&amp;#x4EF6;&amp;#xFF0C;&amp;#x5982;&amp;#x679C;&amp;#x4F60;&amp;#x8FD8;&amp;#x672A;&amp;#x8FDB;&amp;#x884C;&amp;#x4E86;&amp;#x89E3;&amp;#xFF">
+<meta name="keywords" content="Android Architecture Components">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paging在RecyclerView中的应用，有这一篇就够了">
+<meta property="og:url" content="https://www.rousetime.com/2019/07/25/Paging在RecyclerView中的应用，有这一篇就够了/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="&amp;#x524D;&amp;#x8A00;AAC&amp;#x662F;&amp;#x975E;&amp;#x5E38;&amp;#x4E0D;&amp;#x9519;&amp;#x7684;&amp;#x4E00;&amp;#x5957;&amp;#x6846;&amp;#x67B6;&amp;#x7EC4;&amp;#x4EF6;&amp;#xFF0C;&amp;#x5982;&amp;#x679C;&amp;#x4F60;&amp;#x8FD8;&amp;#x672A;&amp;#x8FDB;&amp;#x884C;&amp;#x4E86;&amp;#x89E3;&amp;#xFF">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.rousetime.com/2019/07/25/Paging在RecyclerView中的应用，有这一篇就够了/Paging在RecyclerView中的应用，有这一篇就够了_1.gif">
+<meta property="og:image" content="https://www.rousetime.com/2019/07/25/Paging在RecyclerView中的应用，有这一篇就够了/Paging在RecyclerView中的应用，有这一篇就够了_2.gif">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/7/31/16c45287d667775c?w=258&h=258&f=webp&s=5898">
+<meta property="og:updated_time" content="2019-07-30T23:34:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Paging在RecyclerView中的应用，有这一篇就够了">
+<meta name="twitter:description" content="&amp;#x524D;&amp;#x8A00;AAC&amp;#x662F;&amp;#x975E;&amp;#x5E38;&amp;#x4E0D;&amp;#x9519;&amp;#x7684;&amp;#x4E00;&amp;#x5957;&amp;#x6846;&amp;#x67B6;&amp;#x7EC4;&amp;#x4EF6;&amp;#xFF0C;&amp;#x5982;&amp;#x679C;&amp;#x4F60;&amp;#x8FD8;&amp;#x672A;&amp;#x8FDB;&amp;#x884C;&amp;#x4E86;&amp;#x89E3;&amp;#xFF">
+<meta name="twitter:image" content="https://www.rousetime.com/2019/07/25/Paging在RecyclerView中的应用，有这一篇就够了/Paging在RecyclerView中的应用，有这一篇就够了_1.gif">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Database中的使用"><span class="toc-text">Database中的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DataSource-Factory"><span class="toc-text">DataSource.Factory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LiveData"><span class="toc-text">LiveData</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PagedListAdapter"><span class="toc-text">PagedListAdapter</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义DataSource"><span class="toc-text">自定义DataSource</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PageKeyedDataSource"><span class="toc-text">PageKeyedDataSource</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DataSource-Factory-1"><span class="toc-text">DataSource.Factory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Repository-amp-ViewModel"><span class="toc-text">Repository &amp; ViewModel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PagedListAdapter-amp-Activity"><span class="toc-text">PagedListAdapter &amp; Activity</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目地址"><span class="toc-text">项目地址</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Android精华录"><span class="toc-text">Android精华录</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Paging在RecyclerView中的应用，有这一篇就够了" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Paging在RecyclerView中的应用，有这一篇就够了</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.07.25</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="&#x524D;&#x8A00;"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</h2><p>AAC&#x662F;&#x975E;&#x5E38;&#x4E0D;&#x9519;&#x7684;&#x4E00;&#x5957;&#x6846;&#x67B6;&#x7EC4;&#x4EF6;&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x8FD8;&#x672A;&#x8FDB;&#x884C;&#x4E86;&#x89E3;&#xFF0C;&#x63A8;&#x8350;&#x4F60;&#x9605;&#x8BFB;&#x6211;&#x4E4B;&#x524D;&#x7684;&#x7CFB;&#x5217;&#x6587;&#x7AE0;&#xFF1A;</p>
+<p><a href="https://www.rousetime.com/2018/06/07/Android-Architecture-Components-Part1-Room/">Android Architecture Components Part1:Room</a></p>
+<p><a href="https://www.rousetime.com/2018/06/10/Android-Architecture-Components-Part2-LiveData/">Android Architecture Components Part2:LiveData</a></p>
+<p><a href="https://www.rousetime.com/2018/06/14/Android-Architecture-Components-Part3-Lifecycle/">Android Architecture Components Part3:Lifecycle</a></p>
+<p><a href="https://www.rousetime.com/2018/06/22/Android-Architecture-Components-Part4-ViewModel/">Android Architecture Components Part4:ViewModel</a></p>
+<p>&#x7ECF;&#x8FC7;&#x4E00;&#x5E74;&#x7684;&#x53D1;&#x5C55;&#xFF0C;AAC&#x53C8;&#x63A8;&#x51FA;&#x4E86;&#x4E00;&#x7CFB;&#x5217;&#x65B0;&#x7684;&#x7EC4;&#x4EF6;&#xFF0C;&#x5E2E;&#x52A9;&#x5F00;&#x53D1;&#x8005;&#x66F4;&#x5FEB;&#x7684;&#x8FDB;&#x884C;&#x9879;&#x76EE;&#x6846;&#x67B6;&#x7684;&#x6784;&#x5EFA;&#x4E0E;&#x5F00;&#x53D1;&#x3002;&#x8FD9;&#x6B21;&#x4E3B;&#x8981;&#x6D89;&#x53CA;&#x7684;&#x662F;&#x5BF9;Paging&#x8FD0;&#x7528;&#x7684;&#x5168;&#x9762;&#x4ECB;&#x7ECD;&#xFF0C;&#x76F8;&#x4FE1;&#x4F60;&#x9605;&#x8BFB;&#x4E86;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x4E4B;&#x540E;&#x5C06;&#x5BF9;Paging&#x7684;&#x8FD0;&#x7528;&#x4E86;&#x5982;&#x6307;&#x638C;&#x3002;</p>
+<p>Paging&#x4E13;&#x6CE8;&#x4E8E;&#x6709;&#x5927;&#x91CF;&#x6570;&#x636E;&#x8BF7;&#x6C42;&#x7684;&#x5217;&#x8868;&#x5904;&#x7406;&#xFF0C;&#x8BA9;&#x5F00;&#x53D1;&#x8005;&#x65E0;&#x9700;&#x5173;&#x5FC3;&#x6570;&#x636E;&#x7684;&#x5206;&#x9875;&#x903B;&#x8F91;&#xFF0C;&#x5C06;&#x6570;&#x636E;&#x7684;&#x83B7;&#x53D6;&#x903B;&#x8F91;&#x5B8C;&#x5168;&#x4E0E;ui&#x9694;&#x79BB;&#xFF0C;&#x964D;&#x4F4E;&#x9879;&#x76EE;&#x7684;&#x8026;&#x5408;&#x3002;</p>
+<p>&#x4F46;Paging&#x7684;&#x552F;&#x4E00;&#x5C40;&#x9650;&#x6027;&#x662F;&#xFF0C;&#x5B83;&#x9700;&#x8981;&#x4E0E;RecyclerView&#x7ED3;&#x5408;&#x4F7F;&#x7528;&#xFF0C;&#x540C;&#x65F6;&#x4E5F;&#x8981;&#x4F7F;&#x7528;&#x4E13;&#x6709;&#x7684;PagedListAdapter&#x3002;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#xFF0C;&#x5B83;&#x4F1A;&#x5C06;&#x6570;&#x636E;&#x7EDF;&#x4E00;&#x5C01;&#x88C5;&#x6210;&#x4E00;&#x4E2A;PagedList&#x5BF9;&#x8C61;&#xFF0C;&#x800C;adapter&#x6301;&#x6709;&#x8BE5;&#x5BF9;&#x8C61;&#xFF0C;&#x4E00;&#x5207;&#x6570;&#x636E;&#x7684;&#x66F4;&#x65B0;&#x4E0E;&#x53D8;&#x52A8;&#x90FD;&#x662F;&#x901A;&#x8FC7;PagedList&#x6765;&#x89E6;&#x53D1;&#x3002;</p>
+<p>&#x8FD9;&#x6837;&#x7684;&#x597D;&#x5904;&#x662F;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x7ED3;&#x5408;LiveData&#x6216;&#x8005;RxJava&#x6765;&#x5BF9;PagedList&#x5BF9;&#x8C61;&#x7684;&#x521B;&#x5EFA;&#x8FDB;&#x884C;&#x89C2;&#x5BDF;&#xFF0C;&#x4E00;&#x65E6;PagedList&#x5DF2;&#x7ECF;&#x521B;&#x5EFA;&#xFF0C;&#x53EA;&#x9700;&#x5C06;&#x5176;&#x4F20;&#x5165;&#x7ED9;adapter&#x5373;&#x53EF;&#xFF0C;&#x5269;&#x4E0B;&#x7684;&#x6570;&#x636E;&#x64CD;&#x66F4;&#x65B0;&#x64CD;&#x4F5C;&#x5C06;&#x7531;adapter&#x81EA;&#x52A8;&#x5B8C;&#x6210;&#x3002;&#x76F8;&#x6BD4;&#x4E8E;&#x6B63;&#x5E38;&#x7684;RecyclerView&#x5F00;&#x53D1;&#xFF0C;&#x7B80;&#x5355;&#x4E86;&#x8BB8;&#x591A;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x901A;&#x8FC7;&#x4E24;&#x4E2A;&#x5177;&#x4F53;&#x5B9E;&#x4F8B;&#x6765;&#x5BF9;Paging&#x8FDB;&#x884C;&#x4E86;&#x89E3;</p>
+<ol>
+<li>Database&#x4E2D;&#x7684;&#x4F7F;&#x7528;</li>
+<li>&#x81EA;&#x5B9A;&#x4E49;DataSource</li>
+</ol>
+<h2 id="Database&#x4E2D;&#x7684;&#x4F7F;&#x7528;"><a href="#Database&#x4E2D;&#x7684;&#x4F7F;&#x7528;" class="headerlink" title="Database&#x4E2D;&#x7684;&#x4F7F;&#x7528;"></a>Database&#x4E2D;&#x7684;&#x4F7F;&#x7528;</h2><p>Paging&#x5728;Database&#x4E2D;&#x7684;&#x4F7F;&#x7528;&#x975E;&#x5E38;&#x7B80;&#x5355;&#xFF0C;&#x5B83;&#x4E0E;Room&#x7ED3;&#x5408;&#x5C06;&#x64CD;&#x4F5C;&#x7B80;&#x5355;&#x5230;&#x4E86;&#x6781;&#x81F4;&#xFF0C;&#x6211;&#x8FD9;&#x91CC;&#x5C06;&#x5176;&#x5F52;&#x7EB3;&#x4E8E;&#x4E09;&#x6B65;&#x3002;</p>
+<ol>
+<li>&#x4F7F;&#x7528;DataSource.Factory&#x6765;&#x83B7;&#x53D6;Room&#x4E2D;&#x7684;&#x6570;&#x636E;</li>
+<li>&#x4F7F;&#x7528;LiveData&#x6765;&#x89C2;&#x5BDF;PagedList</li>
+<li>&#x4F7F;&#x7528;PagedListAdapter&#x6765;&#x4E0E;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x7ED1;&#x5B9A;&#x4E0E;&#x66F4;&#x65B0;</li>
+</ol>
+<h3 id="DataSource-Factory"><a href="#DataSource-Factory" class="headerlink" title="DataSource.Factory"></a>DataSource.Factory</h3><p>&#x9996;&#x5148;&#x7B2C;&#x4E00;&#x6B65;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x4F7F;&#x7528;DataSource.Factory&#x62BD;&#x8C61;&#x7C7B;&#x6765;&#x83B7;&#x53D6;Room&#x4E2D;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5B83;&#x5185;&#x90E8;&#x53EA;&#x8981;&#x4E00;&#x4E2A;create&#x62BD;&#x8C61;&#x65B9;&#x6CD5;&#xFF0C;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x65E0;&#x9700;&#x5B9E;&#x73B0;&#xFF0C;Room&#x4F1A;&#x81EA;&#x52A8;&#x5E2E;&#x6211;&#x4EEC;&#x521B;&#x5EFA;PositionalDataSource&#x5B9E;&#x4F8B;&#xFF0C;&#x5B83;&#x5C06;&#x4F1A;&#x5B9E;&#x73B0;create&#x65B9;&#x6CD5;&#x3002;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x8981;&#x505A;&#x7684;&#x4E8B;&#x60C5;&#x975E;&#x5E38;&#x7B80;&#x5355;&#xFF0C;&#x5982;&#x4E0B;:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">ArticleDao</span> </span>{</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// PositionalDataSource</span></span><br><span class="line">    <span class="meta">@Query(<span class="meta-string">&quot;SELECT * FROM article&quot;</span>)</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getAll</span><span class="params">()</span></span>: DataSource.Factory&lt;<span class="built_in">Int</span>, ArticleModel&gt;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x62FF;&#x5230;&#x5B9E;&#x73B0;DataSource.Factory&#x62BD;&#x8C61;&#x7684;&#x5B9E;&#x4F8B;&#x5373;&#x53EF;&#x3002;</p>
+<p>&#x7B2C;&#x4E00;&#x6B65;&#x5C31;&#x8FD9;&#x4E48;&#x7B80;&#x5355;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x770B;&#x7B2C;&#x4E8C;&#x6B65;</p>
+<h3 id="LiveData"><a href="#LiveData" class="headerlink" title="LiveData"></a>LiveData</h3><p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x5728;ViewMode&#x4E2D;&#x8C03;&#x7528;&#x4E0A;&#x9762;&#x7684;getAll&#x65B9;&#x6CD5;&#x83B7;&#x53D6;&#x6240;&#x6709;&#x7684;&#x6587;&#x7AE0;&#x4FE1;&#x606F;&#xFF0C;&#x5E76;&#x4E14;&#x5C06;&#x8FD4;&#x56DE;&#x7684;&#x6570;&#x636E;&#x5C01;&#x88C5;&#x6210;&#x4E00;&#x4E2A;LiveData&#xFF0C;&#x5177;&#x4F53;&#x5982;&#x4E0B;:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PagingViewModel</span></span>(app: Application) : AndroidViewModel(app) {</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> dao: ArticleDao <span class="keyword">by</span> lazy { AppDatabase.getInstance(app).articleDao() }</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">val</span> articleList = dao.getAll()</span><br><span class="line">            .toLiveData(Config(</span><br><span class="line">                    pageSize = <span class="number">5</span></span><br><span class="line">            ))</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x901A;&#x8FC7;DataSource.Factory&#x7684;toLiveData&#x6269;&#x5C55;&#x65B9;&#x6CD5;&#x6765;&#x6784;&#x5EFA;PagedList&#x7684;LiveData&#x6570;&#x636E;&#x3002;&#x5176;&#x4E2D;Config&#x4E2D;&#x7684;&#x53C2;&#x6570;&#x4EE3;&#x8868;&#x6BCF;&#x9875;&#x8BF7;&#x6C42;&#x7684;&#x6570;&#x636E;&#x4E2A;&#x6570;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x62FF;&#x5230;&#x4E86;LiveData&#x6570;&#x636E;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x8FDB;&#x5165;&#x7B2C;&#x4E09;&#x6B65;</p>
+<h3 id="PagedListAdapter"><a href="#PagedListAdapter" class="headerlink" title="PagedListAdapter"></a>PagedListAdapter</h3><p>&#x524D;&#x9762;&#x5DF2;&#x7ECF;&#x8BF4;&#x4E86;&#xFF0C;&#x6211;&#x4EEC;&#x8981;&#x5B9E;&#x73B0;PagedListAdapter&#xFF0C;&#x5E76;&#x5C06;&#x7B2C;&#x4E8C;&#x6B65;&#x62FF;&#x5230;&#x7684;&#x6570;&#x636E;&#x4F20;&#x5165;&#x7ED9;&#x5B83;&#x3002;</p>
+<p>PagedListAdapter&#x4E0E;RecyclerView.Adapter&#x7684;&#x4F7F;&#x7528;&#x533A;&#x522B;&#x4E0D;&#x5927;&#xFF0C;&#x53EA;&#x662F;&#x5BF9;getItemCount&#x4E0E;getItem&#x8FDB;&#x884C;&#x4E86;&#x91CD;&#x5199;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x4F7F;&#x7528;&#x5230;&#x4E86;DiffUtil&#xFF0C;&#x907F;&#x514D;&#x5BF9;&#x6570;&#x636E;&#x7684;&#x65E0;&#x7528;&#x66F4;&#x65B0;&#x3002;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PagingAdapter</span> : <span class="type">PagedListAdapter</span>&lt;<span class="type">ArticleModel, PagingVH</span>&gt;</span>(diffCallbacks) {</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> {</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">val</span> diffCallbacks = <span class="keyword">object</span> : DiffUtil.ItemCallback&lt;ArticleModel&gt;() {</span><br><span class="line"></span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">areItemsTheSame</span><span class="params">(oldItem: <span class="type">ArticleModel</span>, newItem: <span class="type">ArticleModel</span>)</span></span>: <span class="built_in">Boolean</span> = oldItem.id == newItem.id</span><br><span class="line"> </span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">areContentsTheSame</span><span class="params">(oldItem: <span class="type">ArticleModel</span>, newItem: <span class="type">ArticleModel</span>)</span></span>: <span class="built_in">Boolean</span> = oldItem == newItem</span><br><span class="line"></span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreateViewHolder</span><span class="params">(parent: <span class="type">ViewGroup</span>, viewType: <span class="type">Int</span>)</span></span>: PagingVH = PagingVH(R.layout.item_paging_article_layout, parent)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onBindViewHolder</span><span class="params">(holder: <span class="type">PagingVH</span>, position: <span class="type">Int</span>)</span></span> = holder.bind(getItem(position))</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x6837;adapter&#x4E5F;&#x5DF2;&#x7ECF;&#x6784;&#x5EFA;&#x5B8C;&#x6210;&#xFF0C;&#x6700;&#x540E;&#x4E00;&#x65E6;PagedList&#x88AB;&#x89C2;&#x5BDF;&#x5230;&#xFF0C;&#x4F7F;&#x7528;submitList&#x4F20;&#x5165;&#x5230;adapter&#x5373;&#x53EF;&#x3002;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">viewModel.articleList.observe(<span class="keyword">this</span>, Observer {</span><br><span class="line">    adapter.submitList(it)</span><br><span class="line">})</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/07/25/Paging&#x5728;RecyclerView&#x4E2D;&#x7684;&#x5E94;&#x7528;&#xFF0C;&#x6709;&#x8FD9;&#x4E00;&#x7BC7;&#x5C31;&#x591F;&#x4E86;/Paging&#x5728;RecyclerView&#x4E2D;&#x7684;&#x5E94;&#x7528;&#xFF0C;&#x6709;&#x8FD9;&#x4E00;&#x7BC7;&#x5C31;&#x591F;&#x4E86;_1.gif" alt></p>
+<p>&#x4E00;&#x4E2A;&#x57FA;&#x4E8E;Paging&#x7684;Database&#x5217;&#x8868;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#xFF0C;&#x662F;&#x4E0D;&#x662F;&#x975E;&#x5E38;&#x7B80;&#x5355;&#x5462;&#xFF1F;&#x5982;&#x679C;&#x9700;&#x8981;&#x5B8C;&#x6574;&#x4EE3;&#x7801;&#x53EF;&#x4EE5;&#x67E5;&#x770B;<a href="https://github.com/idisfkj/android-api-analysis" target="_blank" rel="noopener">Github</a></p>
+<h2 id="&#x81EA;&#x5B9A;&#x4E49;DataSource"><a href="#&#x81EA;&#x5B9A;&#x4E49;DataSource" class="headerlink" title="&#x81EA;&#x5B9A;&#x4E49;DataSource"></a>&#x81EA;&#x5B9A;&#x4E49;DataSource</h2><p>&#x4E0A;&#x9762;&#x662F;&#x901A;&#x8FC7;Room&#x6765;&#x83B7;&#x53D6;&#x6570;&#x636E;&#xFF0C;&#x4F46;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x77E5;&#x9053;&#x7684;&#x662F;&#xFF0C;Room&#x4E4B;&#x6240;&#x4EE5;&#x7B80;&#x5355;&#x662F;&#x56E0;&#x4E3A;&#x5B83;&#x4F1A;&#x5E2E;&#x6211;&#x4EEC;&#x81EA;&#x5DF1;&#x5B9E;&#x73B0;&#x8BB8;&#x591A;&#x6570;&#x636E;&#x5E93;&#x76F8;&#x5173;&#x7684;&#x903B;&#x8F91;&#x4EE3;&#x7801;&#xFF0C;&#x8BA9;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x5173;&#x6CE8;&#x4E0E;&#x81EA;&#x5DF1;&#x4E1A;&#x52A1;&#x76F8;&#x5173;&#x7684;&#x903B;&#x8F91;&#x5373;&#x53EF;&#x3002;&#x800C;&#x8FD9;&#x5176;&#x4E2D;&#x4E0E;Paging&#x76F8;&#x5173;&#x7684;&#x662F;&#x5BF9;DataSource&#x4E0E;DataSource.Factory&#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x6211;&#x4EEC;&#x5B9E;&#x9645;&#x5F00;&#x53D1;&#x4E2D;&#x6570;&#x636E;&#x7EDD;&#x5927;&#x591A;&#x6570;&#x6765;&#x81EA;&#x4E8E;&#x7F51;&#x7EDC;&#xFF0C;&#x6240;&#x4EE5;DataSource&#x4E0E;DataSource.Factory&#x7684;&#x5B9E;&#x73B0;&#x8FD8;&#x662F;&#x8981;&#x6211;&#x4EEC;&#x81EA;&#x5DF1;&#x6765;&#x5543;&#x3002;</p>
+<p>&#x6240;&#x5E78;&#x7684;&#x662F;&#xFF0C;&#x5BF9;&#x4E8E;DataSource&#x7684;&#x5B9E;&#x73B0;&#xFF0C;Paging&#x5DF2;&#x7ECF;&#x5E2E;&#x6211;&#x4EEC;&#x63D0;&#x4F9B;&#x4E86;&#x4E09;&#x4E2A;&#x975E;&#x5E38;&#x5168;&#x9762;&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x5206;&#x522B;&#x662F;: </p>
+<ol>
+<li>PageKeyedDataSource: &#x901A;&#x8FC7;&#x5F53;&#x524D;&#x9875;&#x76F8;&#x5173;&#x7684;key&#x6765;&#x83B7;&#x53D6;&#x6570;&#x636E;&#xFF0C;&#x975E;&#x5E38;&#x5E38;&#x89C1;&#x7684;&#x662F;key&#x4F5C;&#x4E3A;&#x8BF7;&#x6C42;&#x7684;page&#x7684;&#x5927;&#x5C0F;&#x3002;</li>
+<li>ItemKeyedDataSource: &#x901A;&#x8FC7;&#x5177;&#x4F53;item&#x6570;&#x636E;&#x4F5C;&#x4E3A;key&#xFF0C;&#x6765;&#x83B7;&#x53D6;&#x4E0B;&#x4E00;&#x9875;&#x6570;&#x636E;&#x3002;&#x4F8B;&#x5982;&#x804A;&#x5929;&#x4F1A;&#x8BDD;&#xFF0C;&#x8BF7;&#x6C42;&#x4E0B;&#x4E00;&#x9875;&#x6570;&#x636E;&#x53EF;&#x80FD;&#x9700;&#x8981;&#x4E0A;&#x4E00;&#x6761;&#x6570;&#x636E;&#x7684;id&#x3002;</li>
+<li>PositionalDataSource: &#x901A;&#x8FC7;&#x5728;&#x6570;&#x636E;&#x4E2D;&#x7684;position&#x4F5C;&#x4E3A;key&#xFF0C;&#x6765;&#x83B7;&#x53D6;&#x4E0B;&#x4E00;&#x9875;&#x6570;&#x636E;&#x3002;&#x8FD9;&#x4E2A;&#x5178;&#x578B;&#x7684;&#x5C31;&#x662F;&#x4E0A;&#x9762;&#x6240;&#x8BF4;&#x7684;&#x5728;Database&#x4E2D;&#x7684;&#x8FD0;&#x7528;&#x3002;</li>
+</ol>
+<p>PositionalDataSource&#x76F8;&#x4FE1;&#x5DF2;&#x7ECF;&#x6709;&#x70B9;&#x5370;&#x8C61;&#x4E86;&#x5427;&#xFF0C;Room&#x4E2D;&#x9ED8;&#x8BA4;&#x5E2E;&#x6211;&#x5B9E;&#x73B0;&#x7684;&#x5C31;&#x662F;&#x901A;&#x8FC7;PositionalDataSource&#x6765;&#x83B7;&#x53D6;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x7684;&#x3002;</p>
+<p>&#x63A5;&#x4E0B;&#x6765;&#x6211;&#x4EEC;&#x901A;&#x8FC7;&#x4F7F;&#x7528;&#x6700;&#x5E7F;&#x7684;PageKeyedDataSource&#x6765;&#x5B9E;&#x73B0;&#x7F51;&#x7EDC;&#x6570;&#x636E;&#x3002;</p>
+<p>&#x57FA;&#x4E8E;Databases&#x7684;&#x4E09;&#x6B65;&#xFF0C;&#x6211;&#x4EEC;&#x8FD9;&#x91CC;&#x5C06;&#x5B83;&#x7684;&#x7B2C;&#x4E00;&#x6B65;&#x62C6;&#x5206;&#x4E3A;&#x4E24;&#x6B65;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x56DB;&#x6B65;&#x5C31;&#x80FD;&#x5B9E;&#x73B0;Paging&#x5BF9;&#x7F51;&#x7EDC;&#x6570;&#x636E;&#x7684;&#x5904;&#x7406;&#x3002;</p>
+<ol>
+<li>&#x57FA;&#x4E8E;PageKeyedDataSource&#x5B9E;&#x73B0;&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;</li>
+<li>&#x5B9E;&#x73B0;DataSource.Factory</li>
+<li>&#x4F7F;&#x7528;LiveData&#x6765;&#x89C2;&#x5BDF;PagedList</li>
+<li>&#x4F7F;&#x7528;PagedListAdapter&#x6765;&#x4E0E;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x7ED1;&#x5B9A;&#x4E0E;&#x66F4;</li>
+</ol>
+<h3 id="PageKeyedDataSource"><a href="#PageKeyedDataSource" class="headerlink" title="PageKeyedDataSource"></a>PageKeyedDataSource</h3><p>&#x6211;&#x4EEC;&#x81EA;&#x5B9A;&#x4E49;&#x7684;DataSource&#x9700;&#x8981;&#x5B9E;&#x73B0;PageKeyedDataSource&#xFF0C;&#x5B9E;&#x73B0;&#x4E86;&#x4E4B;&#x540E;&#x4F1A;&#x6709;&#x5982;&#x4E0B;&#x4E09;&#x4E2A;&#x65B9;&#x6CD5;&#x9700;&#x8981;&#x6211;&#x4EEC;&#x53BB;&#x5B9E;&#x73B0;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NewsDataSource</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> newsApi: NewsApi,</span><br><span class="line">                     <span class="keyword">private</span> <span class="keyword">val</span> domains: String,</span><br><span class="line">                     <span class="keyword">private</span> <span class="keyword">val</span> retryExecutor: Executor) : PageKeyedDataSource&lt;<span class="built_in">Int</span>, ArticleModel&gt;() {</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">loadInitial</span><span class="params">(params: <span class="type">LoadInitialParams</span>&lt;<span class="type">Int</span>&gt;, callback: <span class="type">LoadInitialCallback</span>&lt;<span class="type">Int</span>, ArticleModel&gt;)</span></span> {</span><br><span class="line">    	<span class="comment">// &#x521D;&#x59CB;&#x5316;&#x7B2C;&#x4E00;&#x9875;&#x6570;&#x636E;</span></span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">loadAfter</span><span class="params">(params: <span class="type">LoadParams</span>&lt;<span class="type">Int</span>&gt;, callback: <span class="type">LoadCallback</span>&lt;<span class="type">Int</span>, ArticleModel&gt;)</span></span> {</span><br><span class="line">    	<span class="comment">// &#x52A0;&#x8F7D;&#x4E0B;&#x4E00;&#x9875;&#x6570;&#x636E;</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">loadBefore</span><span class="params">(params: <span class="type">LoadParams</span>&lt;<span class="type">Int</span>&gt;, callback: <span class="type">LoadCallback</span>&lt;<span class="type">Int</span>, ArticleModel&gt;)</span></span> {</span><br><span class="line">    	<span class="comment">// &#x52A0;&#x8F7D;&#x524D;&#x4E00;&#x9875;&#x6570;&#x636E;</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5176;&#x4E2D;loadBefore&#x6682;&#x65F6;&#x7528;&#x4E0D;&#x5230;&#xFF0C;&#x56E0;&#x4E3A;&#x6211;&#x8FD9;&#x4E2A;&#x5B9E;&#x4F8B;&#x662F;&#x83B7;&#x53D6;&#x65B0;&#x95FB;&#x5217;&#x8868;&#xFF0C;&#x6240;&#x4EE5;&#x53EA;&#x9700;&#x8981;loadInitial&#x4E0E;loadAfter&#x5373;&#x53EF;&#x3002;</p>
+<p>&#x81F3;&#x4E8E;&#x8FD9;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#xFF0C;&#x5176;&#x5B9E;&#x6CA1;&#x4EC0;&#x4E48;&#x591A;&#x8BF4;&#x7684;&#xFF0C;&#x6839;&#x636E;&#x4F60;&#x7684;&#x4E1A;&#x52A1;&#x8981;&#x6C42;&#x6765;&#x5373;&#x53EF;&#xFF0C;&#x8FD9;&#x91CC;&#x8981;&#x8BF4;&#x7684;&#x662F;&#xFF0C;&#x6570;&#x636E;&#x83B7;&#x53D6;&#x5B8C;&#x6BD5;&#x4E4B;&#x540E;&#x8981;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#x7B2C;&#x4E8C;&#x4E2A;&#x53C2;&#x6570;callback&#x7684;onResult&#x65B9;&#x6CD5;&#x3002;&#x4F8B;&#x5982;loadInitial:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">loadInitial</span><span class="params">(params: <span class="type">LoadInitialParams</span>&lt;<span class="type">Int</span>&gt;, callback: <span class="type">LoadInitialCallback</span>&lt;<span class="type">Int</span>, ArticleModel&gt;)</span></span> {</span><br><span class="line">    initStatus.postValue(Loading(<span class="string">&quot;&quot;</span>))</span><br><span class="line">    CompositeDisposable().add(getEverything(domains, <span class="number">1</span>, ArticleListModel::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line">            .subscribeWith(<span class="keyword">object</span> : DisposableObserver&lt;ArticleListModel&gt;() {</span><br><span class="line">                <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onComplete</span><span class="params">()</span></span> {</span><br><span class="line">                }</span><br><span class="line"> </span><br><span class="line">                <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onError</span><span class="params">(e: <span class="type">Throwable</span>)</span></span> {</span><br><span class="line">                    retry = {</span><br><span class="line">                        loadInitial(params, callback)</span><br><span class="line">                    }</span><br><span class="line">                    initStatus.postValue(Error(e.localizedMessage))</span><br><span class="line">                }</span><br><span class="line"></span><br><span class="line">                <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onNext</span><span class="params">(t: <span class="type">ArticleListModel</span>)</span></span> {</span><br><span class="line">                    initStatus.postValue(Success(<span class="number">200</span>))</span><br><span class="line">                    callback.onResult(t.articles, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">                }</span><br><span class="line">            }))</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;onNext&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x5C06;&#x83B7;&#x53D6;&#x7684;&#x6570;&#x636E;&#x586B;&#x5145;&#x5230;onResult&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x540C;&#x65F6;&#x4F20;&#x5165;&#x4E86;&#x4E4B;&#x524D;&#x7684;&#x9875;&#x7801;previousPageKey(&#x521D;&#x59CB;&#x5316;&#x4E3A;&#x7B2C;&#x4E00;&#x9875;)&#x4E0E;&#x4E4B;&#x540E;&#x7684;&#x9875;&#x9762;nextPageKey&#xFF0C;nextPageKey&#x81EA;&#x7136;&#x662F;&#x4F5C;&#x7528;&#x4E8E;loadAfter&#x65B9;&#x6CD5;&#x3002;&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x5728;loadAfter&#x4E2D;&#x7684;params&#x53C2;&#x6570;&#x4E2D;&#x83B7;&#x53D6;&#x5230;:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">loadAfter</span><span class="params">(params: <span class="type">LoadParams</span>&lt;<span class="type">Int</span>&gt;, callback: <span class="type">LoadCallback</span>&lt;<span class="type">Int</span>, ArticleModel&gt;)</span></span> {</span><br><span class="line">    loadStatus.postValue(Loading(<span class="string">&quot;&quot;</span>))</span><br><span class="line">    CompositeDisposable().add(getEverything(domains, params.key, ArticleListModel::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line">            .subscribeWith(<span class="keyword">object</span> : DisposableObserver&lt;ArticleListModel&gt;() {</span><br><span class="line">                <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onComplete</span><span class="params">()</span></span> {</span><br><span class="line">                }</span><br><span class="line"> </span><br><span class="line">                <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onError</span><span class="params">(e: <span class="type">Throwable</span>)</span></span> {</span><br><span class="line">                    retry = {</span><br><span class="line">                        loadAfter(params, callback)</span><br><span class="line">                    }</span><br><span class="line">                    loadStatus.postValue(Error(e.localizedMessage))</span><br><span class="line">                }</span><br><span class="line"> </span><br><span class="line">                <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onNext</span><span class="params">(t: <span class="type">ArticleListModel</span>)</span></span> {</span><br><span class="line">                    loadStatus.postValue(Success(<span class="number">200</span>))</span><br><span class="line">                    callback.onResult(t.articles, params.key + <span class="number">1</span>)</span><br><span class="line">                }</span><br><span class="line">            }))</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x6837;DataSource&#x5C31;&#x57FA;&#x672C;&#x4E0A;&#x5B8C;&#x6210;&#x4E86;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x8981;&#x505A;&#x7684;&#x662F;&#xFF0C;&#x5B9E;&#x73B0;DataSource.Factory&#x6765;&#x751F;&#x6210;&#x6211;&#x4EEC;&#x81EA;&#x5B9A;&#x4E49;&#x7684;DataSource</p>
+<h3 id="DataSource-Factory-1"><a href="#DataSource-Factory-1" class="headerlink" title="DataSource.Factory"></a>DataSource.Factory</h3><p>&#x4E4B;&#x524D;&#x6211;&#x4EEC;&#x5C31;&#x5DF2;&#x7ECF;&#x63D0;&#x53CA;&#x5230;&#xFF0C;DataSource.Factory&#x53EA;&#x6709;&#x4E00;&#x4E2A;abstract&#x65B9;&#x6CD5;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x5B9E;&#x73B0;&#x5B83;&#x7684;create&#x65B9;&#x6CD5;&#x6765;&#x521B;&#x5EFA;&#x81EA;&#x5B9A;&#x4E49;&#x7684;DataSource&#x5373;&#x53EF;:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NewsDataSourceFactory</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> newsApi: NewsApi,</span><br><span class="line">                            <span class="keyword">private</span> <span class="keyword">val</span> domains: String,</span><br><span class="line">                            <span class="keyword">private</span> <span class="keyword">val</span> executor: Executor) : DataSource.Factory&lt;<span class="built_in">Int</span>, ArticleModel&gt;() {</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">val</span> dataSourceLiveData = MutableLiveData&lt;NewsDataSource&gt;()</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">create</span><span class="params">()</span></span>: DataSource&lt;<span class="built_in">Int</span>, ArticleModel&gt; {</span><br><span class="line">        <span class="keyword">val</span> dataSource = NewsDataSource(newsApi, domains, executor)</span><br><span class="line">        dataSourceLiveData.postValue(dataSource)</span><br><span class="line">        <span class="keyword">return</span> dataSource</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x55EF;&#xFF0C;&#x4EE3;&#x7801;&#x5C31;&#x662F;&#x8FD9;&#x4E48;&#x7B80;&#x5355;&#xFF0C;&#x8FD9;&#x4E00;&#x6B65;&#x4E5F;&#x5C31;&#x5B8C;&#x6210;&#x4E86;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x8981;&#x505A;&#x7684;&#x662F;&#x5C06;pagedList&#x8FDB;&#x884C;LiveData&#x5C01;&#x88C5;&#x3002;</p>
+<h3 id="Repository-amp-ViewModel"><a href="#Repository-amp-ViewModel" class="headerlink" title="Repository &amp; ViewModel"></a>Repository &amp; ViewModel</h3><p>&#x8FD9;&#x91CC;&#x4E0E;Database&#x4E0D;&#x540C;&#x7684;&#x662F;&#xFF0C;&#x5E76;&#x6CA1;&#x6709;&#x76F4;&#x63A5;&#x5728;ViewModel&#x4E2D;&#x901A;&#x8FC7;DataSource.Factory&#x6765;&#x83B7;&#x53D6;pagedList&#xFF0C;&#x800C;&#x662F;&#x8FDB;&#x4E00;&#x6B65;&#x4F7F;&#x7528;Repository&#x8FDB;&#x884C;&#x5C01;&#x88C5;&#xFF0C;&#x7EDF;&#x4E00;&#x901A;&#x8FC7;sendRequest&#x62BD;&#x8C61;&#x65B9;&#x6CD5;&#x6765;&#x83B7;&#x53D6;NewsListingModel&#x7684;&#x5C01;&#x88C5;&#x7ED3;&#x679C;&#x5B9E;&#x4F8B;&#x3002;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">NewsListingModel</span></span>(<span class="keyword">val</span> pagedList: LiveData&lt;PagedList&lt;ArticleModel&gt;&gt;,</span><br><span class="line">                            <span class="keyword">val</span> loadStatus: LiveData&lt;LoadStatus&gt;,</span><br><span class="line">                            <span class="keyword">val</span> refreshStatus: LiveData&lt;LoadStatus&gt;,</span><br><span class="line">                            <span class="keyword">val</span> retry: () -&gt; <span class="built_in">Unit</span>,</span><br><span class="line">                            <span class="keyword">val</span> refresh: () -&gt; <span class="built_in">Unit</span>)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">sealed</span> <span class="class"><span class="keyword">class</span> <span class="title">LoadStatus</span> : <span class="type">BaseModel</span></span>()</span><br><span class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">Success</span></span>(<span class="keyword">val</span> status: <span class="built_in">Int</span>) : LoadStatus()</span><br><span class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">NoMore</span></span>(<span class="keyword">val</span> content: String) : LoadStatus()</span><br><span class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">Loading</span></span>(<span class="keyword">val</span> content: String) : LoadStatus()</span><br><span class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">Error</span></span>(<span class="keyword">val</span> message: String) : LoadStatus()</span><br></pre></td></tr></table></figure>
+<p>&#x6240;&#x4EE5;Repository&#x4E2D;&#x7684;sendRequest&#x8FD4;&#x56DE;&#x7684;&#x5C06;&#x662F;NewsListingModel&#xFF0C;&#x5B83;&#x91CC;&#x9762;&#x5305;&#x542B;&#x4E86;&#x6570;&#x636E;&#x5217;&#x8868;&#x3001;&#x52A0;&#x8F7D;&#x72B6;&#x6001;&#x3001;&#x5237;&#x65B0;&#x72B6;&#x6001;&#x3001;&#x91CD;&#x8BD5;&#x4E0E;&#x5237;&#x65B0;&#x8BF7;&#x6C42;&#x3002;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NewsRepository</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> newsApi: NewsApi,</span><br><span class="line">                     <span class="keyword">private</span> <span class="keyword">val</span> domains: String,</span><br><span class="line">                     <span class="keyword">private</span> <span class="keyword">val</span> executor: Executor) : BaseRepository&lt;NewsListingModel&gt; {</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">sendRequest</span><span class="params">(pageSize: <span class="type">Int</span>)</span></span>: NewsListingModel {</span><br><span class="line">        <span class="keyword">val</span> newsDataSourceFactory = NewsDataSourceFactory(newsApi, domains, executor)</span><br><span class="line">        <span class="keyword">val</span> newsPagingList = newsDataSourceFactory.toLiveData(</span><br><span class="line">                pageSize = pageSize,</span><br><span class="line">                fetchExecutor = executor</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">val</span> loadStatus = Transformations.switchMap(newsDataSourceFactory.dataSourceLiveData) {</span><br><span class="line">            it.loadStatus</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">val</span> initStatus = Transformations.switchMap(newsDataSourceFactory.dataSourceLiveData) {</span><br><span class="line">            it.initStatus</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> NewsListingModel(</span><br><span class="line">                pagedList = newsPagingList,</span><br><span class="line">                loadStatus = loadStatus,</span><br><span class="line">                refreshStatus = initStatus,</span><br><span class="line">                retry = {</span><br><span class="line">                    newsDataSourceFactory.dataSourceLiveData.value?.retryAll()</span><br><span class="line">                },</span><br><span class="line">                refresh = {</span><br><span class="line">                    newsDataSourceFactory.dataSourceLiveData.value?.invalidate()</span><br><span class="line">                }</span><br><span class="line">        )</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x63A5;&#x4E0B;&#x6765;ViewModel&#x4E2D;&#x5C31;&#x76F8;&#x5BF9;&#x6765;&#x5C31;&#x7B80;&#x5355;&#x8BB8;&#x591A;&#x4E86;&#xFF0C;&#x5B83;&#x9700;&#x8981;&#x5173;&#x6CE8;&#x7684;&#x5C31;&#x662F;&#x5BF9;NewsListingModel&#x4E2D;&#x7684;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x5206;&#x79BB;&#x6210;&#x5355;&#x4E2A;LiveData&#x5BF9;&#x8C61;&#x5373;&#x53EF;&#xFF0C;&#x7531;&#x4E8E;&#x672C;&#x8EAB;&#x5176;&#x6210;&#x5458;&#x5C31;&#x662F;LiveDate&#x5BF9;&#x8C61;&#xFF0C;&#x6240;&#x4EE5;&#x5206;&#x79BB;&#x4E5F;&#x662F;&#x975E;&#x5E38;&#x7B80;&#x5355;&#x3002;&#x5206;&#x79BB;&#x662F;&#x4E3A;&#x4E86;&#x4EE5;&#x4FBF;&#x5728;Activity&#x8FDB;&#x884C;observe&#x89C2;&#x5BDF;&#x3002;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NewsVM</span></span>(app: Application, <span class="keyword">private</span> <span class="keyword">val</span> newsRepository: BaseRepository&lt;NewsListingModel&gt;) : AndroidViewModel(app) {</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> newsListing = MutableLiveData&lt;NewsListingModel&gt;()</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">val</span> adapter = NewsAdapter {</span><br><span class="line">        retry()</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">val</span> newsLoadStatus = Transformations.switchMap(newsListing) {</span><br><span class="line">        it.loadStatus</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">val</span> refreshLoadStatus = Transformations.switchMap(newsListing) {</span><br><span class="line">        it.refreshStatus</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">val</span> articleList = Transformations.switchMap(newsListing) {</span><br><span class="line">        it.pagedList</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getData</span><span class="params">()</span></span> {</span><br><span class="line">        newsListing.value = newsRepository.sendRequest(<span class="number">20</span>)</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">retry</span><span class="params">()</span></span> {</span><br><span class="line">        newsListing.value?.retry?.invoke()</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">refresh</span><span class="params">()</span></span> {</span><br><span class="line">        newsListing.value?.refresh?.invoke()</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h3 id="PagedListAdapter-amp-Activity"><a href="#PagedListAdapter-amp-Activity" class="headerlink" title="PagedListAdapter &amp; Activity"></a>PagedListAdapter &amp; Activity</h3><p>Adapter&#x90E8;&#x5206;&#x4E0E;Database&#x7684;&#x57FA;&#x672C;&#x7C7B;&#x4F3C;&#xFF0C;&#x4E3B;&#x8981;&#x4E5F;&#x662F;&#x9700;&#x8981;&#x5B9E;&#x73B0;DiffUtil.ItemCallback&#xFF0C;&#x5269;&#x4E0B;&#x7684;&#x5C31;&#x662F;&#x6B63;&#x5E38;&#x7684;Adapter&#x5B9E;&#x73B0;&#xFF0C;&#x6211;&#x8FD9;&#x91CC;&#x5C31;&#x4E0D;&#x518D;&#x591A;&#x8BF4;&#x4E86;&#xFF0C;&#x5982;&#x679C;&#x9700;&#x8981;&#x7684;&#x8BDD;&#x8BF7;&#x9605;&#x8BFB;&#x6E90;&#x7801;</p>
+<p>&#x6700;&#x540E;&#x7684;observe&#x4EE3;&#x7801;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">private fun addObserve() {</span><br><span class="line">    newsVM.articleList.observe(this, Observer {</span><br><span class="line">        newsVM.adapter.submitList(it)</span><br><span class="line">    })</span><br><span class="line">    newsVM.newsLoadStatus.observe(this, Observer {</span><br><span class="line">        newsVM.adapter.updateLoadStatus(it)</span><br><span class="line">    })</span><br><span class="line">    newsVM.refreshLoadStatus.observe(this, Observer {</span><br><span class="line">        refresh_layout.isRefreshing = it is Loading</span><br><span class="line">    })</span><br><span class="line">    refresh_layout.setOnRefreshListener {</span><br><span class="line">        newsVM.refresh()</span><br><span class="line">    }</span><br><span class="line">    newsVM.getData()</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/07/25/Paging&#x5728;RecyclerView&#x4E2D;&#x7684;&#x5E94;&#x7528;&#xFF0C;&#x6709;&#x8FD9;&#x4E00;&#x7BC7;&#x5C31;&#x591F;&#x4E86;/Paging&#x5728;RecyclerView&#x4E2D;&#x7684;&#x5E94;&#x7528;&#xFF0C;&#x6709;&#x8FD9;&#x4E00;&#x7BC7;&#x5C31;&#x591F;&#x4E86;_2.gif" alt></p>
+<p>Paging&#x5C01;&#x88C5;&#x7684;&#x8FD8;&#x662F;&#x975E;&#x5E38;&#x597D;&#x7684;&#xFF0C;&#x5C24;&#x5176;&#x662F;&#x9879;&#x76EE;&#x4E2D;&#x5BF9;RecyclerView&#x975E;&#x5E38;&#x4F9D;&#x8D56;&#x7684;&#xFF0C;&#x8FD8;&#x662F;&#x6548;&#x679C;&#x4E0D;&#x9519;&#x7684;&#x3002;&#x5F53;&#x7136;&#x5B83;&#x7684;&#x4F18;&#x70B9;&#x4E5F;&#x662F;&#x5B83;&#x7684;&#x5C40;&#x9650;&#x6027;&#xFF0C;&#x8FD9;&#x4E00;&#x70B9;&#x4E5F;&#x662F;&#x6CA1;&#x529E;&#x6CD5;&#x7684;&#x4E8B;&#x60C5;&#x3002;</p>
+<p>&#x5E0C;&#x671B;&#x4F60;&#x901A;&#x8FC7;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x80FD;&#x591F;&#x719F;&#x6089;&#x8FD0;&#x7528;Paging&#xFF0C;&#x5982;&#x679C;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x5BF9;&#x4F60;&#x6709;&#x6240;&#x5E2E;&#x52A9;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x987A;&#x624B;&#x5173;&#x6CE8;&#x4E00;&#x6CE2;&#xFF0C;&#x8FD9;&#x662F;&#x5BF9;&#x6211;&#x6700;&#x5927;&#x7684;&#x9F13;&#x52B1;&#xFF01;</p>
+<h2 id="&#x9879;&#x76EE;&#x5730;&#x5740;"><a href="#&#x9879;&#x76EE;&#x5730;&#x5740;" class="headerlink" title="&#x9879;&#x76EE;&#x5730;&#x5740;"></a>&#x9879;&#x76EE;&#x5730;&#x5740;</h2><h4 id="Android&#x7CBE;&#x534E;&#x5F55;"><a href="#Android&#x7CBE;&#x534E;&#x5F55;" class="headerlink" title="Android&#x7CBE;&#x534E;&#x5F55;"></a>Android&#x7CBE;&#x534E;&#x5F55;</h4><p>&#x8BE5;&#x5E93;&#x7684;&#x76EE;&#x7684;&#x662F;&#x7ED3;&#x5408;&#x8BE6;&#x7EC6;&#x7684;Demo&#x6765;&#x5168;&#x9762;&#x89E3;&#x6790;Android&#x76F8;&#x5173;&#x7684;&#x77E5;&#x8BC6;&#x70B9;, &#x5E2E;&#x52A9;&#x8BFB;&#x8005;&#x80FD;&#x591F;&#x66F4;&#x5FEB;&#x7684;&#x638C;&#x63E1;&#x4E0E;&#x7406;&#x89E3;&#x6240;&#x9610;&#x8FF0;&#x7684;&#x8981;&#x70B9;</p>
+<p><a href="https://github.com/idisfkj/android-api-analysis" target="_blank" rel="noopener">Android&#x7CBE;&#x534E;&#x5F55;</a></p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/7/31/16c45287d667775c?w=258&amp;h=258&amp;f=webp&amp;s=5898" alt></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/07/09/只需三步实现Databinding插件化/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/08/12/WorkManager从入门到实践，有这一篇就够了/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Thu Jul 25 2019 07:17:41 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

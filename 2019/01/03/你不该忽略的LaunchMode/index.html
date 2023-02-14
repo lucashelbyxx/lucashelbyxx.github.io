@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>你不该忽略的LaunchMode | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="interview,">
+  
+
+  <meta name="description" content="&amp;#x4F5C;&amp;#x4E3A;&amp;#x4E00;&amp;#x4E2A;&amp;#x597D;&amp;#x7684;&amp;#x5F00;&amp;#x53D1;&amp;#x4EBA;&amp;#x5458;&amp;#xFF0C;&amp;#x4E0D;&amp;#x5E94;&amp;#x8BE5;&amp;#x5FFD;&amp;#x89C6;&amp;#x6389;Activity&amp;#x7684;&amp;#x542F;&amp;#x52A8;&amp;#x65B9;&amp;#x5F0F;launchMode&amp;#x300">
+<meta name="keywords" content="interview">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你不该忽略的LaunchMode">
+<meta property="og:url" content="https://www.rousetime.com/2019/01/03/你不该忽略的LaunchMode/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="&amp;#x4F5C;&amp;#x4E3A;&amp;#x4E00;&amp;#x4E2A;&amp;#x597D;&amp;#x7684;&amp;#x5F00;&amp;#x53D1;&amp;#x4EBA;&amp;#x5458;&amp;#xFF0C;&amp;#x4E0D;&amp;#x5E94;&amp;#x8BE5;&amp;#x5FFD;&amp;#x89C6;&amp;#x6389;Activity&amp;#x7684;&amp;#x542F;&amp;#x52A8;&amp;#x65B9;&amp;#x5F0F;launchMode&amp;#x300">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.rousetime.com/2019/01/03/你不该忽略的LaunchMode/wx_qr_code.png">
+<meta property="og:updated_time" content="2019-01-06T16:39:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="你不该忽略的LaunchMode">
+<meta name="twitter:description" content="&amp;#x4F5C;&amp;#x4E3A;&amp;#x4E00;&amp;#x4E2A;&amp;#x597D;&amp;#x7684;&amp;#x5F00;&amp;#x53D1;&amp;#x4EBA;&amp;#x5458;&amp;#xFF0C;&amp;#x4E0D;&amp;#x5E94;&amp;#x8BE5;&amp;#x5FFD;&amp;#x89C6;&amp;#x6389;Activity&amp;#x7684;&amp;#x542F;&amp;#x52A8;&amp;#x65B9;&amp;#x5F0F;launchMode&amp;#x300">
+<meta name="twitter:image" content="https://www.rousetime.com/2019/01/03/你不该忽略的LaunchMode/wx_qr_code.png">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#standard"><span class="toc-text">standard</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#singleTop"><span class="toc-text">singleTop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#singleTask"><span class="toc-text">singleTask</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#singleInstance"><span class="toc-text">singleInstance</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#End"><span class="toc-text">End</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-你不该忽略的LaunchMode" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">你不该忽略的LaunchMode</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.01.03</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x597D;&#x7684;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#xFF0C;&#x4E0D;&#x5E94;&#x8BE5;&#x5FFD;&#x89C6;&#x6389;Activity&#x7684;&#x542F;&#x52A8;&#x65B9;&#x5F0F;launchMode&#x3002;&#x6BCF;&#x6B21;&#x65B0;&#x5EFA;Activity&#x65F6;&#xFF0C;&#x5185;&#x5FC3;&#x90FD;&#x8981;&#x95EE;&#x95EE;&#x81EA;&#x5DF1;&#x8FD9;&#x4E2A;&#x754C;&#x9762;&#x542F;&#x52A8;&#x573A;&#x666F;&#x662F;&#x4EC0;&#x4E48;&#xFF0C;&#x5B83;&#x5E94;&#x8BE5;&#x9002;&#x5E94;&#x4E8E;&#x54EA;&#x79CD;&#x542F;&#x52A8;&#x65B9;&#x5F0F;&#xFF1F;&#x5982;&#x679C;&#x8981;&#x5FEB;&#x901F;&#x7075;&#x6D3B;&#x7684;&#x89E3;&#x51B3;&#x4E0A;&#x8FF0;&#x95EE;&#x9898;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5BF9;launchMode&#x7684;&#x56DB;&#x79CD;&#x542F;&#x52A8;&#x65B9;&#x5F0F;&#x4E86;&#x7136;&#x4E8E;&#x80F8;&#x3002;&#x4E0B;&#x9762;&#x6211;&#x4F1A;&#x9010;&#x4E00;&#x901A;&#x8FC7;&#x7B80;&#x6D01;&#x7684;&#x8BED;&#x8A00;&#x4ECB;&#x7ECD;&#x5B83;&#x4EEC;&#x7684;&#x610F;&#x4E49;&#xFF0C;&#x540C;&#x65F6;&#x4F7F;&#x7528;&#x4E00;&#x53E5;&#x8BDD;&#x6765;&#x603B;&#x7ED3;&#x5B83;&#x4EEC;&#x5404;&#x81EA;&#x7684;&#x7279;&#x6027;&#xFF0C;&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x8FC5;&#x901F;&#x4E86;&#x7136;&#x4E8E;&#x80F8;&#x3002;</p>
+<h2 id="standard"><a href="#standard" class="headerlink" title="standard"></a>standard</h2><p>&#x5982;&#x679C;&#x4E0D;&#x5BF9;&#x65B0;&#x5EFA;&#x7684;Activity&#x4E0D;&#x505A;&#x4EFB;&#x4F55;&#x4FEE;&#x6539;&#xFF0C;&#x5B83;&#x5728;&#x6E05;&#x5355;&#x6587;&#x4EF6;&#x4E2D;&#x9ED8;&#x8BA4;&#x7684;launchMode&#x4E3A;standard</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity </span><br><span class="line">	android:name=<span class="string">&quot;.MainActivity&quot;</span></span><br><span class="line">	android:launchMode=<span class="string">&quot;standard&quot;</span>&gt;</span><br><span class="line">&lt;/activity&gt;</span><br></pre></td></tr></table></figure>
+<p>&#x4EA6;&#x6216;&#x8005;&#x76F4;&#x63A5;&#x6CA1;&#x6709;launchMode&#xFF0C;&#x4F46;&#x5185;&#x90E8;&#x9ED8;&#x8BA4;&#x8FD8;&#x662F;standard&#x3002;&#x5927;&#x5BB6;&#x90FD;&#x77E5;&#x9053;&#x6211;&#x4EEC;&#x542F;&#x52A8;&#x7684;Activity&#x7684;&#x4FDD;&#x5B58;&#x5728;stack&#x4E2D;&#xFF0C;&#x5047;&#x8BBE;&#x5F53;&#x524D;Activity&#x5806;&#x6808;&#x4E3A;</p>
+<ul>
+<li>D</li>
+<li>C</li>
+<li>B</li>
+<li>A</li>
+</ul>
+<p>&#x6B64;&#x65F6;&#x6211;&#x4E3A;B&#x6DFB;&#x52A0;launchMode=&#x201D;standard&#x201D;&#xFF0C;&#x5E76;&#x4E14;&#x5728;D&#x4E2D;&#x542F;&#x52A8;B&#xFF0C;&#x6B64;&#x65F6;Activity&#x5806;&#x6808;&#x4E3A;</p>
+<ul>
+<li>B &#xFF08;&#x65B0;&#x7684;&#x5B9E;&#x4F8B;B&#xFF09;</li>
+<li>D</li>
+<li>C</li>
+<li>B</li>
+<li>A</li>
+</ul>
+<p>&#x6240;&#x4EE5;standard&#x6A21;&#x5F0F;&#x8868;&#x73B0;&#x4E3A;&#xFF1A;<strong>&#x4E0D;&#x5173;&#x5FC3;&#x5F53;&#x524D;Activity&#x5806;&#x6808;&#xFF0C;&#x5B83;&#x603B;&#x4F1A;&#x65B0;&#x589E;&#x4E00;&#x4E2A;&#x5B9E;&#x4F8B;&#x52A0;&#x5165;&#x5F53;&#x524D;&#x5806;&#x6808;&#x4E2D;</strong>&#x3002;</p>
+<h2 id="singleTop"><a href="#singleTop" class="headerlink" title="singleTop"></a>singleTop</h2><p>1.&#x8FD8;&#x662F;&#x4E4B;&#x524D;&#x7684;Activity&#x5806;&#x6808;</p>
+<ul>
+<li>D</li>
+<li>C</li>
+<li>B</li>
+<li>A</li>
+</ul>
+<p>&#x73B0;&#x5728;&#x6211;&#x5BF9;C&#x6DFB;&#x52A0;launchMode=&#x201D;singleTop&#x201D;&#xFF0C;&#x5E76;&#x5728;D&#x4E2D;&#x542F;&#x52A8;C&#xFF0C;&#x6B64;&#x65F6;&#x7684;Activity&#x5806;&#x6808;&#x4E3A;</p>
+<ul>
+<li>C &#xFF08;&#x65B0;&#x7684;&#x5B9E;&#x4F8B;C&#xFF09;</li>
+<li>D</li>
+<li>C</li>
+<li>B</li>
+<li>A</li>
+</ul>
+<p>&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x8868;&#x73B0;&#x65B9;&#x5F0F;&#x4E0E;&#x9ED8;&#x8BA4;&#x7684;standard&#x6A21;&#x5F0F;&#x4E00;&#x81F4;</p>
+<p>2.&#x5982;&#x679C;&#x6211;&#x5C06;&#x4E4B;&#x524D;&#x7684;Activity&#x5806;&#x6808;&#x7A0D;&#x4F5C;&#x4FEE;&#x6539;</p>
+<ul>
+<li>C</li>
+<li>B</li>
+<li>A</li>
+</ul>
+<p>&#x518D;&#x6B21;&#x542F;&#x52A8;C&#xFF0C;&#x6B64;&#x65F6;Activity&#x5806;&#x6808;&#x4E3A;</p>
+<ul>
+<li>C &#xFF08;&#x4E4B;&#x524D;&#x7684;&#x5B9E;&#x4F8B;C&#xFF0C;&#x65B0;&#x7684;intent&#x6570;&#x636E;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;onNewIntent&#x83B7;&#x53D6;&#xFF09;</li>
+<li>B</li>
+<li>A</li>
+</ul>
+<p>3.&#x5982;&#x679C;&#x4E4B;&#x524D;&#x7684;Activity&#x5806;&#x6808;&#x4E2D;&#x6CA1;&#x6709;C</p>
+<ul>
+<li>B</li>
+<li>A</li>
+</ul>
+<p>&#x518D;&#x6B21;&#x542F;&#x52A8;C&#xFF0C;&#x6B64;&#x65F6;Activity&#x5806;&#x6808;&#x4E3A;</p>
+<ul>
+<li>C &#xFF08;&#x65B0;&#x7684;&#x5B9E;&#x4F8B;C&#xFF09;</li>
+<li>B</li>
+<li>A</li>
+</ul>
+<p>&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x8868;&#x73B0;&#x65B9;&#x5F0F;&#x4E0E;&#x9ED8;&#x8BA4;&#x7684;standard&#x6A21;&#x5F0F;&#x4E00;&#x81F4;</p>
+<p>&#x6240;&#x4EE5;singleTop&#x6A21;&#x5F0F;&#x8868;&#x73B0;&#x4E3A;&#xFF1A;<strong>&#x53EA;&#x5173;&#x5FC3;&#x5F53;&#x524D;Activity&#x5806;&#x6808;&#x7684;&#x6808;&#x9876;&#x662F;&#x5426;&#x5B58;&#x5728;&#x5B83;&#x7684;&#x7C7B;&#x578B;&#x5B9E;&#x4F8B;&#xFF0C;&#x5982;&#x679C;&#x6709;&#x5219;&#x4E0D;&#x65B0;&#x5EFA;&#x5B9E;&#x4F8B;&#xFF1B;&#x5426;&#x5219;&#x65B0;&#x5EFA;&#x5B9E;&#x4F8B;</strong></p>
+<h2 id="singleTask"><a href="#singleTask" class="headerlink" title="singleTask"></a>singleTask</h2><p>1.&#x5F53;&#x524D;Activity&#x5806;&#x6808;&#x4E3A;</p>
+<ul>
+<li>D</li>
+<li>C</li>
+<li>B</li>
+<li>A</li>
+</ul>
+<p>&#x73B0;&#x5728;&#x6211;&#x5BF9;C&#x6DFB;&#x52A0;launchMode=&#x201D;singleTask&#x201D;&#xFF0C;&#x5E76;&#x5728;D&#x4E2D;&#x542F;&#x52A8;C&#xFF0C;&#x6B64;&#x65F6;Activity&#x5806;&#x6808;&#x4E3A;</p>
+<ul>
+<li>C &#xFF08;&#x4E4B;&#x524D;&#x7684;&#x5B9E;&#x4F8B;C&#xFF0C;&#x65B0;&#x7684;intent&#x6570;&#x636E;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;onNewIntent&#x83B7;&#x53D6;&#xFF09;</li>
+<li>B</li>
+<li>A</li>
+</ul>
+<p>D&#x4F1A;&#x88AB;&#x4ECE;Activity&#x5806;&#x6808;&#x4E2D;&#x79FB;&#x9664;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x590D;&#x7528;&#x4E4B;&#x524D;&#x7684;&#x5B9E;&#x4F8B;</p>
+<p>2.&#x5F53;&#x524D;Activity&#x5806;&#x6808;&#x4E3A;</p>
+<ul>
+<li>C</li>
+<li>B</li>
+<li>A</li>
+</ul>
+<p>&#x518D;&#x6B21;&#x542F;&#x52A8;C&#xFF0C;&#x6B64;&#x65F6;Activity&#x5806;&#x6808;&#x4E3A;</p>
+<ul>
+<li>C &#xFF08;&#x4E4B;&#x524D;&#x7684;&#x5B9E;&#x4F8B;C&#xFF0C;&#x65B0;&#x7684;intent&#x6570;&#x636E;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;onNewIntent&#x83B7;&#x53D6;&#xFF09;</li>
+<li>B</li>
+<li>A</li>
+</ul>
+<p>&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x8868;&#x73B0;&#x65B9;&#x5F0F;&#x4E0E;singlTop&#x6A21;&#x5F0F;&#x4E00;&#x81F4;</p>
+<p>3.&#x5F53;&#x524D;Activity&#x5806;&#x6808;&#x4E3A;</p>
+<ul>
+<li>B</li>
+<li>A</li>
+</ul>
+<p>&#x518D;&#x6B21;&#x542F;&#x52A8;C&#xFF0C;&#x6B64;&#x65F6;Activity&#x5806;&#x6808;&#x4E3A;</p>
+<ul>
+<li>C &#xFF08;&#x65B0;&#x7684;&#x5B9E;&#x4F8B;C&#xFF09;</li>
+<li>B</li>
+<li>A</li>
+</ul>
+<p>&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x8868;&#x73B0;&#x65B9;&#x5F0F;&#x4E0E;&#x9ED8;&#x8BA4;&#x7684;standard&#x6A21;&#x5F0F;&#x4E00;&#x81F4;</p>
+<p>&#x6240;&#x4EE5;singleTask&#x8868;&#x73B0;&#x4E3A;&#xFF1A;<strong>&#x53EA;&#x5173;&#x5FC3;&#x5F53;&#x524D;Activity&#x5806;&#x6808;&#x4E2D;&#x662F;&#x5426;&#x5B58;&#x5728;&#x5B83;&#x7684;&#x7C7B;&#x578B;&#x5B9E;&#x4F8B;&#xFF0C;&#x5982;&#x679C;&#x6709;&#x5219;&#x5148;&#x5C06;&#x5B83;&#x9876;&#x90E8;&#x6240;&#x6709;&#x5806;&#x6808;&#x5B9E;&#x4F8B;&#x51FA;&#x6808;&#xFF0C;&#x4F7F;&#x5176;&#x56DE;&#x5230;&#x6808;&#x9876;&#xFF0C;&#x518D;&#x590D;&#x7528;&#x5F53;&#x524D;&#x6808;&#x9876;&#x5B9E;&#x4F8B;&#xFF0C;&#x5426;&#x5219;&#x65B0;&#x5EFA;&#x5B9E;&#x4F8B;</strong></p>
+<h2 id="singleInstance"><a href="#singleInstance" class="headerlink" title="singleInstance"></a>singleInstance</h2><p>1.&#x5F53;&#x524D;Activity&#x5806;&#x6808;&#x4E3A;</p>
+<ul>
+<li>D</li>
+<li>C</li>
+<li>B</li>
+<li>A</li>
+</ul>
+<p>&#x73B0;&#x5728;&#x6211;&#x4E3A;E&#x6DFB;&#x52A0;launchMode=&#x201D;singleInstance&#x201D;&#xFF0C;&#x7136;&#x540E;&#x5728;D&#x4E2D;&#x542F;&#x52A8;E&#xFF0C;&#x6B64;&#x65F6;Activity&#x5806;&#x6808;&#x4E3A;</p>
+<p>&#x7B2C;&#x4E00;&#x4E2A;Activity&#x5806;&#x6808;</p>
+<ul>
+<li>D</li>
+<li>C</li>
+<li>B</li>
+<li>A</li>
+</ul>
+<p>&#x7B2C;&#x4E8C;&#x4E2A;Activity&#x5806;&#x6808;</p>
+<ul>
+<li>E</li>
+</ul>
+<p>&#x4F60;&#x4F1A;&#x53D1;&#x73B0;E&#x4E0D;&#x5B58;&#x5728;&#x4E8E;&#x4E4B;&#x524D;&#x7684;&#x5806;&#x6808;&#x4E2D;&#xFF0C;&#x800C;&#x662F;&#x65B0;&#x5F00;&#x4E00;&#x4E2A;Activity&#x5806;&#x6808;&#x3002;</p>
+<p>2.&#x5982;&#x679C;&#x5728;1&#x7684;&#x7ED3;&#x679C;&#x57FA;&#x7840;&#x4E0A;&#xFF0C;&#x6211;&#x5728;E&#x4E2D;&#x7EE7;&#x7EED;&#x542F;&#x52A8;F&#xFF0C;&#x6B64;&#x65F6;Activity&#x5806;&#x6808;&#x4E3A;</p>
+<p>&#x7B2C;&#x4E00;&#x4E2A;Activity&#x5806;&#x6808;</p>
+<ul>
+<li>F</li>
+<li>D</li>
+<li>C</li>
+<li>B</li>
+<li>A</li>
+</ul>
+<p>&#x7B2C;&#x4E8C;&#x4E2A;Activity&#x5806;&#x6808;</p>
+<ul>
+<li>E</li>
+</ul>
+<p>&#x540E;&#x7EED;&#x542F;&#x52A8;&#x7684;&#x5B9E;&#x4F8B;&#x8FD8;&#x662F;&#x4F1A;&#x52A0;&#x5165;&#x5230;&#x4E4B;&#x524D;&#x7684;Activity&#x5806;&#x6808;&#x4E2D;&#x3002;</p>
+<p>3.&#x5F53;&#x524D;Activity&#x5806;&#x6808;&#x4E3A;</p>
+<p>&#x7B2C;&#x4E00;&#x4E2A;Activity&#x5806;&#x6808;</p>
+<ul>
+<li>D</li>
+<li>C</li>
+<li>B</li>
+<li>A</li>
+</ul>
+<p>&#x7B2C;&#x4E8C;&#x4E2A;Activity&#x5806;&#x6808;</p>
+<ul>
+<li>E</li>
+</ul>
+<p>&#x73B0;&#x5728;&#x6211;&#x5728;D&#x4E2D;&#x542F;&#x52A8;E&#xFF0C;&#x6B64;&#x65F6;Activity&#x5806;&#x6808;&#x4E3A;</p>
+<p>&#x7B2C;&#x4E00;&#x4E2A;Activity&#x5806;&#x6808;</p>
+<ul>
+<li>D</li>
+<li>C</li>
+<li>B</li>
+<li>A</li>
+</ul>
+<p>&#x7B2C;&#x4E8C;&#x4E2A;Activity&#x5806;&#x6808;</p>
+<ul>
+<li>E &#xFF08;&#x4E4B;&#x524D;&#x7684;&#x5B9E;&#x4F8B;E&#xFF0C;&#x65B0;&#x7684;intent&#x6570;&#x636E;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;onNewIntent&#x83B7;&#x53D6;&#xFF09;</li>
+</ul>
+<p>E&#x5DF2;&#x7ECF;&#x5904;&#x4E8E;&#x5355;&#x72EC;&#x7684;Activity&#x5806;&#x6808;&#x4E2D;&#xFF0C;&#x4E0D;&#x4F1A;&#x518D;&#x65B0;&#x5EFA;&#x5B9E;&#x4F8B;</p>
+<p>&#x6240;&#x4EE5;singleInstance&#x8868;&#x73B0;&#x4E3A;&#xFF1A;<strong>&#x53EA;&#x5173;&#x5FC3;&#x81EA;&#x5DF1;&#x662F;&#x5426;&#x5904;&#x4E8E;&#x5355;&#x72EC;&#x7684;Activity&#x5806;&#x6808;&#x4E2D;&#xFF0C;&#x5373;&#x5806;&#x6808;&#x4E2D;&#x53EA;&#x80FD;&#x6709;&#x5B83;&#x4E00;&#x4E2A;&#x5B9E;&#x4F8B;&#xFF0C;&#x4E5F;&#x4E0D;&#x65B0;&#x52A0;&#x5176;&#x5B83;&#x5B9E;&#x4F8B;&#xFF1B;&#x5426;&#x5219;&#x65B0;&#x5F00;Activity&#x5806;&#x6808;</strong></p>
+<h2 id="End"><a href="#End" class="headerlink" title="End"></a>End</h2><p>&#x5E0C;&#x671B;&#x901A;&#x8FC7;&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#xFF0C;&#x4F60;&#x5DF2;&#x7ECF;&#x5BF9;&#x8FD9;&#x56DB;&#x79CD;&#x542F;&#x52A8;&#x6A21;&#x5F0F;&#x6709;&#x4E86;&#x5168;&#x65B0;&#x7684;&#x7406;&#x89E3;&#x3002;</p>
+<p>&#x6700;&#x540E;&#x6211;&#x60F3;&#x95EE;&#x7684;&#x662F;&#xFF1A;&#x4F60;&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x4E86;&#x7136;&#x4E8E;&#x80F8;&#x4E86;&#xFF1F;</p>
+<p><img src="/2019/01/03/&#x4F60;&#x4E0D;&#x8BE5;&#x5FFD;&#x7565;&#x7684;LaunchMode/wx_qr_code.png" alt></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/08/28/React-Native-Fetch封装那点事/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/01/06/vps携手hexo的博客搭建之旅/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Thu Jan 03 2019 21:41:50 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

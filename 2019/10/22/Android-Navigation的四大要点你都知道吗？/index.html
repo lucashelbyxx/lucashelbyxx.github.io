@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Android Navigation的四大要点你都知道吗？ | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Android Architecture Components,">
+  
+
+  <meta name="description" content="&amp;#x5728;JetPack&amp;#x4E2D;&amp;#x6709;&amp;#x4E00;&amp;#x4E2A;&amp;#x7EC4;&amp;#x4EF6;&amp;#x662F;Navigation&amp;#xFF0C;&amp;#x987E;&amp;#x540D;&amp;#x601D;&amp;#x4E49;&amp;#x5B83;&amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x9875;&amp;#x9762;&amp;#x5BFC;&amp;#x822A;&amp;#x7EC4;&amp;#x4EF6">
+<meta name="keywords" content="Android Architecture Components">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Navigation的四大要点你都知道吗？">
+<meta property="og:url" content="https://www.rousetime.com/2019/10/22/Android-Navigation的四大要点你都知道吗？/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="&amp;#x5728;JetPack&amp;#x4E2D;&amp;#x6709;&amp;#x4E00;&amp;#x4E2A;&amp;#x7EC4;&amp;#x4EF6;&amp;#x662F;Navigation&amp;#xFF0C;&amp;#x987E;&amp;#x540D;&amp;#x601D;&amp;#x4E49;&amp;#x5B83;&amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x9875;&amp;#x9762;&amp;#x5BFC;&amp;#x822A;&amp;#x7EC4;&amp;#x4EF6">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.rousetime.com/2019/10/22/Android-Navigation的四大要点你都知道吗？/1.png">
+<meta property="og:image" content="https://www.rousetime.com/2019/10/22/Android-Navigation的四大要点你都知道吗？/2.png">
+<meta property="og:image" content="https://www.rousetime.com/2019/10/22/Android-Navigation的四大要点你都知道吗？/3.gif">
+<meta property="og:image" content="https://www.rousetime.com/2019/10/22/Android-Navigation的四大要点你都知道吗？/4.gif">
+<meta property="og:updated_time" content="2019-10-23T15:12:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Navigation的四大要点你都知道吗？">
+<meta name="twitter:description" content="&amp;#x5728;JetPack&amp;#x4E2D;&amp;#x6709;&amp;#x4E00;&amp;#x4E2A;&amp;#x7EC4;&amp;#x4EF6;&amp;#x662F;Navigation&amp;#xFF0C;&amp;#x987E;&amp;#x540D;&amp;#x601D;&amp;#x4E49;&amp;#x5B83;&amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x9875;&amp;#x9762;&amp;#x5BFC;&amp;#x822A;&amp;#x7EC4;&amp;#x4EF6">
+<meta name="twitter:image" content="https://www.rousetime.com/2019/10/22/Android-Navigation的四大要点你都知道吗？/1.png">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#跳转"><span class="toc-text">跳转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传参"><span class="toc-text">传参</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动画"><span class="toc-text">动画</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#deepLink"><span class="toc-text">deepLink</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目地址"><span class="toc-text">项目地址</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Android精华录"><span class="toc-text">Android精华录</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Android-Navigation的四大要点你都知道吗？" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Android Navigation的四大要点你都知道吗？</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.10.22</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>&#x5728;JetPack&#x4E2D;&#x6709;&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;&#x662F;Navigation&#xFF0C;&#x987E;&#x540D;&#x601D;&#x4E49;&#x5B83;&#x662F;&#x4E00;&#x4E2A;&#x9875;&#x9762;&#x5BFC;&#x822A;&#x7EC4;&#x4EF6;&#xFF0C;&#x76F8;&#x5BF9;&#x4E8E;&#x5176;&#x4ED6;&#x7684;&#x7B2C;&#x4E09;&#x65B9;&#x5BFC;&#x822A;&#xFF0C;&#x4E0D;&#x540C;&#x7684;&#x662F;&#x5B83;&#x662F;&#x4E13;&#x95E8;&#x4E3A;Fragment&#x7684;&#x9875;&#x9762;&#x7BA1;&#x7406;&#x6240;&#x8BBE;&#x8BA1;&#x7684;&#x3002;&#x5B83;&#x5BF9;&#x4E8E;&#x5355;&#x4E2A;Activity&#x7684;App&#x6765;&#x8BF4;&#x975E;&#x5E38;&#x6709;&#x7528;&#xFF0C;&#x56E0;&#x4E3A;&#x4EE5;&#x4E00;&#x4E2A;Activity&#x4E3A;&#x67B6;&#x6784;&#x7684;App&#x9875;&#x9762;&#x7684;&#x5448;&#x73B0;&#x90FD;&#x662F;&#x901A;&#x8FC7;&#x4E0D;&#x540C;&#x7684;Fragment&#x6765;&#x5C55;&#x793A;&#x7684;&#x3002;&#x6240;&#x4EE5;&#x5BF9;&#x4E8E;Fragment&#x7684;&#x7BA1;&#x7406;&#x81F3;&#x5173;&#x91CD;&#x8981;&#x3002;&#x901A;&#x5E38;&#x7684;&#x5B9E;&#x73B0;&#x90FD;&#x8981;&#x81EA;&#x5DF1;&#x7EF4;&#x62A4;Fragment&#x4E4B;&#x95F4;&#x7684;&#x6808;&#x5173;&#x7CFB;&#xFF0C;&#x540C;&#x65F6;&#x8981;&#x5BF9;Fragment&#x7684;Transaction&#x64CD;&#x4F5C;&#x975E;&#x5E38;&#x719F;&#x6089;&#x3002;&#x4E3A;&#x4E86;&#x964D;&#x4F4E;&#x4F7F;&#x7528;&#x4E0E;&#x7EF4;&#x62A4;&#x6210;&#x672C;&#xFF0C;&#x6240;&#x4EE5;&#x5C31;&#x6709;&#x4E86;&#x4ECA;&#x5929;&#x7684;&#x4E3B;&#x89D2;Navigation&#x3002;</p>
+<p>&#x5982;&#x679C;&#x4F60;&#x5BF9;JetPack&#x7684;&#x5176;&#x5B83;&#x7EC4;&#x4EF6;&#x611F;&#x5174;&#x8DA3;&#xFF0C;&#x63A8;&#x8350;&#x4F60;&#x9605;&#x8BFB;&#x6211;&#x4E4B;&#x524D;&#x7684;&#x7CFB;&#x5217;&#x6587;&#x7AE0;&#xFF0C;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x76EE;&#x524D;&#x4E3A;JetPack&#x7CFB;&#x5217;&#x7684;&#x6700;&#x540E;&#x4E00;&#x7BC7;&#x3002;</p>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzIzNTc5NDY4Nw==&amp;mid=2247483702&amp;idx=1&amp;sn=dc1a5cefe847412bd276cc1eff0b2b88&amp;chksm=e8e0f8a6df9771b0a003edcfc0b25c0e58418ba7fd3ec34064479d444a96958ee2efc7fc92c1&amp;token=482154268&amp;lang=zh_CN#rd" target="_blank" rel="noopener">Android Architecture Components Part1:Room</a><br><a href="https://mp.weixin.qq.com/s?__biz=MzIzNTc5NDY4Nw==&amp;mid=2247483706&amp;idx=1&amp;sn=4e5f7bb015b46d3ece8e3eff6437f8af&amp;chksm=e8e0f8aadf9771bc67aca66049f852165700c0f3c2e8ba38a8f83875dcc205089f402e76089d&amp;token=482154268&amp;lang=zh_CN#rd" target="_blank" rel="noopener">Android Architecture Components Part2:LiveData</a><br><a href="https://mp.weixin.qq.com/s?__biz=MzIzNTc5NDY4Nw==&amp;mid=2247483714&amp;idx=1&amp;sn=8d2137f92d0f8561cbf03c75456f122c&amp;chksm=e8e0f8d2df9771c41caa4f5cb285c6c99ba115e8c20ed8356eccdf998a640f01341028b8c9df&amp;token=482154268&amp;lang=zh_CN#rd" target="_blank" rel="noopener">Android Architecture Components Part3:Lifecycle</a><br><a href="https://mp.weixin.qq.com/s?__biz=MzIzNTc5NDY4Nw==&amp;mid=2247483721&amp;idx=1&amp;sn=7228254b03acde76c737b110f7619f73&amp;chksm=e8e0f8d9df9771cfe8b8d088d531efa9fecf8825586fb7f307572cacc45721a6dc577a69bca9&amp;token=482154268&amp;lang=zh_CN#rd" target="_blank" rel="noopener">Android Architecture Components Part4:ViewModel</a><br><a href="https://mp.weixin.qq.com/s?__biz=MzIzNTc5NDY4Nw==&amp;mid=2247484096&amp;idx=1&amp;sn=c87f8a38fe75108ccdc1883116efc78e&amp;chksm=e8e0fb50df9772460b5ee546b4474c46b58f0433eb75a9029d7ec41bc9d50bea225f880183d6&amp;token=482154268&amp;lang=zh_CN#rd" target="_blank" rel="noopener">Paging&#x5728;RecyclerView&#x4E2D;&#x7684;&#x5E94;&#x7528;&#xFF0C;&#x6709;&#x8FD9;&#x4E00;&#x7BC7;&#x5C31;&#x591F;&#x4E86;</a><br><a href="https://mp.weixin.qq.com/s?__biz=MzIzNTc5NDY4Nw==&amp;mid=2247484164&amp;idx=1&amp;sn=8e1cf325a281340d5664a1826b870e34&amp;chksm=e8e0fa94df977382ec38fba3440723cc12d76a44d2f6e3b4ef59d0228aa21a98a25a6b0d2ac9&amp;token=482154268&amp;lang=zh_CN#rd" target="_blank" rel="noopener">WorkManager&#x4ECE;&#x5165;&#x95E8;&#x5230;&#x5B9E;&#x8DF5;&#xFF0C;&#x6709;&#x8FD9;&#x4E00;&#x7BC7;&#x5C31;&#x591F;&#x4E86;</a></p>
+<p>&#x5BF9;&#x4E8E;Navigation&#x7684;&#x4F7F;&#x7528;&#xFF0C;&#x6211;&#x5C06;&#x5176;&#x5F52;&#x7EB3;&#x4E8E;&#x4EE5;&#x4E0B;&#x56DB;&#x70B9;&#xFF1A;</p>
+<ul>
+<li>Navigation&#x7684;&#x57FA;&#x672C;&#x914D;&#x7F6E;</li>
+<li>Navigation&#x7684;&#x8DF3;&#x8F6C;&#x4E0E;&#x6570;&#x636E;&#x4F20;&#x9012;</li>
+<li>Navigation&#x7684;&#x9875;&#x9762;&#x52A8;&#x753B;</li>
+<li>Navigation&#x7684;deepLink</li>
+</ul>
+<h2 id="&#x914D;&#x7F6E;"><a href="#&#x914D;&#x7F6E;" class="headerlink" title="&#x914D;&#x7F6E;"></a>&#x914D;&#x7F6E;</h2><p>&#x5728;&#x4F7F;&#x7528;&#x4E4B;&#x524D;&#x9700;&#x8981;&#x5F15;&#x5165;Navigation&#x7684;&#x4F9D;&#x8D56;&#xFF0C;&#x7136;&#x540E;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x4E3A;Navigation&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x5B83;&#x5C06;&#x4F4D;&#x4E8E;res/navigation/nav_graph.xml&#x3002;&#x4E3A;&#x4E86;&#x65B9;&#x4FBF;&#x7406;&#x89E3;&#x6587;&#x7AE0;&#x4E2D;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x6211;&#x5199;&#x4E86;&#x4E00;&#x4E2A;Demo&#xFF0C;&#x5927;&#x5BB6;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<a href="https://github.com/idisfkj/android-api-analysis/tree/master" target="_blank" rel="noopener">Android&#x7CBE;&#x534E;&#x5F55;</a>&#x67E5;&#x770B;&#x3002;</p>
+<p>&#x5728;&#x6211;&#x7684;Demo&#x4E2D;&#x6253;&#x5F00;nav_graph.xml&#x4F60;&#x5C06;&#x6E05;&#x6670;&#x7684;&#x770B;&#x5230;&#x5B83;&#x4EEC;&#x9875;&#x9762;&#x95F4;&#x7684;&#x5173;&#x7CFB;&#x7EBD;&#x5E26;</p>
+<p><img src="/2019/10/22/Android-Navigation&#x7684;&#x56DB;&#x5927;&#x8981;&#x70B9;&#x4F60;&#x90FD;&#x77E5;&#x9053;&#x5417;&#xFF1F;/1.png" alt></p>
+<p>&#x4E00;&#x5171;&#x6709;6&#x4E2A;&#x9875;&#x9762;&#xFF0C;&#x6700;&#x5DE6;&#x8FB9;&#x7684;&#x4E3A;&#x7A0B;&#x5E8F;&#x5165;&#x53E3;&#x9875;&#x9762;&#xFF0C;&#x5B83;&#x4EEC;&#x95F4;&#x7684;&#x7EBF;&#x6761;&#x6307;&#x5411;&#x4E3A;&#x5B83;&#x4EEC;&#x95F4;&#x53EF;&#x8DF3;&#x8F6C;&#x7684;&#x65B9;&#x5411;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x518D;&#x6765;&#x770B;&#x5B83;&#x4EEC;&#x7684;xm&#x914D;&#x7F6E;&#x1F447;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">navigation</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:app</span>=<span class="string">&quot;http://schemas.android.com/apk/res-auto&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">&quot;http://schemas.android.com/tools&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">&quot;@+id/nav_graph&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:startDestination</span>=<span class="string">&quot;@id/welcome_fragment&quot;</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="name">fragment</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">&quot;@+id/welcome_fragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">&quot;com.idisfkj.androidapianalysis.navigation.fragment.WelcomeFragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:label</span>=<span class="string">&quot;welcome_fragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">tools:layout</span>=<span class="string">&quot;@layout/fragment_welcome&quot;</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/action_go_to_register_page&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:destination</span>=<span class="string">&quot;@id/register_fragment&quot;</span> /&gt;</span></span><br><span class="line"> </span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/action_go_to_order_list_page&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:destination</span>=<span class="string">&quot;@id/order_list_fragment&quot;</span>/&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;/<span class="name">fragment</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="name">fragment</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">&quot;@+id/register_fragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">&quot;com.idisfkj.androidapianalysis.navigation.fragment.RegisterFragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:label</span>=<span class="string">&quot;register_fragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">tools:layout</span>=<span class="string">&quot;@layout/fragment_register&quot;</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/action_go_to_shop_list_page&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:destination</span>=<span class="string">&quot;@id/shop_list_fragment&quot;</span> /&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;/<span class="name">fragment</span>&gt;</span></span><br><span class="line">     </span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">navigation</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>&#x9875;&#x9762;&#x6807;&#x7B7E;&#x4E3B;&#x8981;&#x5305;&#x542B;navigation&#x3001;fragment&#x4E0E;action</p>
+<ul>
+<li>navigation: &#x5B9A;&#x4E49;&#x5BFC;&#x822A;&#x6808;&#xFF0C;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x5D4C;&#x5957;&#x5B9A;&#x4E49;&#xFF0C;&#x5404;&#x4E2A;navigation&#x76F8;&#x4E92;&#x72EC;&#x7ACB;&#x3002;&#x5B83;&#x6709;&#x4E00;&#x4E2A;&#x5C5E;&#x6027;startDestination&#x7528;&#x6765;&#x5B9A;&#x4E49;&#x5BFC;&#x822A;&#x6808;&#x7684;&#x6839;&#x5165;&#x53E3;fragment</li>
+<li>fragment: &#x987E;&#x540D;&#x601D;&#x4E49;fragment&#x9875;&#x9762;&#x3002;&#x901A;&#x8FC7;name&#x5C5E;&#x6027;&#x6765;&#x5B9A;&#x4E49;&#x5173;&#x8054;&#x7684;fragment</li>
+<li>action: &#x610F;&#x56FE;&#xFF0C;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;Intent&#xFF0C;&#x5373;&#x8DF3;&#x8F6C;&#x7684;&#x884C;&#x4E3A;&#x3002;&#x901A;&#x8FC7;destination&#x6765;&#x5173;&#x8054;&#x5C06;&#x8981;&#x8DF3;&#x8F6C;&#x7684;&#x76EE;&#x6807;fragment&#x3002;</li>
+</ul>
+<p>&#x4EE5;&#x4E0A;&#x662F;nav_graph.xml&#x7684;&#x57FA;&#x672C;&#x914D;&#x7F6E;&#x3002;</p>
+<p>&#x5728;&#x914D;&#x7F6E;&#x5B8C;&#x4E4B;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x8FD8;&#x9700;&#x8981;&#x5C06;&#x5176;&#x5173;&#x8054;&#x5230;Activity&#x4E2D;&#x3002;&#x56E0;&#x4E3A;&#x6240;&#x6709;&#x7684;Fragment&#x90FD;&#x79BB;&#x4E0D;&#x5F00;Activity&#x3002;</p>
+<p>Navigation&#x4E3A;&#x6211;&#x4EEC;&#x63D0;&#x4F9B;&#x4E86;&#x4E24;&#x4E2A;&#x914D;&#x7F6E;&#x53C2;&#x6570;: defaultNavHost&#x4E0E;navGraph&#xFF0C;&#x6240;&#x4EE5;&#x5728;Activity&#x7684;xml&#x4E2D;&#x9700;&#x8981;&#x5982;&#x4E0B;&#x914D;&#x7F6E;&#x1F447;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:app</span>=<span class="string">&quot;http://schemas.android.com/apk/res-auto&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">&quot;http://schemas.android.com/tools&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:background</span>=<span class="string">&quot;@android:color/background_light&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:orientation</span>=<span class="string">&quot;vertical&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">tools:context</span>=<span class="string">&quot;.navigation.NavigationMainActivity&quot;</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="name">fragment</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">&quot;@+id/nav_host_fragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">&quot;androidx.navigation.fragment.NavHostFragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:defaultNavHost</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:navGraph</span>=<span class="string">&quot;@navigation/nav_graph&quot;</span> /&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>defaultNavHost: &#x5C06;&#x8BBE;&#x5907;&#x7684;&#x56DE;&#x9000;&#x64CD;&#x4F5C;&#x8FDB;&#x884C;&#x62E6;&#x622A;&#xFF0C;&#x5E76;&#x5C06;&#x5176;&#x4EA4;&#x7ED9;Navigation&#x8FDB;&#x884C;&#x7BA1;&#x7406;&#x3002;</li>
+<li>navGraph: Navigation&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x5373;&#x4E0A;&#x9762;&#x6211;&#x4EEC;&#x914D;&#x7F6E;&#x7684;nav_graph.xml&#x6587;&#x4EF6;</li>
+</ul>
+<p>&#x9664;&#x6B64;&#x4E4B;&#x5916;&#xFF0C;fragment&#x7684;name&#x5C5E;&#x6027;&#x5FC5;&#x987B;&#x4E3A;NavHostFragment&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x4F1A;&#x4F5C;&#x4E3A;&#x6211;&#x4EEC;&#x914D;&#x7F6E;&#x7684;&#x6240;&#x6709;fragment&#x7684;&#x7BA1;&#x7406;&#x8005;&#x3002;&#x5177;&#x4F53;&#x901A;&#x8FC7;&#x5185;&#x90E8;&#x7684;NavController&#x4E2D;&#x7684;NavigationProvider&#x6765;&#x83B7;&#x53D6;Navigator&#x62BD;&#x8C61;&#x5B9E;&#x4F8B;&#xFF0C;&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#x7C7B;&#x662F;FragmentNavigator&#xFF0C;&#x6240;&#x4EE5;&#x6700;&#x7EC8;&#x901A;&#x8FC7;&#x5B83;&#x7684;navigate&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x521B;&#x5EFA;&#x6211;&#x4EEC;&#x914D;&#x7F6E;&#x7684;Fragment&#xFF0C;&#x5E76;&#x4E14;&#x6DFB;&#x52A0;&#x5230;NavHostFragment&#x7684;FrameLayout&#x6839;&#x5E03;&#x5C40;&#x4E2D;&#x3002;</p>
+<p>&#x6B64;&#x65F6;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x76F4;&#x63A5;&#x8FD0;&#x884C;&#x7A0B;&#x5E8F;&#x540E;&#x53D1;&#x73B0;&#x5DF2;&#x7ECF;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5165;&#x53E3;&#x9875;&#x9762;WelcomeFragment</p>
+<p><img src="/2019/10/22/Android-Navigation&#x7684;&#x56DB;&#x5927;&#x8981;&#x70B9;&#x4F60;&#x90FD;&#x77E5;&#x9053;&#x5417;&#xFF1F;/2.png" alt></p>
+<p>&#x4F46;&#x70B9;&#x51FB;register&#x7B49;&#x64CD;&#x4F5C;&#x4F60;&#x4F1A;&#x53D1;&#x73B0;&#x70B9;&#x51FB;&#x8DF3;&#x8F6C;&#x65E0;&#x6548;&#xFF0C;&#x6240;&#x4EE5;&#x63A5;&#x4E0B;&#x6765;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x4E3A;&#x5176;&#x6DFB;&#x52A0;&#x8DF3;&#x8F6C;</p>
+<h2 id="&#x8DF3;&#x8F6C;"><a href="#&#x8DF3;&#x8F6C;" class="headerlink" title="&#x8DF3;&#x8F6C;"></a>&#x8DF3;&#x8F6C;</h2><p>&#x7531;&#x4E8E;&#x6211;&#x4EEC;&#x4E4B;&#x524D;&#x5DF2;&#x7ECF;&#x5728;nav_graph.xml&#x4E2D;&#x5B9A;&#x4E49;&#x4E86;action&#xFF0C;&#x6240;&#x4EE5;&#x8DF3;&#x8F6C;&#x7684;&#x63A5;&#x5165;&#x975E;&#x5E38;&#x65B9;&#x4FBF;&#xFF0C;&#x6BCF;&#x4E00;&#x4E2A;action&#x7684;&#x5173;&#x8054;&#x8DF3;&#x8F6C;&#x53EA;&#x9700;&#x4E00;&#x884C;&#x4EE3;&#x7801;&#x1F447;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WelcomeFragment</span> : <span class="type">Fragment</span></span>() {</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreateView</span><span class="params">(inflater: <span class="type">LayoutInflater</span>, container: <span class="type">ViewGroup</span>?, savedInstanceState: <span class="type">Bundle</span>?)</span></span>: View? {</span><br><span class="line">        <span class="keyword">return</span> inflater.inflate(R.layout.fragment_welcome, container, <span class="literal">false</span>).apply {</span><br><span class="line">            register_bt.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_go_to_register_page))</span><br><span class="line">            stroll_bt.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_go_to_order_list_page))</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4EE3;&#x7801;&#x4E2D;&#x7684;id&#x5C31;&#x662F;&#x914D;&#x7F6E;&#x7684;action&#x7684;id&#xFF0C;&#x5185;&#x90E8;&#x539F;&#x7406;&#x662F;&#x5148;&#x83B7;&#x53D6;&#x5230;&#x5BF9;&#x5E94;&#x7684;NavController&#xFF0C;&#x901A;&#x8FC7;&#x70B9;&#x51FB;&#x7684;view&#x6765;&#x904D;&#x5386;&#x627E;&#x5230;&#x6700;&#x5916;&#x5C42;&#x7684;parent view&#xFF0C;&#x56E0;&#x4E3A;&#x6700;&#x5916;&#x5C42;&#x7684;parent view&#x4F1A;&#x5728;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5BFC;&#x5165;&#x65F6;&#xFF0C;&#x5373;NavHostFragment&#x4E2D;&#x7684;onViewCreated&#x65B9;&#x6CD5;&#x4E2D;&#x8FDB;&#x884C;&#x5173;&#x8054;&#x5BF9;&#x5E94;&#x7684;NavController&#x1F447;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onViewCreated</span><span class="params">(@NonNull View view, @Nullable Bundle savedInstanceState)</span> </span>{</span><br><span class="line">    <span class="keyword">super</span>.onViewCreated(view, savedInstanceState);</span><br><span class="line">    <span class="keyword">if</span> (!(view <span class="keyword">instanceof</span> ViewGroup)) {</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">&quot;created host view &quot;</span> + view + <span class="string">&quot; is not a ViewGroup&quot;</span>);</span><br><span class="line">    }</span><br><span class="line">    Navigation.setViewNavController(view, mNavController);</span><br><span class="line">    <span class="comment">// When added programmatically, we need to set the NavController on the parent - i.e.,</span></span><br><span class="line">    <span class="comment">// the View that has the ID matching this NavHostFragment.</span></span><br><span class="line">    <span class="keyword">if</span> (view.getParent() != <span class="keyword">null</span>) {</span><br><span class="line">        View rootView = (View) view.getParent();</span><br><span class="line">        <span class="keyword">if</span> (rootView.getId() == getId()) {</span><br><span class="line">            Navigation.setViewNavController(rootView, mNavController);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x7136;&#x540E;&#x518D;&#x8C03;&#x7528;navigate&#x8FDB;&#x884C;&#x9875;&#x9762;&#x8DF3;&#x8F6C;&#x5904;&#x7406;&#xFF0C;&#x6700;&#x7EC8;&#x901A;&#x8FC7;FragmentTransaction&#x7684;replace&#x8FDB;&#x884C;Fragment&#x66FF;&#x6362;&#x1F447;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">-------------- NavController ------------------</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">navigate</span><span class="params">(@NonNull NavDestination node, @Nullable Bundle args,</span></span></span><br><span class="line"><span class="function"><span class="params">        @Nullable NavOptions navOptions, @Nullable Navigator.Extras navigatorExtras)</span> </span>{</span><br><span class="line">    <span class="keyword">boolean</span> popped = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (navOptions != <span class="keyword">null</span>) {</span><br><span class="line">        <span class="keyword">if</span> (navOptions.getPopUpTo() != -<span class="number">1</span>) {</span><br><span class="line">            popped = popBackStackInternal(navOptions.getPopUpTo(),</span><br><span class="line">                    navOptions.isPopUpToInclusive());</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    Navigator&lt;NavDestination&gt; navigator = mNavigatorProvider.getNavigator(</span><br><span class="line">            node.getNavigatorName());</span><br><span class="line">    Bundle finalArgs = node.addInDefaultArgs(args);</span><br><span class="line">    # ---- &#x5173;&#x952E;&#x4EE3;&#x7801; -------</span><br><span class="line">    NavDestination newDest = navigator.navigate(node, finalArgs,</span><br><span class="line">            navOptions, navigatorExtras);</span><br><span class="line">    ....</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line">-------------- FragmentNavigator ------------------</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">public</span> NavDestination <span class="title">navigate</span><span class="params">(@NonNull Destination destination, @Nullable Bundle args,</span></span></span><br><span class="line"><span class="function"><span class="params">        @Nullable NavOptions navOptions, @Nullable Navigator.Extras navigatorExtras)</span> </span>{</span><br><span class="line">    <span class="keyword">if</span> (mFragmentManager.isStateSaved()) {</span><br><span class="line">        Log.i(TAG, <span class="string">&quot;Ignoring navigate() call: FragmentManager has already&quot;</span></span><br><span class="line">                + <span class="string">&quot; saved its state&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    }</span><br><span class="line">    String className = destination.getClassName();</span><br><span class="line">    <span class="keyword">if</span> (className.charAt(<span class="number">0</span>) == <span class="string">&apos;.&apos;</span>) {</span><br><span class="line">        className = mContext.getPackageName() + className;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">final</span> Fragment frag = instantiateFragment(mContext, mFragmentManager,</span><br><span class="line">            className, args);</span><br><span class="line">    frag.setArguments(args);</span><br><span class="line">    <span class="keyword">final</span> FragmentTransaction ft = mFragmentManager.beginTransaction();</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">int</span> enterAnim = navOptions != <span class="keyword">null</span> ? navOptions.getEnterAnim() : -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> exitAnim = navOptions != <span class="keyword">null</span> ? navOptions.getExitAnim() : -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> popEnterAnim = navOptions != <span class="keyword">null</span> ? navOptions.getPopEnterAnim() : -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> popExitAnim = navOptions != <span class="keyword">null</span> ? navOptions.getPopExitAnim() : -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (enterAnim != -<span class="number">1</span> || exitAnim != -<span class="number">1</span> || popEnterAnim != -<span class="number">1</span> || popExitAnim != -<span class="number">1</span>) {</span><br><span class="line">        enterAnim = enterAnim != -<span class="number">1</span> ? enterAnim : <span class="number">0</span>;</span><br><span class="line">        exitAnim = exitAnim != -<span class="number">1</span> ? exitAnim : <span class="number">0</span>;</span><br><span class="line">        popEnterAnim = popEnterAnim != -<span class="number">1</span> ? popEnterAnim : <span class="number">0</span>;</span><br><span class="line">        popExitAnim = popExitAnim != -<span class="number">1</span> ? popExitAnim : <span class="number">0</span>;</span><br><span class="line">        ft.setCustomAnimations(enterAnim, exitAnim, popEnterAnim, popExitAnim);</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    # ------ &#x5173;&#x952E;&#x4EE3;&#x7801; ------</span><br><span class="line">    ft.replace(mContainerId, frag);</span><br><span class="line">    ft.setPrimaryNavigationFragment(frag);</span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6E90;&#x7801;&#x5C31;&#x5206;&#x6790;&#x5230;&#x8FD9;&#x91CC;&#x4E86;&#xFF0C;&#x5982;&#x679C;&#x9700;&#x8981;&#x6DF1;&#x5165;&#x4E86;&#x89E3;&#xFF0C;&#x5EFA;&#x8BAE;&#x9605;&#x8BFB;<strong>NavHostFragment</strong>&#x3001;<strong>NavController</strong>&#x3001;<strong>NavigatorProvider</strong>&#x4E0E;<strong>FragmentNavigator</strong></p>
+<h2 id="&#x4F20;&#x53C2;"><a href="#&#x4F20;&#x53C2;" class="headerlink" title="&#x4F20;&#x53C2;"></a>&#x4F20;&#x53C2;</h2><p>&#x4EE5;&#x4E0A;&#x662F;&#x9875;&#x9762;&#x7684;&#x65E0;&#x53C2;&#x8DF3;&#x8F6C;&#xFF0C;&#x90A3;&#x4E48;&#x5BF9;&#x4E8E;&#x6709;&#x53C2;&#x8DF3;&#x8F6C;&#x53C8;&#x8BE5;&#x5982;&#x4F55;&#x5462;&#xFF1F;</p>
+<p>&#x5927;&#x5BB6;&#x60F3;&#x5230;&#x7684;&#x5E94;&#x8BE5;&#x90FD;&#x662F;bundle&#xFF0C;&#x5C06;&#x4F20;&#x9012;&#x7684;&#x6570;&#x636E;&#x586B;&#x5165;&#x5230;bundle&#x4E2D;&#x3002;&#x6CA1;&#x9519;Navigator&#x63D0;&#x4F9B;&#x7684;navigate&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x4F20;&#x9012;bundle&#x6570;&#x636E;&#x1F447;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">findNavController().navigate(R.id.action_go_to_shop_detail_page, bundleOf(<span class="string">&quot;title&quot;</span> to <span class="string">&quot;I am title&quot;</span>))</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x79CD;&#x4F20;&#x7EDF;&#x7684;&#x65B9;&#x6CD5;&#x5728;&#x4F20;&#x9012;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x4E0A;&#x5E76;&#x4E0D;&#x80FD;&#x4FDD;&#x8BC1;&#x5176;&#x4E00;&#x81F4;&#x6027;&#xFF0C;&#x4E3A;&#x4E86;&#x51CF;&#x5C11;&#x4EBA;&#x4E3A;&#x7CBE;&#x529B;&#x4E0A;&#x7684;&#x9519;&#x8BEF;&#xFF0C;Navigation&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;Gradle&#x63D2;&#x4EF6;&#xFF0C;&#x4E13;&#x95E8;&#x7528;&#x6765;&#x4FDD;&#x8BC1;&#x6570;&#x636E;&#x7684;&#x7C7B;&#x578B;&#x5B89;&#x5168;&#x3002;</p>
+<p>&#x4F7F;&#x7528;&#x5B83;&#x7684;&#x8BDD;&#x9700;&#x8981;&#x5F15;&#x5165;&#x8BE5;&#x63D2;&#x4EF6;&#xFF0C;&#x65B9;&#x5F0F;&#x5982;&#x4E0B;&#x1F447;</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">buildscript {</span><br><span class="line">    repositories {</span><br><span class="line">        google()</span><br><span class="line">    }</span><br><span class="line">    dependencies {</span><br><span class="line">        <span class="keyword">def</span> nav_version = <span class="string">&quot;2.1.0&quot;</span></span><br><span class="line">        classpath <span class="string">&quot;androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version&quot;</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6700;&#x540E;&#x518D;&#x5230;app&#x4E0B;&#x7684;build.gradle&#x4E2D;&#x5F15;&#x5165;&#x8BE5;&#x63D2;&#x4EF6;&#x1F447;</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply <span class="string">plugin:</span> <span class="string">&quot;androidx.navigation.safeargs.kotlin&quot;</span></span><br></pre></td></tr></table></figure>
+<p>&#x800C;&#x5B83;&#x7684;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#x4E5F;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x9996;&#x5148;&#x53C2;&#x6570;&#x9700;&#x8981;&#x5728;nav_graph.xml&#x4E2D;&#x8FDB;&#x884C;&#x914D;&#x7F6E;&#x3002;&#x1F447;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">fragment</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">&quot;@+id/shop_list_fragment&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">&quot;com.idisfkj.androidapianalysis.navigation.fragment.ShopListFragment&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:label</span>=<span class="string">&quot;shop_list_fragment&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">tools:layout</span>=<span class="string">&quot;@layout/fragment_shop_list&quot;</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="name">action</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">&quot;@+id/action_go_to_shop_detail_page&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:destination</span>=<span class="string">&quot;@id/shop_detail_fragment&quot;</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">        <span class="tag">&lt;<span class="name">argument</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:name</span>=<span class="string">&quot;title&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:argType</span>=<span class="string">&quot;string&quot;</span> /&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;/<span class="name">action</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;/<span class="name">fragment</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">fragment</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">&quot;@+id/shop_detail_fragment&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">&quot;com.idisfkj.androidapianalysis.navigation.fragment.ShopDetailFragment&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:label</span>=<span class="string">&quot;shop_detail_fragment&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">tools:layout</span>=<span class="string">&quot;@layout/fragment_shop_detail&quot;</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="name">action</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">&quot;@+id/action_go_to_cart_page&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:destination</span>=<span class="string">&quot;@id/cart_fragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:popUpTo</span>=<span class="string">&quot;@id/cart_fragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:popUpToInclusive</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="name">argument</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">&quot;title&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:argType</span>=<span class="string">&quot;string&quot;</span> /&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;/<span class="name">fragment</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x4ECE;ShopListFragment&#x8DF3;&#x8F6C;&#x5230;ShopDetailFragment&#xFF0C;&#x9700;&#x8981;&#x5728;ShopListFragment&#x7684;&#x5BF9;&#x5E94;action&#x4E2D;&#x6DFB;&#x52A0;argument&#xFF0C;&#x58F0;&#x660E;&#x5BF9;&#x5E94;&#x7684;&#x53C2;&#x6570;&#x7C7B;&#x578B;&#x4E0E;&#x53C2;&#x6570;&#x540D;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;defaultValue&#x5B9A;&#x4E49;&#x53C2;&#x6570;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#x4E0E;nullable&#x6807;&#x660E;&#x662F;&#x5426;&#x53EF;&#x7A7A;&#x3002;&#x5BF9;&#x5E94;&#x7684;ShopDetailFragment&#x63A5;&#x6536;&#x53C2;&#x6570;&#x4E5F;&#x662F;&#x4E00;&#x6837;&#x3002;</p>
+<p>&#x53E6;&#x5916;popUpTo&#x4E0E;popUpToInclusive&#x5C5E;&#x6027;&#x662F;&#x4E3A;&#x4E86;&#x5B9E;&#x73B0;&#x8DF3;&#x8F6C;&#x5230;CartFragment&#x65F6;&#x8FBE;&#x5230;SingleTop&#x6548;&#x679C;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x76F4;&#x63A5;&#x770B;&#x5728;&#x4EE3;&#x7801;&#x4E2D;&#x5982;&#x4F55;&#x4F7F;&#x7528;&#x8FD9;&#x4E9B;&#x914D;&#x7F6E;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x9996;&#x5148;&#x662F;&#x5728;ShopListFragment&#x4E2D;&#x1F447;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">holder.item.setOnClickListener(Navigation.createNavigateOnClickListener(ShopListFragmentDirections.actionGoToShopDetailPage(shopList[position])))</span><br></pre></td></tr></table></figure>
+<p>&#x8FD8;&#x662F;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;createNavigateOnClickListener&#xFF0C;&#x53EA;&#x4E0D;&#x8FC7;&#x73B0;&#x5728;&#x4F20;&#x9012;&#x7684;&#x4E0D;&#x518D;&#x662F;&#x8DF3;&#x8F6C;&#x7684;action id&#xFF0C;&#x800C;&#x662F;&#x901A;&#x8FC7;&#x63D2;&#x4EF6;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x7684;ShopListFragmentDirections.actionGoToShopDetailPage&#x65B9;&#x6CD5;&#x3002;&#x4E00;&#x65E6;&#x6211;&#x4EEC;&#x5982;&#x4E0A;&#x914D;&#x7F6E;&#x4E86;argument&#xFF0C;&#x63D2;&#x4EF6;&#x5C31;&#x4F1A;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x4EE5;[&#x7C7B;&#x540D;]+Directions&#x7684;&#x7C7B;&#xFF0C;&#x800C;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x7684;&#x7C7B;&#x672C;&#x8D28;&#x662F;&#x505A;&#x4E86;&#x8DF3;&#x8F6C;&#x4E0E;&#x53C2;&#x6570;&#x7684;&#x5C01;&#x88C5;&#xFF0C;&#x6E90;&#x7801;&#x5982;&#x4E0B;&#x1F447;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShopListFragmentDirections</span> <span class="keyword">private</span> <span class="keyword">constructor</span></span>() {</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">ActionGoToShopDetailPage</span></span>(<span class="keyword">val</span> title: String) : NavDirections {</span><br><span class="line">        <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getActionId</span><span class="params">()</span></span>: <span class="built_in">Int</span> = R.id.action_go_to_shop_detail_page</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getArguments</span><span class="params">()</span></span>: Bundle {</span><br><span class="line">            <span class="keyword">val</span> result = Bundle()</span><br><span class="line">            result.putString(<span class="string">&quot;title&quot;</span>, <span class="keyword">this</span>.title)</span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> {</span><br><span class="line">        <span class="function"><span class="keyword">fun</span> <span class="title">actionGoToShopDetailPage</span><span class="params">(title: <span class="type">String</span>)</span></span>: NavDirections = ActionGoToShopDetailPage(title)</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x672C;&#x8D28;&#x662F;&#x5C06;action id&#x4E0E;argument&#x5C01;&#x88C5;&#x6210;&#x4E00;&#x4E2A;NavDirections&#xFF0C;&#x5185;&#x90E8;&#x901A;&#x8FC7;&#x89E3;&#x6790;&#x5B83;&#x6765;&#x83B7;&#x53D6;action id&#x4E0E;argument&#xFF0C;&#x4ECE;&#x800C;&#x6267;&#x884C;&#x8DF3;&#x8F6C;&#x3002;</p>
+<p>&#x800C;&#x5BF9;&#x4E8E;&#x63A5;&#x53D7;&#x65B9;ShopDetailFragment&#xFF0C;&#x63D2;&#x4EF6;&#x9875;&#x9762;&#x81EA;&#x52A8;&#x5E2E;&#x6211;&#x4EEC;&#x751F;&#x6210;&#x4E00;&#x4E2A;ShopDetailFragmentArgs&#xFF0C;&#x4EE5;[&#x7C7B;&#x540D;]+Args&#x7684;&#x7C7B;&#x3002;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x505A;&#x7684;&#x4E5F;&#x975E;&#x5E38;&#x7B80;&#x5355;&#x1F447;</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShopDetailFragment</span> : <span class="type">Fragment</span></span>() {</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> args <span class="keyword">by</span> navArgs&lt;ShopDetailFragmentArgs&gt;()</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreateView</span><span class="params">(inflater: <span class="type">LayoutInflater</span>, container: <span class="type">ViewGroup</span>?, savedInstanceState: <span class="type">Bundle</span>?)</span></span>: View? {</span><br><span class="line">        <span class="keyword">return</span> inflater.inflate(R.layout.fragment_shop_detail, container, <span class="literal">false</span>).apply {</span><br><span class="line">            title.text = args.title</span><br><span class="line">            add_cart.setOnClickListener(Navigation.createNavigateOnClickListener(ShopDetailFragmentDirections.actionGoToCartPage()))</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x901A;&#x8FC7;navArgs&#x6765;&#x83B7;&#x53D6;ShopDetailFragmentArgs&#x5BF9;&#x8C61;&#xFF0C;&#x5B83;&#x5176;&#x4E2D;&#x5305;&#x542B;&#x4E86;&#x4F20;&#x9012;&#x8FC7;&#x6765;&#x7684;&#x9875;&#x9762;&#x6570;&#x636E;&#x3002;</p>
+<h2 id="&#x52A8;&#x753B;"><a href="#&#x52A8;&#x753B;" class="headerlink" title="&#x52A8;&#x753B;"></a>&#x52A8;&#x753B;</h2><p>&#x5728;action&#x4E2D;&#x4E0D;&#x4EC5;&#x53EF;&#x4EE5;&#x914D;&#x7F6E;&#x8DF3;&#x8F6C;&#x7684;destination&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x5B9A;&#x4E49;&#x5BF9;&#x5E94;&#x9875;&#x9762;&#x7684;&#x8F6C;&#x573A;&#x52A8;&#x753B;&#xFF0C;&#x4F7F;&#x7528;&#x975E;&#x5E38;&#x7B80;&#x5355;&#x1F447;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">navigation</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:app</span>=<span class="string">&quot;http://schemas.android.com/apk/res-auto&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">&quot;http://schemas.android.com/tools&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">&quot;@+id/nav_graph&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:startDestination</span>=<span class="string">&quot;@id/welcome_fragment&quot;</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="name">fragment</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">&quot;@+id/welcome_fragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">&quot;com.idisfkj.androidapianalysis.navigation.fragment.WelcomeFragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:label</span>=<span class="string">&quot;welcome_fragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">tools:layout</span>=<span class="string">&quot;@layout/fragment_welcome&quot;</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/action_go_to_register_page&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:destination</span>=<span class="string">&quot;@id/register_fragment&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:enterAnim</span>=<span class="string">&quot;@anim/slide_in_right&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:exitAnim</span>=<span class="string">&quot;@anim/slide_in_left&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:popEnterAnim</span>=<span class="string">&quot;@anim/slide_out_left&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:popExitAnim</span>=<span class="string">&quot;@anim/slide_out_right&quot;</span> /&gt;</span></span><br><span class="line"> </span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/action_go_to_order_list_page&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:destination</span>=<span class="string">&quot;@id/order_list_fragment&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:enterAnim</span>=<span class="string">&quot;@anim/slide_in_right&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:exitAnim</span>=<span class="string">&quot;@anim/slide_in_left&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:popEnterAnim</span>=<span class="string">&quot;@anim/slide_out_left&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:popExitAnim</span>=<span class="string">&quot;@anim/slide_out_right&quot;</span> /&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;/<span class="name">fragment</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">navigation</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>&#x5BF9;&#x5E94;&#x56DB;&#x4E2A;&#x52A8;&#x753B;&#x914D;&#x7F6E;&#x53C2;&#x6570;</p>
+<ul>
+<li>enterAnim: &#x914D;&#x7F6E;&#x8FDB;&#x573A;&#x65F6;&#x76EE;&#x6807;&#x9875;&#x9762;&#x52A8;&#x753B;</li>
+<li>exitAnim: &#x914D;&#x7F6E;&#x8FDB;&#x573A;&#x65F6;&#x539F;&#x9875;&#x9762;&#x52A8;&#x753B;</li>
+<li>popEnterAnim: &#x914D;&#x7F6E;&#x56DE;&#x9000;pop&#x65F6;&#x76EE;&#x6807;&#x9875;&#x9762;&#x52A8;&#x753B;</li>
+<li>popExitAnim: &#x914D;&#x7F6E;&#x56DE;&#x9000;pop&#x65F6;&#x539F;&#x9875;&#x9762;&#x52A8;&#x753B;</li>
+</ul>
+<p>&#x901A;&#x8FC7;&#x4E0A;&#x9762;&#x7684;&#x914D;&#x7F6E;&#x4F60;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5982;&#x4E0B;&#x6548;&#x679C;&#x1F447;</p>
+<p><img src="/2019/10/22/Android-Navigation&#x7684;&#x56DB;&#x5927;&#x8981;&#x70B9;&#x4F60;&#x90FD;&#x77E5;&#x9053;&#x5417;&#xFF1F;/3.gif" alt></p>
+<h2 id="deepLink"><a href="#deepLink" class="headerlink" title="deepLink"></a>deepLink</h2><p>&#x6211;&#x4EEC;&#x56DE;&#x60F3;&#x4E00;&#x4E0B;&#x5BF9;&#x4E8E;&#x591A;&#x4E2A;Activity&#x6211;&#x9700;&#x8981;&#x5B9E;&#x73B0;deepLink&#x6548;&#x679C;&#xFF0C;&#x5E94;&#x8BE5;&#x90FD;&#x662F;&#x5728;AndroidManifest.xml&#x4E2D;&#x8FDB;&#x884C;&#x914D;&#x7F6E;scheme&#x3001;host&#x7B49;&#x3002;&#x800C;&#x5BF9;&#x4E8E;&#x5355;&#x4E2A;Activity&#x4E5F;&#x9700;&#x8981;&#x5B9E;&#x73B0;&#x7C7B;&#x4F3C;&#x7684;&#x6548;&#x679C;&#xFF0C;Navigation&#x4E5F;&#x63D0;&#x4F9B;&#x4E86;&#x5BF9;&#x5E94;&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x800C;&#x4E14;&#x64CD;&#x4F5C;&#x66F4;&#x7B80;&#x5355;&#x3002;</p>
+<p>Navigation&#x63D0;&#x4F9B;&#x7684;&#x662F;deepLink&#x6807;&#x7B7E;&#xFF0C;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x5728;nav_graph.xml&#x8FDB;&#x884C;&#x914D;&#x7F6E;&#xFF0C;&#x4F8B;&#x5982;&#x1F447;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">fragment</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">&quot;@+id/register_fragment&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">&quot;com.idisfkj.androidapianalysis.navigation.fragment.RegisterFragment&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:label</span>=<span class="string">&quot;register_fragment&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">tools:layout</span>=<span class="string">&quot;@layout/fragment_register&quot;</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="name">action</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">&quot;@+id/action_go_to_shop_list_page&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:destination</span>=<span class="string">&quot;@id/shop_list_fragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:enterAnim</span>=<span class="string">&quot;@anim/slide_in_right&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:exitAnim</span>=<span class="string">&quot;@anim/slide_in_left&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:popEnterAnim</span>=<span class="string">&quot;@anim/slide_out_left&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:popExitAnim</span>=<span class="string">&quot;@anim/slide_out_right&quot;</span> /&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="name">deepLink</span> <span class="attr">app:uri</span>=<span class="string">&quot;api://register/&quot;</span> /&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;/<span class="name">fragment</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x9762;&#x901A;&#x8FC7;deepLink&#x6211;&#x914D;&#x7F6E;&#x4E86;&#x4E00;&#x4E2A;&#x8DF3;&#x8F6C;&#x5230;&#x6CE8;&#x518C;&#x9875;RegisterFragment&#xFF0C;&#x5199;&#x6CD5;&#x975E;&#x5E38;&#x7B80;&#x5355;&#xFF0C;&#x76F4;&#x63A5;&#x914D;&#x7F6E;uri&#x5373;&#x53EF;&#xFF1B;&#x540C;&#x65F6;&#x8FD8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5360;&#x4F4D;&#x7B26;&#x914D;&#x7F6E;&#x4F20;&#x9012;&#x53C2;&#x6570;&#xFF0C;&#x4F8B;&#x5982;&#x1F447;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">deepLink</span> <span class="attr">app:uri</span>=<span class="string">&quot;api://register/{id}&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x65F6;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x5728;&#x6CE8;&#x518C;&#x9875;&#x9762;&#x901A;&#x8FC7;argument&#x83B7;&#x53D6;key&#x4E3A;id&#x7684;&#x6570;&#x636E;&#x3002;</p>
+<p>&#x5F53;&#x7136;&#x8981;&#x5B9E;&#x73B0;&#x4E0A;&#x9762;&#x7684;&#x6548;&#x679C;&#xFF0C;&#x6211;&#x4EEC;&#x8FD8;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x524D;&#x63D0;&#xFF0C;&#x9700;&#x8981;&#x5728;AndroidManifest.xml&#x4E2D;&#x5C06;&#x6211;&#x4EEC;&#x7684;deepLink&#x8FDB;&#x884C;&#x914D;&#x7F6E;&#xFF0C;&#x5728;Activity&#x4E2D;&#x4F7F;&#x7528;nav-graph&#x6807;&#x7B7E;&#x1F447;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span></span></span><br><span class="line"><span class="tag">    <span class="attr">...</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:theme</span>=<span class="string">&quot;@style/AppTheme&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">&quot;.navigation.NavigationMainActivity&quot;</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.action.VIEW&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.action.MAIN&quot;</span> /&gt;</span></span><br><span class="line"> </span><br><span class="line">            <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.category.LAUNCHER&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">nav-graph</span> <span class="attr">android:value</span>=<span class="string">&quot;@navigation/nav_graph&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>&#x73B0;&#x5728;&#x53EA;&#x9700;&#x5C06;&#x6587;&#x7AE0;&#x4E2D;&#x7684;demo&#x5B89;&#x88C5;&#x5230;&#x624B;&#x673A;&#x4E0A;&#xFF0C;&#x518D;&#x70B9;&#x51FB;&#x4E0B;&#x9762;&#x7684;link</p>
+<p><a href="api://register/" target="_blank" rel="noopener">jump to register api</a></p>
+<p>&#x4E4B;&#x540E;&#x5C31;&#x4F1A;&#x542F;&#x52A8;App&#xFF0C;&#x5E76;&#x5B9A;&#x4F4D;&#x5230;&#x6CE8;&#x518C;&#x754C;&#x9762;&#x3002;&#x662F;&#x4E0D;&#x662F;&#x975E;&#x5E38;&#x7B80;&#x5355;&#x5462;&#xFF1F;</p>
+<p>&#x6700;&#x540E;&#x6211;&#x4EEC;&#x518D;&#x6765;&#x770B;&#x4E0B;&#x6548;&#x679C;&#x1F447;</p>
+<p><img src="/2019/10/22/Android-Navigation&#x7684;&#x56DB;&#x5927;&#x8981;&#x70B9;&#x4F60;&#x90FD;&#x77E5;&#x9053;&#x5417;&#xFF1F;/4.gif" alt></p>
+<p>&#x6709;&#x5173;Navigation&#x6682;&#x65F6;&#x5C31;&#x5230;&#x8FD9;&#x91CC;&#xFF0C;&#x901A;&#x8FC7;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#xFF0C;&#x5E0C;&#x671B;&#x4F60;&#x80FD;&#x591F;&#x719F;&#x6089;&#x8FD0;&#x7528;Navigation&#xFF0C;&#x5E76;&#x4E14;&#x53D1;&#x73B0;&#x5355;Activity&#x7684;&#x9B45;&#x529B;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x5BF9;&#x4F60;&#x6709;&#x6240;&#x5E2E;&#x52A9;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x987A;&#x624B;&#x70B9;&#x8D5E;&#x3001;&#x5173;&#x6CE8;&#x4E00;&#x6CE2;&#xFF0C;&#x8FD9;&#x662F;&#x5BF9;&#x6211;&#x6700;&#x5927;&#x7684;&#x9F13;&#x52B1;&#xFF01;</p>
+<h2 id="&#x9879;&#x76EE;&#x5730;&#x5740;"><a href="#&#x9879;&#x76EE;&#x5730;&#x5740;" class="headerlink" title="&#x9879;&#x76EE;&#x5730;&#x5740;"></a>&#x9879;&#x76EE;&#x5730;&#x5740;</h2><h3 id="Android&#x7CBE;&#x534E;&#x5F55;"><a href="#Android&#x7CBE;&#x534E;&#x5F55;" class="headerlink" title="Android&#x7CBE;&#x534E;&#x5F55;"></a>Android&#x7CBE;&#x534E;&#x5F55;</h3><p>&#x8BE5;&#x5E93;&#x7684;&#x76EE;&#x7684;&#x662F;&#x7ED3;&#x5408;&#x8BE6;&#x7EC6;&#x7684;Demo&#x6765;&#x5168;&#x9762;&#x89E3;&#x6790;Android&#x76F8;&#x5173;&#x7684;&#x77E5;&#x8BC6;&#x70B9;, &#x5E2E;&#x52A9;&#x8BFB;&#x8005;&#x80FD;&#x591F;&#x66F4;&#x5FEB;&#x7684;&#x638C;&#x63E1;&#x4E0E;&#x7406;&#x89E3;&#x6240;&#x9610;&#x8FF0;&#x7684;&#x8981;&#x70B9;</p>
+<p><a href="https://github.com/idisfkj/android-api-analysis" target="_blank" rel="noopener">Android&#x7CBE;&#x534E;&#x5F55;</a></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/08/12/WorkManager从入门到实践，有这一篇就够了/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2020/01/03/AwesomeGithub组件化探索之旅/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Tue Oct 22 2019 07:32:10 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

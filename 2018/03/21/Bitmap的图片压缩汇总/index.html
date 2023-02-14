@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Bitmap的图片压缩汇总 | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="bitmap,">
+  
+
+  <meta name="description" content="&amp;#x524D;&amp;#x8A00;Bitmap&amp;#x662F;Android&amp;#x4E2D;&amp;#x4E00;&amp;#x79CD;&amp;#x91CD;&amp;#x8981;&amp;#x7684;&amp;#x56FE;&amp;#x7247;&amp;#x5904;&amp;#x7406;&amp;#x673A;&amp;#x5236;&amp;#xFF0C;&amp;#x5B83;&amp;#x53EF;&amp;#x4EE5;&amp;#x7528;&amp;#x6765;&amp;#x83B7;&amp;#x53D6;&amp;#x">
+<meta name="keywords" content="bitmap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bitmap的图片压缩汇总">
+<meta property="og:url" content="https://www.rousetime.com/2018/03/21/Bitmap的图片压缩汇总/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="&amp;#x524D;&amp;#x8A00;Bitmap&amp;#x662F;Android&amp;#x4E2D;&amp;#x4E00;&amp;#x79CD;&amp;#x91CD;&amp;#x8981;&amp;#x7684;&amp;#x56FE;&amp;#x7247;&amp;#x5904;&amp;#x7406;&amp;#x673A;&amp;#x5236;&amp;#xFF0C;&amp;#x5B83;&amp;#x53EF;&amp;#x4EE5;&amp;#x7528;&amp;#x6765;&amp;#x83B7;&amp;#x53D6;&amp;#x">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.rousetime.com/2018/03/21/Bitmap的图片压缩汇总/1.png">
+<meta property="og:image" content="https://www.rousetime.com/2018/03/21/Bitmap的图片压缩汇总/2.png">
+<meta property="og:image" content="https://www.rousetime.com/2018/03/21/Bitmap的图片压缩汇总/3.png">
+<meta property="og:image" content="https://www.rousetime.com/2018/03/21/Bitmap的图片压缩汇总/wx.jpg">
+<meta property="og:updated_time" content="2018-05-16T15:15:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Bitmap的图片压缩汇总">
+<meta name="twitter:description" content="&amp;#x524D;&amp;#x8A00;Bitmap&amp;#x662F;Android&amp;#x4E2D;&amp;#x4E00;&amp;#x79CD;&amp;#x91CD;&amp;#x8981;&amp;#x7684;&amp;#x56FE;&amp;#x7247;&amp;#x5904;&amp;#x7406;&amp;#x673A;&amp;#x5236;&amp;#xFF0C;&amp;#x5B83;&amp;#x53EF;&amp;#x4EE5;&amp;#x7528;&amp;#x6765;&amp;#x83B7;&amp;#x53D6;&amp;#x">
+<meta name="twitter:image" content="https://www.rousetime.com/2018/03/21/Bitmap的图片压缩汇总/1.png">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bitmap大小计算"><span class="toc-text">Bitmap大小计算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CompressFormat"><span class="toc-text">CompressFormat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Config"><span class="toc-text">Config</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bitmap相关"><span class="toc-text">Bitmap相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#compress"><span class="toc-text">compress</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#createBitmap"><span class="toc-text">createBitmap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#createScaledBitmap"><span class="toc-text">createScaledBitmap</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BitmapFactory相关"><span class="toc-text">BitmapFactory相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#decodeFile"><span class="toc-text">decodeFile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#decodeStream-amp-decodeResourceStream"><span class="toc-text">decodeStream &amp; decodeResourceStream</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#decodeResource"><span class="toc-text">decodeResource</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关注"><span class="toc-text">关注</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Bitmap的图片压缩汇总" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Bitmap的图片压缩汇总</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.03.21</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="&#x524D;&#x8A00;"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</h2><p>Bitmap&#x662F;Android&#x4E2D;&#x4E00;&#x79CD;&#x91CD;&#x8981;&#x7684;&#x56FE;&#x7247;&#x5904;&#x7406;&#x673A;&#x5236;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x83B7;&#x53D6;&#x56FE;&#x7247;&#x7684;&#x76F8;&#x5173;&#x4FE1;&#x606F;&#xFF0C;&#x540C;&#x65F6;&#x53EF;&#x4EE5;&#x5BF9;&#x56FE;&#x7247;&#x8FDB;&#x884C;&#x88C1;&#x526A;&#x3001;&#x7F29;&#x653E;&#x7B49;&#x64CD;&#x4F5C;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x56FE;&#x7247;&#x683C;&#x5F0F;&#x8FDB;&#x884C;&#x4FDD;&#x5B58;&#x3002;&#x76F8;&#x4FE1;&#x5BF9;&#x4E8E;OOM&#x518D;&#x719F;&#x6089;&#x4E0D;&#x8FC7;&#x4E86;&#xFF0C;OOM&#x7684;&#x4EA7;&#x751F;&#x662F;&#x4E00;&#x4E2A;&#x975E;&#x5E38;&#x5934;&#x75BC;&#x7684;&#x4E8B;&#x60C5;&#xFF0C;&#x5982;&#x679C;&#x5728;&#x52A0;&#x8F7D;&#x56FE;&#x7247;&#x7684;&#x65F6;&#x5019;&#x672A;&#x5BF9;&#x5927;&#x56FE;&#x8FDB;&#x884C;&#x5904;&#x7406;&#xFF0C;&#x5B83;&#x5C06;&#x4F1A;&#x5360;&#x7528;&#x975E;&#x5E38;&#x5927;&#x7684;&#x5185;&#x5B58;&#xFF0C;&#x8FD9;&#x6837;&#x5C31;&#x975E;&#x5E38;&#x5BB9;&#x6613;&#x4EA7;&#x751F;OOM&#x3002;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x5FC5;&#x987B;&#x8981;&#x6709;&#x610F;&#x8BC6;&#x7684;&#x5BF9;&#x5927;&#x56FE;&#x8FDB;&#x884C;&#x538B;&#x7F29;&#x52A0;&#x8F7D;&#xFF0C;&#x8FD9;&#x6837;&#x624D;&#x80FD;&#x66F4;&#x597D;&#x7684;&#x4FDD;&#x8BC1;App&#x7684;&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#x4E0E;&#x6027;&#x80FD;&#x7684;&#x7A33;&#x5B9A;&#x3002;</p>
+<h2 id="Bitmap&#x5927;&#x5C0F;&#x8BA1;&#x7B97;"><a href="#Bitmap&#x5927;&#x5C0F;&#x8BA1;&#x7B97;" class="headerlink" title="Bitmap&#x5927;&#x5C0F;&#x8BA1;&#x7B97;"></a>Bitmap&#x5927;&#x5C0F;&#x8BA1;&#x7B97;</h2><p>&#x90A3;&#x4E48;&#x5982;&#x679C;&#x8BA1;&#x7B97;&#x4E00;&#x5F20;&#x56FE;&#x7247;&#x52A0;&#x8F7D;&#x8FC7;&#x7A0B;&#x4E2D;&#x6240;&#x5360;&#x7684;&#x5185;&#x5B58;&#x5927;&#x5C0F;&#x5462;&#xFF1F;&#x5728;&#x8FD9;&#x4E4B;&#x524D;&#xFF0C;&#x6211;&#x4EEC;&#x5148;&#x6765;&#x4E86;&#x89E3;&#x4E00;&#x4E0B;&#x5173;&#x4E8E;Bitmap&#x4E24;&#x4E2A;&#x4E3B;&#x8981;&#x914D;&#x7F6E;&#x3002;</p>
+<h3 id="CompressFormat"><a href="#CompressFormat" class="headerlink" title="CompressFormat"></a>CompressFormat</h3><p>&#x8FD9;&#x662F;&#x7528;&#x6765;&#x6307;&#x5B9A;Bitmap&#x7684;&#x56FE;&#x7247;&#x7684;&#x538B;&#x7F29;&#x683C;&#x5F0F;&#xFF0C;&#x5728;Bitmap&#x4E2D;&#x662F;&#x4E00;&#x4E2A;Enum&#x7ED3;&#x6784;&#xFF0C;&#x4E3B;&#x8981;&#x8868;&#x73B0;&#x4E3A;&#x4EE5;&#x4E0B;&#x4E09;&#x79CD;&#x683C;&#x5F0F;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public enum CompressFormat {</span><br><span class="line">    JPEG    (0),</span><br><span class="line">    PNG     (1),</span><br><span class="line">    WEBP    (2);</span><br><span class="line"></span><br><span class="line">    CompressFormat(int nativeInt) {</span><br><span class="line">        this.nativeInt = nativeInt;</span><br><span class="line">    }</span><br><span class="line">    final int nativeInt;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<ul>
+<li>JPEG: &#x4EE5;JPEG&#x7B97;&#x6CD5;&#x8FDB;&#x884C;&#x538B;&#x7F29;&#xFF0C;&#x538B;&#x7F29;&#x540E;&#x7684;&#x56FE;&#x7247;&#x683C;&#x5F0F;&#x53EF;&#x4EE5;&#x4E3A;.jpeg&#x6216;&#x8005;.jpg&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x79CD;&#x6709;&#x635F;&#x538B;&#x7F29;&#xFF0C;&#x6CA1;&#x6709;&#x900F;&#x660E;&#x5EA6;&#x3002;</li>
+<li>PNG&#xFF1A;&#x4EE5;PNG&#x7B97;&#x6CD5;&#x8FDB;&#x884C;&#x538B;&#x7F29;&#xFF0C;&#x538B;&#x7F29;&#x540E;&#x7684;&#x56FE;&#x7247;&#x683C;&#x5F0F;&#x662F;.png&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x79CD;&#x65E0;&#x635F;&#x538B;&#x7F29;&#xFF0C;&#x53EF;&#x4EE5;&#x6709;&#x900F;&#x660E;&#x5EA6;&#x3002;</li>
+<li>WEBP&#xFF1A;&#x4EE5;WEBP&#x7B97;&#x6CD5;&#x8FDB;&#x884C;&#x538B;&#x7F29;&#xFF0C;&#x538B;&#x7F29;&#x540E;&#x7684;&#x56FE;&#x7247;&#x683C;&#x5F0F;&#x662F;.webp&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x79CD;&#x6709;&#x635F;&#x538B;&#x7F29;&#x3002;&#x76F8;&#x540C;&#x8D28;&#x91CF;&#x4E0B;&#xFF0C;webp&#x6BD4;jpeg&#x56FE;&#x50CF;&#x5C0F;40%&#xFF0C;&#x4F46;webp&#x56FE;&#x7247;&#x7684;&#x7F16;&#x7801;&#x65F6;&#x95F4;&#x6BD4;jpeg&#x957F;8&#x500D;&#x3002;</li>
+</ul>
+<h3 id="Config"><a href="#Config" class="headerlink" title="Config"></a>Config</h3><p>&#x8FD9;&#x662F;&#x5173;&#x4E8E;Bitmap&#x50CF;&#x7D20;&#x5B58;&#x50A8;&#x7684;&#x65B9;&#x5F0F;&#x914D;&#x7F6E;&#xFF0C;&#x4E0D;&#x540C;&#x7684;&#x50CF;&#x7D20;&#x5B58;&#x50A8;&#xFF0C;&#x5BF9;&#x56FE;&#x7247;&#x7684;&#x8D28;&#x91CF;&#x4E5F;&#x4F1A;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x5F71;&#x54CD;&#x3002;&#x5728;Bitmap&#x4E2D;&#x662F;&#x4E00;&#x4E2A;Enum&#x7ED3;&#x6784;&#xFF0C;&#x4E3B;&#x8981;&#x8868;&#x73B0;&#x4E8E;&#x4EE5;&#x4E0B;&#x56DB;&#x79CD;&#x683C;&#x5F0F;&#x3002;</p>
+<ul>
+<li>ALPHA_8&#xFF1A;&#x6BCF;&#x4E00;&#x4E2A;&#x50CF;&#x7D20;&#x90FD;&#x53EA;&#x50A8;&#x5B58;&#x5355;&#x4E00;&#x7684;&#x900F;&#x660E;&#x5EA6;&#xFF0C;&#x5373;&#x53EA;&#x6709;&#x900F;&#x660E;&#x5EA6;&#xFF0C;&#x603B;&#x5171;&#x5360;8&#x4F4D;&#xFF0C;1&#x5B57;&#x8282;&#x3002;</li>
+<li>ARGB_4444&#xFF1A;&#x6BCF;&#x4E00;&#x4E2A;&#x50CF;&#x7D20;&#x90FD;&#x4EE5;A&#xFF08;&#x900F;&#x660E;&#x5EA6;&#xFF09;R&#xFF08;Red&#xFF09;G&#xFF08;Green&#xFF09;B&#xFF08;Blue&#xFF09;&#x56DB;&#x90E8;&#x5206;&#x7EC4;&#x6210;&#xFF0C;&#x6BCF;&#x90E8;&#x5206;&#x5360;4&#x4F4D;&#xFF0C;&#x603B;&#x5171;&#x5360;16&#x4F4D;&#xFF0C;2&#x5B57;&#x8282;&#x3002;&#x7531;&#x4E8E;&#x8FD9;&#x79CD;&#x683C;&#x5F0F;&#x7684;&#x56FE;&#x7247;&#x8D28;&#x91CF;&#x592A;&#x5DEE;&#xFF0C;&#x6240;&#x4EE5;&#x4E2D;API 13&#x5C31;&#x5DF2;&#x7ECF;&#x5E9F;&#x5F03;&#x4E86;&#xFF0C;&#x63A8;&#x8350;&#x4F7F;&#x7528;ARGB_8888&#x3002;</li>
+<li>ARGB_8888&#xFF1A;&#x6BCF;&#x4E00;&#x4E2A;&#x50CF;&#x7D20;&#x90FD;&#x4EE5;A&#xFF08;&#x900F;&#x660E;&#x5EA6;&#xFF09;R&#xFF08;Red&#xFF09;G&#xFF08;Green&#xFF09;B&#xFF08;Blue&#xFF09;&#x56DB;&#x90E8;&#x5206;&#x7EC4;&#x6210;&#xFF0C;&#x6BCF;&#x90E8;&#x5206;&#x5360;8&#x4F4D;&#xFF0C;&#x603B;&#x5171;32&#x4F4D;&#xFF0C;4&#x5B57;&#x8282;&#x3002;</li>
+<li>RGB_565&#xFF1A;&#x6BCF;&#x4E00;&#x4E2A;&#x50CF;&#x7D20;&#x90FD;&#x4EE5;R&#xFF08;Red&#xFF09;G&#xFF08;Green&#xFF09;B&#xFF08;Blue&#xFF09;&#x4E09;&#x90E8;&#x5206;&#x7EC4;&#x6210;&#xFF0C;&#x5404;&#x4E2A;&#x90E8;&#x5206;&#x5206;&#x522B;&#x5360;5&#x4F4D;&#xFF0C;6&#x4F4D;&#xFF0C;5&#x4F4D;&#xFF0C;&#x603B;&#x5171;16&#x4F4D;&#xFF0C;2&#x5B57;&#x8282;&#x3002;</li>
+</ul>
+<p>&#x6240;&#x4EE5;&#x5982;&#x679C;&#x4E3A;&#x4E86;&#x9632;&#x6B62;OOM&#x5BF9;&#x56FE;&#x7247;&#x8FDB;&#x884C;&#x538B;&#x7F29;&#xFF0C;&#x4E00;&#x822C;&#x4F1A;&#x4F7F;&#x7528;RGB_565&#x683C;&#x5F0F;&#xFF0C;&#x56E0;&#x4E3A;ALPHA_8&#x53EA;&#x6709;&#x900F;&#x660E;&#x5EA6;&#xFF0C;&#x5BF9;&#x4E8E;&#x6B63;&#x5E38;&#x56FE;&#x7247;&#x672A;&#x610F;&#x4E49;&#xFF1B;ARGB_4444&#x663E;&#x793A;&#x7684;&#x56FE;&#x7247;&#x8D28;&#x91CF;&#x592A;&#x5DEE;&#xFF1B;ARGB_8888&#x5360;&#x7528;&#x7684;&#x5185;&#x5B58;&#x6700;&#x591A;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x52A0;&#x8F7D;&#x7684;&#x56FE;&#x7247;&#x7684;&#x5BBD;&#x5EA6;&#x4E3A;1080&#x3001;&#x9AD8;&#x5EA6;&#x4E3A;675&#x3001;Config&#x4E3A;ARGB_8888&#x3002;&#x90A3;&#x4E48;&#x5B83;&#x5360;&#x7684;&#x5185;&#x5B58;&#x4E3A;&#xFF1A;1080 x 675 x 4 = 2916000.&#x6298;&#x7B97;&#x6210;M&#x4E3A;2916000 / 1024 / 1024 = 2.78M&#x3002;&#x4E00;&#x79CD;&#x56FE;&#x7247;&#x5C31;&#x8FD1;3M&#xFF0C;&#x5982;&#x679C;&#x52A0;&#x8F7D;10&#x5F20;&#x6216;&#x8005;100&#x5F20;&#xFF0C;&#x6240;&#x5360;&#x7684;&#x5185;&#x5B58;&#x53EF;&#x60F3;&#x800C;&#x77E5;&#x3002;&#x8FD9;&#x6837;&#x7684;&#x8BDD;&#x4F1A;&#x5F88;&#x5BB9;&#x6613;&#x5C06;&#x5185;&#x5B58;&#x6D88;&#x8017;&#x6B86;&#x5C3D;&#xFF0C;&#x540C;&#x65F6;&#x5BF9;&#x4E8E;Android App&#x6765;&#x8BF4;&#x6839;&#x672C;&#x5C31;&#x4E0D;&#x9700;&#x8981;&#x8FD9;&#x4E48;&#x9AD8;&#x6E05;&#x7684;&#x56FE;&#x7247;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x5728;&#x52A0;&#x8F7D;&#x56FE;&#x7247;&#x7684;&#x65F6;&#x5019;&#x53EF;&#x4EE5;&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x76F8;&#x5E94;&#x7684;&#x5904;&#x7406;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;&#x5BF9;&#x5BBD;&#x9AD8;&#x8FDB;&#x884C;&#x7F29;&#x653E;&#xFF0C;&#x4EA6;&#x6216;&#x8005;&#x5C06;Config&#x6539;&#x6211;RGB_565&#x3002;&#x8FD9;&#x6837;&#x4E0D;&#x4EC5;&#x6709;&#x6548;&#x7684;&#x51CF;&#x5C0F;&#x4E86;&#x5185;&#x5B58;&#x7684;&#x5360;&#x7528;&#xFF0C;&#x540C;&#x65F6;&#x4E5F;&#x4E0D;&#x5F71;&#x54CD;&#x56FE;&#x7247;&#x7684;&#x6E05;&#x6670;&#x5EA6;&#x7684;&#x5C55;&#x793A;&#x3002;</p>
+<blockquote>
+<p>&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4E0B;&#x5982;&#x4F55;&#x901A;&#x8FC7;Bitmap&#x4E0E;BitmapFactory&#x6765;&#x5BF9;&#x56FE;&#x7247;&#x8FDB;&#x884C;&#x5904;&#x7406;</p>
+</blockquote>
+<h2 id="Bitmap&#x76F8;&#x5173;"><a href="#Bitmap&#x76F8;&#x5173;" class="headerlink" title="Bitmap&#x76F8;&#x5173;"></a>Bitmap&#x76F8;&#x5173;</h2><p>&#x5BF9;&#x4E8E;&#x4F7F;&#x7528;Bitmap&#x8FDB;&#x884C;&#x56FE;&#x7247;&#x7684;&#x538B;&#x7F29;&#x5904;&#x7406;&#xFF0C;&#x5B83;&#x4E3B;&#x8981;&#x63D0;&#x4F9B;&#x4E86;&#x4EE5;&#x4E0B;&#x6709;&#x6548;&#x65B9;&#x6CD5;&#x3002;</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">status return</th>
+<th style="text-align:center">method name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">compress(Bitmap.CompressFormat format, int quality, OutputStream stream)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">createBitmap(DisplayMetrics display, int[] colors, int width, int height, Bitmap.Config config)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">createBitmap(DisplayMetrics display, int[] colors, int offset, int stride, int width, int height, Bitmap.Config config)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">createBitmap(Bitmap source, int x, int y, int width, int height)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">createBitmap(Bitmap src)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">createBitmap(DisplayMetrics display, int width, int height, Bitmap.Config config)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">createBitmap(Bitmap source, int x, int y, int width, int height, Matrix m, boolean filter)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">createBitmap(int width, int height, Bitmap.Config config)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">createBitmap(int[] colors, int offset, int stride, int width, int height, Bitmap.Config config)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitamp</td>
+<td style="text-align:center">createBitmap(int[] colors, int width, int height, Bitmap.Config config)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">createScaledBitmap(Bitmap src, int dstWidth, int dstHeight, boolean filter)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compress"><a href="#compress" class="headerlink" title="compress"></a>compress</h3><p>compress&#x65B9;&#x6CD5;&#x901A;&#x8FC7;&#x6307;&#x5B9A;&#x56FE;&#x7247;&#x7684;CompressFormat&#x683C;&#x5F0F;&#x4E0E;&#x538B;&#x7F29;&#x767E;&#x5206;&#x6BD4;&#x6765;&#x5BF9;&#x56FE;&#x7247;&#x8FDB;&#x884C;&#x538B;&#x7F29;&#x5904;&#x7406;&#xFF0C;&#x540C;&#x65F6;&#x5C06;&#x538B;&#x7F29;&#x7684;&#x56FE;&#x7247;&#x4FDD;&#x5B58;&#x5230;&#x6307;&#x5B9A;&#x7684;outputStream&#x4E2D;&#x3002;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4E0B;&#x5177;&#x4F53;&#x7528;&#x6CD5;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">val fs = FileOutputStream(path)</span><br><span class="line">val out = ByteArrayOutputStream()</span><br><span class="line">scaleBitmap.compress(Bitmap.CompressFormat.JPEG, 30, out)</span><br><span class="line">LogUtils.d(&quot;compressBitmap jpeg of byteCount %d.&quot;, out.toByteArray().size)</span><br><span class="line">fs.write(out.toByteArray())</span><br><span class="line">fs.close()</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x8FD9;&#x91CC;&#x8981;&#x6CE8;&#x610F;quality&#x4EE3;&#x8868;&#x767E;&#x5206;&#x6BD4;&#xFF0C;&#x503C;&#x4E3A;0~100&#xFF0C;&#x503C;&#x8D8A;&#x5C0F;&#x538B;&#x7F29;&#x7684;&#x540E;&#x7684;&#x5927;&#x5C0F;&#x5C31;&#x8D8A;&#x5C0F;&#x3002;&#x4F8B;&#x5982;&#x4E0A;&#x9762;&#x7684;&#x793A;&#x4F8B;&#xFF0C;quality&#x4E3A;30&#xFF0C;&#x5219;&#x4EE3;&#x8868;&#x5BF9;&#x539F;&#x56FE;&#x8FDB;&#x884C;&#x538B;&#x7F29;70%&#xFF0C;&#x4FDD;&#x7559;30%&#x3002;&#x540C;&#x65F6;Bitmap.CompressFormat&#x5728;&#x524D;&#x9762;&#x5DF2;&#x7ECF;&#x8BE6;&#x7EC6;&#x4ECB;&#x7ECD;&#x4E86;&#xFF0C;&#x8981;&#x6CE8;&#x610F;&#x4E0D;&#x540C;&#x7684;&#x683C;&#x5F0F;&#x56FE;&#x7247;&#x7684;&#x5C55;&#x793A;&#x6548;&#x679C;&#x4E5F;&#x4E0D;&#x540C;&#xFF0C;&#x4F8B;&#x5982;JPEG&#x7684;&#x683C;&#x5F0F;&#x56FE;&#x7247;&#x662F;&#x6CA1;&#x6709;&#x900F;&#x660E;&#x5EA6;&#x7684;&#x3002;</p>
+<blockquote>
+<p>&#x7279;&#x522B;&#x6CE8;&#x610F;&#x7684;&#xFF1A;&#x5BF9;&#x4E8E;Bitmap.CompressFormat.PNG&#x7C7B;&#x578B;&#x7684;&#x683C;&#x5F0F;&#xFF0C;quality&#x5C06;&#x5931;&#x53BB;&#x6548;&#x679C;&#xFF0C;&#x56E0;&#x4E3A;&#x5176;&#x683C;&#x5F0F;&#x662F;&#x65E0;&#x635F;&#x7684;&#x538B;&#x7F29;&#xFF1B;&#x518D;&#x8005;&#xFF0C;&#x4F7F;&#x7528;compress&#x65B9;&#x6CD5;&#x5E76;&#x4E0D;&#x662F;&#x5BF9;&#x663E;&#x793A;&#x5904;&#x7406;&#x7684;&#x56FE;&#x7247;&#x8FDB;&#x884C;&#x4E86;&#x538B;&#x7F29;&#xFF0C;&#x5B83;&#x53EA;&#x662F;&#x5BF9;&#x539F;&#x56FE;&#x8FDB;&#x884C;&#x538B;&#x7F29;&#x540E;&#x4FDD;&#x5B58;&#x5230;&#x672C;&#x5730;&#x78C1;&#x76D8;&#x4E2D;&#xFF0C;&#x5E76;&#x4E0D;&#x6539;&#x53D8;&#x663E;&#x793A;&#x7684;&#x56FE;&#x7247;&#x3002;&#x4E3B;&#x8981;&#x7528;&#x9014;&#x4F5C;&#x7528;&#x4E8E;&#x4FDD;&#x5B58;&#x56FE;&#x7247;&#x5230;&#x672C;&#x5730;&#xFF0C;&#x4EE5;&#x4FBF;&#x4E0B;&#x6B21;&#x52A0;&#x8F7D;&#xFF0C;&#x51CF;&#x5C0F;&#x56FE;&#x7247;&#x5728;&#x672C;&#x5730;&#x78C1;&#x76D8;&#x6240;&#x5360;&#x7684;&#x78C1;&#x76D8;&#x5927;&#x5C0F;&#x3002;</p>
+</blockquote>
+<h3 id="createBitmap"><a href="#createBitmap" class="headerlink" title="createBitmap"></a>createBitmap</h3><p>&#x5BF9;&#x4E8E;createBitmap&#x65B9;&#x6CD5;&#xFF0C;Bitmap&#x4E2D;&#x63D0;&#x4F9B;&#x4E86;9&#x79CD;&#x4E0D;&#x540C;&#x6570;&#x636E;&#x6E90;&#x7684;&#x538B;&#x7F29;&#x5904;&#x7406;&#x65B9;&#x6CD5;&#x3002;&#x5206;&#x522B;&#x6709;&#x901A;&#x8FC7;colors&#x6570;&#x7EC4;&#x3001;Bitmap&#x4E0E;DisplayMetrics&#x7B49;&#x6765;&#x51B3;&#x5B9A;&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#x4F7F;&#x7528;colors&#x6570;&#x7EC4;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">val colors = intArrayOf(Color.RED, Color.GREEN, Color.BLUE,</span><br><span class="line">                        Color.GREEN, Color.BLUE, Color.RED,</span><br><span class="line">                        Color.BLUE, Color.RED, Color.GREEN)</span><br><span class="line">val displayMetricsBitmap = Bitmap.createBitmap(DisplayMetrics(),colors,3, 3,Bitmap.Config.ARGB_8888)</span><br><span class="line">LogUtils.d(&quot;displayMetricsBitmap of byteCount %d and rowBytes %d&quot;, displayMetricsBitmap.byteCount, displayMetricsBitmap.rowBytes)</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x521B;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;3 x 3&#x7684;&#x56FE;&#x7247;&#xFF0C;Config&#x4E3A;ARGB_8888&#xFF0C;&#x6240;&#x4EE5;&#x6700;&#x7EC8;&#x56FE;&#x7247;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x7684;&#x5927;&#x5C0F;&#x4E3A;3 x 3 x 4 = 36&#x5B57;&#x8282;&#x3002;&#x800C;&#x56FE;&#x7247;&#x7684;&#x5C55;&#x793A;&#x6548;&#x679C;&#x662F;&#x901A;&#x8FC7;colors&#x6570;&#x7EC4;&#x4E2D;&#x7684;&#x989C;&#x8272;&#x4E5F;&#x5B9E;&#x73B0;&#x7684;&#xFF0C;3 x 3 = 9 &#x5206;&#x522B;&#x5BF9;&#x5E94;colors&#x4E2D;&#x7684;9&#x4E2A;&#x50CF;&#x7D20;&#x70B9;&#x7684;&#x8272;&#x503C;&#x3002;&#x6240;&#x4EE5;colors&#x7684;&#x5927;&#x5C0F;&#x6700;&#x5C0F;&#x5FC5;&#x987B;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;9&#xFF0C;&#x5373;&#x5BBD;*&#x9AD8;&#x7684;&#x5927;&#x5C0F;&#x3002;&#x4E3A;&#x4F55;&#x8BF4;&#x6700;&#x5C0F;&#xFF0C;&#x56E0;&#x4E3A;Bitmap&#x8FD8;&#x63D0;&#x4F9B;&#x4E86;offset&#x4E0E;stride&#x53C2;&#x6570;&#x7684;&#x91CD;&#x8F7D;&#x65B9;&#x6CD5;&#x3002;&#x8FD9;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#x5206;&#x522B;&#x4EE3;&#x8868;&#x5728;colors&#x4E2D;&#x7684;&#x5F00;&#x59CB;&#x70B9;&#x7684;&#x504F;&#x79FB;&#x91CF;&#x4E0E;&#x53D6;&#x503C;&#x7684;&#x6B65;&#x4F10;&#xFF0C;&#x5373;&#x6BCF;&#x4E2A;&#x53D6;&#x503C;&#x70B9;&#x95F4;&#x7684;&#x8DE8;&#x5EA6;&#x3002;</p>
+<p>&#x5728;&#x5B9E;&#x9645;&#x662F;&#x4F7F;&#x7528;createBitmap&#x6700;&#x591A;&#x7684;&#x8FD8;&#x662F;&#x7528;&#x5B83;&#x7684;Bitmap&#x91CD;&#x8F7D;&#x65B9;&#x6CD5;&#xFF0C;&#x4E3B;&#x8981;&#x7528;&#x6765;&#x5BF9;&#x539F;&#x56FE;&#x7247;&#x8FDB;&#x884C;&#x88C1;&#x526A;&#x3002;&#x6211;&#x4EEC;&#x76F4;&#x63A5;&#x770B;&#x5B83;&#x7684;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//bitmap</span><br><span class="line">val bitmapBitmap = Bitmap.createBitmap(scaleBitmap, 150, 0, 100, 100)</span><br><span class="line">image_view?.setImageBitmap(scaleBitmap)</span><br><span class="line">image_view_text.text = &quot;width: &quot; + scaleBitmap.width + &quot; height: &quot; + scaleBitmap.height</span><br><span class="line">sub_image_view.setImageBitmap(bitmapBitmap)</span><br><span class="line">sub_image_view_text.text = &quot;startX: 150 startY: 0\n&quot; + &quot;width: &quot; + bitmapBitmap.width + &quot; height: &quot; + bitmapBitmap.height</span><br></pre></td></tr></table></figure>
+<p>&#x4E3B;&#x8981;&#x53C2;&#x6570;&#x662F;&#x539F;Bitmap&#xFF0C;&#x6211;&#x4EEC;&#x6240;&#x6709;&#x7684;&#x64CD;&#x4F5C;&#x90FD;&#x662F;&#x5728;&#x539F;Bitmap&#x4E2D;&#x8FDB;&#x884C;&#x7684;&#x3002;&#x5176;&#x4E2D;x = 150&#x3001;y = 0&#x4EE3;&#x8868;&#x4ECE;&#x539F;Bitmap&#x4E2D;&#x7684;&#x5750;&#x6807;&#xFF08;150&#xFF0C;0&#xFF09;&#x5F00;&#x59CB;&#x8FDB;&#x884C;&#x88C1;&#x526A;;width = 100&#x3001;height = 100&#xFF0C;&#x88C1;&#x526A;&#x540E;&#x8FD4;&#x56DE;&#x65B0;&#x7684;&#x7684;Bitmap&#xFF0C;&#x4E14;&#x5927;&#x5C0F;&#x4E3A;100 x 100&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if (!source.isMutable() &amp;&amp; x == 0 &amp;&amp; y == 0 &amp;&amp; width == source.getWidth() &amp;&amp;</span><br><span class="line">        height == source.getHeight() &amp;&amp; (m == null || m.isIdentity())) {</span><br><span class="line">    return source;</span><br><span class="line"> }</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>&#x6CE8;&#x610F;&#xFF0C;&#x5982;&#x679C;&#x539F;Bitmap&#x662F;&#x4E0D;&#x53EF;&#x53D8;&#x7684;&#xFF0C;&#x540C;&#x65F6;&#x9700;&#x8981;&#x7684;&#x56FE;&#x53C2;&#x6570;&#x4E0E;&#x539F;&#x56FE;&#x7247;&#x76F8;&#x540C;&#xFF0C;&#x90A3;&#x4E48;&#x5B83;&#x4F1A;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#x539F;Bitmap&#x3002;&#x662F;&#x5426;&#x53EF;&#x53D8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;Bitmap.isMutable&#x5224;&#x65AD;&#x3002;</p>
+</blockquote>
+<p>&#x770B;&#x4E0B;&#x4E0A;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x6240;&#x5C55;&#x793A;&#x7684;&#x6548;&#x679C;&#x56FE;&#xFF1A;<br><img src="/2018/03/21/Bitmap&#x7684;&#x56FE;&#x7247;&#x538B;&#x7F29;&#x6C47;&#x603B;/1.png" alt="&#x6548;&#x679C;&#x56FE;"></p>
+<p>&#x6700;&#x540E;&#x901A;&#x8FC7;&#x4F20;&#x9012;Bitmap&#x53C2;&#x6570;&#x8FD8;&#x6709;&#x4E00;&#x4E2A;&#x53EF;&#x9009;&#x53C2;&#x6570;Matrix&#xFF0C;&#x5B83;&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x5BF9;Bitmap&#x8FDB;&#x884C;&#x77E9;&#x9635;&#x53D8;&#x6362;&#x3002;</p>
+<h3 id="createScaledBitmap"><a href="#createScaledBitmap" class="headerlink" title="createScaledBitmap"></a>createScaledBitmap</h3><p>&#x8BE5;&#x65B9;&#x6CD5;&#x76F8;&#x5BF9;&#x4E0A;&#x9762;&#x4E24;&#x79CD;&#x5C31;&#x7B80;&#x5355;&#x591A;&#x4E86;&#xFF0C;&#x5B83;&#x76EE;&#x7684;&#x662F;&#x5BF9;&#x539F;Bitmap&#x8FDB;&#x884C;&#x6307;&#x5B9A;&#x7684;&#x5BBD;&#x9AD8;&#x8FDB;&#x884C;&#x7F29;&#x653E;&#xFF0C;&#x6700;&#x7EC8;&#x8FD4;&#x56DE;&#x65B0;&#x7684;Bitmap&#x3002;</p>
+<blockquote>
+<p>&#x6CE8;&#x610F;&#xFF1A;&#x5982;&#x679C;&#x4F20;&#x5165;&#x7684;&#x5BBD;&#x9AD8;&#x4E0E;&#x539F;Bitmap&#x76F8;&#x540C;&#xFF0C;&#x5B83;&#x5C06;&#x8FD4;&#x56DE;&#x539F;Bitmap&#x5BF9;&#x8C61;&#x3002;</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//createScaledBitmap</span><br><span class="line">val createScaledBitmap = Bitmap.createScaledBitmap(scaleBitmap, 500, 300, false)</span><br><span class="line">image_view?.setImageBitmap(scaleBitmap)</span><br><span class="line">image_view_text.text = &quot;width: &quot; + scaleBitmap.width + &quot; height: &quot; + scaleBitmap.height</span><br><span class="line">sub_image_view.setImageBitmap(createScaledBitmap)</span><br><span class="line">sub_image_view_text.text = &quot;width: &quot; + createScaledBitmap.width + &quot; height: &quot; + createScaledBitmap.height</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/03/21/Bitmap&#x7684;&#x56FE;&#x7247;&#x538B;&#x7F29;&#x6C47;&#x603B;/2.png" alt="&#x6548;&#x679C;&#x56FE;"></p>
+<p>&#x518D;&#x6765;&#x770B;&#x4E0B;&#x5176;&#x5B9E;&#x73B0;&#x6E90;&#x7801;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public static Bitmap createScaledBitmap(@NonNull Bitmap src, int dstWidth, int dstHeight,</span><br><span class="line">        boolean filter) {</span><br><span class="line">    Matrix m = new Matrix();</span><br><span class="line"> </span><br><span class="line">    final int width = src.getWidth();</span><br><span class="line">    final int height = src.getHeight();</span><br><span class="line">    if (width != dstWidth || height != dstHeight) {</span><br><span class="line">        final float sx = dstWidth / (float) width;</span><br><span class="line">        final float sy = dstHeight / (float) height;</span><br><span class="line">        m.setScale(sx, sy);</span><br><span class="line">    }</span><br><span class="line">    return Bitmap.createBitmap(src, 0, 0, width, height, m, filter);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E00;&#x76EE;&#x4E86;&#x7136;&#xFF0C;&#x5185;&#x90E8;&#x5C31;&#x662F;&#x4F7F;&#x7528;&#x5230;&#x4E86;Matrix&#xFF0C;&#x8FD0;&#x7528;Matrix&#x7684;&#x77E5;&#x8BC6;&#x8FDB;&#x884C;&#x5BBD;&#x9AD8;&#x7F29;&#x653E;&#xFF1B;&#x6700;&#x540E;&#x518D;&#x8C03;&#x7528;&#x524D;&#x9762;&#x6240;&#x5206;&#x6790;&#x7684;createBitmap&#x65B9;&#x6CD5;&#x3002;&#x53EA;&#x4E0D;&#x8FC7;&#x8FD9;&#x91CC;&#x6307;&#x5B9A;&#x4E86;&#x521D;&#x59CB;&#x70B9;&#xFF08;0&#xFF0C;0&#xFF09;&#x800C;&#x5DF2;&#xFF0C;&#x518D;&#x4F20;&#x5165;&#x539F;Bitmap&#x7684;&#x5BBD;&#x9AD8;&#x4E0E;&#x751F;&#x6210;&#x7684;Matrix&#x3002;&#x56E0;&#x6B64;createBitmap&#x65B9;&#x6CD5;&#x4E2D;&#x7684;&#x6CE8;&#x610F;&#x70B9;&#x4E5F;&#x662F;&#x5E94;&#x7528;&#x5230;createScaledBitmap&#x4E2D;&#x3002;</p>
+<h2 id="BitmapFactory&#x76F8;&#x5173;"><a href="#BitmapFactory&#x76F8;&#x5173;" class="headerlink" title="BitmapFactory&#x76F8;&#x5173;"></a>BitmapFactory&#x76F8;&#x5173;</h2><p>BitmapFactory&#x4E3B;&#x8981;&#x7528;&#x6765;&#x89E3;&#x7801;Bitmap&#xFF0C;&#x901A;&#x8FC7;&#x4E0D;&#x540C;&#x7684;&#x8D44;&#x6E90;&#x7C7B;&#x578B;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;files&#x3001;streams&#x4E0E;byte-arrays&#x3002;&#x65E2;&#x7136;&#x662F;&#x7EE7;&#x7EED;&#x8D44;&#x6E90;&#x7684;&#x89E3;&#x7801;&#xFF0C;&#x81EA;&#x7136;&#x53EF;&#x4EE5;&#x5728;&#x89E3;&#x7801;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x8FDB;&#x884C;&#x4E00;&#x4E9B;&#x56FE;&#x7247;&#x538B;&#x7F29;&#x5904;&#x7406;&#x3002;&#x6765;&#x770B;&#x4E0B;&#x5B83;&#x63D0;&#x4F9B;&#x7684;&#x4E3B;&#x8981;&#x89E3;&#x7801;&#x65B9;&#x6CD5;&#x3002;</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">status return</th>
+<th style="text-align:center">method name </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">decodeByteArray(byte[] data, int offset, int length, BitmapFactory.Options opts)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">decodeByteArray(byte[] data, int offset, int length)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">decodeFile(String pathName)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">decodeFile(String pathName, BitmapFactory.Options opts)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">decodeFileDescriptor(FileDescriptor fd)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">decodeFileDescriptor(FileDescriptor fd, Rect outPadding, BitmapFactory.Options opts)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">decodeResource(Resources res, int id, BitmapFactory.Options opts)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">decodeResource(Resources res, int id)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">decodeResourceStream(Resources res, TypedValue value, InputStream is, Rect pad, BitmapFactory.Options opts)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">decodeStream(InputStream is)</td>
+</tr>
+<tr>
+<td style="text-align:center">static Bitmap</td>
+<td style="text-align:center">decodeStream(InputStream is, Rect outPadding, BitmapFactory.Options opts)</td>
+</tr>
+</tbody>
+</table>
+<p>&#x76F4;&#x63A5;&#x901A;&#x8FC7;&#x65B9;&#x6CD5;&#x540D;&#x5C31;&#x80FD;&#x5F88;&#x65B9;&#x4FBF;&#x7684;&#x5206;&#x8FA8;&#x51FA;&#x4F7F;&#x7528;&#x54EA;&#x79CD;&#x8D44;&#x6E90;&#x7C7B;&#x578B;&#x8FDB;&#x884C;&#x56FE;&#x7247;&#x89E3;&#x7801;&#x64CD;&#x4F5C;&#x3002;&#x4F8B;&#x5982;&#xFF1A;decodeByteArray&#x65B9;&#x6CD5;&#x662F;&#x901A;&#x8FC7;byte&#x6570;&#x7EC4;&#x4F5C;&#x4E3A;&#x89E3;&#x6790;&#x6E90;&#xFF0C;&#x540C;&#x65F6;&#x5728;&#x89E3;&#x7801;&#x8FC7;&#x7A0B;&#x4E2D;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;offset&#x4E0E;length&#x6765;&#x63A7;&#x5236;&#x89E3;&#x7801;&#x7684;&#x8D77;&#x59CB;&#x70B9;&#x4E0E;&#x89E3;&#x7801;&#x7684;&#x5927;&#x5C0F;&#x3002;&#x56E0;&#x6B64;&#x5982;&#x679C;&#x80FD;&#x591F;&#x7CBE;&#x786E;&#x63A7;&#x5236;offset&#x4E0E;length&#x4E5F;&#x5C31;&#x80FD;&#x591F;&#x505A;&#x5230;&#x56FE;&#x7247;&#x7684;&#x88C1;&#x526A;&#x6548;&#x679C;&#x3002;decodeFileDescriptor&#x65B9;&#x6CD5;&#x662F;&#x901A;&#x8FC7;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x8FDB;&#x884C;&#x89E3;&#x7801;Bitmap&#x3002;&#x4E00;&#x822C;&#x7528;&#x4E0D;&#x5230;&#xFF0C;&#x4E0B;&#x9762;&#x8BE6;&#x7EC6;&#x5206;&#x6790;&#x51E0;&#x79CD;&#x5E38;&#x7528;&#x7684;&#x65B9;&#x6CD5;&#x3002;</p>
+<h3 id="decodeFile"><a href="#decodeFile" class="headerlink" title="decodeFile"></a>decodeFile</h3><p>&#x8BE5;&#x65B9;&#x6CD5;&#x662F;&#x901A;&#x8FC7;&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#x6765;&#x89E3;&#x7801;&#x51FA;Bitmap</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//decodeFile</span><br><span class="line">val decodeFileOptions = BitmapFactory.Options()</span><br><span class="line">val decodeFileBitmap = BitmapFactory.decodeFile(mRootPath +&quot;bitmap&quot;, decodeFileOptions)</span><br><span class="line">decodeFileOptions.inSampleSize = 2</span><br><span class="line">val decodeFileScaleBitmap = BitmapFactory.decodeFile(mRootPath + &quot;bitmap&quot;, decodeFileOptions)</span><br><span class="line">image_view?.setImageBitmap(decodeFileBitmap)</span><br><span class="line">image_view_text.text = &quot;width: &quot; + decodeFileBitmap.width + &quot; height: &quot; + decodeFileBitmap.height</span><br><span class="line">sub_image_view.setImageBitmap(decodeFileScaleBitmap)</span><br><span class="line">sub_image_view_text.text = &quot;width: &quot; + decodeFileScaleBitmap.width + &quot; height: &quot; + decodeFileScaleBitmap.height</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/03/21/Bitmap&#x7684;&#x56FE;&#x7247;&#x538B;&#x7F29;&#x6C47;&#x603B;/3.png" alt="&#x6548;&#x679C;&#x56FE;"></p>
+<p>&#x4E0B;&#x9762;&#x7684;&#x56FE;&#x7247;&#x6BD4;&#x4E0A;&#x9762;&#x7684;&#x56FE;&#x7247;&#x5BBD;&#x9AD8;&#x90FD;&#x7F29;&#x5C0F;&#x4E86;&#x4E00;&#x534A;&#xFF0C;&#x5BF9;&#x56FE;&#x7247;&#x8FDB;&#x884C;&#x4E86;&#x538B;&#x7F29;&#x64CD;&#x4F5C;&#x3002;&#x901A;&#x8FC7;&#x4EE3;&#x7801;&#x53D1;&#x73B0;&#xFF0C;&#x4E0B;&#x9762;&#x7684;&#x56FE;&#x7247;&#x89E3;&#x7801;&#x65F6;&#x8BBE;&#x7F6E;&#x4E86;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">decodeFileOptions.inSampleSize = 2</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x5C31;&#x6D89;&#x53CA;&#x5230;&#x4E86;&#x9759;&#x6001;&#x5185;&#x90E8;&#x7C7B;BitmapFactory.Options&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x4E0A;&#x9762;&#x7684;&#x8868;&#x53D1;&#x73B0;&#x5927;&#x591A;&#x6570;&#x65B9;&#x6CD5;&#x90FD;&#x6709;&#x8FD9;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x5B83;&#x662F;&#x4E00;&#x4E2A;&#x53EF;&#x9009;&#x9879;&#x3002;&#x4E3B;&#x8981;&#x7528;&#x9014;&#x662F;&#x5728;&#x56FE;&#x7247;&#x89E3;&#x7801;&#x8FC7;&#x7A0B;&#x4E2D;&#x5BF9;&#x56FE;&#x7247;&#x7684;&#x539F;&#x6709;&#x5C5E;&#x6027;&#x8FDB;&#x884C;&#x4FEE;&#x6539;&#x3002;&#x5B83;&#x7684;&#x53C2;&#x6570;&#x914D;&#x7F6E;&#x5927;&#x591A;&#x6570;&#x4EE5;in&#x524D;&#x7F00;&#x5F00;&#x5934;&#xFF0C;&#x4E0B;&#x9762;&#x5217;&#x4E3E;&#x4E00;&#x4E9B;&#x5E38;&#x7528;&#x7684;&#x914D;&#x7F6E;&#x8BBE;&#x7F6E;&#x5C5E;&#x6027;&#x3002;</p>
+<table>
+<thead>
+<tr>
+<th>type</th>
+<th>name</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>boolean</td>
+<td>inJustDecodeBounds</td>
+<td>&#x5982;&#x679C;&#x4E3A;true&#xFF0C;&#x89E3;&#x7801;&#x540E;&#x4E0D;&#x4F1A;&#x8FD4;&#x56DE;Bitmap&#x5BF9;&#x8C61;&#xFF0C;&#x4F46;Bitmap&#x5BBD;&#x9AD8;&#x5C06;&#x8FD4;&#x56DE;&#x5230;options.outWidth&#x4E0E;options.outHeight&#x4E2D;&#xFF1B;&#x53CD;&#x4E4B;&#x8FD4;&#x56DE;&#x3002;&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x53EA;&#x9700;&#x83B7;&#x53D6;&#x89E3;&#x7801;&#x540E;&#x7684;Bitmap&#x7684;&#x5927;&#x5C0F;&#x3002;</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>inMutable</td>
+<td>&#x4E3A;true&#xFF0C;&#x4EE3;&#x8868;&#x8FD4;&#x56DE;&#x53EF;&#x53D8;&#x5C5E;&#x6027;&#x7684;Bitmap&#xFF0C;&#x53CD;&#x4E4B;&#x4E0D;&#x53EF;&#x53D8;</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>inPreferQualityOverSpeed</td>
+<td>&#x4E3A;true&#xFF0C;&#x5C06;&#x5728;&#x89E3;&#x7801;&#x8FC7;&#x7A0B;&#x4E2D;&#x727A;&#x7272;&#x89E3;&#x7801;&#x7684;&#x901F;&#x5EA6;&#x6765;&#x83B7;&#x53D6;&#x66F4;&#x9AD8;&#x8D28;&#x91CF;&#x7684;Bitmap</td>
+</tr>
+<tr>
+<td>Bitmap.Config</td>
+<td>inPreferredConfig</td>
+<td>&#x6839;&#x636E;&#x6307;&#x5B9A;&#x7684;Config&#x6765;&#x8FDB;&#x884C;&#x89E3;&#x7801;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;Bitmap.Config.RGB_565&#x7B49;</td>
+</tr>
+<tr>
+<td>int</td>
+<td>inSampleSize</td>
+<td>&#x5982;&#x679C;&#x503C;&#x5927;&#x4E8E;1&#xFF0C;&#x5728;&#x89E3;&#x7801;&#x8FC7;&#x7A0B;&#x4E2D;&#x5C06;&#x6309;&#x6BD4;&#x4F8B;&#x8FD4;&#x56DE;&#x5360;&#x66F4;&#x5C0F;&#x5185;&#x5B58;&#x7684;Bitmap&#x3002;&#x4F8B;&#x5982;&#x503C;&#x4E3A;2&#xFF0C;&#x5219;&#x5BF9;&#x5BBD;&#x9AD8;&#x8FDB;&#x884C;&#x7F29;&#x653E;&#x4E00;&#x534A;&#x3002;</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>inScaled</td>
+<td>&#x5982;&#x679C;&#x4E3A;true&#xFF0C;&#x4E14;inDesity&#x4E0E;inTargetDensity&#x90FD;&#x4E0D;&#x4E3A;0&#xFF0C;&#x90A3;&#x4E48;&#x5728;&#x52A0;&#x8F7D;&#x8FC7;&#x7A0B;&#x4E2D;&#x5C06;&#x4F1A;&#x6839;&#x636E;inTargetDensityl&#x6765;&#x7F29;&#x653E;&#xFF0C;&#x5728;drawn&#x4E2D;&#x4E0D;&#x4F9D;&#x9760;&#x4E8E;&#x56FE;&#x7247;&#x81EA;&#x8EAB;&#x7684;&#x7F29;&#x653E;&#x5C5E;&#x6027;&#x3002;</td>
+</tr>
+<tr>
+<td>int</td>
+<td>inDensity</td>
+<td>Bitmap&#x81EA;&#x8EAB;&#x7684;&#x5BC6;&#x5EA6;</td>
+</tr>
+<tr>
+<td>int</td>
+<td>inTargetDensity</td>
+<td>Bitmap drawn&#x8FC7;&#x7A0B;&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#x5BC6;&#x5EA6;</td>
+</tr>
+</tbody>
+</table>
+<p>&#x6211;&#x4EEC;&#x5728;&#x6765;&#x770B;&#x4E0B;decodeFile&#x7684;&#x6E90;&#x7801;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public static Bitmap decodeFile(String pathName, Options opts) {</span><br><span class="line">    validate(opts);</span><br><span class="line">    Bitmap bm = null;</span><br><span class="line">    InputStream stream = null;</span><br><span class="line">    try {</span><br><span class="line">        stream = new FileInputStream(pathName);</span><br><span class="line">        bm = decodeStream(stream, null, opts);</span><br><span class="line">    } catch (Exception e) {</span><br><span class="line">        /*  do nothing.</span><br><span class="line">            If the exception happened on open, bm will be null.</span><br><span class="line">        */</span><br><span class="line">        Log.e(&quot;BitmapFactory&quot;, &quot;Unable to decode stream: &quot; + e);</span><br><span class="line">    } finally {</span><br><span class="line">        if (stream != null) {</span><br><span class="line">            try {</span><br><span class="line">                stream.close();</span><br><span class="line">            } catch (IOException e) {</span><br><span class="line">                // do nothing here</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    return bm;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5185;&#x90E8;&#x6839;&#x636E;&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#x521B;&#x5EFA;FileInputStream&#xFF0C;&#x6700;&#x7EC8;&#x8C03;&#x7528;decodeStream&#x65B9;&#x6CD5;&#x8FDB;&#x89E3;&#x7801;&#x56FE;&#x7247;&#x3002;</p>
+<h3 id="decodeStream-amp-decodeResourceStream"><a href="#decodeStream-amp-decodeResourceStream" class="headerlink" title="decodeStream &amp; decodeResourceStream"></a>decodeStream &amp; decodeResourceStream</h3><p>&#x81F3;&#x4E8E;decodeStream&#x5185;&#x90E8;&#x5219;&#x662F;&#x6839;&#x636E;&#x4E0D;&#x540C;&#x7684;InputStream&#x7C7B;&#x578B;&#x8C03;&#x7528;&#x4E0D;&#x540C;&#x7684;native&#x65B9;&#x6CD5;&#x3002;&#x5982;&#x679C;&#x4E3A;AssetManager.AssetInputStrea&#x7C7B;&#x578B;&#x5219;&#x8C03;&#x7528;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nativeDecodeAsset(asset, outPadding, opts);</span><br></pre></td></tr></table></figure>
+<p>&#x5426;&#x5219;&#x8C03;&#x7528;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nativeDecodeStream(is, tempStorage, outPadding, opts);</span><br></pre></td></tr></table></figure>
+<p>&#x8FD8;&#x6709;&#x5BF9;&#x5E94;&#x7684;decodeResourceStream&#x65B9;&#x6CD5;&#x5185;&#x90E8;&#x4E5F;&#x662F;&#x8C03;&#x7528;&#x4E86;decodeStream.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public static Bitmap decodeResourceStream(Resources res, TypedValue value,</span><br><span class="line">        InputStream is, Rect pad, Options opts) {</span><br><span class="line">    validate(opts);</span><br><span class="line">    if (opts == null) {</span><br><span class="line">        opts = new Options();</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    if (opts.inDensity == 0 &amp;&amp; value != null) {</span><br><span class="line">        final int density = value.density;</span><br><span class="line">        if (density == TypedValue.DENSITY_DEFAULT) {</span><br><span class="line">            opts.inDensity = DisplayMetrics.DENSITY_DEFAULT;</span><br><span class="line">        } else if (density != TypedValue.DENSITY_NONE) {</span><br><span class="line">            opts.inDensity = density;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">     </span><br><span class="line">    if (opts.inTargetDensity == 0 &amp;&amp; res != null) {</span><br><span class="line">        opts.inTargetDensity = res.getDisplayMetrics().densityDpi;</span><br><span class="line">    }</span><br><span class="line">     </span><br><span class="line">    return decodeStream(is, pad, opts);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>decodeResourceStream&#x5185;&#x90E8;&#x505A;&#x4E86;&#x5BF9;Bitmap&#x7684;&#x5BC6;&#x5EA6;&#x9002;&#x914D;&#xFF0C;&#x6700;&#x540E;&#x518D;&#x8C03;&#x7528;decodeStream&#xFF0C;&#x8FD9;&#x6837;decodeStream&#x4E5F;&#x5206;&#x6790;&#x5B8C;&#x6BD5;&#x3002;</p>
+<h3 id="decodeResource"><a href="#decodeResource" class="headerlink" title="decodeResource"></a>decodeResource</h3><p>decodeResource&#x7528;&#x6CD5;&#x4E5F;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x4F20;&#x5165;&#x76F8;&#x5E94;&#x672C;&#x5730;&#x7684;&#x8D44;&#x6E90;&#x6587;&#x4EF6;&#x5373;&#x53EF;&#xFF0C;&#x9700;&#x8981;&#x7F29;&#x653E;&#x7684;&#x8BDD;&#x914D;&#x7F6E;options&#x53C2;&#x6570;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val options = BitmapFactory.Options()</span><br><span class="line">val bitmap = BitmapFactory.decodeResource(resources, R.drawable.yaodaoji, options)</span><br></pre></td></tr></table></figure>
+<p>&#x968F;&#x4FBF;&#x770B;&#x4E0B;&#x5B83;&#x7684;&#x6E90;&#x7801;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public static Bitmap decodeResource(Resources res, int id, Options opts) {</span><br><span class="line">    validate(opts);</span><br><span class="line">    Bitmap bm = null;</span><br><span class="line">    InputStream is = null; </span><br><span class="line">     </span><br><span class="line">    try {</span><br><span class="line">        final TypedValue value = new TypedValue();</span><br><span class="line">        is = res.openRawResource(id, value);</span><br><span class="line"></span><br><span class="line">        bm = decodeResourceStream(res, value, is, null, opts);</span><br><span class="line">    } catch (Exception e) {</span><br><span class="line">        /*  do nothing.</span><br><span class="line">            If the exception happened on open, bm will be null.</span><br><span class="line">            If it happened on close, bm is still valid.</span><br><span class="line">        */</span><br><span class="line">    } finally {</span><br><span class="line">        try {</span><br><span class="line">            if (is != null) is.close();</span><br><span class="line">        } catch (IOException e) {</span><br><span class="line">            // Ignore</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    if (bm == null &amp;&amp; opts != null &amp;&amp; opts.inBitmap != null) {</span><br><span class="line">        throw new IllegalArgumentException(&quot;Problem decoding into existing bitmap&quot;);</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    return bm;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x901A;&#x8FC7;res.openRawResource(id, value)&#x6765;&#x83B7;&#x53D6;InputStream&#xFF0C;&#x6700;&#x540E;&#x518D;&#x8C03;&#x7528;decodeResourceStream(res, value, is, null, opts)&#x65B9;&#x6CD5;&#x3002;&#x8FD9;&#x6837;&#x5C31;&#x7B80;&#x5355;&#x4E86;&#xFF0C;&#x53C8;&#x56DE;&#x5230;&#x4E86;&#x4E0A;&#x9762;&#x5206;&#x6790;&#x7684;&#x65B9;&#x6CD5;&#x4E2D;&#x53BB;&#x4E86;&#x3002;</p>
+<h2 id="&#x603B;&#x7ED3;"><a href="#&#x603B;&#x7ED3;" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</h2><p>&#x4E0B;&#x9762;&#x6765;&#x505A;&#x4E2A;&#x603B;&#x7ED3;&#xFF0C;&#x5BF9;&#x4E8E;&#x56FE;&#x7247;&#x538B;&#x7F29;&#x4E3B;&#x8981;&#x4F7F;&#x7528;&#x5230;Bitmap&#x4E0E;BitmapFactory&#x8FD9;&#x4E24;&#x4E2A;&#x7C7B;&#xFF0C;&#x540C;&#x65F6;&#x5728;&#x4F7F;&#x7528;&#x8FD9;&#x4E24;&#x4E2A;&#x7C7B;&#x4E4B;&#x524D;&#x4E5F;&#x8981;&#x5BF9;Bitmap&#x4E2D;&#x7684;CompressFormat&#x4E0E;Config&#xFF1B;BitmapFactory&#x4E2D;&#x7684;BitmapFactory.Options&#x6709;&#x6240;&#x4E86;&#x89E3;&#x3002;&#x7136;&#x540E;&#x518D;&#x7ED3;&#x5408;&#x4ED6;&#x4EEC;&#x4E2D;&#x7684;&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x76F8;&#x5E94;&#x7684;&#x538B;&#x7F29;&#x3001;&#x88C1;&#x526A;&#x64CD;&#x4F5C;&#x3002;&#x5176;&#x5B9E;&#x53EA;&#x8981;&#x638C;&#x63E1;&#x51E0;&#x4E2A;&#x5E38;&#x7528;&#x7684;&#x65B9;&#x6CD5;&#x5728;&#x65E5;&#x5E38;&#x7684;&#x4F7F;&#x7528;&#x4E2D;&#x5C31;&#x8DB3;&#x591F;&#x4E86;&#x3002;</p>
+<p>&#x6700;&#x540E;&#x5982;&#x6709;&#x6709;&#x4E0D;&#x8DB3;&#x4E4B;&#x5904;&#xFF0C;&#x5E0C;&#x671B;&#x6307;&#x51FA;&#xFF01;</p>
+<p><a href="https://github.com/idisfkj/android-api-analysis" target="_blank" rel="noopener">&#x70B9;&#x51FB;&#x8DF3;&#x8F6C;&#x5230;&#x9879;&#x76EE;&#x5730;&#x5740;</a></p>
+<h2 id="&#x5173;&#x6CE8;"><a href="#&#x5173;&#x6CE8;" class="headerlink" title="&#x5173;&#x6CE8;"></a>&#x5173;&#x6CE8;</h2><p><img src="/2018/03/21/Bitmap&#x7684;&#x56FE;&#x7247;&#x538B;&#x7F29;&#x6C47;&#x603B;/wx.jpg" alt="&#x602A;&#x8C08;&#x65F6;&#x95F4;&#x5230;&#x4E86;"></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/02/27/EventBus的工作原理总结/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/05/03/ConstraintLayout使用汇总/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Wed Mar 21 2018 07:26:50 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

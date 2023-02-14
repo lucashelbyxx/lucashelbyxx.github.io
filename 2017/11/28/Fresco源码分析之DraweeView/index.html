@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Fresco源码分析之DraweeView | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="源码分析,">
+  
+
+  <meta name="description" content="&amp;#x5728;Android&amp;#x4E2D;&amp;#x56FE;&amp;#x7247;&amp;#x52A0;&amp;#x8F7D;&amp;#x7684;&amp;#x6846;&amp;#x67B6;&amp;#x5F88;&amp;#x591A;&amp;#xFF0C;&amp;#x4F8B;&amp;#x5982;&amp;#xFF1A;Fresco&amp;#x3001;Picasso&amp;#x3001;Glide&amp;#x4E0E;Imageloader&amp;#x3002;&amp;#x5B83;&amp;#x4">
+<meta name="keywords" content="源码分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fresco源码分析之DraweeView">
+<meta property="og:url" content="https://www.rousetime.com/2017/11/28/Fresco源码分析之DraweeView/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="&amp;#x5728;Android&amp;#x4E2D;&amp;#x56FE;&amp;#x7247;&amp;#x52A0;&amp;#x8F7D;&amp;#x7684;&amp;#x6846;&amp;#x67B6;&amp;#x5F88;&amp;#x591A;&amp;#xFF0C;&amp;#x4F8B;&amp;#x5982;&amp;#xFF1A;Fresco&amp;#x3001;Picasso&amp;#x3001;Glide&amp;#x4E0E;Imageloader&amp;#x3002;&amp;#x5B83;&amp;#x4">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-12-28T14:36:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fresco源码分析之DraweeView">
+<meta name="twitter:description" content="&amp;#x5728;Android&amp;#x4E2D;&amp;#x56FE;&amp;#x7247;&amp;#x52A0;&amp;#x8F7D;&amp;#x7684;&amp;#x6846;&amp;#x67B6;&amp;#x5F88;&amp;#x591A;&amp;#xFF0C;&amp;#x4F8B;&amp;#x5982;&amp;#xFF1A;Fresco&amp;#x3001;Picasso&amp;#x3001;Glide&amp;#x4E0E;Imageloader&amp;#x3002;&amp;#x5B83;&amp;#x4">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SimpleDraweeView"><span class="toc-text">SimpleDraweeView</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fresco"><span class="toc-text">Fresco</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GenericDraweeView"><span class="toc-text">GenericDraweeView</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DraweeView"><span class="toc-text">DraweeView</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DraweeHolder"><span class="toc-text">DraweeHolder</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#End"><span class="toc-text">End</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Fresco源码分析之DraweeView" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Fresco源码分析之DraweeView</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.11.28</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>&#x5728;<code>Android</code>&#x4E2D;&#x56FE;&#x7247;&#x52A0;&#x8F7D;&#x7684;&#x6846;&#x67B6;&#x5F88;&#x591A;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;<code>Fresco</code>&#x3001;<code>Picasso</code>&#x3001;<code>Glide</code>&#x4E0E;<code>Imageloader</code>&#x3002;&#x5B83;&#x4EEC;&#x90FD;&#x6709;&#x5404;&#x81EA;&#x7684;&#x4F18;&#x70B9;&#xFF0C;&#x4F46;&#x603B;&#x7684;&#x6765;&#x8BF4;&#xFF0C;&#x4F7F;&#x7528;&#x8D77;&#x6765;&#x65B9;&#x4FBF;&#x7B80;&#x5355;&#x3001;&#x53EF;&#x914D;&#x7F6E;&#x6027;&#x9AD8;&#x4E0E;&#x63D0;&#x4F9B;&#x826F;&#x597D;&#x7684;&#x7F13;&#x5B58;&#x673A;&#x5236;&#x3002;&#x7531;&#x4E8E;&#x5E73;&#x5E38;&#x4E3B;&#x8981;&#x7528;&#x7684;&#x8FD8;&#x662F;<code>Fresco</code>&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x6709;&#x5FC5;&#x8981;&#x5BF9;<code>Fresco</code>&#x7684;&#x539F;&#x7406;&#x8FDB;&#x884C;&#x6DF1;&#x5165;&#x7814;&#x7A76;&#x3002;&#x8FD9;&#x6837;&#x5BF9;&#x4E8E;&#x4EE5;&#x540E;&#x7684;&#x4F7F;&#x7528;&#x4E0E;&#x7406;&#x89E3;&#x5C06;&#x4F1A;&#x5F97;&#x5230;&#x5DE8;&#x5927;&#x7684;&#x5E2E;&#x52A9;&#x3002;</p>
+<p><code>Fresco</code>&#x662F;&#x4E13;&#x6CE8;&#x4E8E;&#x5BF9;&#x56FE;&#x7247;&#x52A0;&#x8F7D;&#x800C;&#x8BBE;&#x8BA1;&#x7684;&#x6846;&#x67B6;&#xFF0C;&#x6240;&#x4EE5;&#x5BF9;&#x4E8E;&#x4EE5;&#x56FE;&#x7247;&#x4E3A;&#x4E3B;&#x7684;<code>App</code>&#x5F3A;&#x70C8;&#x63A8;&#x8350;&#x4F7F;&#x7528;&#x3002;<code>Fresco</code>&#x5BF9;&#x4E8E;&#x56FE;&#x7247;&#x7684;&#x5C55;&#x793A;&#x652F;&#x6301;&#x591A;&#x79CD;&#x60C5;&#x51B5;&#xFF1A;<code>backgroud image</code>(&#x80CC;&#x666F;&#x56FE;)&#x3001;<code>placeholder image</code>(&#x5360;&#x4F4D;&#x56FE;)&#x3001;<code>actual image</code>(&#x52A0;&#x8F7D;&#x7684;&#x56FE;&#x7247;)&#x3001;<code>progress bar image</code>(&#x8FDB;&#x5EA6;&#x6761;)&#x3001;<code>retry image</code>(&#x91CD;&#x65B0;&#x52A0;&#x8F7D;&#x7684;&#x56FE;&#x7247;)&#x3001;<code>failure image</code>(&#x5931;&#x8D25;&#x56FE;&#x7247;)&#x4E0E;<code>overlay image</code>(&#x53E0;&#x52A0;&#x56FE;)&#x3002;<code>Fresco</code>&#x65E2;&#x7136;&#x652F;&#x6301;&#x8FD9;&#x4E48;&#x591A;&#x56FE;&#x7247;&#x5C55;&#x793A;&#x60C5;&#x51B5;&#xFF0C;&#x90A3;&#x4E48;&#x5B83;&#x5BF9;&#x8FD9;&#x6B21;&#x56FE;&#x5C42;&#x7684;&#x7BA1;&#x7406;&#x6A21;&#x5F0F;&#x53C8;&#x662F;&#x600E;&#x4E48;&#x6837;&#x7684;&#x5462;&#xFF1F;<code>Fresco</code>&#x5BF9;&#x4E8E;&#x8FD9;&#x4E9B;&#x56FE;&#x5C42;&#x7684;&#x7BA1;&#x7406;&#x90FD;&#x4EA4;&#x7ED9;&#x4E86;<code>Hierarchy</code>&#xFF0C;&#x800C;&#x8FD9;&#x4E9B;&#x56FE;&#x5C42;&#x7684;&#x6570;&#x636E;&#x90FD;&#x901A;&#x8FC7;<code>Controller</code>&#x6765;&#x8BBE;&#x7F6E;&#x3002;&#x5148;&#x4E0D;&#x5206;&#x6790;&#x8FD9;&#x4E9B;&#xFF0C;&#x8FD9;&#x4E9B;&#x540E;&#x7EED;&#x6587;&#x7AE0;&#x4F1A;&#x8BE6;&#x7EC6;&#x5206;&#x6790;&#xFF0C;&#x4ECA;&#x5929;&#x5148;&#x4ECE;<code>Fresco</code>&#x7684;&#x57FA;&#x672C;&#x7EC4;&#x4EF6;&#x5F00;&#x59CB;&#x3002;</p>
+<h2 id="SimpleDraweeView"><a href="#SimpleDraweeView" class="headerlink" title="SimpleDraweeView"></a>SimpleDraweeView</h2><blockquote>
+<p>&#x9996;&#x5148;&#x8FD9;&#x662F;&#x5BF9;<code>Fresco</code>&#x7684;&#x6E90;&#x7801;&#x5206;&#x6790;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x770B;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x4E4B;&#x524D;&#x4F60;&#x5E94;&#x8BE5;&#x8981;&#x6709;&#x4F7F;&#x7528;<code>Fresco</code>&#x7684;&#x57FA;&#x7840;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x7684;&#x5F3A;&#x70C8;&#x63A8;&#x8350;&#x770B;&#x4E0B;<a href="https://www.fresco-cn.org/docs/getting-started.html" target="_blank" rel="noopener">Fresco&#x5B98;&#x65B9;&#x6587;&#x6863;</a>&#x3002;</p>
+</blockquote>
+<p>&#x6211;&#x4EEC;&#x4F7F;&#x7528;<code>Fresco</code>&#x8FDB;&#x884C;&#x56FE;&#x7247;&#x52A0;&#x8F7D;&#xFF0C;&#x4F7F;&#x7528;&#x6700;&#x591A;&#x7684;&#x8FD8;&#x662F;&#x5DF2;&#x7ECF;&#x5C01;&#x88C5;&#x597D;&#x7684;<code>SimpleDraweeView</code>&#xFF0C;&#x800C;&#x5728;<code>SimpleDraweeView</code>&#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x4E2D;&#x4F1A;&#x8C03;&#x7528;<code>init()</code>&#x65B9;&#x6CD5;&#xFF0C;&#x5B83;&#x7684;&#x6E90;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">private void init(Context context, @Nullable AttributeSet attrs) {</span><br><span class="line">    if (isInEditMode()) {</span><br><span class="line">      return;</span><br><span class="line">    }</span><br><span class="line">    Preconditions.checkNotNull(</span><br><span class="line">        sDraweeControllerBuilderSupplier,</span><br><span class="line">        &quot;SimpleDraweeView was not initialized!&quot;);</span><br><span class="line">    mSimpleDraweeControllerBuilder = sDraweeControllerBuilderSupplier.get();</span><br><span class="line"> </span><br><span class="line">    if (attrs != null) {</span><br><span class="line">      TypedArray gdhAttrs = context.obtainStyledAttributes(</span><br><span class="line">          attrs,</span><br><span class="line">          R.styleable.SimpleDraweeView);</span><br><span class="line">      try {</span><br><span class="line">        if (gdhAttrs.hasValue(R.styleable.SimpleDraweeView_actualImageUri)) {</span><br><span class="line">          setImageURI(</span><br><span class="line">              Uri.parse(gdhAttrs.getString(R.styleable.SimpleDraweeView_actualImageUri)),</span><br><span class="line">              null);</span><br><span class="line">        } else if (gdhAttrs.hasValue((R.styleable.SimpleDraweeView_actualImageResource))) {</span><br><span class="line">          int resId = gdhAttrs.getResourceId(</span><br><span class="line">              R.styleable.SimpleDraweeView_actualImageResource,</span><br><span class="line">              NO_ID);</span><br><span class="line">          if (resId != NO_ID) {</span><br><span class="line">            setActualImageResource(resId);</span><br><span class="line">          }</span><br><span class="line">        }</span><br><span class="line">      } finally {</span><br><span class="line">        gdhAttrs.recycle();</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x505A;&#x7684;&#x4E8B;&#x60C5;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x4F46;&#x6211;&#x4EEC;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#x5B83;&#x4F1A;&#x5BF9;<code>sDraweeControllerBuilderSupplier</code>&#x8FDB;&#x884C;<code>null</code>&#x5224;&#x65AD;&#xFF0C;&#x5982;&#x679C;&#x4E3A;<code>null</code>&#x5C06;&#x4F1A;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#x3002;<code>sDraweeControllerBuilderSupplier</code>&#x662F;&#x4F9B;&#x5E94;&#x7C7B;&#xFF0C;&#x901A;&#x8FC7;&#x5B83;&#x7684;<code>get</code>&#x65B9;&#x6CD5;&#x6765;&#x83B7;&#x53D6;<code>DraweeControllerBuilder</code>&#xFF0C;&#x8FD9;&#x4E2A;&#x662F;<code>controller</code>&#x6784;&#x9020;&#x5668;&#xFF0C;&#x8FD9;&#x4E2A;&#x4EE5;&#x540E;&#x7684;&#x7AE0;&#x8282;&#x4F1A;&#x8BE6;&#x7EC6;&#x8BF4;&#x660E;&#x3002;&#x7A7A;&#x5224;&#x65AD;&#x7684;&#x76EE;&#x7684;&#x5C31;&#x662F;&#x5728;&#x4F7F;&#x7528;<code>SimpleDraweeView</code>&#x4E4B;&#x524D;&#x5FC5;&#x987B;&#x521D;&#x59CB;&#x5316;<code>sDraweeControllerBuilderSupplier</code>&#x3002;&#x5728;<code>SimpleDraweeView</code>&#x4E2D;&#x6211;&#x4EEC;&#x80FD;&#x627E;&#x5230;&#x5B83;&#x7684;&#x521D;&#x59CB;&#x5316;&#x65B9;&#x6CD5;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public static void initialize(</span><br><span class="line">      Supplier&lt;? extends SimpleDraweeControllerBuilder&gt; draweeControllerBuilderSupplier) {</span><br><span class="line">    sDraweeControllerBuilderSupplier = draweeControllerBuilderSupplier;</span><br><span class="line">  }</span><br></pre></td></tr></table></figure>
+<p>&#x5B83;&#x662F;&#x4E00;&#x4E2A;<code>static</code>&#x65B9;&#x6CD5;&#xFF0C;&#x5728;<code>SimpleDraweeView</code>&#x521D;&#x59CB;&#x5316;&#x4E4B;&#x524D;&#x52A0;&#x8F7D;&#x4E00;&#x6B21;&#x5373;&#x53EF;&#x3002;&#x8FD9;&#x662F;<code>SimpleDraweeView</code>&#x7684;&#x5173;&#x952E;&#x3002;&#x5B83;&#x8FD8;&#x6709;&#x4E00;&#x4E2A;&#x5173;&#x952E;&#x65B9;&#x6CD5;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public void setImageURI(Uri uri, @Nullable Object callerContext) {</span><br><span class="line">    //&#x901A;&#x8FC7;controller &#x6765;&#x4FDD;&#x5B58;Uri &#x7B49;&#x76F8;&#x5173;&#x4FE1;&#x606F;</span><br><span class="line">    DraweeController controller = mSimpleDraweeControllerBuilder</span><br><span class="line">        .setCallerContext(callerContext)</span><br><span class="line">        .setUri(uri)</span><br><span class="line">        .setOldController(getController())</span><br><span class="line">        .build();</span><br><span class="line">    setController(controller);</span><br><span class="line">  }</span><br></pre></td></tr></table></figure>
+<p>&#x4F7F;&#x7528;<code>mSimpleDraweeControllerBuilder</code>&#x6765;&#x6784;&#x5EFA;&#x4E00;&#x4E2A;<code>Controller</code>&#xFF0C;&#x800C;<code>Controller</code>&#x662F;&#x7531;<code>build</code>&#x6A21;&#x5F0F;&#x6240;&#x521B;&#x5EFA;&#xFF0C;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x80FD;&#x770B;&#x5230;<code>uri</code>&#x4E5F;&#x4EA4;&#x7531;<code>Controller</code>&#x7BA1;&#x7406;&#x3002;&#x5176;&#x5B9E;&#x6700;&#x7EC8;<code>uri</code>&#x4F1A;&#x5C01;&#x88C5;&#x6210;&#x4E00;&#x4E2A;<code>ImageRequest</code>&#xFF0C;<code>Controller</code>&#x771F;&#x6B63;&#x6301;&#x6709;&#x7684;&#x662F;<code>uri</code>&#x7684;&#x5C01;&#x88C5;&#x4F53;<code>ImageRequest</code>&#x3002;&#x5728;<code>SimpleDraweeView</code>&#x4E2D;&#x5B83;&#x4F1A;&#x91CD;&#x5199;<code>setImageURI</code>&#x65B9;&#x6CD5;&#xFF0C;&#x6700;&#x7EC8;&#x4E5F;&#x5C31;&#x662F;&#x5C06;<code>ImageView</code>&#x4E2D;&#x7684;&#x539F;&#x751F;&#x65B9;&#x6CD5;&#x7ED9;&#x8986;&#x76D6;&#x6389;&#x3002;&#x8FD8;&#x6709;&#x5176;&#x5B83;&#x7684;&#x7C7B;&#x4F3C;&#x7684;<code>setImageResource</code>&#x4E0E;<code>setImageBitmap</code>&#x7B49;&#xFF0C;<code>Fresco</code>&#x90FD;&#x5728;&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x4E0A;&#x52A0;&#x4E86;<code>@Deprecated</code>&#xFF0C;&#x610F;&#x601D;&#x5C31;&#x662F;&#x8BF4;&#x4E0D;&#x63A8;&#x8350;&#x4F7F;&#x7528;&#xFF0C;&#x5982;&#x679C;&#x4F7F;&#x7528;&#x7684;&#x8BDD;&#x5C31;&#x8DDF;&#x76F4;&#x63A5;&#x4F7F;&#x7528;<code>ImageView</code>&#x6CA1;&#x4EC0;&#x4E48;&#x533A;&#x522B;&#xFF0C;&#x8FD9;&#x5C31;&#x65E0;&#x6CD5;&#x4F53;&#x9A8C;&#x5230;<code>Fresco</code>&#x7684;&#x5F3A;&#x5927;&#x7684;&#x7279;&#x6027;&#x3002;&#x5728;<code>Fresco</code>&#x4E2D;&#x7EDF;&#x4E00;&#x7531;<code>setController</code>&#x6765;&#x66FF;&#x4EE3;&#x3002;</p>
+<blockquote>
+<p>&#x5173;&#x4E8E;<code>Controller</code>&#x540E;&#x7EED;&#x6587;&#x7AE0;&#x4F1A;&#x8BE6;&#x7EC6;&#x5206;&#x6790;&#x3002;</p>
+</blockquote>
+<h2 id="Fresco"><a href="#Fresco" class="headerlink" title="Fresco"></a>Fresco</h2><p>&#x5982;&#x679C;&#x6211;&#x4EEC;&#x6839;&#x636E;<a href="https://www.fresco-cn.org/docs/getting-started.html" target="_blank" rel="noopener">Fresco&#x5B98;&#x65B9;&#x6587;&#x6863;</a>&#x7684;&#x6B63;&#x5E38;&#x6B65;&#x9AA4;&#x6765;&#x4F7F;&#x7528;&#x7684;&#x8BDD;&#x5C31;&#x65E0;&#x9700;&#x62C5;&#x5FC3;&#x8FD9;&#x4E00;&#x6B65;&#xFF0C;&#x56E0;&#x4E3A;&#x5728;&#x6211;&#x4EEC;&#x5728;&#x4F7F;&#x7528;<code>Fresco</code>&#x4E4B;&#x524D;&#x90FD;&#x8981;&#x5148;&#x8C03;&#x7528;<code>Fresco.initialize(context)</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public static void initialize(</span><br><span class="line">      Context context,</span><br><span class="line">      @Nullable ImagePipelineConfig imagePipelineConfig,</span><br><span class="line">      @Nullable DraweeConfig draweeConfig) {</span><br><span class="line">    if (sIsInitialized) {</span><br><span class="line">      FLog.w(</span><br><span class="line">          TAG,</span><br><span class="line">          &quot;Fresco has already been initialized! `Fresco.initialize(...)` should only be called &quot; +</span><br><span class="line">            &quot;1 single time to avoid memory leaks!&quot;);</span><br><span class="line">    } else {</span><br><span class="line">      sIsInitialized = true;</span><br><span class="line">    }</span><br><span class="line">    // we should always use the application context to avoid memory leaks</span><br><span class="line">    context = context.getApplicationContext();</span><br><span class="line">    if (imagePipelineConfig == null) {</span><br><span class="line">      //&#x521D;&#x59CB;&#x5316;ImagePipeline&#x5DE5;&#x5382;&#xFF0C;&#x5305;&#x542B;ImagePipelineConfig &#x76F8;&#x5173;&#x521D;&#x59CB;&#x5316;&#x914D;&#x7F6E;&#x4FE1;&#x606F;</span><br><span class="line">      // (&#x4E09;&#x7EA7;&#x7F13;&#x5B58;&#x3001;&#x56FE;&#x7247;&#x89E3;&#x7801;/&#x7F16;&#x7801;&#x3001;&#x8F6C;&#x5316;&#x3001;&#x6E10;&#x53D8;&#x3001;bitmap&#x914D;&#x7F6E;&#x3001;&#x56DB;&#x79CD;executor &#x5206;&#x522B;&#x4E3A; io&#x3001;decode&#x3001;background&#x3001;lightweight background)&#x7B49;</span><br><span class="line">      ImagePipelineFactory.initialize(context);</span><br><span class="line">    } else {</span><br><span class="line">       ImagePipelineFactory.initialize(imagePipelineConfig);</span><br><span class="line">    }</span><br><span class="line">    //&#x521D;&#x59CB;&#x5316;Drawee&#x76F8;&#x5173;&#x914D;&#x7F6E;&#x4FE1;&#x606F;</span><br><span class="line">    initializeDrawee(context, draweeConfig);</span><br><span class="line">  }</span><br></pre></td></tr></table></figure>
+<p>&#x9664;&#x4E86;&#x521D;&#x59CB;&#x5316;<code>ImagePipeline</code>&#x4E4B;&#x5916;&#xFF0C;&#x6700;&#x540E;&#x8FD8;&#x4F1A;&#x8C03;&#x7528;<code>initializeDrawee (context, draweeConfig)</code>&#xFF0C;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4E0B;<code>initializeDrawee</code>&#x505A;&#x4E86;&#x4EC0;&#x4E48;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">private static void initializeDrawee(</span><br><span class="line">      Context context,</span><br><span class="line">      @Nullable DraweeConfig draweeConfig) {</span><br><span class="line">    //&#x6784;&#x5EFA;PipelineDraweeControllerBuilderSupplier,</span><br><span class="line">    //&#x5176;&#x4E2D;ImagePipeline&#x3001;PipelineDraweeControllerFactory&#x3001;ControllerListener set&#x96C6;&#x5408;</span><br><span class="line">    sDraweeControllerBuilderSupplier =</span><br><span class="line">        new PipelineDraweeControllerBuilderSupplier(context, draweeConfig);</span><br><span class="line">    //&#x521D;&#x59CB;&#x5316;SimpleDrawee</span><br><span class="line">    //&#x521D;&#x59CB;&#x5316;&#x65F6;&#x901A;&#x8FC7;&#x8C03;&#x7528;PipelineDraweeControllerBuilderSupplier&#x5B9E;&#x73B0;&#x7684;Supplier&#x7684;get()&#x65B9;&#x6CD5;</span><br><span class="line">    // &#x8FD4;&#x56DE;&#x914D;&#x7F6E;&#x4FE1;&#x606F;&#x7684;&#x5C01;&#x88C5;&#x4F53;PipelineDraweeControllerBuilder implements SimpleDraweeControllerBuilder</span><br><span class="line">     SimpleDraweeView.initialize(sDraweeControllerBuilderSupplier);</span><br><span class="line">  }</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x4F1A;&#x770B;&#x5230;&#x4E4B;&#x524D;&#x6240;&#x63D0;&#x5230;&#x7684;<code>sDraweeControllerBuilderSupplier</code>&#x4E0E;<code>SimpleDraweeView</code>&#x4E2D;&#x5FC5;&#x987B;&#x4F18;&#x5148;&#x8C03;&#x7528;&#x7684;<code>initialize</code>&#x65B9;&#x6CD5;&#x3002;&#x76F8;&#x4FE1;&#x73B0;&#x5728;&#x5E94;&#x8BE5;&#x660E;&#x767D;&#x7684;&#x4E3A;&#x4EC0;&#x4E48;&#x5728;&#x4F7F;&#x7528;<code>Fresco</code>&#x4E4B;&#x524D;&#x5FC5;&#x987B;&#x8C03;&#x7528;&#x5B83;&#x7684;<code>initialize</code>&#x65B9;&#x6CD5;&#x4E86;&#x3002;&#x56E0;&#x4E3A;&#x5B83;&#x5FC5;&#x987B;&#x8981;&#x521D;&#x59CB;&#x5316;&#x4E00;&#x4E9B;&#x5FC5;&#x8981;&#x7684;&#x914D;&#x7F6E;&#x4FE1;&#x606F;&#xFF0C;&#x5176;&#x4E2D;&#x5C31;&#x5305;&#x62EC;&#x4F7F;&#x7528;&#x7684;&#x63A7;&#x4EF6;<code>SimpleDraweeView</code>&#x7684;&#x914D;&#x7F6E;&#x4FE1;&#x606F;&#x3002;</p>
+<h2 id="GenericDraweeView"><a href="#GenericDraweeView" class="headerlink" title="GenericDraweeView"></a>GenericDraweeView</h2><p>&#x4E0A;&#x9762;&#x6240;&#x8BF4;&#x7684;<code>SimpleDraweeView</code>&#x7684;&#x7236;&#x7C7B;&#x662F;<code>GenericDraweeView</code>&#xFF0C;&#x5B83;&#x505A;&#x7684;&#x4E8B;&#x60C5;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x5904;&#x7406;<code>xml</code>&#x76F8;&#x5173;&#x7684;&#x5C5E;&#x6027;&#x3002;&#x5B83;&#x4F1A;&#x901A;&#x8FC7;<code>inflateHierarchy</code>&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">protected void inflateHierarchy(Context context, @Nullable AttributeSet attrs) {</span><br><span class="line">    GenericDraweeHierarchyBuilder builder =</span><br><span class="line">        GenericDraweeHierarchyInflater.inflateBuilder(context, attrs);</span><br><span class="line">    setAspectRatio(builder.getDesiredAspectRatio());</span><br><span class="line">    setHierarchy(builder.build());</span><br><span class="line">  }</span><br></pre></td></tr></table></figure>
+<p>&#x5B83;&#x662F;&#x7531;<code>GenericDraweeHierarchyBuilder</code>&#x6765;&#x7EDF;&#x4E00;&#x5C01;&#x88C5;&#x8FD9;&#x4E9B;&#x5C5E;&#x6027;&#x3002;&#x6700;&#x7EC8;&#x901A;&#x8FC7;<code>build</code>&#x65B9;&#x6CD5;&#x6765;&#x6784;&#x5EFA;<code>GenericDraweeHierarchy</code>&#xFF0C;&#x8FD9;&#x5C31;&#x662F;<code>Fresco</code>&#x7684;&#x56FE;&#x5C42;&#x3002;&#x7136;&#x540E;&#x901A;&#x8FC7;<code>setHierarchy</code>&#x5C06;&#x56FE;&#x5C42;&#x4F20;&#x9012;&#x7ED9;<code>DraweeHolder</code>&#x3002;<code>DraweeHolder</code>&#x662F;&#x7528;&#x6765;&#x7BA1;&#x7406;<code>Hierarchy</code>&#x4E0E;<code>Controller</code>&#x7684;&#x3002;&#x800C;<code>DraweeHolder</code>&#x662F;&#x5728;&#x6700;&#x5E95;&#x5C42;&#x7684;<code>DraweeView</code>&#x4E2D;&#xFF0C;&#x8FD9;&#x4E5F;&#x662F;<code>GenericDraweeView</code>&#x7684;&#x7236;&#x7C7B;&#x3002;&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x8FDB;&#x5165;<code>DraweeView</code>&#xFF0C;&#x6765;&#x770B;&#x770B;&#x5B83;&#x5230;&#x5E95;&#x505A;&#x4E86;&#x4EC0;&#x4E48;&#x3002;</p>
+<h2 id="DraweeView"><a href="#DraweeView" class="headerlink" title="DraweeView"></a>DraweeView</h2><p><code>DraweeView</code>&#x662F;<code>Fresco</code>&#x6700;&#x5E95;&#x5C42;&#x7684;&#x63A7;&#x4EF6;&#xFF0C;&#x4E5F;&#x662F;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x5B83;&#x5C55;&#x793A;&#x56FE;&#x7247;&#x7684;&#x57FA;&#x7840;&#xFF0C;&#x5B83;&#x7EE7;&#x627F;&#x4E8E;<code>ImageView</code>&#xFF0C;&#x6240;&#x4EE5;&#x5B83;&#x80FD;&#x505A;&#x7684;&#x4E8B;&#x4E5F;&#x65E0;&#x975E;&#x4E8E;&#x5728;&#x539F;&#x751F;<code>ImageView</code>&#x4E0A;&#x505A;&#x6269;&#x5C55;&#x6216;&#x8005;&#x65B9;&#x6CD5;&#x91CD;&#x5199;&#xFF0C;&#x4ECE;&#x800C;&#x6765;&#x5B9E;&#x73B0;&#x81EA;&#x5DF1;&#x7684;&#x4E00;&#x5957;&#x903B;&#x8F91;&#x3002;&#x5148;&#x770B;&#x4E0B;&#x5B83;&#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public DraweeView(Context context) {</span><br><span class="line">    super(context);</span><br><span class="line">    init(context);</span><br><span class="line">  }</span><br></pre></td></tr></table></figure>
+<p>&#x6CA1;&#x4EC0;&#x4E48;&#x7279;&#x522B;&#x7684;&#x903B;&#x8F91;&#xFF0C;&#x5C31;&#x4E00;&#x4E2A;<code>init</code>&#x65B9;&#x6CD5;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x8FDB;&#x5165;<code>init</code>&#x770B;&#x770B;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/** This method is idempotent so it only has effect the first time it&apos;s called */</span><br><span class="line">  private void init(Context context) {</span><br><span class="line">    if (mInitialised) {</span><br><span class="line">      return;</span><br><span class="line">    }</span><br><span class="line">    mInitialised = true;</span><br><span class="line">    mDraweeHolder = DraweeHolder.create(null, context);</span><br><span class="line">    if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) {</span><br><span class="line">      ColorStateList imageTintList = getImageTintList();</span><br><span class="line">      if (imageTintList == null) {</span><br><span class="line">        return;</span><br><span class="line">      }</span><br><span class="line">      setColorFilter(imageTintList.getDefaultColor());</span><br><span class="line">    }</span><br><span class="line">    // In Android N and above, visibility handling for Drawables has been changed, which breaks</span><br><span class="line">    // activity transitions with DraweeViews.</span><br><span class="line">    mLegacyVisibilityHandlingEnabled = sGlobalLegacyVisibilityHandlingEnabled &amp;&amp;</span><br><span class="line">        context.getApplicationInfo().targetSdkVersion &gt;= 24; //Build.VERSION_CODES.N</span><br><span class="line">  }</span><br></pre></td></tr></table></figure>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5B83;&#x4F1A;&#x901A;&#x8FC7;<code>mInitialised</code>&#x6765;&#x5224;&#x65AD;&#x662F;&#x5426;&#x9700;&#x8981;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x6E90;&#x7801;&#x6CE8;&#x91CA;&#x4E5F;&#x8BF4;&#x660E;&#x7684;&#x8BE5;&#x65B9;&#x6CD5;&#x53EA;&#x4F1A;&#x8C03;&#x7528;&#x4E00;&#x6B21;&#x3002;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#x521B;&#x5EFA;<code>Hierarchy</code>&#x7684;&#x4EE3;&#x4EF7;&#x592A;&#x5927;&#xFF0C;&#x6240;&#x4EE5;&#x53EA;&#x4F1A;&#x521B;&#x5EFA;&#x4E00;&#x6B21;&#xFF0C;&#x4EE5;&#x540E;&#x90FD;&#x4F1A;&#x4F7F;&#x7528;&#x540C;&#x4E00;&#x4E2A;<code>mDraweeHolder</code>&#x4E2D;&#x7684;<code>Hierarchy</code>&#xFF0C;&#x6240;&#x4EE5;&#x4F1A;&#x770B;&#x5230;&#x8FD9;&#x91CC;&#x5C31;&#x5FC5;&#x987B;&#x521D;&#x59CB;&#x5316;&#x4E00;&#x4E2A;<code>mDraweeHolder</code>&#x3002;&#x5728;<code>DraweeView</code>&#x4E2D;&#x8FD8;&#x6709;&#x4EE5;&#x4E0B;&#x51E0;&#x4E2A;&#x4E3B;&#x8981;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<ul>
+<li><code>void setHierarchy(DH hierarchy)</code>&#x8BBE;&#x7F6E;<code>Hierarchy</code>,&#x540C;&#x65F6;&#x4F1A;&#x5C06;<code>Hierarchy</code>&#x4EA4;&#x7531;<code>mDraweeHolder</code>&#x7BA1;&#x7406;&#xFF0C;&#x6700;&#x540E;&#x8FD8;&#x4F1A;&#x8C03;&#x7528;<code>super.setImageDrawable(mDraweeHolder.getTopLevelDrawable());</code>&#x6765;&#x5C06;<code>Hierarchy</code>&#x4E2D;&#x7684;&#x56FE;&#x5C42;&#x6811;&#x663E;&#x793A;&#x51FA;&#x6765;&#x3002;</li>
+<li><code>Drawable getTopLevelDrawable()</code>&#x4F1A;&#x901A;&#x8FC7;<code>mDraweeHolder</code>&#x4E2D;&#x7684;<code>Hierarchy</code>&#x6765;&#x83B7;&#x53D6;&#x56FE;&#x5C42;&#x6811;&#x3002;</li>
+<li><code>void setController(@Nullable DraweeController draweeController)</code>&#x8BBE;&#x7F6E;<code>Controller</code>&#xFF0C;&#x540C;&#x65F6;&#x4E5F;&#x4F1A;&#x5C06;<code>Hierarchy</code>&#x4E2D;&#x7684;&#x56FE;&#x5C42;&#x6811;&#x663E;&#x793A;&#x51FA;&#x6765;&#x3002;</li>
+<li><code>void onAttachedToWindow()</code>&#x3001;<code>void onDetachedFromWindow()</code>&#x3001;<code>void onStartTemporaryDetach()</code>&#x4E0E;<code>void onFinishTemporaryDetach()</code>&#x662F;&#x6765;&#x63A7;&#x5236;&#x56FE;&#x5C42;&#x7684;&#x663E;&#x793A;&#x4E0E;&#x9690;&#x85CF;&#x3001;&#x7ED1;&#x5B9A;&#x4E0E;&#x89E3;&#x7ED1;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF0C;&#x5B83;&#x4EEC;&#x90FD;&#x5206;&#x522B;&#x4F1A;&#x8C03;&#x7528;<code>mDraweeHolder</code>&#x7684;<code>onAttach()</code>&#x4E0E;<code>onDetach()</code>&#x3002;&#x5176;&#x5B9E;&#x6700;&#x7EC8;&#x8C03;&#x7528;&#x7684;&#x8FD8;&#x662F;<code>Controller</code>&#x4E2D;&#x7684;<code>onAttach()</code>&#x4E0E;<code>onDetach()</code>&#x3002;</li>
+<li><code>boolean onTouchEvent(MotionEvent event)</code>&#x63A7;&#x5236;&#x63A7;&#x4EF6;&#x7684;&#x89E6;&#x6478;&#xFF0C;&#x5982;&#x679C;<code>Controller</code>&#x6709;&#x6548;&#x7684;&#x8BDD;&#x4F1A;&#x8C03;&#x7528;<code>Controller</code>&#x4E2D;&#x7684;<code>onTouchEvent</code>&#x3002;</li>
+<li><code>void setAspectRatio(float aspectRatio)</code>&#x7528;&#x6765;&#x8BBE;&#x7F6E;<code>DraweeView</code>&#x663E;&#x793A;&#x7684;&#x5BBD;&#x9AD8;&#x6BD4;&#x4F8B;&#x3002;</li>
+<li><code>setImageDrawable</code>&#x3001;<code>setImageBitmap</code>&#x3001;<code>setImageResource</code>&#x4E0E;<code>setImageURI</code>&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x90FD;&#x662F;&#x539F;&#x751F;<code>ImageView</code>&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x4F46;&#x5728;<code>DraweeView</code>&#x4E2D;&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x90FD;&#x88AB;&#x52A0;&#x4E0A;&#x4E86;<code>@Deprecated</code>&#x6807;&#x8BB0;&#x3002;&#x6807;&#x660E;&#x4E0D;&#x63A8;&#x8350;&#x4F7F;&#x7528;&#xFF0C;&#x5982;&#x679C;&#x4E00;&#x5B9A;&#x4F7F;&#x7528;&#x7684;&#x8BDD;&#xFF0C;&#x90A3;&#x4E48;<code>DraweeView</code>&#x5C06;&#x4F1A;&#x9000;&#x5316;&#x6210;&#x4E00;&#x4E2A;&#x666E;&#x901A;&#x7684;<code>ImageView</code>&#x3002;&#x56E0;&#x4E3A;&#x5728;<code>DraweeView</code>&#x4E2D;&#x90FD;&#x662F;&#x901A;&#x8FC7;<code>Controller</code>&#x6765;&#x4F53;&#x73B0;&#x5B83;&#x7684;&#x7F13;&#x5B58;&#x3001;&#x52A0;&#x8F7D;&#x673A;&#x5236;&#x7B49;&#x7279;&#x6027;&#x3002;</li>
+</ul>
+<p>&#x4E0A;&#x9762;&#x8FD9;&#x4E9B;&#x5C31;&#x662F;<code>DraweeView</code>&#x7684;&#x4E3B;&#x8981;&#x6D89;&#x53CA;&#x5230;&#x7684;&#x65B9;&#x6CD5;&#x4E0E;&#x7279;&#x6027;&#xFF0C;&#x4E0D;&#x8FC7;&#x5728;<code>DraweeView</code>&#x4E2D;&#x57FA;&#x672C;&#x4E0A;&#x6BCF;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x90FD;&#x6D89;&#x53CA;&#x5230;&#x4E86;<code>DraweeHolder</code>&#xFF0C;&#x90A3;&#x5B83;&#x5230;&#x5E95;&#x662F;&#x5E72;&#x4EC0;&#x4E48;&#x7684;&#x5462;&#xFF1F;&#x522B;&#x6025;&#x4E0B;&#x9762;&#x5C31;&#x8F6E;&#x5230;&#x5B83;&#x4E86;&#x3002;</p>
+<h2 id="DraweeHolder"><a href="#DraweeHolder" class="headerlink" title="DraweeHolder"></a>DraweeHolder</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A holder class for Drawee controller and hierarchy.</span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x9762;&#x7684;&#x662F;&#x5B98;&#x65B9;&#x6CE8;&#x91CA;&#xFF0C;&#x8BF4;&#x660E;<code>DraweeHolder</code>&#x662F;&#x7528;&#x6765;&#x7BA1;&#x7406;<code>Hierarchy</code>&#x4E0E;<code>Controller</code>&#x7684;&#xFF0C;&#x540C;&#x65F6;&#x4E5F;&#x662F;&#x5B83;&#x4EEC;&#x4E4B;&#x95F4;&#x7684;&#x8054;&#x7CFB;&#x7684;&#x6865;&#x6881;&#x3002;<code>DraweeView</code>&#x4EE5;&#x53CA;&#x5B83;&#x7684;&#x5B50;&#x7C7B;&#x90FD;&#x662F;&#x901A;&#x8FC7;&#x5B83;&#x6765;&#x95F4;&#x63A5;&#x64CD;&#x4F5C;<code>Controller</code>&#x4E0E;<code>Hierarchy</code>&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public static &lt;DH extends DraweeHierarchy&gt; DraweeHolder&lt;DH&gt; create(</span><br><span class="line">      @Nullable DH hierarchy,</span><br><span class="line">      Context context) {</span><br><span class="line">    DraweeHolder&lt;DH&gt; holder = new DraweeHolder&lt;DH&gt;(hierarchy);</span><br><span class="line">    holder.registerWithContext(context);</span><br><span class="line">    return holder;</span><br><span class="line">  }</span><br></pre></td></tr></table></figure>
+<p>&#x5B83;&#x662F;&#x901A;&#x8FC7;&#x516C;&#x6709;&#x7684;&#x9759;&#x6001;&#x65B9;&#x6CD5;&#x6765;&#x521B;&#x5EFA;&#x81EA;&#x8EAB;&#x5B9E;&#x4F8B;&#x7684;&#x3002;&#x5728;&#x4E0A;&#x9762;&#x7684;<code>DraweeView</code>&#x7684;<code>init</code>&#x65B9;&#x6CD5;&#x4E2D;&#x4F1A;&#x8C03;&#x7528;&#x3002;&#x5728;&#x5176;&#x5185;&#x90E8;&#x7684;<code>DraweeEventTracker</code>&#xFF0C;&#x662F;&#x7528;&#x6765;&#x8BB0;&#x5F55;&#x4E8B;&#x4EF6;&#x7684;&#x4F20;&#x9012;&#xFF0C;&#x65B9;&#x4FBF;<code>dubug</code>&#x7684;&#x8C03;&#x8BD5;&#x3002;&#x5982;&#x679C;&#x4E0D;&#x9700;&#x8981;&#x7684;&#x8BDD;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;<code>Fresco.initialize()</code>&#x4E4B;&#x524D;&#x8C03;&#x7528;<code>DraweeEventTracker.disable()</code>&#x3002;&#x90A3;&#x4E48;&#x5269;&#x4E0B;&#x7684;&#x65B9;&#x6CD5;&#x5176;&#x5B9E;&#x57FA;&#x672C;&#x4E0A;&#x5728;<code>DraweeView</code>&#x4E2D;&#x90FD;&#x8BF4;&#x8FC7;&#x3002;</p>
+<ul>
+<li><code>onAttach()</code>&#x4E0E;<code>onDetach()</code>&#xFF0C;&#x90FD;&#x4F1A;&#x8C03;&#x7528;<code>attachOrDetachController()</code>&#xFF0C;&#x6839;&#x636E;&#x60C5;&#x51B5;&#x5206;&#x522B;&#x8C03;&#x7528;<code>attachController()</code>&#x4E0E;<code>detachController()</code>,&#x6700;&#x7EC8;&#x8C03;&#x7528;&#x7684;&#x5C31;&#x662F;<code>Controller</code>&#x7684;<code>onAttach()</code>&#x4E0E;<code>onDetach()</code></li>
+<li><code>Drawable getTopLevelDrawable()</code>&#x8C03;&#x7528;<code>mHierarchy.getTopLevelDrawable()</code>&#x83B7;&#x53D6;&#x56FE;&#x5C42;&#x6811;&#x3002;</li>
+<li><code>void setController(@Nullable DraweeController draweeController)</code>&#x8BBE;&#x7F6E;<code>Controller</code>&#xFF0C;&#x5728;&#x8BBE;&#x7F6E;&#x4E4B;&#x524D;&#x4F1A;&#x5148;&#x5224;&#x65AD;&#x662F;&#x5426;&#x5DF2;&#x7ECF;<code>wasAttached</code>&#xFF0C;&#x5982;&#x679C;&#x662F;&#x7684;&#x8BDD;&#x5C31;&#x5148;&#x8C03;&#x7528;<code>detachController()</code>&#xFF0C;&#x7136;&#x540E;&#x6E05;&#x9664;&#x8001;&#x7684;<code>Controller</code>&#xFF0C;&#x518D;&#x5C06;<code>Hierarchy</code>&#x8BBE;&#x7F6E;&#x5230;&#x65B0;&#x7684;<code>Controller</code>&#x4E2D;&#x3002;&#x6700;&#x540E;&#x518D;<code>attachController()</code>&#x8FDB;&#x884C;&#x7ED1;&#x5B9A;&#x663E;&#x793A;&#x56FE;&#x5C42;&#x3002;</li>
+<li><code>void setHierarchy(DH hierarchy)</code>&#x8BBE;&#x7F6E;<code>Hierarchy</code>&#xFF0C;&#x5982;&#x679C;<code>Controller</code>&#x6709;&#x6548;&#x7684;&#x8BDD;&#x5C31;&#x4E0E;<code>Hierarchy</code>&#x5EFA;&#x7ACB;&#x94FE;&#x63A5;&#xFF0C;&#x5C06;<code>Hierarchy</code>&#x8BBE;&#x7F6E;&#x5230;<code>Controller</code>&#x4E2D;&#x3002;</li>
+</ul>
+<p>&#x4EE5;&#x4E0A;&#x5C31;&#x662F;<code>DraweeHolder</code>&#x7684;&#x4E3B;&#x8981;&#x65B9;&#x6CD5;&#xFF0C;&#x90FD;&#x8DDF;<code>Controller</code>&#x4E0E;<code>Hierarchy</code>&#x76F8;&#x5173;&#x3002;&#x800C;<code>DraweeHolder</code>&#x53C8;&#x4E0E;<code>DraweeView</code>&#x76F8;&#x8FDE;&#xFF0C;&#x6240;&#x4EE5;&#x6700;&#x7EC8;&#x8FD8;&#x662F;&#x8981;&#x56DE;&#x5230;<code>Controller</code>&#x4E0E;<code>Hierarchy</code>&#x4E2D;&#x3002;</p>
+<h2 id="End"><a href="#End" class="headerlink" title="End"></a>End</h2><p>&#x8FD9;&#x6B21;&#x4E3B;&#x8981;&#x662F;&#x5206;&#x6790;&#x4E86;<code>Fresco</code>&#x4E2D;&#x7684;&#x57FA;&#x672C;&#x7EC4;&#x4EF6;<code>DraweeView</code>&#x4E0E;&#x5B83;&#x7684;&#x5B50;&#x7C7B;&#x3002;&#x5982;&#x679C;&#x4F60;&#x8FD8;&#x60F3;&#x8FDB;&#x4E00;&#x6B65;&#x4E86;&#x89E3;<code>Hierarchy</code>&#x4E0E;<code>Controller</code>&#x7684;&#x539F;&#x7406;&#xFF0C;&#x4E0B;&#x7BC7;&#x6587;&#x7AE0;&#x5C06;&#x4F1A;&#x8BE6;&#x7EC6;&#x5206;&#x6790;&#x76F8;&#x5173;&#x7684;&#x539F;&#x7406;&#xFF0C;&#x656C;&#x8BF7;&#x671F;&#x5F85;&#xFF01;</p>
+<p><a href="https://github.com/idisfkj/Fresco-Source-Analysis" target="_blank" rel="noopener">Fresco&#x6E90;&#x7801;&#x5206;&#x6790;&#x7CFB;&#x5217;Github&#x5730;&#x5740;</a></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/11/06/tensorflow-梯度下降-有这一篇就足够了/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/12/07/Fresco源码分析之Hierarchy/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Tue Nov 28 2017 21:28:05 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Vue:scoped与module的使用与利弊 | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="vue,">
+  
+
+  <meta name="description" content="&amp;#x4E00;&amp;#x4E2A;web&amp;#x5E94;&amp;#x7528;&amp;#x662F;&amp;#x79BB;&amp;#x4E0D;&amp;#x5F00;html&amp;#x3001;css&amp;#x4E0E;js&amp;#xFF0C;&amp;#x5176;&amp;#x4E2D;css&amp;#x5145;&amp;#x65A5;&amp;#x7684;&amp;#x6574;&amp;#x4E2A;web&amp;#x9879;&amp;#x76EE;&amp;#x4E2D;&amp;#x3002;css&amp;#x">
+<meta name="keywords" content="vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue:scoped与module的使用与利弊">
+<meta property="og:url" content="https://www.rousetime.com/2019/01/11/Vue-scoped与module的使用与利弊/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="&amp;#x4E00;&amp;#x4E2A;web&amp;#x5E94;&amp;#x7528;&amp;#x662F;&amp;#x79BB;&amp;#x4E0D;&amp;#x5F00;html&amp;#x3001;css&amp;#x4E0E;js&amp;#xFF0C;&amp;#x5176;&amp;#x4E2D;css&amp;#x5145;&amp;#x65A5;&amp;#x7684;&amp;#x6574;&amp;#x4E2A;web&amp;#x9879;&amp;#x76EE;&amp;#x4E2D;&amp;#x3002;css&amp;#x">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.rousetime.com/2019/01/11/Vue-scoped与module的使用与利弊/1.jpg">
+<meta property="og:image" content="https://www.rousetime.com/2019/01/11/Vue-scoped与module的使用与利弊/2.jpg">
+<meta property="og:image" content="https://www.rousetime.com/2019/01/11/Vue-scoped与module的使用与利弊/3.jpg">
+<meta property="og:image" content="https://www.rousetime.com/2019/01/11/Vue-scoped与module的使用与利弊/4.jpg">
+<meta property="og:image" content="https://www.rousetime.com/2019/01/11/Vue-scoped与module的使用与利弊/1.jpg">
+<meta property="og:image" content="https://www.rousetime.com/2019/01/11/Vue-scoped与module的使用与利弊/5.jpg">
+<meta property="og:image" content="https://www.rousetime.com/2019/01/11/Vue-scoped与module的使用与利弊/1.jpg">
+<meta property="og:image" content="https://www.rousetime.com/2019/01/11/Vue-scoped与module的使用与利弊/2.jpg">
+<meta property="og:image" content="https://www.rousetime.com/2019/01/11/Vue-scoped与module的使用与利弊/6.jpg">
+<meta property="og:image" content="https://www.rousetime.com/2019/01/11/Vue-scoped与module的使用与利弊/7.jpg">
+<meta property="og:image" content="https://www.rousetime.com/2019/01/11/Vue-scoped与module的使用与利弊/1.jpg">
+<meta property="og:image" content="https://www.rousetime.com/2019/01/11/Vue-scoped与module的使用与利弊/8.jpg">
+<meta property="og:image" content="https://www.rousetime.com/2019/01/11/Vue-scoped与module的使用与利弊/9.jpg">
+<meta property="og:image" content="https://www.rousetime.com/2019/01/11/Vue-scoped与module的使用与利弊/wx.jpg">
+<meta property="og:updated_time" content="2019-01-24T08:38:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue:scoped与module的使用与利弊">
+<meta name="twitter:description" content="&amp;#x4E00;&amp;#x4E2A;web&amp;#x5E94;&amp;#x7528;&amp;#x662F;&amp;#x79BB;&amp;#x4E0D;&amp;#x5F00;html&amp;#x3001;css&amp;#x4E0E;js&amp;#xFF0C;&amp;#x5176;&amp;#x4E2D;css&amp;#x5145;&amp;#x65A5;&amp;#x7684;&amp;#x6574;&amp;#x4E2A;web&amp;#x9879;&amp;#x76EE;&amp;#x4E2D;&amp;#x3002;css&amp;#x">
+<meta name="twitter:image" content="https://www.rousetime.com/2019/01/11/Vue-scoped与module的使用与利弊/1.jpg">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Scoped"><span class="toc-text">Scoped</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#特性"><span class="toc-text">特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#深度作用"><span class="toc-text">深度作用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Module"><span class="toc-text">Module</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#公众号"><span class="toc-text">公众号</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Vue-scoped与module的使用与利弊" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Vue:scoped与module的使用与利弊</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.01.11</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/web/">web</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>&#x4E00;&#x4E2A;web&#x5E94;&#x7528;&#x662F;&#x79BB;&#x4E0D;&#x5F00;html&#x3001;css&#x4E0E;js&#xFF0C;&#x5176;&#x4E2D;css&#x5145;&#x65A5;&#x7684;&#x6574;&#x4E2A;web&#x9879;&#x76EE;&#x4E2D;&#x3002;css&#x5B83;&#x6709;&#x4E00;&#x4E2A;&#x7279;&#x5B9A;&#xFF0C;&#x5B83;&#x662F;&#x5168;&#x5C40;&#x7684;&#x3002;&#x8FD9;&#x6837;&#x7684;&#x7279;&#x6027;&#x5BFC;&#x81F4;&#x7684;&#x7ED3;&#x679C;&#x662F;&#xFF0C;&#x4E00;&#x65E6;&#x4F60;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x5730;&#x65B9;&#x5B9A;&#x4E49;&#x4E86;&#x76F8;&#x540C;&#x7684;css&#x547D;&#x540D;&#xFF0C;&#x90A3;&#x4E48;&#x5B83;&#x4EEC;&#x7684;&#x6837;&#x5F0F;&#x5C31;&#x4F1A;&#x76F8;&#x4E92;&#x8986;&#x76D6;&#xFF0C;&#x6700;&#x7EC8;&#x5BFC;&#x81F4;&#x7684;style&#x9519;&#x4E71;&#xFF0C;&#x4ECE;&#x800C;&#x5F71;&#x54CD;&#x6574;&#x4E2A;&#x7F51;&#x9875;&#x5E03;&#x5C40;&#x3002;</p>
+<p>&#x6211;&#x76F8;&#x4FE1;&#x5BF9;&#x4E8E;&#x6BCF;&#x4E00;&#x4E2A;&#x524D;&#x7AEF;&#x5F00;&#x53D1;&#x8005;&#x90FD;&#x9047;&#x5230;&#x8FC7;&#x8FD9;&#x79CD;css&#x6837;&#x5F0F;&#x8986;&#x76D6;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x503C;&#x5F97;&#x5E86;&#x5E78;&#x7684;&#x662F;&#xFF0C;&#x8FD9;&#x4E9B;&#x95EE;&#x9898;&#x524D;&#x8F88;&#x90FD;&#x5DF2;&#x7ECF;&#x7ED9;&#x51FA;&#x4E86;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;</p>
+<p>&#x5728;Vue&#x4E2D;&#x6211;&#x4EEC;&#x901A;&#x8FC7;Scoped&#x4E0E;Module&#x6765;&#x89E3;&#x51B3;&#x3002;&#x4E0B;&#x9762;&#x6211;&#x4F1A;&#x5206;&#x522B;&#x5BF9;scoped&#x4E0E;module&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x8FDB;&#x884C;&#x8BF4;&#x660E;&#xFF0C;&#x6700;&#x540E;&#x5728;&#x5206;&#x6790;&#x5B83;&#x4EEC;&#x7684;&#x5229;&#x5F0A;&#x4E0E;&#x9009;&#x62E9;&#x3002;&#x5982;&#x679C;&#x4F60;&#x8FD8;&#x672A;&#x4F7F;&#x7528;&#x8FC7;&#x6216;&#x8005;&#x8BF4;&#x5BF9;&#x5B83;&#x4EEC;&#x4E4B;&#x95F4;&#x7684;&#x5229;&#x5F0A;&#x4E0E;&#x9009;&#x62E9;&#x5B58;&#x5728;&#x7591;&#x95EE;&#x7684;&#xFF0C;&#x76F8;&#x4FE1;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x80FD;&#x591F;&#x5E2E;&#x4F60;&#x89E3;&#x60D1;&#x3002;</p>
+<h2 id="Scoped"><a href="#Scoped" class="headerlink" title="Scoped"></a>Scoped</h2><p>&#x5047;&#x8BBE;&#x6211;&#x4EEC;&#x6709;&#x5982;&#x4E0B;&#x4E00;&#x6BB5;&#x4EE3;&#x7801;&#xFF1A;</p>
+<p>index.vue</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;content&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;title-wrap&quot;&gt;&#x6211;&#x662F;&#x7EA2;&#x8272;&#x7684;&lt;/div&gt;</span><br><span class="line">    &lt;green-title&gt;&lt;/green-title&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"> </span><br><span class="line">&lt;style lang=&quot;scss&quot;&gt;</span><br><span class="line">.content {</span><br><span class="line">  .title-wrap {</span><br><span class="line">    font-size: 20px;</span><br><span class="line">    color: red;</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<p>GreenTitle.vue</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;content&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;title-wrap&quot;&gt;&#x6211;&#x662F;&#x7EFF;&#x8272;&#x7684;&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"> </span><br><span class="line">&lt;style lang=&quot;scss&quot;&gt;</span><br><span class="line">.content {</span><br><span class="line">  .title-wrap {</span><br><span class="line">    font-size: 20px;</span><br><span class="line">    color: green;</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/11/Vue-scoped&#x4E0E;module&#x7684;&#x4F7F;&#x7528;&#x4E0E;&#x5229;&#x5F0A;/1.jpg" alt></p>
+<p>&#x6700;&#x7EC8;&#x8FD9;&#x5C4F;&#x5E55;&#x4E0A;&#x5C55;&#x793A;&#x7684;&#x662F;&#x4E24;&#x884C;&#x7EA2;&#x8272;&#x7684;&#x6587;&#x5B57;&#xFF0C;&#x8FD9;&#x5C31;&#x662F;&#x7236;&#x7EC4;&#x4EF6;&#x4E0E;&#x5B50;&#x7EC4;&#x4EF6;&#x90FD;&#x5B9A;&#x4E49;&#x4E86;title-wrap&#x7684;&#x6837;&#x5F0F;&#xFF0C;&#x5BFC;&#x81F4;&#x5B50;&#x7EC4;&#x4EF6;&#x7684;&#x6837;&#x5F0F;&#x88AB;&#x7236;&#x7EC4;&#x4EF6;&#x6240;&#x8986;&#x76D6;&#x3002;</p>
+<p>&#x9047;&#x5230;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;style&#x6807;&#x7B7E;&#x4E2D;&#x6DFB;&#x52A0;scoped&#x5C5E;&#x6027;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;style lang=&quot;scss&quot; scoped&gt;</span><br><span class="line">.content {</span><br><span class="line">  .title-wrap {</span><br><span class="line">    font-size: 20px;</span><br><span class="line">    color: red;</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/11/Vue-scoped&#x4E0E;module&#x7684;&#x4F7F;&#x7528;&#x4E0E;&#x5229;&#x5F0A;/2.jpg" alt></p>
+<p>scoped&#x4F5C;&#x7528;&#x7684;&#x963B;&#x6B62;&#x4E0A;&#x5C42;&#x7684;css&#x6837;&#x5F0F;&#x4F20;&#x9012;&#x5230;&#x4E0B;&#x5C42;&#xFF0C;&#x9650;&#x5236;&#x5F53;&#x524D;css&#x4F5C;&#x7528;&#x57DF;&#xFF0C;&#x4F7F;&#x5176;&#x53EA;&#x5BF9;&#x5F53;&#x524D;&#x7EC4;&#x4EF6;&#x751F;&#x6548;&#x3002;</p>
+<p>&#x77E5;&#x9053;&#x4E86;&#x5B83;&#x7684;&#x4F5C;&#x7528;&#xFF0C;&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x5728;&#x5F00;&#x6DF1;&#x5165;&#x770B;&#x4E0B;&#x5B83;&#x7684;&#x5B9E;&#x73B0;&#x3002;</p>
+<p><img src="/2019/01/11/Vue-scoped&#x4E0E;module&#x7684;&#x4F7F;&#x7528;&#x4E0E;&#x5229;&#x5F0A;/3.jpg" alt><br><img src="/2019/01/11/Vue-scoped&#x4E0E;module&#x7684;&#x4F7F;&#x7528;&#x4E0E;&#x5229;&#x5F0A;/4.jpg" alt><br>&#x524D;&#x9762;&#x7684;&#x662F;&#x6CA1;&#x6709;&#x6DFB;&#x52A0;scoped&#x7684;&#x6E90;&#x7801;&#xFF0C;&#x540E;&#x9762;&#x662F;&#x6DFB;&#x52A0;&#x4E86;scoped&#x7684;&#x6E90;&#x7801;&#x3002;&#x6211;&#x4EEC;&#x8FDB;&#x884C;&#x4E00;&#x4E00;&#x5BF9;&#x6BD4;&#xFF0C;&#x53D1;&#x73B0;&#x524D;&#x9762;&#x7684;&#x4E24;&#x4E2A;div&#x6807;&#x7B7E;&#x90FD;&#x4F7F;&#x7528;&#x4E86;title-wrap&#x6837;&#x5F0F;&#xFF0C;&#x81EA;&#x7136;&#x5BFC;&#x81F4;&#x6837;&#x5F0F;&#x8986;&#x76D6;&#xFF1B;&#x800C;&#x540E;&#x9762;&#x7684;&#x4E24;&#x4E2A;div&#x6807;&#x7B7E;&#xFF0C;&#x7B2C;&#x4E00;&#x4E2A;&#x589E;&#x52A0;&#x4E86;data-v-67e6b31f&#x7684;&#x524D;&#x7F00;&#xFF0C;&#x8FD9;&#x5C31;&#x662F;&#x7236;&#x7EC4;&#x7684;style&#x4E2D;&#x589E;&#x52A0;scoped&#x7684;&#x6548;&#x679C;&#xFF0C;&#x533A;&#x522B;&#x4E0E;&#x7B2C;&#x4E8C;&#x4E2A;div&#x4E2D;&#x7684;title-wrap&#x6837;&#x5F0F;&#x3002;</p>
+<p>scoped&#x7684;&#x5B9E;&#x73B0;&#x662F;&#x501F;&#x52A9;&#x4E86;PostCSS&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x4E00;&#x65E6;&#x589E;&#x52A0;&#x4E86;scoped&#xFF0C;&#x4ED6;&#x4F1A;&#x5C06;&#x4E4B;&#x524D;&#x8986;&#x76D6;&#x7684;&#x6837;&#x5F0F;&#x8F6C;&#x6362;&#x6210;&#x4E0B;&#x9762;&#x7684;&#x6837;&#x5F0F;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;style lang=&quot;scss&quot;&gt;</span><br><span class="line">.content[data-v-67e6b31f] {</span><br><span class="line">  .title-wrap[data-v-67e6b31f] {</span><br><span class="line">    font-size: 20px;</span><br><span class="line">    color: red;</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<p>&#x901A;&#x8FC7;&#x8FD9;&#x79CD;&#x8F6C;&#x6362;&#x65B9;&#x5F0F;&#xFF0C;&#x95F4;&#x63A5;&#x7684;&#x6539;&#x53D8;&#x4E86;&#x539F;&#x6709;&#x7684;css&#x547D;&#x540D;&#x3002;&#x9632;&#x6B62;&#x4E0A;&#x5C42;&#x7EC4;&#x4EF6;&#x6837;&#x5F0F;&#x8986;&#x76D6;&#x4E0B;&#x5C42;&#x7EC4;&#x4EF6;&#x6837;&#x5F0F;&#x3002;</p>
+<h3 id="&#x7279;&#x6027;"><a href="#&#x7279;&#x6027;" class="headerlink" title="&#x7279;&#x6027;"></a>&#x7279;&#x6027;</h3><p>&#x7EC6;&#x5FC3;&#x7684;&#x8BFB;&#x8005;&#x53EF;&#x80FD;&#x4F1A;&#x53D1;&#x73B0;&#x4E0A;&#x9762;&#x7684;&#x540E;&#x4E00;&#x5F20;&#x6E90;&#x7801;&#x56FE;&#x4E2D;&#x7B2C;&#x4E8C;&#x4E2A;div&#x7684;content&#x4E2D;&#x4E5F;&#x6709;data-v-67e6b31f&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x7591;&#x95EE;&#xFF0C;&#x7B2C;&#x4E8C;&#x4E2A;content&#x4E0D;&#x662F;&#x5B50;&#x7EC4;&#x4EF6;&#x4E2D;&#x7684;css&#x5417;&#xFF1F;&#x5B50;&#x7EC4;&#x4EF6;&#x4E2D;&#x672A;&#x6DFB;&#x52A0;scoped&#xFF0C;&#x4E3A;&#x4EC0;&#x4E48;&#x8FD8;&#x4F1A;&#x6DFB;&#x52A0;data-v-67e6b31f&#x524D;&#x7F00;&#xFF1F;</p>
+<p>&#x8FD9;&#x662F;scoped&#x7684;&#x4E00;&#x4E2A;&#x7279;&#x6027;&#xFF0C;&#x4F7F;&#x7528; scoped &#x540E;&#xFF0C;&#x7236;&#x7EC4;&#x4EF6;&#x7684;&#x6837;&#x5F0F;&#x5C06;&#x4E0D;&#x4F1A;&#x6E17;&#x900F;&#x5230;&#x5B50;&#x7EC4;&#x4EF6;&#x4E2D;&#x3002;&#x4E0D;&#x8FC7;&#x4E00;&#x4E2A;&#x5B50;&#x7EC4;&#x4EF6;&#x7684;&#x6839;&#x8282;&#x70B9;&#x4F1A;&#x540C;&#x65F6;&#x53D7;&#x5176;&#x7236;&#x7EC4;&#x4EF6;&#x6709;&#x4F5C;&#x7528;&#x57DF;&#x7684; CSS &#x548C;&#x5B50;&#x7EC4;&#x4EF6;&#x6709;&#x4F5C;&#x7528;&#x57DF;&#x7684; CSS &#x7684;&#x5F71;&#x54CD;&#x3002;&#x8FD9;&#x6837;&#x8BBE;&#x8BA1;&#x662F;&#x4E3A;&#x4E86;&#x8BA9;&#x7236;&#x7EC4;&#x4EF6;&#x53EF;&#x4EE5;&#x4ECE;&#x5E03;&#x5C40;&#x7684;&#x89D2;&#x5EA6;&#x51FA;&#x53D1;&#xFF0C;&#x8C03;&#x6574;&#x5176;&#x5B50;&#x7EC4;&#x4EF6;&#x6839;&#x5143;&#x7D20;&#x7684;&#x6837;&#x5F0F;&#x3002;</p>
+<p>&#x6240;&#x4EE5;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x5C06;&#x5B50;&#x7EC4;&#x4EF6;&#x505A;&#x5982;&#x4E0B;&#x4FEE;&#x6539;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;!-- &lt;div class=&quot;content&quot;&gt; --&gt;</span><br><span class="line">    &lt;div class=&quot;title-wrap&quot;&gt;&#x6211;&#x662F;&#x7EFF;&#x8272;&#x7684;&lt;/div&gt;</span><br><span class="line">  &lt;!-- &lt;/div&gt; --&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/11/Vue-scoped&#x4E0E;module&#x7684;&#x4F7F;&#x7528;&#x4E0E;&#x5229;&#x5F0A;/1.jpg" alt><br><img src="/2019/01/11/Vue-scoped&#x4E0E;module&#x7684;&#x4F7F;&#x7528;&#x4E0E;&#x5229;&#x5F0A;/5.jpg" alt><br>&#x7531;&#x4E8E;&#x7236;&#x7EC4;&#x4EF6;scoped&#x7279;&#x6027;&#xFF0C;&#x6240;&#x4EE5;&#x4F1A;&#x5F71;&#x54CD;&#x5230;&#x5B50;&#x7EC4;&#x4EF6;&#x7684;title-wrap&#xFF0C;&#x4E5F;&#x4F1A;&#x6DFB;&#x52A0;data-v-67e6b31f&#x524D;&#x7F00;</p>
+<p>&#x90A3;&#x4E48;&#x53C8;&#x6709;&#x4E2A;&#x7591;&#x95EE;&#xFF0C;&#x589E;&#x52A0;&#x4E86;scoped&#x662F;&#x5426;&#x5C31;&#x4E00;&#x5B9A;&#x4E0D;&#x80FD;&#x4F20;&#x9012;&#x7684;&#x4E0B;&#x5C42;&#x7EC4;&#x4EF6;&#x5462;&#xFF1F;&#x6BD5;&#x7ADF;&#x6211;&#x4EEC;&#x53EF;&#x80FD;&#x6709;&#x9700;&#x8981;&#x4E2A;&#x522B;&#x6837;&#x5F0F;&#x4F20;&#x9012;&#x5230;&#x4E0B;&#x5C42;&#x7684;&#x9700;&#x6C42;&#x3002;&#x522B;&#x6025;&#xFF0C;&#x63A5;&#x7740;&#x770B;&#xFF0C;&#x8FD9;&#x4E2A;&#x4E5F;&#x80FD;&#x5F88;&#x65B9;&#x4FBF;&#x7684;&#x89E3;&#x51B3;&#x3002;</p>
+<h3 id="&#x6DF1;&#x5EA6;&#x4F5C;&#x7528;"><a href="#&#x6DF1;&#x5EA6;&#x4F5C;&#x7528;" class="headerlink" title="&#x6DF1;&#x5EA6;&#x4F5C;&#x7528;"></a>&#x6DF1;&#x5EA6;&#x4F5C;&#x7528;</h3><p>&#x5982;&#x679C;&#x4F60;&#x5E0C;&#x671B;scoped&#x4E2D;&#x7684;&#x67D0;&#x4E2A;&#x6837;&#x5F0F;&#x80FD;&#x591F;&#x4F5C;&#x7528;&#x7684;&#x66F4;&#x6DF1;&#xFF0C;&#x5F71;&#x54CD;&#x5230;&#x5B50;&#x7EC4;&#x4EF6;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>&gt;&gt;&gt;</code>&#x64CD;&#x4F5C;&#x7B26;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;style scoped&gt;</span><br><span class="line">.content &gt;&gt;&gt; .title-wrap {</span><br><span class="line">    font-size: 20px;</span><br><span class="line">    color: red;</span><br><span class="line">}</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<p>&#x6CE8;&#x610F;&#x770B;&#x6211;&#x5C06;style&#x4E2D;&#x7684;lang=&#x201D;scss&#x201D;&#x53BB;&#x6389;&#x4E86;&#xFF0C;&#x56E0;&#x4E3A;&#x52A0;&#x4E86;&#x9884;&#x5904;&#x7406;&#x5668;&#x540E;&#x65E0;&#x6CD5;&#x6B63;&#x786E;&#x89E3;&#x6790;<code>&gt;&gt;&gt;</code>&#xFF0C;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;/deep/&#x4EE3;&#x66FF;&#xFF0C;&#x672C;&#x8D28;&#x662F;<code>&gt;&gt;&gt;</code>&#x7684;&#x522B;&#x540D;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;style lang=&quot;scss&quot; scoped&gt;</span><br><span class="line">.content {</span><br><span class="line">  /deep/ {</span><br><span class="line">    .title-wrap {</span><br><span class="line">      font-size: 20px;</span><br><span class="line">      color: red;</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<p>&#x5C06;&#x4F1A;&#x7F16;&#x8BD1;&#x6210;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.content[data-v-67e6b31f] .title-wrap {</span><br><span class="line">    font-size: 20px;</span><br><span class="line">    color: red;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/11/Vue-scoped&#x4E0E;module&#x7684;&#x4F7F;&#x7528;&#x4E0E;&#x5229;&#x5F0A;/1.jpg" alt></p>
+<blockquote>
+<p>&#x901A;&#x8FC7; v-html &#x521B;&#x5EFA;&#x7684; DOM &#x5185;&#x5BB9;&#x4E0D;&#x53D7;&#x4F5C;&#x7528;&#x57DF;&#x5185;&#x7684;&#x6837;&#x5F0F;&#x5F71;&#x54CD;&#xFF0C;&#x4F46;&#x662F;&#x4F60;&#x4ECD;&#x7136;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6DF1;&#x5EA6;&#x4F5C;&#x7528;&#x9009;&#x62E9;&#x5668;&#x6765;&#x4E3A;&#x4ED6;&#x4EEC;&#x8BBE;&#x7F6E;&#x6837;&#x5F0F;</p>
+</blockquote>
+<h2 id="Module"><a href="#Module" class="headerlink" title="Module"></a>Module</h2><p>&#x9488;&#x5BF9;&#x4E0A;&#x9762;&#x7684;&#x8986;&#x76D6;&#x95EE;&#x9898;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;module&#x6765;&#x89E3;&#x51B3;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div :class=&quot;$style.content&quot;&gt;</span><br><span class="line">    &lt;div :class=&quot;$style[&apos;title-wrap&apos;]&quot;&gt;&#x6211;&#x662F;&#x7EA2;&#x8272;&#x7684;&lt;/div&gt;</span><br><span class="line">    &lt;green-title&gt;&lt;/green-title&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"> </span><br><span class="line">&lt;style lang=&quot;scss&quot; module&gt;</span><br><span class="line">.content {</span><br><span class="line">  .title-wrap {</span><br><span class="line">    font-size: 20px;</span><br><span class="line">    color: red;</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/11/Vue-scoped&#x4E0E;module&#x7684;&#x4F7F;&#x7528;&#x4E0E;&#x5229;&#x5F0A;/2.jpg" alt></p>
+<p>module&#x7684;&#x7528;&#x6CD5;&#x4E5F;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x53EA;&#x8981;&#x5728;style&#x4E2D;&#x589E;&#x52A0;<code>module</code>&#x5C5E;&#x6027;&#x5373;&#x53EF;&#x3002;&#x4E0D;&#x540C;&#x4E4B;&#x5904;&#x662F;&#x5B83;&#x5728;&#x5E03;&#x5C40;&#x4E2D;&#x7684;&#x5F15;&#x7528;&#xFF0C;&#x90FD;&#x9700;&#x8981;&#x6DFB;&#x52A0;&#x524D;&#x7F00;<code>$style</code>&#x3002;&#x56E0;&#x4E3A;&#x901A;&#x8FC7;module&#x4F5C;&#x7528;&#x7684;style&#x90FD;&#x88AB;&#x4FDD;&#x5B58;&#x5230;<code>$style</code>&#x5BF9;&#x8C61;&#x4E2D;&#x3002;&#x6211;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;console&#x67E5;&#x770B;&#x5B83;&#x7684;&#x5177;&#x4F53;&#x5F15;&#x7528;&#x540D;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mounted() {</span><br><span class="line">  console.log(this.$style)</span><br><span class="line">  console.log(this.$style[&apos;title-wrap&apos;])</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/11/Vue-scoped&#x4E0E;module&#x7684;&#x4F7F;&#x7528;&#x4E0E;&#x5229;&#x5F0A;/6.jpg" alt></p>
+<p>&#x901A;&#x8FC7;&#x89C2;&#x5BDF;&#xFF0C;&#x53D1;&#x73B0;&#x5F15;&#x7528;&#x540D;&#x6709;&#x4E00;&#x5B9A;&#x7684;&#x89C4;&#x5F8B;&#x3002;&#x90FD;&#x662F;&#x5DF2;index&#x5F00;&#x5934;&#xFF0C;&#x540E;&#x9762;&#x518D;&#x63A5;&#x7740;style&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x547D;&#x540D;&#xFF0C;&#x6700;&#x540E;&#x518D;&#x63A5;&#x4E2A;&#x540E;&#x7F00;&#x3002;&#x8FD9;&#x91CC;&#x7684;index&#x662F;&#x7236;&#x7EC4;&#x4EF6;&#x7684;&#x6587;&#x4EF6;&#x540D;index.vue&#x3002;&#x6240;&#x4EE5;&#x901A;&#x8FC7;module&#x4F5C;&#x7528;&#x7684;style&#x5C06;&#x4F1A;&#x91CD;&#x65B0;&#x547D;&#x540D;&#x4E3A;&#xFF1A;&#x6587;&#x4EF6;&#x540D;<em>&#x539F;style&#x540D;</em>&#x4E0D;&#x5B9A;&#x540E;&#x7F00;&#x3002;</p>
+<p>&#x8FD9;&#x4E48;&#x547D;&#x540D;&#x53C8;&#x6709;&#x4EC0;&#x4E48;&#x597D;&#x5904;&#x5462;&#xFF1F;&#x6211;&#x4EEC;&#x518D;&#x6765;&#x770B;&#x4E0B;&#x5C55;&#x793A;&#x7684;&#x6548;&#x679C;</p>
+<p><img src="/2019/01/11/Vue-scoped&#x4E0E;module&#x7684;&#x4F7F;&#x7528;&#x4E0E;&#x5229;&#x5F0A;/7.jpg" alt></p>
+<p>&#x5F53;&#x6211;&#x4EEC;&#x5728;&#x6D4F;&#x89C8;&#x7684;&#x63A7;&#x5236;&#x53F0;&#x67E5;&#x770B;Elements&#x65F6;&#xFF0C;&#x4F18;&#x70B9;&#x663E;&#x800C;&#x6613;&#x89C1;&#x3002;&#x76F8;&#x5BF9;&#x4E8E;scoped&#x7684;&#x65B9;&#x5F0F;&#xFF0C;module&#x7684;&#x65B9;&#x5F0F;&#x80FD;&#x591F;&#x4E00;&#x773C;&#x77E5;&#x9053;&#x8BE5;&#x5143;&#x7D20;&#x65F6;&#x5C5E;&#x4E8E;&#x54EA;&#x4E2A;&#x6587;&#x4EF6;&#x7EC4;&#x4EF6;&#x4E2D;&#x3002;&#x5728;&#x5927;&#x578B;&#x9879;&#x76EE;&#x4E2D;&#x80FD;&#x591F;&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x8FC5;&#x901F;&#x5B9A;&#x4F4D;&#x5230;&#x8981;&#x67E5;&#x627E;&#x7684;&#x7EC4;&#x4EF6;&#x3002;</p>
+<p>&#x9664;&#x4E86;&#x4E0A;&#x8FF0;&#x7684;&#x5FEB;&#x901F;&#x5B9A;&#x4F4D;&#xFF0C;&#x7531;&#x4E8E;module&#x4F1A;&#x5C06;&#x6240;&#x6709;&#x7684;style&#x90FD;&#x5F52;&#x5165;<code>$style</code>&#x4E2D;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5F88;&#x7075;&#x6D3B;&#x7684;&#x5C06;&#x4EFB;&#x610F;&#x7684;&#x7236;&#x7EC4;&#x4EF6;&#x6837;&#x5F0F;&#x4F20;&#x9012;&#x5230;&#x4EFB;&#x610F;&#x6DF1;&#x5C42;&#x7684;&#x5B50;&#x7EC4;&#x4EF6;&#x4E2D;&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x5C06;&#x7236;&#x7EC4;&#x4EF6;&#x4E2D;&#x7684;<code>title-wrap</code>&#x901A;&#x8FC7;props&#x4F20;&#x9012;&#x5230;&#x5B50;&#x7EC4;&#x4EF6;&#x4E2D;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div :class=&quot;$style.content&quot;&gt;</span><br><span class="line">    &lt;div :class=&quot;$style[&apos;title-wrap&apos;]&quot;&gt;&#x6211;&#x662F;&#x7EA2;&#x8272;&#x7684;&lt;/div&gt;</span><br><span class="line">    &lt;green-title :styleTitle=&quot;$style[&apos;title-wrap&apos;]&quot;&gt;&lt;/green-title&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;content&quot;&gt;</span><br><span class="line">    &lt;div :class=&quot;styleTitle&quot;&gt;&#x6211;&#x662F;&#x7EFF;&#x8272;&#x7684;&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line"> </span><br><span class="line">export default {</span><br><span class="line">  props: {</span><br><span class="line">    styleTitle: String,</span><br><span class="line">  },</span><br><span class="line">}</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/11/Vue-scoped&#x4E0E;module&#x7684;&#x4F7F;&#x7528;&#x4E0E;&#x5229;&#x5F0A;/1.jpg" alt><br><img src="/2019/01/11/Vue-scoped&#x4E0E;module&#x7684;&#x4F7F;&#x7528;&#x4E0E;&#x5229;&#x5F0A;/8.jpg" alt></p>
+<p>module&#x8FD8;&#x6709;&#x4E00;&#x4E2A;&#x7279;&#x6027;&#x975E;&#x5E38;&#x4E0D;&#x9519;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x5BFC;&#x51FA;&#x5B9A;&#x4E49;&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x5C06;&#x53D8;&#x91CF;&#x5F52;&#x5165;<code>$style</code>&#x4E2D;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div :class=&quot;$style.content&quot;&gt;</span><br><span class="line">    &lt;div :class=&quot;$style[&apos;title-wrap&apos;]&quot;&gt;&#x6211;&#x662F;&#x7EA2;&#x8272;&#x7684;&lt;/div&gt;</span><br><span class="line">    &lt;green-title :styleTitle=&quot;$style[&apos;title-wrap&apos;]&quot;&gt;&lt;/green-title&gt;</span><br><span class="line">    &lt;div&gt;{{$style.titleColor}}&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"> </span><br><span class="line">&lt;style lang=&quot;scss&quot; module&gt;</span><br><span class="line">$title-color: red;</span><br><span class="line">:export {</span><br><span class="line">  titleColor: $title-color</span><br><span class="line">}</span><br><span class="line">.content {</span><br><span class="line">  .title-wrap {</span><br><span class="line">    font-size: 20px;</span><br><span class="line">    color: $title-color;</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/11/Vue-scoped&#x4E0E;module&#x7684;&#x4F7F;&#x7528;&#x4E0E;&#x5229;&#x5F0A;/9.jpg" alt></p>
+<blockquote>
+<p>&#x66F4;&#x591A;module&#x76F8;&#x5173;&#x64CD;&#x4F5C;&#x53EF;&#x4EE5;<a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Fcss-modules%2Fcss-modules" target="_blank" rel="noopener">&#x70B9;&#x51FB;&#x67E5;&#x770B;</a></p>
+</blockquote>
+<h2 id="&#x603B;&#x7ED3;"><a href="#&#x603B;&#x7ED3;" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</h2><p>scoped&#x4E0E;module&#x90FD;&#x975E;&#x5E38;&#x7B80;&#x5355;&#x3001;&#x6613;&#x7528;&#xFF0C;&#x90A3;&#x4E48;&#x53C8;&#x8BE5;&#x5982;&#x4F55;&#x9009;&#x62E9;&#x5462;&#xFF1F;</p>
+<p>&#x901A;&#x8FC7;&#x4E0A;&#x9762;&#x7684;&#x4F7F;&#x7528;&#x5BF9;&#x6BD4;&#xFF0C;&#x53D1;&#x73B0;scoped&#x4E0D;&#x9700;&#x8981;&#x989D;&#x5916;&#x7684;&#x77E5;&#x8BC6;&#xFF0C;&#x53EA;&#x8981;&#x5728;style&#x4E2D;&#x5B9A;&#x4E49;scoped&#x5C5E;&#x6027;&#x5373;&#x53EF;&#xFF0C;&#x4F7F;&#x7528;&#x975E;&#x5E38;&#x7B80;&#x4FBF;&#x3002;&#x4F46;&#x5B83;&#x7684;&#x5C40;&#x9650;&#x6027;&#x662F;&#x9002;&#x7528;&#x4E8E;&#x4E2D;&#x5C0F;&#x9879;&#x76EE;&#x4E2D;&#x3002;&#x56E0;&#x4E3A;scoped&#x4F5C;&#x7528;&#x7684;style&#x5BF9;&#x4E8E;&#x6211;&#x4EEC;&#x6765;&#x8BF4;&#x4E0D;&#x76F4;&#x89C2;&#xFF0C;&#x5BF9;&#x4E8E;&#x5FEB;&#x901F;&#x67E5;&#x627E;&#x5B9A;&#x4F4D;&#xFF0C;module&#x66F4;&#x52A0;&#x5408;&#x9002;&#xFF0C;&#x540C;&#x65F6;module&#x5BF9;&#x4E8E;style&#x5411;&#x4E0B;&#x4F20;&#x9012;&#x7684;&#x63A7;&#x5236;&#x6743;&#x4E5F;&#x975E;&#x5E38;&#x7075;&#x6D3B;&#xFF1B;&#x989D;&#x5916;&#x7684;&#x8FD8;&#x6709;&#x53D8;&#x91CF;&#x5BFC;&#x51FA;&#x7B49;&#x4FBF;&#x6377;&#x529F;&#x80FD;&#x3002;</p>
+<p>&#x6240;&#x4EE5;&#x5982;&#x679C;&#x4F60;&#x662F;&#x5C0F;&#x9879;&#x76EE;&#x4E2D;&#x4E14;&#x4F4E;&#x6210;&#x672C;&#x7684;&#x4F7F;&#x7528;&#xFF0C;scoped&#x66F4;&#x52A0;&#x9002;&#x5408;&#xFF1B;&#x800C;&#x5BF9;&#x5927;&#x9879;&#x76EE;module&#x66F4;&#x52A0;&#x5408;&#x9002;&#xFF0C;&#x867D;&#x7136;&#x6709;&#x4E00;&#x70B9;&#x5B66;&#x4E60;&#x6210;&#x672C;&#xFF0C;&#x4F46;&#x5BF9;&#x4E8E;&#x7528;&#x66F4;&#x597D;&#x7684;&#x63A7;&#x5236;&#x6743;&#x3001;&#x53EF;&#x89C2;&#x6027;&#x4E0E;&#x5B9A;&#x4F4D;&#x901F;&#x5EA6;&#x6765;&#x8BF4;&#x4E5F;&#x5C31;&#x4E0D;&#x503C;&#x4E00;&#x63D0;&#x3002;</p>
+<h2 id="&#x516C;&#x4F17;&#x53F7;"><a href="#&#x516C;&#x4F17;&#x53F7;" class="headerlink" title="&#x516C;&#x4F17;&#x53F7;"></a>&#x516C;&#x4F17;&#x53F7;</h2><p>&#x611F;&#x89C9;&#x4E0D;&#x9519;&#x7684;&#x53EF;&#x4EE5;&#x6765;&#x4E00;&#x6CE2;&#x5173;&#x6CE8;&#xFF0C;&#x626B;&#x63CF;&#x4E0B;&#x65B9;&#x4E8C;&#x7EF4;&#x7801;&#xFF0C;&#x5173;&#x6CE8;&#x516C;&#x4F17;&#x53F7;:<code>&#x602A;&#x8C08;&#x65F6;&#x95F4;</code>&#xFF0C;&#x53CA;&#x65F6;&#x83B7;&#x53D6;&#x6700;&#x65B0;&#x77E5;&#x8BC6;&#x6280;&#x5DE7;&#x4E0E;&#x4E92;&#x8054;&#x7F51;&#x65B0;&#x52A8;&#x6001;&#x3002;</p>
+<p><img src="/2019/01/11/Vue-scoped&#x4E0E;module&#x7684;&#x4F7F;&#x7528;&#x4E0E;&#x5229;&#x5F0A;/wx.jpg" alt></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/01/06/vps携手hexo的博客搭建之旅/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/05/05/Android-Gradle系列-入门篇/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Fri Jan 11 2019 08:32:34 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

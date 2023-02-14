@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Android init 启动 | Rouse</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="启动,">
+  
+
+  <meta name="description" content="Android&amp;#x662F;&amp;#x57FA;&amp;#x4E8E;Linux&amp;#x7CFB;&amp;#x7EDF;&amp;#x7684;&amp;#xFF0C;&amp;#x6240;&amp;#x4EE5;Android&amp;#x542F;&amp;#x52A8;&amp;#x5C06;&amp;#x7531;Linux Kernel&amp;#x542F;&amp;#x52A8;&amp;#x5E76;&amp;#x521B;&amp;#x5EFA;init&amp;#x8FDB;&amp;#x7A0B;&amp;#x30">
+<meta name="keywords" content="启动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android init 启动">
+<meta property="og:url" content="https://www.rousetime.com/2020/12/08/Android-init-启动/index.html">
+<meta property="og:site_name" content="Rouse">
+<meta property="og:description" content="Android&amp;#x662F;&amp;#x57FA;&amp;#x4E8E;Linux&amp;#x7CFB;&amp;#x7EDF;&amp;#x7684;&amp;#xFF0C;&amp;#x6240;&amp;#x4EE5;Android&amp;#x542F;&amp;#x52A8;&amp;#x5C06;&amp;#x7531;Linux Kernel&amp;#x542F;&amp;#x52A8;&amp;#x5E76;&amp;#x521B;&amp;#x5EFA;init&amp;#x8FDB;&amp;#x7A0B;&amp;#x30">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2022-11-30T13:56:41.182Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android init 启动">
+<meta name="twitter:description" content="Android&amp;#x662F;&amp;#x57FA;&amp;#x4E8E;Linux&amp;#x7CFB;&amp;#x7EDF;&amp;#x7684;&amp;#xFF0C;&amp;#x6240;&amp;#x4EE5;Android&amp;#x542F;&amp;#x52A8;&amp;#x5C06;&amp;#x7531;Linux Kernel&amp;#x542F;&amp;#x52A8;&amp;#x5E76;&amp;#x521B;&amp;#x5EFA;init&amp;#x8FDB;&amp;#x7A0B;&amp;#x30">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?bd7ea96a22c9c7b90353962460fa0b8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#init"><span class="toc-text">init</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#main"><span class="toc-text">main</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#FirstStageMain"><span class="toc-text">FirstStageMain</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SetupSelinux"><span class="toc-text">SetupSelinux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SecondStageMain"><span class="toc-text">SecondStageMain</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初始化属性服务"><span class="toc-text">初始化属性服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初始化single句柄"><span class="toc-text">初始化single句柄</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开启属性服务"><span class="toc-text">开启属性服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解析-rc文件"><span class="toc-text">解析.rc文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目"><span class="toc-text">项目</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Android-init-启动" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Android init 启动</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2020.12.08</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Rouse</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>Android&#x662F;&#x57FA;&#x4E8E;Linux&#x7CFB;&#x7EDF;&#x7684;&#xFF0C;&#x6240;&#x4EE5;Android&#x542F;&#x52A8;&#x5C06;&#x7531;Linux Kernel&#x542F;&#x52A8;&#x5E76;&#x521B;&#x5EFA;init&#x8FDB;&#x7A0B;&#x3002;&#x8BE5;&#x8FDB;&#x7A0B;&#x662F;&#x6240;&#x6709;&#x7528;&#x6237;&#x7A7A;&#x95F4;&#x7684;&#x9F3B;&#x7956;&#x3002;</p>
+<p>&#x5728;init&#x8FDB;&#x7A0B;&#x542F;&#x52A8;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x4F1A;&#x76F8;&#x7EE7;&#x542F;&#x52A8;servicemanager(binder&#x670D;&#x52A1;&#x7BA1;&#x7406;&#x8005;)&#x3001;Zygote&#x8FDB;&#x7A0B;(java&#x8FDB;&#x7A0B;)&#x3002;&#x800C;Zygote&#x53C8;&#x4F1A;&#x521B;&#x5EFA;system_server&#x8FDB;&#x7A0B;&#x4EE5;&#x53CA;app&#x8FDB;&#x7A0B;&#x3002;</p>
+<p>&#x6240;&#x4EE5;&#x4F60;&#x4E00;&#x5B9A;&#x542C;&#x5230;&#x8FC7;&#x8FD9;&#x53E5;&#x8BDD;&#xFF1A;app&#x8FDB;&#x7A0B;&#x662F;&#x7531;Zygote&#x8FDB;&#x7A0B;&#x901A;&#x8FC7;fork&#x521B;&#x5EFA;&#x51FA;&#x6765;&#x7684;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x6211;&#x5C1D;&#x8BD5;&#x6765;&#x5206;&#x6790;Android&#x542F;&#x52A8;&#x8FC7;&#x7A0B;&#x4E2D;&#x5173;&#x4E8E;init&#x8FDB;&#x7A0B;&#x7684;&#x521B;&#x5EFA;&#x8FC7;&#x7A0B;&#x3002;</p>
+<blockquote>
+<p>&#x6B64;&#x6B21;&#x5206;&#x6790;&#x8FC7;&#x7A0B;&#x57FA;&#x4E8E;Android 10.0</p>
+</blockquote>
+<h2 id="init"><a href="#init" class="headerlink" title="init"></a>init</h2><p>init&#x8FDB;&#x7A0B;&#x662F;Android&#x542F;&#x52A8;&#x8FC7;&#x7A0B;&#x4E2D;&#x5728;Linux&#x7CFB;&#x7EDF;&#x4E2D;&#x7528;&#x6237;&#x7A7A;&#x95F4;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x3002;init&#x542F;&#x52A8;&#x5165;&#x53E3;&#x662F;&#x5728;&#x5B83;&#x7684;SecondStageMain&#x65B9;&#x6CD5;&#x4E2D;&#x3002;&#x4F46;&#x8C03;&#x7528;init&#x7684;SecondStageMain&#x65B9;&#x6CD5;&#x662F;&#x901A;&#x8FC7;main.cpp&#x4E2D;&#x7684;main&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x7684;&#x3002;</p>
+<p>&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x5C31;&#x4ECE;main.cpp&#x7684;main&#x65B9;&#x6CD5;&#x5F00;&#x59CB;&#x3002;</p>
+<h2 id="main"><a href="#main" class="headerlink" title="main"></a>main</h2><blockquote>
+<p>system/core/init/main.cpp</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, char** argv) {</span><br><span class="line">#if __has_feature(address_sanitizer)</span><br><span class="line">    __asan_set_error_report_callback(AsanReportCallback);</span><br><span class="line">#endif</span><br><span class="line">  </span><br><span class="line">    // &#x521B;&#x5EFA;&#x8BBE;&#x5907;&#x8282;&#x70B9;&#x3001;&#x6743;&#x9650;&#x8BBE;&#x5B9A;&#x7B49;</span><br><span class="line">    if (!strcmp(basename(argv[0]), &quot;ueventd&quot;)) {</span><br><span class="line">        return ueventd_main(argc, argv);</span><br><span class="line">    }</span><br><span class="line">  </span><br><span class="line">    if (argc &gt; 1) {</span><br><span class="line">        // &#x521D;&#x59CB;&#x5316;&#x65E5;&#x5FD7;&#x7CFB;&#x7EDF;</span><br><span class="line">        if (!strcmp(argv[1], &quot;subcontext&quot;)) {</span><br><span class="line">            android::base::InitLogging(argv, &amp;android::base::KernelLogger);</span><br><span class="line">            const BuiltinFunctionMap function_map;</span><br><span class="line">            return SubcontextMain(argc, argv, &amp;function_map);</span><br><span class="line">        }</span><br><span class="line"> </span><br><span class="line">        // 2. &#x521B;&#x5EFA;&#x589E;&#x5F3A;&#x578B;Linux</span><br><span class="line">        if (!strcmp(argv[1], &quot;selinux_setup&quot;)) {</span><br><span class="line">            return SetupSelinux(argv);</span><br><span class="line">        }</span><br><span class="line"> </span><br><span class="line">        // 3. &#x89E3;&#x6790;init.rc&#x6587;&#x4EF6;&#x3001;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#x3001;&#x521B;&#x5EFA;epoll&#x4E0E;&#x5904;&#x7406;&#x5B50;&#x8FDB;&#x7A0B;&#x7684;&#x7EC8;&#x6B62;&#x7B49;</span><br><span class="line">        if (!strcmp(argv[1], &quot;second_stage&quot;)) {</span><br><span class="line">            return SecondStageMain(argc, argv);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    // 1. &#x6302;&#x8F7D;&#x76F8;&#x5173;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;</span><br><span class="line">    return FirstStageMain(argc, argv);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;main.cpp&#x7684;main&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x4E3B;&#x8981;&#x5206;&#x4E3A;&#x4E09;&#x6B65;&#xFF1A;</p>
+<ol>
+<li>FirstStageMain</li>
+<li>SetupSelinux</li>
+<li>SecondStageMain</li>
+</ol>
+<h3 id="FirstStageMain"><a href="#FirstStageMain" class="headerlink" title="FirstStageMain"></a>FirstStageMain</h3><blockquote>
+<p>system/core/init/first_stage_init.cpp</p>
+</blockquote>
+<p>&#x5B83;&#x662F;init&#x8FDB;&#x7A0B;&#x542F;&#x52A8;&#x7684;&#x7B2C;&#x4E00;&#x6B65;&#xFF0C;&#x4E3B;&#x8981;&#x4EFB;&#x52A1;&#x662F;&#x6302;&#x8F7D;&#x76F8;&#x5173;&#x7684;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">int FirstStageMain(int argc, char** argv) {</span><br><span class="line">    if (REBOOT_BOOTLOADER_ON_PANIC) {</span><br><span class="line">        InstallRebootSignalHandlers();</span><br><span class="line">    }</span><br><span class="line">  </span><br><span class="line">    boot_clock::time_point start_time = boot_clock::now();</span><br><span class="line">  </span><br><span class="line">    std::vector&lt;std::pair&lt;std::string, int&gt;&gt; errors;</span><br><span class="line">#define CHECKCALL(x) \</span><br><span class="line">    if (x != 0) errors.emplace_back(#x &quot; failed&quot;, errno);</span><br><span class="line">  </span><br><span class="line">    // Clear the umask.</span><br><span class="line">    umask(0);</span><br><span class="line">  </span><br><span class="line">    // &#x521B;&#x5EFA;&#x4E8E;&#x6302;&#x8F7D;&#x76F8;&#x5173;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;</span><br><span class="line">    CHECKCALL(clearenv());</span><br><span class="line">    CHECKCALL(setenv(&quot;PATH&quot;, _PATH_DEFPATH, 1));</span><br><span class="line">    // Get the basic filesystem setup we need put together in the initramdisk</span><br><span class="line">    // on / and then we&apos;ll let the rc file figure out the rest.</span><br><span class="line">    CHECKCALL(mount(&quot;tmpfs&quot;, &quot;/dev&quot;, &quot;tmpfs&quot;, MS_NOSUID, &quot;mode=0755&quot;));</span><br><span class="line">    CHECKCALL(mkdir(&quot;/dev/pts&quot;, 0755));</span><br><span class="line">    CHECKCALL(mkdir(&quot;/dev/socket&quot;, 0755));</span><br><span class="line">    CHECKCALL(mount(&quot;devpts&quot;, &quot;/dev/pts&quot;, &quot;devpts&quot;, 0, NULL));</span><br><span class="line">#define MAKE_STR(x) __STRING(x)</span><br><span class="line">    CHECKCALL(mount(&quot;proc&quot;, &quot;/proc&quot;, &quot;proc&quot;, 0, &quot;hidepid=2,gid=&quot; MAKE_STR(AID_READPROC)));</span><br><span class="line">#undef MAKE_STR</span><br><span class="line">    // Don&apos;t expose the raw commandline to unprivileged processes.</span><br><span class="line">    CHECKCALL(chmod(&quot;/proc/cmdline&quot;, 0440));</span><br><span class="line">    gid_t groups[] = {AID_READPROC};</span><br><span class="line">    CHECKCALL(setgroups(arraysize(groups), groups));</span><br><span class="line">    CHECKCALL(mount(&quot;sysfs&quot;, &quot;/sys&quot;, &quot;sysfs&quot;, 0, NULL));</span><br><span class="line">    CHECKCALL(mount(&quot;selinuxfs&quot;, &quot;/sys/fs/selinux&quot;, &quot;selinuxfs&quot;, 0, NULL));</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">    // Now that tmpfs is mounted on /dev and we have /dev/kmsg, we can actually</span><br><span class="line">    // talk to the outside world...</span><br><span class="line">     </span><br><span class="line">    // &#x521D;&#x59CB;&#x5316;&#x65E5;&#x5FD7;&#x7CFB;&#x7EDF;</span><br><span class="line">    InitKernelLogging(argv);</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">     </span><br><span class="line">    // &#x8FDB;&#x5165;&#x4E0B;&#x4E00;&#x6B65;</span><br><span class="line">    const char* path = &quot;/system/bin/init&quot;;</span><br><span class="line">    const char* args[] = {path, &quot;selinux_setup&quot;, nullptr};</span><br><span class="line">    execv(path, const_cast&lt;char**&gt;(args));</span><br><span class="line">  </span><br><span class="line">    // execv() only returns if an error happened, in which case we</span><br><span class="line">    // panic and never fall through this conditional.</span><br><span class="line">    PLOG(FATAL) &lt;&lt; &quot;execv(\&quot;&quot; &lt;&lt; path &lt;&lt; &quot;\&quot;) failed&quot;;</span><br><span class="line">  </span><br><span class="line">    return 1;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E3B;&#x8981;&#x901A;&#x8FC7;mount&#x6302;&#x8F7D;&#x5BF9;&#x5E94;&#x7684;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#xFF0C;mkdir&#x521B;&#x5EFA;&#x5BF9;&#x5E94;&#x7684;&#x6587;&#x4EF6;&#x76EE;&#x5F55;&#xFF0C;&#x5E76;&#x914D;&#x7F6E;&#x76F8;&#x5E94;&#x7684;&#x8BBF;&#x95EE;&#x6743;&#x9650;&#x3002;</p>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x8FD9;&#x4E9B;&#x6587;&#x4EF6;&#x53EA;&#x662F;&#x5728;&#x5E94;&#x7528;&#x8FD0;&#x884C;&#x7684;&#x65F6;&#x5019;&#x5B58;&#x5728;&#xFF0C;&#x4E00;&#x65E6;&#x5E94;&#x7528;&#x8FD0;&#x884C;&#x7ED3;&#x675F;&#x5C31;&#x4F1A;&#x968F;&#x7740;&#x5E94;&#x7528;&#x4E00;&#x8D77;&#x6D88;&#x5931;&#x3002;</p>
+<p>&#x6302;&#x8F7D;&#x7684;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x4E3B;&#x8981;&#x6709;&#x56DB;&#x7C7B;&#xFF1A;</p>
+<ol>
+<li>tmpfs: &#x4E00;&#x79CD;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#xFF0C;&#x5B83;&#x4F1A;&#x5C06;&#x6240;&#x6709;&#x7684;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x5728;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x4E2D;&#x3002;&#x7531;&#x4E8E;tmpfs&#x662F;&#x9A7B;&#x7559;&#x5728;RAM&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x5B83;&#x7684;&#x5185;&#x5BB9;&#x662F;&#x4E0D;&#x6301;&#x4E45;&#x7684;&#x3002;&#x65AD;&#x7535;&#x540E;&#xFF0C;tmpfs &#x7684;&#x5185;&#x5BB9;&#x5C31;&#x6D88;&#x5931;&#x4E86;&#xFF0C;&#x8FD9;&#x4E5F;&#x662F;&#x88AB;&#x79F0;&#x4F5C;tmpfs&#x7684;&#x6839;&#x672C;&#x539F;&#x56E0;&#x3002;</li>
+<li>devpts: &#x4E3A;&#x4F2A;&#x7EC8;&#x7AEF;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x6807;&#x51C6;&#x63A5;&#x53E3;&#xFF0C;&#x5B83;&#x7684;&#x6807;&#x51C6;&#x6302;&#x63A5;&#x70B9;&#x662F;/dev/pts&#x3002;&#x53EA;&#x8981;pty&#x7684;&#x4E3B;&#x590D;&#x5408;&#x8BBE;&#x5907;/dev/ptmx&#x88AB;&#x6253;&#x5F00;&#xFF0C;&#x5C31;&#x4F1A;&#x5728;/dev/pts&#x4E0B;&#x52A8;&#x6001;&#x7684;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x7684;pty&#x8BBE;&#x5907;&#x6587;&#x4EF6;&#x3002;</li>
+<li>proc: &#x4E5F;&#x662F;&#x4E00;&#x4E2A;&#x865A;&#x62DF;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x770B;&#x4F5C;&#x662F;&#x5185;&#x6838;&#x5185;&#x90E8;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x901A;&#x8FC7;&#x5B83;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x83B7;&#x5F97;&#x7CFB;&#x7EDF;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x540C;&#x65F6;&#x4E5F;&#x80FD;&#x591F;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x4FEE;&#x6539;&#x7279;&#x5B9A;&#x7684;&#x5185;&#x6838;&#x53C2;&#x6570;&#x3002;</li>
+<li>sysfs: &#x4E0E;proc&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7C7B;&#x4F3C;&#xFF0C;&#x4E5F;&#x662F;&#x4E00;&#x4E2A;&#x4E0D;&#x5360;&#x6709;&#x4EFB;&#x4F55;&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x7684;&#x865A;&#x62DF;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x3002;&#x5B83;&#x901A;&#x5E38;&#x88AB;&#x6302;&#x63A5;&#x5728;/sys&#x76EE;&#x5F55;&#x4E0B;&#x3002;</li>
+</ol>
+<p>&#x5728;FirstStageMain&#x8FD8;&#x4F1A;&#x901A;&#x8FC7;InitKernelLogging(argv)&#x6765;&#x521D;&#x59CB;&#x5316;log&#x65E5;&#x5FD7;&#x7CFB;&#x7EDF;&#x3002;&#x6B64;&#x65F6;Android&#x8FD8;&#x6CA1;&#x6709;&#x81EA;&#x5DF1;&#x7684;&#x7CFB;&#x7EDF;&#x65E5;&#x5FD7;&#xFF0C;&#x91C7;&#x7528;kernel&#x7684;log&#x7CFB;&#x7EDF;&#xFF0C;&#x6253;&#x5F00;&#x7684;&#x8BBE;&#x5907;&#x8282;&#x70B9;/dev/kmsg&#xFF0C; &#x90A3;&#x4E48;&#x53EF;&#x901A;&#x8FC7;cat /dev/kmsg&#x6765;&#x83B7;&#x53D6;&#x5185;&#x6838;log&#x3002;</p>
+<p>&#x6700;&#x540E;&#x4F1A;&#x901A;&#x8FC7;execv&#x65B9;&#x6CD5;&#x4F20;&#x9012;&#x5BF9;&#x5E94;&#x7684;path&#x4E0E;&#x4E0B;&#x4E00;&#x9636;&#x6BB5;&#x7684;&#x53C2;&#x6570;selinux_setup&#x3002;</p>
+<h3 id="SetupSelinux"><a href="#SetupSelinux" class="headerlink" title="SetupSelinux"></a>SetupSelinux</h3><blockquote>
+<p>system/core/init/selinux.cpp</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">// This function initializes SELinux then execs init to run in the init SELinux context.</span><br><span class="line">int SetupSelinux(char** argv) {</span><br><span class="line">    InitKernelLogging(argv);</span><br><span class="line"> </span><br><span class="line">    if (REBOOT_BOOTLOADER_ON_PANIC) {</span><br><span class="line">        InstallRebootSignalHandlers();</span><br><span class="line">    }</span><br><span class="line">   </span><br><span class="line">    // Set up SELinux, loading the SELinux policy.</span><br><span class="line">    SelinuxSetupKernelLogging();</span><br><span class="line">    SelinuxInitialize();</span><br><span class="line">  </span><br><span class="line">    // We&apos;re in the kernel domain and want to transition to the init domain.  File systems that</span><br><span class="line">    // store SELabels in their xattrs, such as ext4 do not need an explicit restorecon here,</span><br><span class="line">    // but other file systems do.  In particular, this is needed for ramdisks such as the</span><br><span class="line">    // recovery image for A/B devices.</span><br><span class="line">    if (selinux_android_restorecon(&quot;/system/bin/init&quot;, 0) == -1) {</span><br><span class="line">        PLOG(FATAL) &lt;&lt; &quot;restorecon failed of /system/bin/init failed&quot;;</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    // &#x8FDB;&#x5165;&#x4E0B;&#x4E00;&#x6B65;</span><br><span class="line">    const char* path = &quot;/system/bin/init&quot;;</span><br><span class="line">    const char* args[] = {path, &quot;second_stage&quot;, nullptr};</span><br><span class="line">    execv(path, const_cast&lt;char**&gt;(args));</span><br><span class="line">   </span><br><span class="line">    // execv() only returns if an error happened, in which case we</span><br><span class="line">    // panic and never return from this function.</span><br><span class="line">    PLOG(FATAL) &lt;&lt; &quot;execv(\&quot;&quot; &lt;&lt; path &lt;&lt; &quot;\&quot;) failed&quot;;</span><br><span class="line"> </span><br><span class="line">    return 1;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E3B;&#x8981;&#x662F;&#x7528;&#x6765;&#x63D0;&#x9AD8;linux&#x7684;&#x5B89;&#x5168;&#xFF0C;&#x8FDB;&#x4E00;&#x6B65;&#x7EA6;&#x675F;&#x8BBF;&#x95EE;&#x7684;&#x6743;&#x9650;&#x3002;</p>
+<p>&#x6700;&#x540E;&#x4E5F;&#x662F;&#x901A;&#x8FC7;execv&#x6765;&#x8FDB;&#x7A0B;init&#x542F;&#x52A8;&#x7684;&#x6838;&#x5FC3;&#x9636;&#x6BB5;SecondStageMain&#x3002;</p>
+<h3 id="SecondStageMain"><a href="#SecondStageMain" class="headerlink" title="SecondStageMain"></a>SecondStageMain</h3><blockquote>
+<p>system/core/init/init.cpp</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br></pre></td><td class="code"><pre><span class="line">int SecondStageMain(int argc, char** argv) {</span><br><span class="line">    if (REBOOT_BOOTLOADER_ON_PANIC) {</span><br><span class="line">        InstallRebootSignalHandlers();</span><br><span class="line">    }</span><br><span class="line">     </span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">     </span><br><span class="line">    // &#x521D;&#x59CB;&#x5316;&#x5C5E;&#x6027;&#x670D;&#x52A1;</span><br><span class="line">    property_init();</span><br><span class="line"> </span><br><span class="line">    // If arguments are passed both on the command line and in DT,</span><br><span class="line">    // properties set in DT always have priority over the command-line ones.</span><br><span class="line">    process_kernel_dt();</span><br><span class="line">    process_kernel_cmdline();</span><br><span class="line"> </span><br><span class="line">    // Propagate the kernel variables to internal variables</span><br><span class="line">    // used by init as well as the current required properties.</span><br><span class="line">    export_kernel_boot_props();</span><br><span class="line"> </span><br><span class="line">    // Make the time that init started available for bootstat to log.</span><br><span class="line">    property_set(&quot;ro.boottime.init&quot;, getenv(&quot;INIT_STARTED_AT&quot;));</span><br><span class="line">    property_set(&quot;ro.boottime.init.selinux&quot;, getenv(&quot;INIT_SELINUX_TOOK&quot;));</span><br><span class="line"> </span><br><span class="line">    // Set libavb version for Framework-only OTA match in Treble build.</span><br><span class="line">    const char* avb_version = getenv(&quot;INIT_AVB_VERSION&quot;);</span><br><span class="line">    if (avb_version) property_set(&quot;ro.boot.avb_version&quot;, avb_version);</span><br><span class="line"> </span><br><span class="line">    // See if need to load debug props to allow adb root, when the device is unlocked.</span><br><span class="line">    const char* force_debuggable_env = getenv(&quot;INIT_FORCE_DEBUGGABLE&quot;);</span><br><span class="line">    if (force_debuggable_env &amp;&amp; AvbHandle::IsDeviceUnlocked()) {</span><br><span class="line">        load_debug_prop = &quot;true&quot;s == force_debuggable_env;</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    // Clean up our environment.</span><br><span class="line">    unsetenv(&quot;INIT_STARTED_AT&quot;);</span><br><span class="line">    unsetenv(&quot;INIT_SELINUX_TOOK&quot;);</span><br><span class="line">    unsetenv(&quot;INIT_AVB_VERSION&quot;);</span><br><span class="line">    unsetenv(&quot;INIT_FORCE_DEBUGGABLE&quot;);</span><br><span class="line"> </span><br><span class="line">    // Now set up SELinux for second stage.</span><br><span class="line">    SelinuxSetupKernelLogging();</span><br><span class="line">    SelabelInitialize();</span><br><span class="line">    SelinuxRestoreContext();</span><br><span class="line"> </span><br><span class="line">    Epoll epoll;</span><br><span class="line">    if (auto result = epoll.Open(); !result) {</span><br><span class="line">        PLOG(FATAL) &lt;&lt; result.error();</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    // &#x521D;&#x59CB;&#x5316;single&#x53E5;&#x67C4;</span><br><span class="line">    InstallSignalFdHandler(&amp;epoll);</span><br><span class="line"> </span><br><span class="line">    property_load_boot_defaults(load_debug_prop);</span><br><span class="line">    UmountDebugRamdisk();</span><br><span class="line">    fs_mgr_vendor_overlay_mount_all();</span><br><span class="line">    export_oem_lock_status();</span><br><span class="line">    // &#x5F00;&#x542F;&#x5C5E;&#x6027;&#x670D;&#x52A1;</span><br><span class="line">    StartPropertyService(&amp;epoll);</span><br><span class="line">    MountHandler mount_handler(&amp;epoll);</span><br><span class="line">    set_usb_controller();</span><br><span class="line"> </span><br><span class="line">    const BuiltinFunctionMap function_map;</span><br><span class="line">    Action::set_function_map(&amp;function_map);</span><br><span class="line"> </span><br><span class="line">    if (!SetupMountNamespaces()) {</span><br><span class="line">        PLOG(FATAL) &lt;&lt; &quot;SetupMountNamespaces failed&quot;;</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    subcontexts = InitializeSubcontexts();</span><br><span class="line"> </span><br><span class="line">    ActionManager&amp; am = ActionManager::GetInstance();</span><br><span class="line">    ServiceList&amp; sm = ServiceList::GetInstance();</span><br><span class="line"> </span><br><span class="line">    // &#x89E3;&#x6790;init.rc&#x7B49;&#x76F8;&#x5173;&#x6587;&#x4EF6;</span><br><span class="line">    LoadBootScripts(am, sm);</span><br><span class="line"> </span><br><span class="line">    // Turning this on and letting the INFO logging be discarded adds 0.2s to</span><br><span class="line">    // Nexus 9 boot time, so it&apos;s disabled by default.</span><br><span class="line">    if (false) DumpState();</span><br><span class="line"> </span><br><span class="line">    // Make the GSI status available before scripts start running.</span><br><span class="line">    if (android::gsi::IsGsiRunning()) {</span><br><span class="line">        property_set(&quot;ro.gsid.image_running&quot;, &quot;1&quot;);</span><br><span class="line">    } else {</span><br><span class="line">        property_set(&quot;ro.gsid.image_running&quot;, &quot;0&quot;);</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    am.QueueBuiltinAction(SetupCgroupsAction, &quot;SetupCgroups&quot;);</span><br><span class="line"> </span><br><span class="line">    am.QueueEventTrigger(&quot;early-init&quot;);</span><br><span class="line"> </span><br><span class="line">    // Queue an action that waits for coldboot done so we know ueventd has set up all of /dev...</span><br><span class="line">    am.QueueBuiltinAction(wait_for_coldboot_done_action, &quot;wait_for_coldboot_done&quot;);</span><br><span class="line">    // ... so that we can start queuing up actions that require stuff from /dev.</span><br><span class="line">    am.QueueBuiltinAction(MixHwrngIntoLinuxRngAction, &quot;MixHwrngIntoLinuxRng&quot;);</span><br><span class="line">    am.QueueBuiltinAction(SetMmapRndBitsAction, &quot;SetMmapRndBits&quot;);</span><br><span class="line">    am.QueueBuiltinAction(SetKptrRestrictAction, &quot;SetKptrRestrict&quot;);</span><br><span class="line">    Keychords keychords;</span><br><span class="line">    am.QueueBuiltinAction(</span><br><span class="line">        [&amp;epoll, &amp;keychords](const BuiltinArguments&amp; args) -&gt; Result&lt;Success&gt; {</span><br><span class="line">            for (const auto&amp; svc : ServiceList::GetInstance()) {</span><br><span class="line">                keychords.Register(svc-&gt;keycodes());</span><br><span class="line">            }</span><br><span class="line">            keychords.Start(&amp;epoll, HandleKeychord);</span><br><span class="line">            return Success();</span><br><span class="line">        },</span><br><span class="line">        &quot;KeychordInit&quot;);</span><br><span class="line">    am.QueueBuiltinAction(console_init_action, &quot;console_init&quot;);</span><br><span class="line"> </span><br><span class="line">    // Trigger all the boot actions to get us started.</span><br><span class="line">    am.QueueEventTrigger(&quot;init&quot;);</span><br><span class="line"> </span><br><span class="line">    // Starting the BoringSSL self test, for NIAP certification compliance.</span><br><span class="line">    am.QueueBuiltinAction(StartBoringSslSelfTest, &quot;StartBoringSslSelfTest&quot;);</span><br><span class="line"> </span><br><span class="line">    // Repeat mix_hwrng_into_linux_rng in case /dev/hw_random or /dev/random</span><br><span class="line">    // wasn&apos;t ready immediately after wait_for_coldboot_done</span><br><span class="line">    am.QueueBuiltinAction(MixHwrngIntoLinuxRngAction, &quot;MixHwrngIntoLinuxRng&quot;);</span><br><span class="line"> </span><br><span class="line">    // Initialize binder before bringing up other system services</span><br><span class="line">    am.QueueBuiltinAction(InitBinder, &quot;InitBinder&quot;);</span><br><span class="line"> </span><br><span class="line">    // Don&apos;t mount filesystems or start core system services in charger mode.</span><br><span class="line">    std::string bootmode = GetProperty(&quot;ro.bootmode&quot;, &quot;&quot;);</span><br><span class="line">    if (bootmode == &quot;charger&quot;) {</span><br><span class="line">        am.QueueEventTrigger(&quot;charger&quot;);</span><br><span class="line">    } else {</span><br><span class="line">        am.QueueEventTrigger(&quot;late-init&quot;);</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    // Run all property triggers based on current state of the properties.</span><br><span class="line">    am.QueueBuiltinAction(queue_property_triggers_action, &quot;queue_property_triggers&quot;);</span><br><span class="line"> </span><br><span class="line">    while (true) {</span><br><span class="line">        // By default, sleep until something happens.</span><br><span class="line">        auto epoll_timeout = std::optional&lt;std::chrono::milliseconds&gt;{};</span><br><span class="line">        if (do_shutdown &amp;&amp; !shutting_down) {</span><br><span class="line">            do_shutdown = false;</span><br><span class="line">            if (HandlePowerctlMessage(shutdown_command)) {</span><br><span class="line">                shutting_down = true;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"> </span><br><span class="line">        if (!(waiting_for_prop || Service::is_exec_service_running())) {</span><br><span class="line">            am.ExecuteOneCommand();</span><br><span class="line">        }</span><br><span class="line">        if (!(waiting_for_prop || Service::is_exec_service_running())) {</span><br><span class="line">            if (!shutting_down) {</span><br><span class="line">                auto next_process_action_time = HandleProcessActions();</span><br><span class="line">                // If there&apos;s a process that needs restarting, wake up in time for that.</span><br><span class="line">                if (next_process_action_time) {</span><br><span class="line">                    epoll_timeout = std::chrono::ceil&lt;std::chrono::milliseconds&gt;(</span><br><span class="line">                            *next_process_action_time - boot_clock::now());</span><br><span class="line">                    if (*epoll_timeout &lt; 0ms) epoll_timeout = 0ms;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line"> </span><br><span class="line">            // If there&apos;s more work to do, wake up again immediately.</span><br><span class="line">            if (am.HasMoreCommands()) epoll_timeout = 0ms;</span><br><span class="line">        }</span><br><span class="line"> </span><br><span class="line">        if (auto result = epoll.Wait(epoll_timeout); !result) {</span><br><span class="line">            LOG(ERROR) &lt;&lt; result.error();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    return 0;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;SecondStageMain&#x4E2D;&#x4E3B;&#x8981;&#x5206;&#x4E3A;4&#x6B65;</p>
+<ol>
+<li>&#x521D;&#x59CB;&#x5316;&#x5C5E;&#x6027;&#x670D;&#x52A1;</li>
+<li>&#x521D;&#x59CB;&#x5316;single&#x53E5;&#x67C4;</li>
+<li>&#x5F00;&#x542F;&#x5C5E;&#x6027;&#x670D;&#x52A1;</li>
+<li>&#x89E3;&#x6790;.rc&#x6587;&#x4EF6;</li>
+</ol>
+<h2 id="&#x521D;&#x59CB;&#x5316;&#x5C5E;&#x6027;&#x670D;&#x52A1;"><a href="#&#x521D;&#x59CB;&#x5316;&#x5C5E;&#x6027;&#x670D;&#x52A1;" class="headerlink" title="&#x521D;&#x59CB;&#x5316;&#x5C5E;&#x6027;&#x670D;&#x52A1;"></a>&#x521D;&#x59CB;&#x5316;&#x5C5E;&#x6027;&#x670D;&#x52A1;</h2><blockquote>
+<p>system/core/init/property_service.cpp</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">void property_init() {</span><br><span class="line">    mkdir(&quot;/dev/__properties__&quot;, S_IRWXU | S_IXGRP | S_IXOTH);</span><br><span class="line">    CreateSerializedPropertyInfo();</span><br><span class="line">    if (__system_property_area_init()) {</span><br><span class="line">        LOG(FATAL) &lt;&lt; &quot;Failed to initialize property area&quot;;</span><br><span class="line">    }</span><br><span class="line">    if (!property_info_area.LoadDefaultPath()) {</span><br><span class="line">        LOG(FATAL) &lt;&lt; &quot;Failed to load serialized property info file&quot;;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E3B;&#x8981;&#x65B9;&#x6CD5;&#x662F;__system_property_area_init()&#xFF0C;&#x7528;&#x6765;&#x521B;&#x5EFA;&#x8DE8;&#x8FDB;&#x7A0B;&#x5185;&#x5B58;&#xFF0C;&#x4E3B;&#x8981;&#x64CD;&#x4F5C;&#x4E3A;</p>
+<ol>
+<li>&#x6267;&#x884C;open&#xFF0C;&#x6253;&#x5F00;dev/properities&#x5171;&#x4EAB;&#x5185;&#x5B58;&#x6587;&#x4EF6;&#xFF0C;&#x5927;&#x5C0F;&#x4E3A;128KB</li>
+<li>&#x6267;&#x884C;mmap&#xFF0C;&#x5C06;&#x5185;&#x5B58;&#x6620;&#x5C04;&#x5230;init&#x8FDB;&#x7A0B;</li>
+<li>&#x5C06;&#x8BE5;&#x5185;&#x5B58;&#x7684;&#x9996;&#x5730;&#x5740;&#x4FDD;&#x5B58;&#x5728;&#x5168;&#x5C40;&#x53D8;&#x91CF;<strong>system_property_area</strong>&#xFF0C;&#x540E;&#x7EED;&#x7684;&#x589E;&#x52A0;&#x6216;&#x8005;&#x4FEE;&#x6539;&#x5C5E;&#x6027;&#x90FD;&#x57FA;&#x4E8E;&#x8BE5;&#x53D8;&#x91CF;&#x6765;&#x8BA1;&#x7B97;&#x4F4D;&#x7F6E;&#x3002;</li>
+</ol>
+<h2 id="&#x521D;&#x59CB;&#x5316;single&#x53E5;&#x67C4;"><a href="#&#x521D;&#x59CB;&#x5316;single&#x53E5;&#x67C4;" class="headerlink" title="&#x521D;&#x59CB;&#x5316;single&#x53E5;&#x67C4;"></a>&#x521D;&#x59CB;&#x5316;single&#x53E5;&#x67C4;</h2><blockquote>
+<p>system/core/init/init.cpp</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">static void InstallSignalFdHandler(Epoll* epoll) {</span><br><span class="line">    // Applying SA_NOCLDSTOP to a defaulted SIGCHLD handler prevents the signalfd from receiving</span><br><span class="line">    // SIGCHLD when a child process stops or continues (b/77867680#comment9).</span><br><span class="line">    const struct sigaction act { .sa_handler = SIG_DFL, .sa_flags = SA_NOCLDSTOP };</span><br><span class="line">    sigaction(SIGCHLD, &amp;act, nullptr);</span><br><span class="line"> </span><br><span class="line">    sigset_t mask;</span><br><span class="line">    sigemptyset(&amp;mask);</span><br><span class="line">    sigaddset(&amp;mask, SIGCHLD);</span><br><span class="line"> </span><br><span class="line">    if (!IsRebootCapable()) {</span><br><span class="line">        // If init does not have the CAP_SYS_BOOT capability, it is running in a container.</span><br><span class="line">        // In that case, receiving SIGTERM will cause the system to shut down.</span><br><span class="line">        sigaddset(&amp;mask, SIGTERM);</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    if (sigprocmask(SIG_BLOCK, &amp;mask, nullptr) == -1) {</span><br><span class="line">        PLOG(FATAL) &lt;&lt; &quot;failed to block signals&quot;;</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    // Register a handler to unblock signals in the child processes.</span><br><span class="line">    const int result = pthread_atfork(nullptr, nullptr, &amp;UnblockSignals);</span><br><span class="line">    if (result != 0) {</span><br><span class="line">        LOG(FATAL) &lt;&lt; &quot;Failed to register a fork handler: &quot; &lt;&lt; strerror(result);</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    signal_fd = signalfd(-1, &amp;mask, SFD_CLOEXEC);</span><br><span class="line">    if (signal_fd == -1) {</span><br><span class="line">        PLOG(FATAL) &lt;&lt; &quot;failed to create signalfd&quot;;</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    if (auto result = epoll-&gt;RegisterHandler(signal_fd, HandleSignalFd); !result) {</span><br><span class="line">        LOG(FATAL) &lt;&lt; result.error();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6BCF;&#x4E2A;&#x8FDB;&#x7A0B;&#x5728;&#x5904;&#x7406;&#x5176;&#x4ED6;&#x8FDB;&#x7A0B;&#x53D1;&#x9001;&#x7684;signal&#x4FE1;&#x53F7;&#x65F6;&#x90FD;&#x9700;&#x8981;&#x5148;&#x6CE8;&#x518C;&#xFF0C;&#x5F53;&#x8FDB;&#x7A0B;&#x7684;&#x8FD0;&#x884C;&#x72B6;&#x6001;&#x6539;&#x53D8;&#x6216;&#x7EC8;&#x6B62;&#x65F6;&#x4F1A;&#x4EA7;&#x751F;&#x67D0;&#x79CD;signal&#x4FE1;&#x53F7;&#xFF0C;init&#x8FDB;&#x7A0B;&#x662F;&#x6240;&#x6709;&#x7528;&#x6237;&#x7A7A;&#x95F4;&#x8FDB;&#x7A0B;&#x7684;&#x7236;&#x8FDB;&#x7A0B;&#xFF0C;&#x5F53;&#x5176;&#x5B50;&#x8FDB;&#x7A0B;&#x7EC8;&#x6B62;&#x65F6;&#x4EA7;&#x751F;signal&#x4FE1;&#x53F7;&#x3002;&#x4EE5;&#x4FBF;&#x7236;&#x8FDB;&#x7A0B;&#x8FDB;&#x884C;&#x5904;&#x7406;&#x3002;</p>
+<p>&#x4E3B;&#x8981;&#x76EE;&#x7684;&#x662F;&#x4E3A;&#x4E86;&#x9632;&#x6B62;&#x5B50;&#x8FDB;&#x7A0B;&#x6210;&#x4E3A;&#x50F5;&#x5C38;&#x8FDB;&#x7A0B;&#x3002;</p>
+<p>&#x4F55;&#x4E3A;&#x50F5;&#x5C38;&#x8FDB;&#x7A0B;&#xFF1F;</p>
+<p>&#x7236;&#x8FDB;&#x7A0B;&#x4F7F;&#x7528;fork&#x521B;&#x5EFA;&#x5B50;&#x8FDB;&#x7A0B;&#xFF0C;&#x5B50;&#x8FDB;&#x7A0B;&#x7EC8;&#x6B62;&#x540E;&#xFF0C;&#x5982;&#x679C;&#x7236;&#x8FDB;&#x7A0B;&#x4E0D;&#x77E5;&#x9053;&#x5B50;&#x8FDB;&#x7A0B;&#x5DF2;&#x7ECF;&#x7EC8;&#x6B62;&#x7684;&#x8BDD;&#xFF0C;&#x8FD9;&#x65F6;&#x5B50;&#x8FDB;&#x7A0B;&#x867D;&#x7136;&#x5DF2;&#x7ECF;&#x9000;&#x51FA;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x7CFB;&#x7EDF;&#x8FDB;&#x7A0B;&#x8868;&#x4E2D;&#x8FD8;&#x4E3A;&#x5B83;&#x4FDD;&#x7559;&#x4E86;&#x4E00;&#x4E9B;&#x4FE1;&#x606F;&#xFF08;&#x5982;&#x8FDB;&#x7A0B;&#x53F7;&#x3001;&#x8FD0;&#x884C;&#x65F6;&#x95F4;&#x3001;&#x9000;&#x51FA;&#x72B6;&#x6001;&#x7B49;&#xFF09;&#xFF0C;&#x8FD9;&#x4E2A;&#x5B50;&#x8FDB;&#x7A0B;&#x5C31;&#x662F;&#x6240;&#x8C13;&#x7684;&#x50F5;&#x5C38;&#x8FDB;&#x7A0B;&#x3002;&#x5176;&#x4E2D;&#x7CFB;&#x7EDF;&#x8FDB;&#x7A0B;&#x8868;&#x662F;&#x4E00;&#x9879;&#x6709;&#x9650;&#x7684;&#x8D44;&#x6E90;&#xFF0C;&#x5982;&#x679C;&#x5B83;&#x88AB;&#x50F5;&#x5C38;&#x8FDB;&#x7A0B;&#x8017;&#x5C3D;&#x7684;&#x8BDD;&#xFF0C;&#x7CFB;&#x7EDF;&#x53EF;&#x80FD;&#x4F1A;&#x65E0;&#x6CD5;&#x521B;&#x5EFA;&#x65B0;&#x7684;&#x8FDB;&#x7A0B;&#x3002;</p>
+<p>&#x901A;&#x8FC7;epoll&#x8FDB;&#x884C;&#x6CE8;&#x518C;&#x53E5;&#x67C4;&#xFF0C;&#x6700;&#x540E;&#x4F1A;&#x7531;HandleSignalFd&#x8FDB;&#x884C;&#x56DE;&#x8C03;&#x64CD;&#x4F5C;&#x3002;</p>
+<p>epoll&#x53C8;&#x662F;&#x4EC0;&#x4E48;&#xFF1F;</p>
+<p>&#x5728;Linux&#x7684;&#x65B0;&#x5185;&#x6838;&#x4E2D;&#xFF0C;epoll&#x662F;&#x7528;&#x6765;&#x53D6;&#x4EE3;select/poll&#x7684;&#xFF0C;&#x5B83;&#x662F;Linux&#x5185;&#x6838;&#x4E3A;&#x5904;&#x7406;&#x5927;&#x6279;&#x91CF;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x7684;&#x6539;&#x8FDB;&#x7248;poll&#xFF0C;&#x662F;Linux&#x4E0B;&#x591A;&#x8DEF;&#x590D;&#x7528;I/O&#x63A5;&#x53E3;select/poll&#x7684;&#x589E;&#x5F3A;&#x7248;&#xFF0C;&#x5B83;&#x80FD;&#x663E;&#x8457;&#x63D0;&#x5347;&#x7A0B;&#x5E8F;&#x5728;&#x5927;&#x91CF;&#x5E76;&#x53D1;&#x8FDE;&#x63A5;&#x4E2D;&#x53EA;&#x6709;&#x5C11;&#x91CF;&#x6D3B;&#x8DC3;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x7684;&#x7CFB;&#x7EDF;CPU&#x5229;&#x7528;&#x7387;&#x3002;</p>
+<p>epoll&#x5185;&#x90E8;&#x4F7F;&#x7528;&#x4E86;&#x7EA2;&#x9ED1;&#x6811;&#xFF0C;&#x6240;&#x4EE5;&#x67E5;&#x627E;&#x6548;&#x7387;&#x6BD4;&#x4F7F;&#x7528;&#x6570;&#x7EC4;&#x7684;select&#x66F4;&#x5FEB;&#x3002;</p>
+<h2 id="&#x5F00;&#x542F;&#x5C5E;&#x6027;&#x670D;&#x52A1;"><a href="#&#x5F00;&#x542F;&#x5C5E;&#x6027;&#x670D;&#x52A1;" class="headerlink" title="&#x5F00;&#x542F;&#x5C5E;&#x6027;&#x670D;&#x52A1;"></a>&#x5F00;&#x542F;&#x5C5E;&#x6027;&#x670D;&#x52A1;</h2><blockquote>
+<p>system/core/init/property_service.cpp</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void StartPropertyService(Epoll* epoll) {</span><br><span class="line">    selinux_callback cb;</span><br><span class="line">    cb.func_audit = SelinuxAuditCallback;</span><br><span class="line">    selinux_set_callback(SELINUX_CB_AUDIT, cb);</span><br><span class="line"> </span><br><span class="line">    property_set(&quot;ro.property_service.version&quot;, &quot;2&quot;);</span><br><span class="line">    property_set_fd = CreateSocket(PROP_SERVICE_NAME, SOCK_STREAM | SOCK_CLOEXEC | SOCK_NONBLOCK,</span><br><span class="line">                                   false, 0666, 0, 0, nullptr);</span><br><span class="line">    if (property_set_fd == -1) {</span><br><span class="line">        PLOG(FATAL) &lt;&lt; &quot;start_property_service socket creation failed&quot;;</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    listen(property_set_fd, 8);</span><br><span class="line"> </span><br><span class="line">    if (auto result = epoll-&gt;RegisterHandler(property_set_fd, handle_property_set_fd); !result) {</span><br><span class="line">        PLOG(FATAL) &lt;&lt; result.error();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E3B;&#x8981;&#x505A;&#x7684;&#x4EFB;&#x52A1;&#x662F;&#xFF1A;</p>
+<ol>
+<li>&#x521B;&#x5EFA;&#x975E;&#x963B;&#x585E;&#x5F0F;&#x7684;Socket&#xFF0C;&#x5E76;&#x8FD4;&#x56DE;property_set_fd&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x3002;</li>
+<li>&#x4F7F;&#x7528;listen()&#x51FD;&#x6570;&#x53BB;&#x76D1;&#x542C;property_set_fd&#xFF0C;&#x6B64;&#x65F6;Socket&#x5373;&#x6210;&#x4E3A;&#x5C5E;&#x6027;&#x670D;&#x52A1;&#x7AEF;&#xFF0C;&#x5E76;&#x4E14;&#x5B83;&#x6700;&#x591A;&#x540C;&#x65F6;&#x53EF;&#x4E3A;8&#x4E2A;&#x8BD5;&#x56FE;&#x8BBE;&#x7F6E;&#x5C5E;&#x6027;&#x7684;&#x7528;&#x6237;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#x3002;</li>
+<li>&#x4F7F;&#x7528;epoll&#x6CE8;&#x518C;&#xFF0C;&#x5F53;property_set_fd&#x4E2D;&#x6709;&#x6570;&#x636E;&#x5230;&#x6765;&#x65F6;&#xFF0C;init&#x8FDB;&#x7A0B;&#x5C06;&#x8C03;&#x7528;handle_property_set_fd()&#x51FD;&#x6570;&#x8FDB;&#x884C;&#x5904;&#x7406;&#x3002;</li>
+</ol>
+<h2 id="&#x89E3;&#x6790;-rc&#x6587;&#x4EF6;"><a href="#&#x89E3;&#x6790;-rc&#x6587;&#x4EF6;" class="headerlink" title="&#x89E3;&#x6790;.rc&#x6587;&#x4EF6;"></a>&#x89E3;&#x6790;.rc&#x6587;&#x4EF6;</h2><blockquote>
+<p>system/core/init/init.cpp</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">static void LoadBootScripts(ActionManager&amp; action_manager, ServiceList&amp; service_list) {</span><br><span class="line">    Parser parser = CreateParser(action_manager, service_list);</span><br><span class="line"> </span><br><span class="line">    std::string bootscript = GetProperty(&quot;ro.boot.init_rc&quot;, &quot;&quot;);</span><br><span class="line">    if (bootscript.empty()) {</span><br><span class="line">        parser.ParseConfig(&quot;/init.rc&quot;);</span><br><span class="line">        if (!parser.ParseConfig(&quot;/system/etc/init&quot;)) {</span><br><span class="line">            late_import_paths.emplace_back(&quot;/system/etc/init&quot;);</span><br><span class="line">        }</span><br><span class="line">        if (!parser.ParseConfig(&quot;/product/etc/init&quot;)) {</span><br><span class="line">            late_import_paths.emplace_back(&quot;/product/etc/init&quot;);</span><br><span class="line">        }</span><br><span class="line">        if (!parser.ParseConfig(&quot;/product_services/etc/init&quot;)) {</span><br><span class="line">            late_import_paths.emplace_back(&quot;/product_services/etc/init&quot;);</span><br><span class="line">        }</span><br><span class="line">        if (!parser.ParseConfig(&quot;/odm/etc/init&quot;)) {</span><br><span class="line">            late_import_paths.emplace_back(&quot;/odm/etc/init&quot;);</span><br><span class="line">        }</span><br><span class="line">        if (!parser.ParseConfig(&quot;/vendor/etc/init&quot;)) {</span><br><span class="line">            late_import_paths.emplace_back(&quot;/vendor/etc/init&quot;);</span><br><span class="line">        }</span><br><span class="line">    } else {</span><br><span class="line">        parser.ParseConfig(bootscript);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x901A;&#x8FC7;ParseConfig&#x6765;&#x89E3;&#x6790;init.rc&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x3002;</p>
+<p>.rc&#x6587;&#x4EF6;&#x8BED;&#x6CD5;&#x662F;&#x4EE5;&#x884C;&#x5C3E;&#x5355;&#x4F4D;&#xFF0C;&#x4EE5;&#x7A7A;&#x683C;&#x95F4;&#x9694;&#x7684;&#x8BED;&#x6CD5;&#xFF0C;&#x4EE5;#&#x5F00;&#x59CB;&#x4EE3;&#x8868;&#x6CE8;&#x91CA;&#x884C;&#x3002;.rc&#x6587;&#x4EF6;&#x4E3B;&#x8981;&#x5305;&#x542B;Action&#x3001;Service&#x3001;Command&#x3001;Options&#x3001;Import&#xFF0C;&#x5176;&#x4E2D;&#x5BF9;&#x4E8E;Action&#x548C;Service&#x7684;&#x540D;&#x79F0;&#x90FD;&#x662F;&#x552F;&#x4E00;&#x7684;&#xFF0C;&#x5BF9;&#x4E8E;&#x91CD;&#x590D;&#x7684;&#x547D;&#x540D;&#x89C6;&#x4E3A;&#x65E0;&#x6548;&#x3002;</p>
+<p>init.rc&#x4E2D;&#x7684;Action&#x3001;Service&#x8BED;&#x53E5;&#x90FD;&#x6709;&#x76F8;&#x5E94;&#x7684;&#x7C7B;&#x6765;&#x89E3;&#x6790;&#xFF0C;&#x5373;ActionParser&#x3001;ServiceParser&#x3002;</p>
+<p>&#x5728;&#x89E3;&#x6790;init.rc&#x4E2D;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x8FDB;&#x884C;&#x542F;&#x52A8;Zygote&#x3002;</p>
+<blockquote>
+<p>&#x5173;&#x4E8E;Zygote&#x7684;&#x542F;&#x52A8;&#x540E;&#x7EED;&#x518D;&#x5206;&#x6790;&#x3002;</p>
+</blockquote>
+<p>&#x4ECA;&#x5929;&#x4E3B;&#x8981;&#x5C1D;&#x8BD5;&#x5206;&#x6790;&#x4E86;&#x4E00;&#x4E0B;Android&#x5728;Linux&#x7CFB;&#x7EDF;&#x4E0B;&#x7684;init&#x542F;&#x52A8;&#x6D89;&#x53CA;&#x7684;&#x4E3B;&#x8981;&#x6D41;&#x7A0B;&#x3002;</p>
+<p>&#x53EF;&#x89C1;init&#x542F;&#x52A8;&#x4E3B;&#x8981;&#x6D89;&#x53CA;&#x7684;&#x5DE5;&#x4F5C;&#x662F;&#xFF1A;</p>
+<ol>
+<li>&#x521B;&#x5EFA;&#x4E0E;&#x6302;&#x8F7D;&#x542F;&#x52A8;&#x6240;&#x9700;&#x8981;&#x7684;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;</li>
+<li>&#x521D;&#x59CB;&#x5316;&#x5C5E;&#x6027;&#x670D;&#x52A1;</li>
+<li>&#x521B;&#x5EFA;single&#x53E5;&#x67C4;&#xFF0C;&#x6765;&#x76D1;&#x542C;&#x5B50;&#x8FDB;&#x7A0B;&#xFF0C;&#x9632;&#x6B62;&#x50F5;&#x5C38;&#x8FDB;&#x7A0B;&#x7684;&#x4EA7;&#x751F;</li>
+<li>&#x5F00;&#x542F;&#x5C5E;&#x6027;&#x670D;&#x52A1;</li>
+<li>&#x89E3;&#x6790;.rc&#x6587;&#x4EF6;&#x5E76;&#x542F;&#x52A8;Zygote&#x8FDB;&#x7A0B;</li>
+</ol>
+<h2 id="&#x9879;&#x76EE;"><a href="#&#x9879;&#x76EE;" class="headerlink" title="&#x9879;&#x76EE;"></a>&#x9879;&#x76EE;</h2><p><a href="https://github.com/idisfkj/android-startup" target="_blank" rel="noopener">android_startup</a>: &#x63D0;&#x4F9B;&#x4E00;&#x79CD;&#x5728;&#x5E94;&#x7528;&#x542F;&#x52A8;&#x65F6;&#x80FD;&#x591F;&#x66F4;&#x52A0;&#x7B80;&#x5355;&#x3001;&#x9AD8;&#x6548;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x521D;&#x59CB;&#x5316;&#x7EC4;&#x4EF6;&#xFF0C;&#x4F18;&#x5316;&#x542F;&#x52A8;&#x901F;&#x5EA6;&#x3002;&#x4E0D;&#x4EC5;&#x652F;&#x6301;Jetpack App Startup&#x7684;&#x5168;&#x90E8;&#x529F;&#x80FD;&#xFF0C;&#x8FD8;&#x63D0;&#x4F9B;&#x989D;&#x5916;&#x7684;&#x540C;&#x6B65;&#x4E0E;&#x5F02;&#x6B65;&#x7B49;&#x5F85;&#x3001;&#x7EBF;&#x7A0B;&#x63A7;&#x5236;&#x4E0E;&#x591A;&#x8FDB;&#x7A0B;&#x652F;&#x6301;&#x7B49;&#x529F;&#x80FD;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/AwesomeGithub" target="_blank" rel="noopener">AwesomeGithub</a>: &#x57FA;&#x4E8E;Github&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x7EAF;&#x7EC3;&#x4E60;&#x9879;&#x76EE;&#xFF0C;&#x652F;&#x6301;&#x7EC4;&#x4EF6;&#x5316;&#x5F00;&#x53D1;&#xFF0C;&#x652F;&#x6301;&#x8D26;&#x6237;&#x5BC6;&#x7801;&#x4E0E;&#x8BA4;&#x8BC1;&#x767B;&#x9646;&#x3002;&#x4F7F;&#x7528;Kotlin&#x8BED;&#x8A00;&#x8FDB;&#x884C;&#x5F00;&#x53D1;&#xFF0C;&#x9879;&#x76EE;&#x67B6;&#x6784;&#x662F;&#x57FA;&#x4E8E;JetPack&amp;DataBinding&#x7684;MVVM&#xFF1B;&#x9879;&#x76EE;&#x4E2D;&#x4F7F;&#x7528;&#x4E86;Arouter&#x3001;Retrofit&#x3001;Coroutine&#x3001;Glide&#x3001;Dagger&#x4E0E;Hilt&#x7B49;&#x6D41;&#x884C;&#x5F00;&#x6E90;&#x6280;&#x672F;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/flutter_github" target="_blank" rel="noopener">flutter_github</a>: &#x57FA;&#x4E8E;Flutter&#x7684;&#x8DE8;&#x5E73;&#x53F0;&#x7248;&#x672C;Github&#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x4E0E;AwesomeGithub&#x76F8;&#x5BF9;&#x5E94;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/android-api-analysis" target="_blank" rel="noopener">android-api-analysis</a>: &#x7ED3;&#x5408;&#x8BE6;&#x7EC6;&#x7684;Demo&#x6765;&#x5168;&#x9762;&#x89E3;&#x6790;Android&#x76F8;&#x5173;&#x7684;&#x77E5;&#x8BC6;&#x70B9;, &#x5E2E;&#x52A9;&#x8BFB;&#x8005;&#x80FD;&#x591F;&#x66F4;&#x5FEB;&#x7684;&#x638C;&#x63E1;&#x4E0E;&#x7406;&#x89E3;&#x6240;&#x9610;&#x8FF0;&#x7684;&#x8981;&#x70B9;&#x3002;</p>
+<p><a href="https://github.com/idisfkj/daily_algorithm" target="_blank" rel="noopener">daily_algorithm</a>: &#x6BCF;&#x65E5;&#x4E00;&#x7B97;&#x6CD5;&#xFF0C;&#x7531;&#x6D45;&#x5165;&#x6DF1;&#xFF0C;&#x6B22;&#x8FCE;&#x52A0;&#x5165;&#x4E00;&#x8D77;&#x5171;&#x52C9;&#x3002;</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">赞赏是一门艺术</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/rouse_wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/rouse_alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2020/12/06/Jetpack-DataStore必知的几个优点/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2020/12/10/Android-Linux-Zygote启动/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+    <div class="fexo-comments comments-post">
+  
+
+  
+
+  
+
+  
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+  <script src="https://jjeejj.github.io/js/gitment.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'idisfkj',
+        repo: 'idisfkj.github.io',
+        id: 'Tue Dec 08 2020 21:50:13 GMT+0800',
+        oauth: {
+          client_id: 'dafb1df02ea9f875bb78',
+          client_secret: 'e9873d78aa5eaed5ce61d1d865a5af501dae377a'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+  
+  
+</div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
